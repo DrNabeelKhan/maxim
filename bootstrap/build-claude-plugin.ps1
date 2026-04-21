@@ -161,7 +161,9 @@ if (Test-Path $PackEngineSrc) {
             @{ GOOS = "darwin";  GOARCH = "amd64"; Name = "mxm-pack-engine-darwin-amd64" }
         )
     } else {
-        $hostName = if ($IsWindows -or $env:OS -eq "Windows_NT") { "mxm-pack-engine.exe" } else { "mxm-pack-engine" }
+        # PS 5.x on Windows does not define $IsWindows; fall back to the OS env var.
+        $isWin = ((Get-Variable -Name IsWindows -ValueOnly -ErrorAction SilentlyContinue) -eq $true) -or ($env:OS -eq "Windows_NT")
+        $hostName = if ($isWin) { "mxm-pack-engine.exe" } else { "mxm-pack-engine" }
         $Targets = @(
             @{ GOOS = $null; GOARCH = $null; Name = $hostName }
         )
