@@ -1,0 +1,46 @@
+{
+  "name": "maxim",
+  "version": "1.0.0",
+  "description": "The behavioral intelligence layer for Claude. 88 specialist agents across 7 executive offices, 34 skill domains, 38 slash commands, 64 peer-reviewed behavioral frameworks, 14 compliance frameworks, and drift detection on every session. Start at $19.99/mo with Solo. BSL 1.1 licensed.",
+  "author": {
+    "name": "Dr. Nabeel Khan",
+    "email": "nabeel@nabeelkhan.com",
+    "url": "https://maxim.isystematic.com"
+  },
+  "homepage": "https://maxim.isystematic.com",
+  "repository": "https://github.com/DrNabeelKhan/maxim",
+  "license": "BSL-1.1",
+  "keywords": [
+    "behavioral-science",
+    "ai-governance",
+    "compliance",
+    "multi-agent",
+    "claude-code",
+    "executive-router",
+    "drift-detection",
+    "mempalace",
+    "behavioral-intelligence",
+    "prospect-theory",
+    "fogg-behavior-model",
+    "com-b"
+  ],
+  "skills": "./.claude/skills/",
+  "commands": "./.claude/commands/",
+  "agents": [
+    "./.claude/agents/enterprise-architect.md",
+    "./.claude/agents/executive-router.md",
+    "./.claude/agents/implementer.md",
+    "./.claude/agents/planner.md",
+    "./.claude/agents/pre-release-audit.md",
+    "./.claude/agents/release-manager.md",
+    "./.claude/agents/reviewer.md",
+    "./.claude/agents/security-analyst.md",
+    "./.claude/agents/skill-synthesizer.md",
+    "./.claude/agents/tester.md",
+    "./.claude/agents/ui-ux-designer.md",
+    "./.claude/agents/voltagent-bridge.md"
+  ],
+  "hooks": "./.claude/hooks/hooks.json",
+  "mcpServers": "./.mcp.json",
+  "outputStyles": "./distributions/claude-plugin/output-styles/"
+}

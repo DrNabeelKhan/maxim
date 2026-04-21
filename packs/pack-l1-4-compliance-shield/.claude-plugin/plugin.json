@@ -1,0 +1,29 @@
+{
+  "name": "mxm-pack-l1-4-compliance-shield",
+  "version": "1.0.0",
+  "description": "Maxim commercial pack: L1.4 Compliance Shield. Ships as part of the L1 tier per ADR-009. Behavioral-science-anchored, MOAT-registered, BSL-excluded (separately licensed via Stripe). Requires an activated license JWT to run.",
+  "author": {
+    "name": "Dr. Nabeel Khan",
+    "email": "nabeel@nabeelkhan.com",
+    "url": "https://maxim.isystematic.com"
+  },
+  "homepage": "https://maxim.isystematic.com/pricing#l1",
+  "repository": "https://github.com/DrNabeelKhan/maxim",
+  "license": "proprietary",
+  "keywords": [
+    "maxim",
+    "pack",
+    "l1",
+    "behavioral-science",
+    "commercial"
+  ],
+  "skills": [
+    "./"
+  ],
+  "dependencies": [
+    {
+      "name": "maxim",
+      "version": "^1.0.0"
+    }
+  ]
+}
