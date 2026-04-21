@@ -27,21 +27,42 @@ __pycache__/
 *.pyc
 
 # ── Private documents subfolders — never committed (history purged) ───
-# ADRs are a live private ledger Maxim writes during operator sessions.
-# build-artifacts-scripts, business, and references contain internal tooling,
-# strategy docs, and archival references. Public-facing docs stay tracked
-# under documents/guides, documents/reference, documents/governance,
-# documents/templates, and documents/cross-surface.
-documents/ADRs/
+# ADRs contain a mix of public governance narrative (tracked via negation
+# rules below) and private architecture / security detail (default-ignored).
+# build-artifacts-scripts, business (strategy, pack-moat, financials), and
+# references contain internal tooling, strategy docs, and archival references.
+# sales holds launch drafts, allocation models, and landing-design specs —
+# all operator-local. Public-facing content stays tracked under
+# documents/guides, documents/reference, documents/governance,
+# documents/templates, documents/cross-surface, and documents/marketing.
+documents/ADRs/*
 documents/build-artifacts-scripts/
 documents/business/
 documents/references/
+documents/sales/
 
 # Legacy path alias (older commits used lowercase adr/)
 documents/adr/
 
 # Architecture docs (PRD, FRD, SRD, secrets) stay operator-local
 documents/architecture/
+
+# ── Public ADRs (negation exceptions) ─────────────────────────────────────
+# The 7 ADRs below are public per the migration plan — they are moat
+# narrative, governance contracts, pricing rationale, and payment choice.
+# The remaining 4 ADRs (001 architecture baseline, 003 Worker license
+# issuance, 005 IP protection 5-layer, 006 external content boundary)
+# describe internal system architecture and stay private.
+!documents/ADRs/README.md
+!documents/ADRs/INDEX.md
+!documents/ADRs/TEMPLATE.md
+!documents/ADRs/ADR-002-documents-as-executable-contracts.md
+!documents/ADRs/ADR-004-free-tier-executable-contract.md
+!documents/ADRs/ADR-007-behavioral-moat-framing-doctrine.md
+!documents/ADRs/ADR-008-community-pack-system.md
+!documents/ADRs/ADR-009-pack-architecture-l1-l2-l3.md
+!documents/ADRs/ADR-010-confidence-tag-technical-educator-rubric.md
+!documents/ADRs/ADR-011-stripe-primary-payment-processor.md
 
 # ── Maxim ledger state (session-local, never committed) ──────────────────
 # documents/ledgers/ holds the canonical Executable Contract ledgers.
