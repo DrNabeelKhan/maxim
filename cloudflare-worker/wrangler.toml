@@ -49,18 +49,16 @@ binding = "LICENSES"
 id = "bd90ce85c3d04c958c986b33e9bf850a"
 
 # Contact-form submissions (90-day TTL, searchable for lead follow-up)
-# Create via: wrangler kv namespace create CONTACT_SUBMISSIONS
-# Then paste the returned id below.
+# Created 2026-04-21 via: wrangler kv namespace create CONTACT_SUBMISSIONS
 [[kv_namespaces]]
 binding = "CONTACT_SUBMISSIONS"
-id = "REPLACE_WITH_ACTUAL_KV_ID"
+id = "c3879edfe07d4ff88a9e5bc89921f59f"
 
 # Per-IP rate-limit counters (1-hour TTL)
-# Create via: wrangler kv namespace create RATE_LIMIT
-# Then paste the returned id below.
+# Created 2026-04-21 via: wrangler kv namespace create RATE_LIMIT
 [[kv_namespaces]]
 binding = "RATE_LIMIT"
-id = "REPLACE_WITH_ACTUAL_KV_ID"
+id = "4b8143b656304fc4982054cbbe54b13b"
 
 # ── Durable Objects (for canary tracking — Sprint 2b+) ───────────────────────
 # [[durable_objects.bindings]]

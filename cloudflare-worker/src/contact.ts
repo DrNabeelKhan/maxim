@@ -100,25 +100,29 @@ export async function handleContact(request: Request, env: ContactEnv): Promise<
     }
 
     // ── Auto-capture request-scoped metadata ────────────────────────────────
-    const cfHeaders = request.headers;
-    const userAgent = cfHeaders.get("user-agent") || "unknown";
+    // Cloudflare exposes rich geolocation via `request.cf` (IncomingRequestCfProperties),
+    // not via HTTP headers. The cf-* headers exist for edge compatibility but are
+    // sparse on workers.dev; request.cf is populated on every Workers request.
+    const cf = (request as Request & { cf?: IncomingRequestCfProperties }).cf;
+    const userAgent = request.headers.get("user-agent") || "unknown";
     const ua = parseUserAgent(userAgent);
 
-    // Cloudflare sets all of these on every inbound request with no API call.
+    const countryCode = (cf?.country as string | undefined) || request.headers.get("cf-ipcountry") || null;
     const geo = {
         ip: clientIp,
-        continent: cfHeaders.get("cf-ipcontinent") || null,
-        country_code: cfHeaders.get("cf-ipcountry") || null,
-        country_name: lookupCountryName(cfHeaders.get("cf-ipcountry") || ""),
-        region_code: cfHeaders.get("cf-region-code") || null,
-        region_name: cfHeaders.get("cf-region") || null,
-        city: cfHeaders.get("cf-ipcity") || null,
-        latitude: cfHeaders.get("cf-iplatitude") || null,
-        longitude: cfHeaders.get("cf-iplongitude") || null,
-        timezone: cfHeaders.get("cf-timezone") || null,
-        postal_code: cfHeaders.get("cf-postal-code") || null,
-        isp: cfHeaders.get("cf-ipisp") || null,
-        currency: guessCurrencyFromCountry(cfHeaders.get("cf-ipcountry") || ""),
+        continent: (cf?.continent as string | undefined) || null,
+        country_code: countryCode,
+        country_name: lookupCountryName(countryCode || ""),
+        region_code: (cf?.regionCode as string | undefined) || null,
+        region_name: (cf?.region as string | undefined) || null,
+        city: (cf?.city as string | undefined) || null,
+        latitude: (cf?.latitude as string | undefined) || null,
+        longitude: (cf?.longitude as string | undefined) || null,
+        timezone: (cf?.timezone as string | undefined) || null,
+        postal_code: (cf?.postalCode as string | undefined) || null,
+        isp: (cf?.asOrganization as string | undefined) || null,
+        asn: (cf?.asn as number | undefined) || null,
+        currency: guessCurrencyFromCountry(countryCode || ""),
     };
 
     const submissionId = crypto.randomUUID();
@@ -271,5 +275,15 @@ function corsOrigin(request?: Request): string {
 }
 
 export function handleContactPreflight(request: Request): Response {
-    return jsonCors({}, 204, request);
+    // 204 No Content cannot carry a body per HTTP/1.1; Workers enforce this.
+    // Return the CORS headers alone.
+    return new Response(null, {
+        status: 204,
+        headers: {
+            "Access-Control-Allow-Origin": corsOrigin(request),
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Max-Age": "86400",
+        },
+    });
 }
