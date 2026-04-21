@@ -35,6 +35,8 @@
 // Prior import pattern was incorrect (used jose-library identifiers); BUG-002 fixed 2026-04-21.
 import jwt from "@tsndr/cloudflare-worker-jwt";
 import { STRIPE_PRODUCT_MAP } from "./stripe-product-map";
+import { handleContact, handleContactPreflight } from "./contact";
+import { notifySales, fmtMoney } from "./notify";
 
 export interface Env {
     // Vars
@@ -54,8 +56,16 @@ export interface Env {
     JWT_SIGNING_KEY_PUBLIC: string;
     ADMIN_API_KEY: string;
     OWNER_PUBLIC_KEYS_JSON: string;
-    // KV binding (add after `wrangler kv namespace create LICENSES`)
+    // KV bindings
+    //   LICENSES              — license records (existing)
+    //   CONTACT_SUBMISSIONS   — contact-form submissions, 90-day TTL
+    //   RATE_LIMIT            — per-IP rate-limit counters, 1-hour TTL
     LICENSES?: KVNamespace;
+    CONTACT_SUBMISSIONS?: KVNamespace;
+    RATE_LIMIT?: KVNamespace;
+    // Notification email config (vars, not secrets)
+    SALES_NOTIFY_EMAIL?: string;
+    FROM_EMAIL?: string;
 }
 
 // ── Variant ID → pack capability grant map (mirrors lemonsqueezy-variant-map.json) ───
@@ -94,6 +104,8 @@ export default {
             if (path === "/license/issue" && request.method === "POST") return licenseIssue(request, env);
             if (path === "/license/validate" && request.method === "POST") return licenseValidate(request, env);
             if (path === "/license/revoke" && request.method === "POST") return licenseRevoke(request, env);
+            if (path === "/contact" && request.method === "OPTIONS") return handleContactPreflight(request);
+            if (path === "/contact" && request.method === "POST") return handleContact(request, env);
             return new Response("Not Found", { status: 404 });
         } catch (err: any) {
             console.error("Unhandled error:", err);
@@ -215,6 +227,9 @@ async function stripeWebhook(request: Request, env: Env): Promise<Response> {
     if (type === "invoice.payment_failed") {
         return await handleStripePaymentFailed(event.data.object, env);
     }
+    if (type === "charge.refunded" || type === "refund.created") {
+        return await handleStripeRefund(event.data.object, env);
+    }
 
     // Other events: acknowledge but no-op
     return json({ received: true, event: type });
@@ -275,6 +290,29 @@ async function handleStripeCheckoutCompleted(session: any, env: Env): Promise<Re
         }));
     }
 
+    // Fire-and-forget sales notification (fail-soft, never blocks the webhook ack)
+    const amount = fmtMoney(session.amount_total, session.currency?.toUpperCase() || "USD");
+    await notifySales(
+        {
+            event: "sale-completed",
+            subject: `New sale — ${amount} · ${mapping.product_id}`,
+            body: [
+                `New Stripe checkout completed.`,
+                ``,
+                `Customer: ${customerEmail || "unknown"}`,
+                `Product: ${mapping.product_id} (${tierId})`,
+                `Amount: ${amount}`,
+                `Billing: ${mapping.billing}`,
+                `Subscription: ${session.subscription || "one-time"}`,
+                `License ID: ${licenseId}`,
+                ``,
+                `Grants activated: ${mapping.grants.join(", ")}`,
+            ].join("\n"),
+            metadata: { session_id: session.id, customer_id: session.customer, subscription_id: session.subscription },
+        },
+        env,
+    );
+
     return json({
         ok: true,
         license_id: licenseId,
@@ -299,6 +337,25 @@ async function handleStripeSubscriptionDeleted(subscription: any, env: Env): Pro
             record.status = "cancelled";
             record.cancelled_at = new Date().toISOString();
             await env.LICENSES.put(key.name, JSON.stringify(record));
+
+            await notifySales(
+                {
+                    event: "subscription-cancelled",
+                    subject: `Subscription cancelled — ${record.product_id}`,
+                    body: [
+                        `A subscription was cancelled.`,
+                        ``,
+                        `Customer: ${record.email || "unknown"}`,
+                        `Product: ${record.product_id} (${record.tier_id})`,
+                        `Subscription ID: ${subscriptionId}`,
+                        `Cancelled at: ${record.cancelled_at}`,
+                        `Active since: ${record.issued_at}`,
+                    ].join("\n"),
+                    metadata: { subscription_id: subscriptionId, license_id: key.name },
+                },
+                env,
+            );
+
             return json({ ok: true, action: "license_cancelled", license_id: key.name.replace("license:", "") });
         }
     }
@@ -306,9 +363,64 @@ async function handleStripeSubscriptionDeleted(subscription: any, env: Env): Pro
 }
 
 async function handleStripePaymentFailed(invoice: any, env: Env): Promise<Response> {
-    // For MVP: acknowledge + log. Grace period logic (dunning) in Phase S6+.
     console.warn("Stripe payment failed:", { invoice_id: invoice.id, subscription: invoice.subscription, customer: invoice.customer });
+
+    const amount = fmtMoney(invoice.amount_due, invoice.currency?.toUpperCase() || "USD");
+    await notifySales(
+        {
+            event: "payment-failed",
+            subject: `Payment failed — ${amount} · ${invoice.customer_email || "unknown customer"}`,
+            body: [
+                `A Stripe invoice payment failed.`,
+                ``,
+                `Customer: ${invoice.customer_email || "unknown"}`,
+                `Amount: ${amount}`,
+                `Invoice ID: ${invoice.id}`,
+                `Subscription: ${invoice.subscription || "one-time"}`,
+                `Attempt count: ${invoice.attempt_count ?? "?"}`,
+                `Next retry: ${invoice.next_payment_attempt ? new Date(invoice.next_payment_attempt * 1000).toISOString() : "none"}`,
+                ``,
+                `Stripe will retry automatically. Consider reaching out if this persists.`,
+            ].join("\n"),
+            metadata: { invoice_id: invoice.id, customer_id: invoice.customer, subscription_id: invoice.subscription },
+        },
+        env,
+    );
+
     return json({ received: true, action: "payment_failed_logged", invoice_id: invoice.id });
+}
+
+async function handleStripeRefund(charge: any, env: Env): Promise<Response> {
+    // Handle both "charge.refunded" (full charge object) and "refund.created" (refund object) shapes
+    const refundAmount = charge.amount_refunded ?? charge.amount ?? 0;
+    const currency = (charge.currency || "usd").toUpperCase();
+    const amount = fmtMoney(refundAmount, currency);
+    const customerEmail = charge.billing_details?.email || charge.receipt_email || "unknown";
+    const chargeId = charge.id;
+    const reason = charge.refunds?.data?.[0]?.reason || charge.reason || "not specified";
+
+    console.warn("Stripe refund issued:", { charge_id: chargeId, amount: refundAmount, customer: customerEmail });
+
+    await notifySales(
+        {
+            event: "refund-issued",
+            subject: `Refund issued — ${amount}`,
+            body: [
+                `A refund was issued via Stripe.`,
+                ``,
+                `Customer: ${customerEmail}`,
+                `Refund amount: ${amount}`,
+                `Charge ID: ${chargeId}`,
+                `Reason: ${reason}`,
+                ``,
+                `Review in Stripe dashboard if follow-up is needed (retention, exit interview, product feedback).`,
+            ].join("\n"),
+            metadata: { charge_id: chargeId, refund_amount_cents: refundAmount, currency },
+        },
+        env,
+    );
+
+    return json({ received: true, action: "refund_logged", charge_id: chargeId });
 }
 
 async function licenseIssue(request: Request, env: Env): Promise<Response> {

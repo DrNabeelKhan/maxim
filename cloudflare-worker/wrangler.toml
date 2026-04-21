@@ -19,11 +19,14 @@ head_sampling_rate = 1.0
 
 # ── Environment variables (non-secret; set here or via dashboard) ────────────
 [vars]
-MXM_VERSION_MIN = "6.4.4"
+MXM_VERSION_MIN = "1.0.0"
 JWT_ISSUER = "https://license.isystematic.com"
 JWT_AUDIENCE = "mxm-pack-engine"
 JWT_TTL_SECONDS = "31536000"  # 12 months
 ENVIRONMENT = "production"
+# Notification routing (contact form submissions + Stripe sale/refund/cancel events)
+SALES_NOTIFY_EMAIL = "sales@isystematic.com"
+FROM_EMAIL = "noreply@isystematic.com"
 
 # ── Secrets (set via `wrangler secret put <NAME>`, NEVER committed) ──────────
 # Stripe (primary processor per D-037):
@@ -38,11 +41,26 @@ ENVIRONMENT = "production"
 # ADMIN_API_KEY                 — Bearer token for internal admin endpoints
 # OWNER_PUBLIC_KEYS_JSON        — JSON array of owner .pub PEMs for OWNER-1 bypass
 
-# ── KV namespace (license records) ───────────────────────────────────────────
-# Created 2026-04-21 via: wrangler kv namespace create LICENSES
+# ── KV namespaces ────────────────────────────────────────────────────────────
+
+# License records — created 2026-04-21 via `wrangler kv namespace create LICENSES`
 [[kv_namespaces]]
 binding = "LICENSES"
 id = "bd90ce85c3d04c958c986b33e9bf850a"
+
+# Contact-form submissions (90-day TTL, searchable for lead follow-up)
+# Create via: wrangler kv namespace create CONTACT_SUBMISSIONS
+# Then paste the returned id below.
+[[kv_namespaces]]
+binding = "CONTACT_SUBMISSIONS"
+id = "REPLACE_WITH_ACTUAL_KV_ID"
+
+# Per-IP rate-limit counters (1-hour TTL)
+# Create via: wrangler kv namespace create RATE_LIMIT
+# Then paste the returned id below.
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "REPLACE_WITH_ACTUAL_KV_ID"
 
 # ── Durable Objects (for canary tracking — Sprint 2b+) ───────────────────────
 # [[durable_objects.bindings]]
