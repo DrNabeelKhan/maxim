@@ -1,0 +1,20 @@
+{
+  "name": "mxm-context",
+  "version": "1.1.0",
+  "description": "Maxim Framework — Per-project intelligence + design references + drift detection MCP server (v1.0.0). Absorbed maxim-design + added watch_* tools.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.24.0"
+  },
+  "maxim": {
+    "consolidated_in": "v1.0.0",
+    "absorbed_servers": ["maxim-design"],
+    "new_tools_v6_4_1": ["watch_run", "watch_report", "watch_configure"],
+    "tool_count": 13
+  }
+}

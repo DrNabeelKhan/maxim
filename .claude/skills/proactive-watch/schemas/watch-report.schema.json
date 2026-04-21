@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maxim/schemas/watch-report.schema.json",
+  "title": "Maxim Watch Report Line",
+  "description": "One JSONL line per detected drift, written to .mxm-skills/watch-report.jsonl",
+  "type": "object",
+  "required": ["ts", "phase", "project", "drift_class", "severity", "triage", "evidence"],
+  "additionalProperties": false,
+  "properties": {
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp"
+    },
+    "phase": {
+      "type": "string",
+      "enum": ["light", "full", "critical"]
+    },
+    "project": {
+      "type": "string",
+      "description": "Project identifier (basename of project root)"
+    },
+    "drift_class": {
+      "type": "string",
+      "enum": [
+        "inventory-drift",
+        "version-drift",
+        "contract-drift",
+        "cross-doc-drift",
+        "orphan-refs",
+        "dependency-drift",
+        "git-hygiene",
+        "junction-drift",
+        "stale-handoff",
+        "compliance-drift",
+        "custom"
+      ]
+    },
+    "severity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "1=cosmetic, 2=minor, 3=standard, 4=material, 5=critical"
+    },
+    "triage": {
+      "type": "string",
+      "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"]
+    },
+    "evidence": {
+      "type": "string",
+      "description": "Human-readable pointer to the specific artifact where drift was detected"
+    },
+    "declared": {
+      "type": ["string", "integer", "null"],
+      "description": "Value declared by the contract (document, inventory, ADR)"
+    },
+    "actual": {
+      "type": ["string", "integer", "null"],
+      "description": "Value observed in reality (filesystem, git, deps)"
+    },
+    "action": {
+      "type": "string",
+      "enum": ["review-queue", "auto-fix", "escalate", "block-commit", "notify"],
+      "default": "review-queue"
+    },
+    "custom_checker_name": {
+      "type": "string",
+      "description": "Present only when drift_class=custom"
+    }
+  }
+}

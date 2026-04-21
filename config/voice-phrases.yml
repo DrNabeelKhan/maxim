@@ -1,0 +1,162 @@
+# =============================================================================
+# Maxim Voice Hotwords — User-editable phrase → command config
+# =============================================================================
+# Loaded by mcp/mxm-voice/server.js on every voice_invoke_command call.
+# Add, remove, rename freely — no restart needed.
+#
+# Pattern syntax:
+#   1. Plain string         → case-insensitive substring match
+#                            "maxim run health check"  matches  "Maxim, run health check please"
+#
+#   2. Wildcard (*)         → captured as $1, $2, $3 etc. for substitution
+#                            "maxim draft a *"  matches  "Maxim, draft a landing page for FixIt"
+#                            $1 = "landing page for FixIt"
+#
+#   3. regex:<pattern>      → full JavaScript regex (case-insensitive)
+#                            "regex:^maxim (?:please )?run (.+)$"  with capture groups
+#
+# Patterns are matched IN ORDER. First match wins. Put more specific patterns FIRST.
+# =============================================================================
+
+phrases:
+  # ----- Workflow examples (per user request: maxim draft, research, health) -----
+  - pattern: "maxim draft a landing page *"
+    dispatch: "/mxm-design landing page $1"
+
+  - pattern: "maxim research * tell me how it improves *"
+    dispatch: "/mxm-cino research $1 for $2"
+
+  - pattern: "maxim research * for *"
+    dispatch: "/mxm-cino research $1 for $2"
+
+  - pattern: "maxim run my * project health check"
+    dispatch: "/mxm-health $1"
+
+  - pattern: "maxim run health check"
+    dispatch: "/mxm-health"
+
+  # ----- CEO automation -----
+  - pattern: "maxim morning ceo cycle"
+    dispatch: "/mxm-ceo-morning"
+
+  - pattern: "maxim overnight ceo cycle"
+    dispatch: "/mxm-ceo-overnight"
+
+  - pattern: "maxim ceo setup"
+    dispatch: "/mxm-ceo-setup"
+
+  # ----- Portfolio & status -----
+  - pattern: "maxim portfolio status"
+    dispatch: "/mxm-portfolio"
+
+  - pattern: "maxim project status"
+    dispatch: "/mxm-status"
+
+  - pattern: "maxim what is my portfolio"
+    dispatch: "/mxm-portfolio"
+
+  - pattern: "maxim show me tasks"
+    dispatch: "/mxm-tasks"
+
+  # ----- Wiki layer (RAG on MemPalace) -----
+  - pattern: "maxim run wiki ingest"
+    dispatch: "/mxm-wiki ingest"
+
+  - pattern: "maxim ingest *"
+    dispatch: "/mxm-wiki ingest $1"
+
+  - pattern: "maxim query wiki *"
+    dispatch: "/mxm-wiki query $1"
+
+  - pattern: "maxim what do we know about *"
+    dispatch: "/mxm-wiki query $1"
+
+  - pattern: "maxim audit the wiki"
+    dispatch: "/mxm-wiki lint"
+
+  - pattern: "maxim wiki health check"
+    dispatch: "/mxm-wiki lint"
+
+  - pattern: "maxim review unverified pages"
+    dispatch: "/mxm-wiki explore"
+
+  # ----- Memory / recall -----
+  - pattern: "maxim recall *"
+    dispatch: "/mxm-recall $1"
+
+  - pattern: "maxim remember *"
+    dispatch: "/mxm-remember $1"
+
+  - pattern: "maxim what did we decide about *"
+    dispatch: "/mxm-recall decision about $1"
+
+  # ----- Office routing -----
+  - pattern: "maxim brief me on the * office"
+    dispatch: "voice_brief_office($1)"
+
+  - pattern: "maxim ask the cto *"
+    dispatch: "/mxm-cto $1"
+
+  - pattern: "maxim ask the ceo *"
+    dispatch: "/mxm-ceo $1"
+
+  - pattern: "maxim ask the cmo *"
+    dispatch: "/mxm-cmo $1"
+
+  - pattern: "maxim ask the cso *"
+    dispatch: "/mxm-cso $1"
+
+  - pattern: "maxim ask the cpo *"
+    dispatch: "/mxm-cpo $1"
+
+  - pattern: "maxim ask the coo *"
+    dispatch: "/mxm-coo $1"
+
+  # ----- Common product cycle commands -----
+  - pattern: "maxim plan *"
+    dispatch: "/mxm-plan $1"
+
+  - pattern: "maxim implement *"
+    dispatch: "/mxm-implement $1"
+
+  - pattern: "maxim review *"
+    dispatch: "/mxm-review $1"
+
+  - pattern: "maxim test *"
+    dispatch: "/mxm-test $1"
+
+  - pattern: "maxim release"
+    dispatch: "/mxm-release"
+
+  # ----- Specialist commands -----
+  - pattern: "maxim run security audit on *"
+    dispatch: "/mxm-security $1"
+
+  - pattern: "maxim check compliance for *"
+    dispatch: "/mxm-compliance $1"
+
+  - pattern: "maxim run seo audit *"
+    dispatch: "/mxm-seo $1"
+
+  - pattern: "maxim behavioral audit *"
+    dispatch: "/mxm-behavior $1"
+
+  # ----- Help / fallback -----
+  - pattern: "maxim help"
+    dispatch: "/mxm-help"
+
+  - pattern: "maxim what can you do"
+    dispatch: "/mxm-help"
+
+  # ----- Unmatched utterances fall through to /mxm-route via voice_invoke_command -----
+
+# =============================================================================
+# Tips for adding your own phrases:
+# =============================================================================
+# 1. Start with the literal phrase you'd say
+# 2. Replace variable parts with *
+# 3. Reference the captured parts in dispatch as $1, $2
+# 4. Test by running:
+#    voice_invoke_command(spoken_phrase: "your test utterance")
+# 5. If the wrong pattern matches, REORDER (first match wins) or use regex: prefix
+# =============================================================================

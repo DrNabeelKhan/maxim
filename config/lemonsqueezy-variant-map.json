@@ -1,0 +1,130 @@
+{
+  "_meta": {
+    "description": "Canonical LemonSqueezy variant_id → Maxim capability grant map. Used by Cloudflare Worker license API.",
+    "version": "v1.0.0",
+    "locked_date": "2026-04-20",
+    "ratified_by": "ADR-009",
+    "mxm_version_min": "1.0.0"
+  },
+  "layer_1_capabilities": {
+    "1551385": {
+      "product_id": "L1.1",
+      "name": "AI Governance",
+      "price_cents": 1999,
+      "billing": "monthly",
+      "grants": ["ai-governance", "audit-trail", "confidence-tagging", "ethical-guidelines", "eu-ai-act-basic"]
+    },
+    "1551380": {
+      "product_id": "L1.2",
+      "name": "MemPalace Pro",
+      "price_cents": 1999,
+      "billing": "monthly",
+      "grants": ["mempalace-full", "wiki-ingest", "wiki-query", "wiki-lint", "wiki-explore", "cross-session-memory", "ttm-stage-detection", "session-milestones", "mxm-recall"]
+    },
+    "1551516": {
+      "product_id": "L1.3",
+      "name": "Proactive Watch",
+      "price_cents": 1999,
+      "billing": "monthly",
+      "grants": ["watch-class-5-mcp-health", "watch-class-6-skill-gap", "watch-class-7-moat-drift", "watch-class-8-brand-drift", "watch-class-9-compliance-drift", "watch-class-10-behavioral-framework-coverage", "watch-class-11-external-boundary-drift", "watch-class-12-behavioral-moat-drift"]
+    },
+    "1551370": {
+      "product_id": "L1.4",
+      "name": "Compliance Shield",
+      "price_cents": 4999,
+      "billing": "monthly",
+      "grants": ["compliance-gdpr", "compliance-pipeda", "compliance-pci-dss", "compliance-soc2", "compliance-hipaa", "compliance-uae-pdpl", "compliance-casl", "compliance-fintrac", "compliance-eu-ai-act", "compliance-iso-27001", "compliance-iso-13485", "compliance-iso-14971", "compliance-nist-csf", "compliance-wcag-21", "cso-auto-loop"]
+    },
+    "1551390": {
+      "product_id": "L1.5",
+      "name": "Brand & Design Pro",
+      "price_cents": 4999,
+      "billing": "monthly",
+      "grants": [".brand-foundation-personal", ".brand-foundation-startups", "design-system", "banner-design", "ai-media-generation-full", "cinematic-styles-15", "ui-ux", "design-resources"]
+    },
+    "1551379": {
+      "product_id": "L1.6",
+      "name": "Behavioral Intelligence",
+      "price_cents": 7999,
+      "billing": "monthly",
+      "grants": ["behavioral-frameworks-78", "behavioral-audit", "nudge-design", "persuasion-system", "behavioral-moat-deep-integration"]
+    }
+  },
+  "layer_2_persona_bundles": {
+    "1551386": {
+      "product_id": "L2.1",
+      "name": "Founder OS",
+      "price_cents": 9999,
+      "billing": "monthly",
+      "includes_products": ["L1.1", "L1.2", "L1.3", "L1.5", "L1.6"],
+      "excludes_products": ["L1.4"],
+      "grants_union_of": ["L1.1", "L1.2", "L1.3", "L1.5", "L1.6"]
+    },
+    "1551388": {
+      "product_id": "L2.2",
+      "name": "Growth Stack",
+      "price_cents": 9999,
+      "billing": "monthly",
+      "includes_products": ["L1.1", "L1.2", "L1.3", "L1.4", "L1.6"],
+      "excludes_products": ["L1.5"],
+      "grants_union_of": ["L1.1", "L1.2", "L1.3", "L1.4", "L1.6"]
+    },
+    "1551393": {
+      "product_id": "L2.3",
+      "name": "Professional OS",
+      "price_cents": 15999,
+      "billing": "monthly",
+      "includes_products": ["L1.1", "L1.2", "L1.3", "L1.4", "L1.5", "L1.6"],
+      "additional_grants": ["super-user-mode", "voice-mode"]
+    },
+    "1551410": {
+      "product_id": "L2.4",
+      "name": "Agency All-In + Future Packs",
+      "price_cents": 59999,
+      "billing": "monthly",
+      "includes_products": ["L1.1", "L1.2", "L1.3", "L1.4", "L1.5", "L1.6", "L3.1", "L3.2", "L3.3", "L3.4"],
+      "additional_grants": ["super-user-mode", "voice-mode", "multi-tenant", "future-packs-auto-included", "priority-support"]
+    }
+  },
+  "layer_3_verticals": {
+    "1551382": {
+      "product_id": "L3.1",
+      "name": "Healthcare",
+      "price_cents": 19999,
+      "billing": "one_time",
+      "requires_min_subscription": "L1.1",
+      "grants": ["hipaa-deep", "iso-13485", "iso-14971", "fhir-hl7-interop", "clinical-decision-support", "patient-consent-flows", "medical-terminology"]
+    },
+    "1551406": {
+      "product_id": "L3.2",
+      "name": "Legal",
+      "price_cents": 19999,
+      "billing": "one_time",
+      "requires_min_subscription": "L1.1",
+      "grants": ["attorney-client-privilege", "contract-templates", "ethics-walls", "conflict-checking", "legaltech-compliance"]
+    },
+    "1551383": {
+      "product_id": "L3.3",
+      "name": "Fintech",
+      "price_cents": 19999,
+      "billing": "one_time",
+      "requires_min_subscription": "L1.1",
+      "grants": ["pci-dss-deep", "fintrac", "kyc-aml", "open-banking-fdx", "sox-controls", "financial-modeling"]
+    },
+    "1551384": {
+      "product_id": "L3.4",
+      "name": "GovTech",
+      "price_cents": 19999,
+      "billing": "one_time",
+      "requires_min_subscription": "L1.1",
+      "grants": ["fedramp", "nist-800-53", "section-508-strict", "rfp-templates", "procurement-frameworks"]
+    }
+  },
+  "early_adopter_promo": {
+    "coupon_prefix": "EARLY-300-",
+    "duration_months": 12,
+    "total_licenses": 300,
+    "single_use": true,
+    "machine_bound": true
+  }
+}

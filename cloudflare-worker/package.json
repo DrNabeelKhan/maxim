@@ -1,0 +1,30 @@
+{
+  "name": "maxim-license-api",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "description": "Maxim License API — Cloudflare Worker issuing JWT pack licenses on Stripe (primary, per D-037) or LemonSqueezy (secondary) purchase webhooks. Per ADR-005 Layer 4.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "types": "wrangler types",
+    "test": "vitest",
+    "secret:put:stripe-api": "wrangler secret put STRIPE_API_KEY",
+    "secret:put:stripe-webhook": "wrangler secret put STRIPE_WEBHOOK_SECRET",
+    "secret:put:lemonsqueezy-api": "wrangler secret put LEMONSQUEEZY_API_KEY",
+    "secret:put:lemonsqueezy-webhook": "wrangler secret put LEMONSQUEEZY_WEBHOOK_SECRET",
+    "secret:put:jwt-private": "wrangler secret put JWT_SIGNING_KEY_PRIVATE",
+    "secret:put:jwt-public": "wrangler secret put JWT_SIGNING_KEY_PUBLIC",
+    "secret:put:admin-key": "wrangler secret put ADMIN_API_KEY",
+    "secret:put:owner-keys": "wrangler secret put OWNER_PUBLIC_KEYS_JSON"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260401.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.5.0",
+    "wrangler": "^3.60.0"
+  },
+  "dependencies": {
+    "@tsndr/cloudflare-worker-jwt": "^2.5.3"
+  }
+}

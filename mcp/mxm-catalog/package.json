@@ -1,0 +1,19 @@
+{
+  "name": "mxm-catalog",
+  "version": "1.1.0",
+  "description": "Maxim Framework — Unified catalog MCP server (v1.0.0). Merges maxim-dispatch (agent routing) + maxim-skills (skill / command catalog). 9 tools total.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.24.0"
+  },
+  "maxim": {
+    "consolidated_in": "v1.0.0",
+    "merged_servers": ["maxim-dispatch", "maxim-skills"],
+    "tool_count": 9
+  }
+}

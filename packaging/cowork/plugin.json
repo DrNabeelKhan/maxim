@@ -1,0 +1,110 @@
+{
+  "$schema": "https://claude.ai/schemas/cowork-plugin.schema.json",
+  "name": "maxim",
+  "display_name": "Maxim",
+  "version": "1.0.0",
+  "description": "Behavioral intelligence layer for Claude.ai Cowork. Multi-agent framework with 7 executive offices, 64 behavioral frameworks, 14 compliance frameworks, 34 skills, 37 commands, 7 MCP connectors. Ships 85% fidelity of the full Claude Code deployment.",
+  "author": {
+    "name": "Maxim",
+    "url": "https://github.com/yourorg/maxim"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/yourorg/maxim",
+  "tags": [
+    "multi-agent",
+    "behavioral-science",
+    "compliance",
+    "governance",
+    "framework",
+    "executive-offices",
+    "brand-intelligence",
+    "rag",
+    "memory-palace"
+  ],
+  "surfaces": [
+    "cowork"
+  ],
+  "capabilities": {
+    "skills": 20,
+    "commands": 14,
+    "mcp_connectors": 7,
+    "frameworks_bundled": 64,
+    "compliance_frameworks": 14
+  },
+  "fidelity": {
+    "tier": "high",
+    "percentage": 85,
+    "source_of_truth": "https://github.com/yourorg/maxim",
+    "non_native": [
+      "executable_hooks",
+      "automatic_session_start_file_loading",
+      "proactive_watch_automatic",
+      "junction_guard",
+      "usage_aware_scheduler"
+    ]
+  },
+  "system_prompt_embedded": "documents/cross-surface/maxim-project-instructions.md",
+  "skills": {
+    "bundled_from": "../../.claude/skills/",
+    "manifest": "skills/MANIFEST.md",
+    "count": 20
+  },
+  "commands": {
+    "bundled_from": "../../.claude/commands/",
+    "manifest": "commands/MANIFEST.md",
+    "count": 14
+  },
+  "mcp_connectors": [
+    {
+      "name": "mxm-context",
+      "tools": 13,
+      "merged_from_v6_4_0": ["mxm-context", "maxim-design"],
+      "new_tools_v6_4_1": ["watch_run", "watch_report", "watch_configure"]
+    },
+    {
+      "name": "mxm-catalog",
+      "tools": 9,
+      "merged_from_v6_4_0": ["maxim-dispatch", "maxim-skills"]
+    },
+    {
+      "name": "mxm-behavioral",
+      "tools": 5
+    },
+    {
+      "name": "mxm-compliance",
+      "tools": 5
+    },
+    {
+      "name": "mxm-memory",
+      "tools": 4
+    },
+    {
+      "name": "mxm-portfolio",
+      "tools": 7
+    },
+    {
+      "name": "mxm-voice",
+      "tools": 4,
+      "note": "No-op unless voicemode binary is available in the Cowork runtime"
+    }
+  ],
+  "non_negotiable": {
+    "description": "The following govern Maxim behavior and cannot be disabled or bypassed by plugin customizers.",
+    "items": [
+      "CSO auto-loop on security / compliance / PII signals",
+      "Confidence tagging on every substantive output",
+      "Executable Contracts enforcement (ADR-002)",
+      ".brand-foundation scan before external-facing copy finalization"
+    ]
+  },
+  "governance": {
+    "adr_reference": "documents/ADRs/ADR-002-executable-contracts.md",
+    "contract_drift_criticality": "warning",
+    "notes": "Plugin deployments can't enforce critical-contract blocking (no pre-commit hook in Cowork). Use Code CLI for enforcement-grade governance."
+  },
+  "versioning": {
+    "strategy": "locked_to_repo_tag",
+    "repo_tag": "v1.0.0",
+    "upgrade_path": "Reinstall plugin from new release"
+  }
+}

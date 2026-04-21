@@ -1,0 +1,42 @@
+{
+  "_comment": "Maxim plugin hook configuration. Three hooks: license validation (PermissionRequest), CSO auto-loop (UserPromptSubmit), behavioral-moat enforcement (PreToolUse).",
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/mxm-license-check.sh",
+            "timeout": 10,
+            "statusMessage": "Validating Maxim pack license..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "(?i)(security|compliance|\\bPII\\b|regulated|privacy|GDPR|HIPAA|PCI-?DSS|SOC\\s?2|PIPEDA|UAE-?PDPL|ISO\\s?27001|EU\\s?AI\\s?Act)",
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "CSO AUTO-LOOP — you are the Maxim security-analyst (CSO office lead). This user prompt matched security, compliance, PII, or regulated-industry signals. Prompt: $ARGUMENTS\n\nApply CSO discipline. Identify: (1) applicable compliance frameworks from GDPR / PIPEDA / HIPAA / PCI-DSS / SOC2 / UAE-PDPL / CASL / FINTRAC / EU AI Act / ISO 27001 / ISO 13485 / ISO 14971 / NIST CSF / WCAG; (2) data-handling concerns or privacy exposure; (3) risk level low / medium / high; (4) required mitigations before the task can ship.\n\nReturn a single JSON object: {\"decision\": \"allow\" or \"block\", \"reason\": \"<one-line\u00a0reason>\", \"frameworks\": [<applicable>], \"risk\": \"low|medium|high\", \"mitigations\": [<required>]}.\n\nBlock only when risk is high and mitigations are missing. For low and medium risk, allow with mitigations listed as guidance. Default to allow with a flagged compliance note when evidence is insufficient to judge.",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Maxim behavioral-moat enforcement (ADR-007). Tool call: $ARGUMENTS\n\nStep 1. Classify the content. Is it external-facing (brand material, marketing copy, landing page, pack SKILL.md, customer documentation, positioning or sales copy)? If NO, return {\"decision\": \"allow\"}.\n\nStep 2. If YES, check framework application. Does the content apply at least one framework from FRAMEWORKS_MASTER v5.0 (Fogg B=MAP, COM-B, Cialdini's 7 principles, Prospect Theory, SCARF, EAST, Hook Model, Nudge Theory, Jobs-to-be-Done, MINDSPACE, Dual Process Theory, Anchoring, Signal Detection, Cognitive Load, Diffusion of Innovations, Theory of Planned Behavior, Institutional Isomorphism, Spreading Activation, Zeigarnik, Transtheoretical Model, Pre-attentive Attribute Theory, Aesthetic-Usability Effect, or similar peer-reviewed behavioral framework)? The framework must be named AND its mechanism stated. Naming without mechanism is theater and does not pass.\n\nIf YES, return {\"decision\": \"allow\"}.\nIf NO, return {\"decision\": \"block\", \"reason\": \"External-facing output missing behavioral framework. Rewrite against B=MAP first (name Motivation lever, protect Ability lever, time the Prompt), then add one or two supporting frameworks.\"}.",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Maxim Project Setup Template
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# HOW TO USE:
+# 1. Copy this file into your PROJECT repo at: templates/project.yml
+# 2. Fill in every field below for your specific project and task
+# 3. Copy .github/workflows/mxm-setup.yml from maxim into your project
+# 4. Git push — the workflow runs automatically and:
+#       ✅ Scaffolds CLAUDE.md customized for your project
+#       ✅ Creates .planning/task_plan.md seeded with your task
+#       ✅ Creates .planning/findings.md and .planning/progress.md
+#       ✅ Copies .mxm-skills/agents/ (all 6 Maxim roles)
+#       ✅ Copies IDE adapter folders you selected
+#       ✅ Opens a GitHub Issue with full task brief
+# 5. Open your IDE — everything is ready, start developing
+#
+# NOTES:
+# - You only need to fill in this file once per feature/task cycle
+# - Change 'task' block for each new feature — leave 'project' block stable
+# - Do NOT push this file to maxim — it belongs in your project repo
+# ─────────────────────────────────────────────────────────────────────────────
+
+project:
+  name: "FixIt"                          # FixIt | DrivingTutors | iSimplification | GulfLaw | SentinelFlow
+  type: "marketplace"                    # marketplace | ai-platform | compliance | legal-tech | tutoring
+  repo: "DrNabeelKhan/fixit"             # your GitHub repo (owner/repo)
+  primary_tool: "cursor"                 # cursor | claude-code | kilocode | copilot | antigravity
+  model_provider: "claude"               # claude | openai | gemini | qwen
+
+task:
+  title: "Build service listing and booking flow"
+  description: |
+    Implement the core service listing page, provider profile cards,
+    and booking request form with AI-assisted lead matching.
+  branch: "feature/service-listing-v1"
+  priority: "high"                       # high | medium | low
+
+# Adapters to scaffold into your project root.
+# Only list tools you actually use — each becomes a .<name>/ folder.
+adapters:
+  - cursor
+  - claude-plugin
+  - kilocode
+  - codex
+
+# List applicable compliance frameworks.
+# Triggers security-analyst subagent to flag violations during review.
+compliance:
+  - PIPEDA                               # Canadian data privacy — required for all CA projects
+  # - HIPAA                             # Uncomment if handling health data
+  # - SOC2                              # Uncomment if enterprise SaaS
+  # - GDPR                              # Uncomment if EU users

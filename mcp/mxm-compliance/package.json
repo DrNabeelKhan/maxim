@@ -1,0 +1,14 @@
+{
+  "name": "mxm-compliance",
+  "version": "1.0.0",
+  "description": "Maxim Framework — Compliance checking as a service MCP server",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.24.0"
+  }
+}

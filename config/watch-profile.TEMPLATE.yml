@@ -1,0 +1,102 @@
+# Maxim Proactive Watch — Per-Project Configuration Template
+#
+# Copy this file to config/watch-profile.yml in your project.
+# Unset fields inherit these template defaults.
+# Ratified by ADR-002 (Documents as Executable Contracts).
+#
+# Schema: .claude/skills/proactive-watch/schemas/watch-profile.schema.json
+
+enabled: true
+phase: light                        # light | full (v1.0.0+) | critical (v1.0.0+)
+
+checkers:
+  inventory-drift:
+    enabled: true
+    source_of_truth: documents/ledgers/AGENT_SKILL_INVENTORY.md
+    reality_paths:
+      - agents/MXM/**
+      - .claude/skills/**
+      - .claude/commands/**
+
+  version-drift:
+    enabled: true
+    anchor: config/agent-registry.json
+    must_match:
+      - README.md
+      - documents/guides/HELP.md
+      - documents/guides/ABOUT.md
+      - CLAUDE.md
+      - package.json
+    version_regex: 'v?\d+\.\d+\.\d+'
+
+  contract-drift:                   # 🔒 triage LOCKED to CEO
+    enabled: true
+    adr_dir: documents/ADRs/
+    inventory_file: documents/ledgers/AGENT_SKILL_INVENTORY.md
+
+  cross-doc-drift:
+    enabled: true
+    canonical_docs:
+      - CHANGELOG.md
+    mirror_docs:
+      - README.md
+      - documents/guides/HELP.md
+      - documents/guides/ABOUT.md
+
+  orphan-refs:
+    enabled: true
+    check_commands: .claude/commands/
+    check_hooks: .claude/hooks/
+    check_mcp: .mcp.json
+
+  dependency-drift:
+    enabled: true
+    npm_paths:
+      - mcp/*/package.json
+    exclude:
+      - community-packs/**
+      - node_modules/**
+
+  git-hygiene:
+    enabled: true
+    stale_uncommitted_hours: 24
+    stale_unpushed_hours: 72
+
+  junction-drift:
+    enabled: true                   # Windows-only in practice
+    expected_junctions:
+      - .mxm-system
+      - .claude
+
+  stale-handoff:
+    enabled: true
+    handoff_path: .claude-sessions-memory/handoff.md
+    max_age_days: 7
+
+  compliance-drift:                 # 🔒 triage LOCKED to CSO
+    enabled: true
+    # delegates to mxm-compliance MCP when available
+    # in LIGHT phase, scans tracked files for high-signal secret patterns only
+
+triage:
+  inventory-drift: coo
+  version-drift: coo
+  contract-drift: ceo               # 🔒 LOCKED — cannot override
+  cross-doc-drift: coo
+  orphan-refs: cto
+  dependency-drift: cto
+  git-hygiene: cto
+  junction-drift: cto
+  stale-handoff: coo
+  compliance-drift: cso             # 🔒 LOCKED — cannot override
+
+thresholds:
+  max_drift_severity: 5             # not enforced in LIGHT (warn-only)
+  fail_on_error: hybrid             # hybrid | fail-open | fail-closed
+
+# custom_checkers:                  # optional — project-specific checkers
+#   my-custom-check:
+#     script_bash: .claude/skills/proactive-watch/custom/my-check.sh
+#     script_ps1: .claude/skills/proactive-watch/custom/my-check.ps1
+#     triage: cto
+#     severity: 3

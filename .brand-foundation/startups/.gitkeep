@@ -1,0 +1,7 @@
+# Placeholder to keep brand-foundation/startups/ tracked in git.
+# Subdirectories under this path are gitignored via .gitignore rule:
+#   brand-foundation/startups/*/
+#   !brand-foundation/startups/README.md
+#   !brand-foundation/startups/.gitkeep
+#
+# See README.md for the per-startup voice overlay system.

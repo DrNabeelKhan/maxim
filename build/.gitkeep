@@ -1,0 +1,5 @@
+# Build pipeline files authored in Sprint 2 (Block 2):
+#   encrypt.ts       — AES-256-GCM encryption of .md → .md.enc
+#   keygen.ts        — per-version key generation (RSA + AES)
+#   ci-publish.yml   — GitHub Actions workflow (encrypt + push to public repo)
+# See ADR-005 for architecture.

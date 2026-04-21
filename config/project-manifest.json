@@ -1,0 +1,329 @@
+{
+  "manifest_version": "2.0.0",
+  "MXM_version": "1.0.0",
+  "description": "Project identity manifest for the Maxim framework repo. One file per project. All agents and orchestrators read from this manifest. v1.0.0 is the first public release of Maxim; status (lifecycle/gated/archived/staleness) and meta (markets/ai_capabilities/ownership_type/repo_topology) are declared per NK universe schema.",
+  "project": {
+    "id": "maxim",
+    "name": "Maxim Framework",
+    "owner": "DrNabeelKhan",
+    "vertical": "AI / Open-Source Framework",
+    "description": "Behavioral intelligence layer + governed multi-agent operating system for AI-assisted work. Model-agnostic. Provider-pluggable. Used by 21+ projects across the Khan portfolio universe.",
+    "stage": "active",
+    "active": true
+  },
+  "status": {
+    "lifecycle": "active_dev",
+    "gated": false,
+    "gated_approval_required_from": null,
+    "archived_reason": null,
+    "last_activity": "2026-04-21",
+    "staleness_warning_days": 30,
+    "last_sprint": "v1.0.0-authoring",
+    "launch_status": "v1.0.0 initial commit pending Gate D push"
+  },
+  "meta": {
+    "ownership_type": "owner",
+    "parent_project_id": null,
+    "markets": [
+      "global",
+      "enterprise"
+    ],
+    "ai_capabilities": [
+      "agent",
+      "rag_enabled",
+      "mcp_connected",
+      "agentic_loop",
+      "compliance_ai",
+      "multi_model"
+    ],
+    "repo_topology": "standalone"
+  },
+  "portfolio": [
+    {
+      "id": "maxim",
+      "name": "Maxim Framework",
+      "vertical": "AI / Open-Source Framework",
+      "stage": "active"
+    },
+    {
+      "id": "mxm-simplification",
+      "name": "Maxim / iSimplification",
+      "vertical": "AI / Enterprise SaaS",
+      "stage": "active"
+    },
+    {
+      "id": "iservices",
+      "name": "iServices.io",
+      "vertical": "Mega Platform",
+      "stage": "in_progress"
+    },
+    {
+      "id": "fixit",
+      "name": "FixIt",
+      "vertical": "SaaS Marketplace (under iServices)",
+      "stage": "in_progress"
+    },
+    {
+      "id": "isalon",
+      "name": "iSalon",
+      "vertical": "SaaS Marketplace (under iServices)",
+      "stage": "concept"
+    },
+    {
+      "id": "drivingtutors",
+      "name": "DrivingTutors.ca",
+      "vertical": "EdTech / SaaS Marketplace",
+      "stage": "active"
+    },
+    {
+      "id": "iqra",
+      "name": "IQRA / QuranGPT",
+      "vertical": "AI / LLM Trained / Education",
+      "stage": "production"
+    },
+    {
+      "id": "gulflawai",
+      "name": "GulfLaw.ai",
+      "vertical": "LegalTech / Compliance AI / Gated",
+      "stage": "in_progress"
+    },
+    {
+      "id": "jober-ai",
+      "name": "Jober.AI",
+      "vertical": "AI / Jobs",
+      "stage": "concept"
+    },
+    {
+      "id": "iskillmetrics",
+      "name": "iSkillMetrics",
+      "vertical": "Analytics AI",
+      "stage": "needs_update"
+    },
+    {
+      "id": "agentic-projects",
+      "name": "Agentic-projects",
+      "vertical": "Lab / Testing",
+      "stage": "testing"
+    },
+    {
+      "id": "mxm-autobots",
+      "name": "Maxim-Autobots",
+      "vertical": "Trading Bot / Analytics AI",
+      "stage": "testing"
+    },
+    {
+      "id": "nabeelkhan-site",
+      "name": "nabeelkhan-site",
+      "vertical": "Personal Brand",
+      "stage": "in_progress"
+    },
+    {
+      "id": "isystematic-site",
+      "name": "iSystematic Inc Site",
+      "vertical": "Corp Web Presence",
+      "stage": "in_progress"
+    },
+    {
+      "id": "simplification",
+      "name": "Simplification (brand docs)",
+      "vertical": "Docs Only",
+      "stage": "active"
+    },
+    {
+      "id": "loadgpt",
+      "name": "LoadGPT",
+      "vertical": "Logistics AI",
+      "stage": "concept"
+    },
+    {
+      "id": "meat-project",
+      "name": "MEAT-Project",
+      "vertical": "E-commerce / Consumer",
+      "stage": "concept"
+    },
+    {
+      "id": "kd-coin",
+      "name": "KD Coin",
+      "vertical": "Crypto / Regulated",
+      "stage": "concept"
+    },
+    {
+      "id": "mybooks",
+      "name": "myBooks",
+      "vertical": "Library / Content",
+      "stage": "active"
+    },
+    {
+      "id": "prompts",
+      "name": "Prompts Library",
+      "vertical": "Library / Knowledge",
+      "stage": "active"
+    },
+    {
+      "id": "ndp",
+      "name": "NDP / Durdana Campaign",
+      "vertical": "Campaign / Docs Only",
+      "stage": "active"
+    },
+    {
+      "id": "airtap",
+      "name": "AirTap",
+      "vertical": "Archived",
+      "stage": "archived"
+    }
+  ],
+  "compliance": {
+    "frameworks": [
+      "PIPEDA",
+      "HIPAA",
+      "PCI-DSS",
+      "GDPR",
+      "UAE-PDPL",
+      "SOC2",
+      "CASL",
+      "FINTRAC",
+      "EU-AI-Act",
+      "ISO27001"
+    ],
+    "per_project": {
+      "maxim": [
+        "SOC2"
+      ],
+      "mxm-simplification": [
+        "PIPEDA",
+        "SOC2",
+        "EU-AI-Act"
+      ],
+      "fixit": [
+        "PCI-DSS",
+        "PIPEDA",
+        "CASL"
+      ],
+      "isalon": [
+        "PCI-DSS",
+        "PIPEDA"
+      ],
+      "drivingtutors": [
+        "PIPEDA",
+        "PCI-DSS",
+        "CASL"
+      ],
+      "iqra": [
+        "GDPR"
+      ],
+      "gulflawai": [
+        "UAE-PDPL",
+        "GDPR",
+        "ISO27001"
+      ],
+      "kd-coin": [
+        "FINTRAC",
+        "PCI-DSS"
+      ],
+      "iservices": [
+        "PIPEDA",
+        "CASL"
+      ]
+    },
+    "regulated_projects": [
+      "mxm-simplification",
+      "gulflawai",
+      "iqra",
+      "kd-coin"
+    ],
+    "payment_projects": [
+      "fixit",
+      "isalon",
+      "drivingtutors",
+      "kd-coin"
+    ],
+    "hipaa_projects": [],
+    "gated_projects": [
+      "gulflawai"
+    ],
+    "archived_projects": [
+      "airtap"
+    ]
+  },
+  "tech_stack": {
+    "default_model_provider": "anthropic",
+    "supported_providers": [
+      "anthropic",
+      "openai",
+      "gemini",
+      "mistral",
+      "local"
+    ],
+    "preferred_models": {
+      "reasoning": "claude-opus",
+      "code": "claude-sonnet",
+      "fast": "claude-haiku",
+      "vision": "claude-sonnet"
+    }
+  },
+  "bootstrap_templates": {
+    "saas-marketplace": {
+      "template": "bootstrap/saas-platform/",
+      "maps_to": [
+        "fixit",
+        "isalon",
+        "drivingtutors"
+      ]
+    },
+    "ai-agent-service": {
+      "template": "bootstrap/ai-agent-service/",
+      "maps_to": [
+        "mxm-simplification",
+        "iqra",
+        "jober-ai",
+        "loadgpt"
+      ]
+    },
+    "compliance-app": {
+      "template": "bootstrap/compliance-app/",
+      "maps_to": [
+        "gulflawai",
+        "kd-coin"
+      ]
+    },
+    "api-backend": {
+      "template": "bootstrap/api-backend/",
+      "maps_to": []
+    }
+  },
+  "review_queue": {
+    "backend": "github_pr",
+    "github_pr": {
+      "enabled": true,
+      "repo": "DrNabeelKhan/maxim",
+      "labels": [
+        "mxm-review",
+        "auto-generated"
+      ],
+      "base_branch": "main",
+      "reviewers": [
+        "DrNabeelKhan"
+      ]
+    }
+  },
+  "agent_overrides": {
+    "description": "Per-project agent behavior overrides. Use sparingly \u2014 prefer manifest-level compliance rules over agent-level overrides.",
+    "overrides": []
+  },
+  "maintainer": "DrNabeelKhan",
+  "last_updated": "2026-04-21",
+  "next_review": "2026-05-21",
+  "super_user": {
+    "enabled": true,
+    "identity": "DrNabeelKhan",
+    "bypass": {
+      "cso_auto_loop": true,
+      "ethics_gate": true,
+      "compliance_pre_check": true,
+      "confidence_tagging": false,
+      "escalation_required": false
+    },
+    "note": "Maxim governance gates suppressed for this identity. Claude's own values layer remains active and is not configurable."
+  },
+  "last_activity": "2026-04-21"
+}

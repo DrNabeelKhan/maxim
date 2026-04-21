@@ -1,0 +1,63 @@
+# maxim — Proactive Watch Configuration
+#
+# This file = the maxim repo's own watch profile.
+# The framework's first consumer is itself (self-adoption).
+#
+# Any deviation from template defaults is commented below.
+
+enabled: true
+phase: light
+
+checkers:
+  inventory-drift:
+    enabled: true
+    # maxim uses the standard documents/ledgers/AGENT_SKILL_INVENTORY.md contract
+
+  version-drift:
+    enabled: true
+    # maxim needs README, HELP, ABOUT, CLAUDE.md, and package.json files to match registry
+
+  contract-drift:
+    enabled: true
+    # maxim has 2 seeded ADRs (001, 002) — scope-lockdown pattern not yet active
+
+  cross-doc-drift:
+    enabled: true
+
+  orphan-refs:
+    enabled: true
+
+  dependency-drift:
+    enabled: true
+    # maxim has MCP servers under mcp/ — each with its own package.json
+
+  git-hygiene:
+    enabled: true
+
+  junction-drift:
+    enabled: true
+    # Windows-first dev environment (NK on Windows 11)
+
+  stale-handoff:
+    enabled: true
+    # 7-day default; maxim is actively maintained
+
+  compliance-drift:
+    enabled: true
+    # 🔒 CSO-locked; delegates to mxm-compliance MCP
+
+triage:
+  inventory-drift: coo
+  version-drift: coo
+  contract-drift: ceo               # 🔒 LOCKED
+  cross-doc-drift: coo
+  orphan-refs: cto
+  dependency-drift: cto
+  git-hygiene: cto
+  junction-drift: cto
+  stale-handoff: coo
+  compliance-drift: cso             # 🔒 LOCKED
+
+thresholds:
+  max_drift_severity: 5
+  fail_on_error: hybrid

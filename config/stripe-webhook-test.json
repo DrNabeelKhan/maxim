@@ -1,0 +1,16 @@
+{
+  "env": "test",
+  "webhook_id": "we_1TOhTqFR96sQjyaJWxy7AHBY",
+  "url": "https://maxim-license-api.isystematic.workers.dev/webhook/stripe",
+  "enabled_events": [
+    "checkout.session.completed",
+    "customer.subscription.deleted",
+    "customer.subscription.updated",
+    "invoice.payment_failed"
+  ],
+  "api_version": null,
+  "status": "enabled",
+  "created": 1776790138,
+  "updated_at": "2026-04-21T16:52:23.013Z",
+  "note": "URL updated 2026-04-21 from mxm-license-api to maxim-license-api per operator rename."
+}

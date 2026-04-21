@@ -1,0 +1,70 @@
+{
+  "$schema_comment": "Maxim Usage-Aware Scheduler Thresholds. v1.0.0+. Pinned globally — usage is a global pool across all Claude surfaces (claude.ai, Claude Code CLI, IDE extensions). When any threshold is exceeded, scheduled tasks sleep until resets_at.",
+
+  "thresholds": {
+    "five_hour_pause_at": 80,
+    "_five_hour_pause_at_comment": "Pause scheduled tasks when the 5-hour rolling session utilization >= this percent. The 5-hour window starts from your first message — always use the API's resets_at value.",
+
+    "seven_day_pause_at": 85,
+    "_seven_day_pause_at_comment": "Pause when the 7-day all-models utilization >= this percent.",
+
+    "seven_day_opus_pause_at": 80,
+    "_seven_day_opus_pause_at_comment": "Pause Opus-targeted tasks when 7-day Opus utilization >= this percent. Tasks that don't require Opus continue."
+  },
+
+  "behavior": {
+    "min_sleep_seconds": 300,
+    "_min_sleep_comment": "Never sleep less than 5 minutes regardless of computed value — protects API.",
+
+    "api_failure_retry_seconds": 300,
+    "_api_failure_retry_comment": "On API failure (401, 5xx, network error), retry after this many seconds.",
+
+    "no_tasks_due_sleep_seconds": 300,
+    "_no_tasks_due_comment": "When all tasks are done or future-scheduled, sleep this long before next cycle.",
+
+    "task_timeout_seconds": 600,
+    "_task_timeout_comment": "Hard timeout per task execution. 10 minutes default.",
+
+    "fallback_model_on_opus_pause": "claude-sonnet",
+    "_fallback_model_comment": "When seven_day_opus is paused, route Opus-required tasks to this model. Set to null to defer Opus tasks until reset.",
+
+    "default_task_model": "claude-sonnet",
+    "_default_model_comment": "Use Sonnet by default to preserve Opus headroom. Tasks can override per-task."
+  },
+
+  "auth": {
+    "oauth_endpoint": "https://api.anthropic.com/api/oauth/usage",
+    "anthropic_beta_header": "oauth-2025-04-20",
+    "user_agent": "claude-code/2.0.32",
+    "token_source": {
+      "_comment": "Where the OAuth token is read from. macOS uses Keychain. Linux/CI uses env var. Windows uses Credential Manager (planned).",
+      "macos": {
+        "service": "Claude Code-credentials",
+        "key": "claudeAiOauth.accessToken"
+      },
+      "linux_env": "ANTHROPIC_OAUTH_TOKEN",
+      "windows_env": "ANTHROPIC_OAUTH_TOKEN",
+      "cli_arg": "--oauth-token"
+    }
+  },
+
+  "presets": {
+    "_comment": "Recommended thresholds by Anthropic plan. Override 'thresholds' above to apply.",
+    "pro": { "five_hour_pause_at": 75, "seven_day_pause_at": 80, "seven_day_opus_pause_at": 75 },
+    "max_5x": { "five_hour_pause_at": 80, "seven_day_pause_at": 85, "seven_day_opus_pause_at": 80 },
+    "max_20x": { "five_hour_pause_at": 85, "seven_day_pause_at": 90, "seven_day_opus_pause_at": 85 },
+    "tighten_for_long_tasks": { "five_hour_pause_at": 70, "seven_day_pause_at": 75, "seven_day_opus_pause_at": 70 }
+  },
+
+  "logging": {
+    "events_log": ".mxm-skills/scheduler-events.jsonl",
+    "_events_log_comment": "Append-only JSONL of scheduler events: cycle_start, threshold_check, sleep, task_run, task_complete, task_fail.",
+
+    "log_usage_snapshots": true,
+    "_log_usage_snapshots_comment": "Snapshot OAuth usage data on every cycle for trend analysis."
+  },
+
+  "version": "1.0.0",
+  "last_updated": "2026-04-16",
+  "_source": "FINAL_RELEASE_CHANGES/claude_scheduler_instructions.md"
+}

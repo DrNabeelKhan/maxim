@@ -1,0 +1,192 @@
+{
+  "$schema": "https://docs.claude.com/claude-code/schema/marketplace-v1.json",
+  "name": "maxim-packs",
+  "display_name": "Maxim",
+  "owner": {
+    "name": "Dr. Nabeel Khan",
+    "email": "nabeel@nabeelkhan.com",
+    "url": "https://maxim.isystematic.com",
+    "contact": "https://maxim.isystematic.com/contact"
+  },
+  "metadata": {
+    "description": "Maxim commercial pack marketplace. 14 packs across 3 tiers: L1 capabilities, L2 persona bundles, L3 verticals. Licensed per-purchase via Stripe (primary; LemonSqueezy secondary, dormant until v1.0.1 per ADR-011), validated via Cloudflare Worker RS256 JWT.",
+    "version": "1.0.0",
+    "homepage": "https://maxim.isystematic.com",
+    "repository": "https://github.com/DrNabeelKhan/maxim",
+    "license_model": "commercial",
+    "license_validation": "https://license.isystematic.com/validate",
+    "payment_provider": "Stripe"
+  },
+  "plugins": [
+    {
+      "name": "mxm-pack-l1-1-ai-governance",
+      "display_name": "L1.1 AI Governance",
+      "version": "1.0.0",
+      "description": "Audit trail, confidence tagging, and ethical checks on every AI decision your operator produces. Primary framework: Prospect Theory.",
+      "source": "./packs/pack-l1-1-ai-governance",
+      "tier": "L1",
+      "price_usd": 19.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551385,
+      "primary_framework": "Prospect Theory (Kahneman & Tversky, 1979)",
+      "moat_row": "MOAT-01"
+    },
+    {
+      "name": "mxm-pack-l1-2-mempalace-pro",
+      "display_name": "L1.2 MemPalace Pro",
+      "version": "1.0.0",
+      "description": "Cross-session memory that resumes your project where you left it, not where the base voice assumes. Primary framework: Cognitive Load Theory.",
+      "source": "./packs/pack-l1-2-mempalace-pro",
+      "tier": "L1",
+      "price_usd": 19.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551380,
+      "primary_framework": "Cognitive Load Theory (Sweller, 1988)",
+      "moat_row": "MOAT-02"
+    },
+    {
+      "name": "mxm-pack-l1-3-proactive-watch",
+      "display_name": "L1.3 Proactive Watch",
+      "version": "1.0.0",
+      "description": "Eight drift classes scanned continuously. Catches regressions before they ship. Primary framework: Signal Detection Theory.",
+      "source": "./packs/pack-l1-3-proactive-watch",
+      "tier": "L1",
+      "price_usd": 19.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551516,
+      "primary_framework": "Signal Detection Theory (Green & Swets, 1966)",
+      "moat_row": "MOAT-03"
+    },
+    {
+      "name": "mxm-pack-l1-4-compliance-shield",
+      "display_name": "L1.4 Compliance Shield",
+      "version": "1.0.0",
+      "description": "14 regulated-industry frameworks enforced on every output. Audit-ready on demand. Primary framework: COM-B.",
+      "source": "./packs/pack-l1-4-compliance-shield",
+      "tier": "L1",
+      "price_usd": 49.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551370,
+      "primary_framework": "COM-B (Michie et al., 2011)",
+      "moat_row": "MOAT-04"
+    },
+    {
+      "name": "mxm-pack-l1-5-brand-design-pro",
+      "display_name": "L1.5 Brand & Design Pro",
+      "version": "1.0.0",
+      "description": "Your brand voice locked across AI outputs. 15 cinematic styles. Design that does not read as AI. Primary framework: Dual Process Theory.",
+      "source": "./packs/pack-l1-5-brand-design-pro",
+      "tier": "L1",
+      "price_usd": 49.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551390,
+      "primary_framework": "Dual Process Theory (Kahneman, 2011)",
+      "moat_row": "MOAT-05"
+    },
+    {
+      "name": "mxm-pack-l1-6-behavioral-intelligence",
+      "display_name": "L1.6 Behavioral Intelligence",
+      "version": "1.0.0",
+      "description": "64 peer-reviewed behavioral frameworks applied to every Maxim output. The flagship moat. Primary framework: Fogg Behavior Model (B=MAP).",
+      "source": "./packs/pack-l1-6-behavioral-intelligence",
+      "tier": "L1",
+      "price_usd": 79.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551379,
+      "primary_framework": "Fogg Behavior Model B=MAP (Fogg, 2009)",
+      "moat_row": "MOAT-06"
+    },
+    {
+      "name": "mxm-pack-l2-1-founder-os",
+      "display_name": "L2.1 Founder OS",
+      "version": "1.0.0",
+      "description": "Persona bundle for solo founders. Combines L1 capabilities for founder-stage operators at 47% off individual L1 pricing.",
+      "source": "./packs/pack-l2-1-founder-os",
+      "tier": "L2",
+      "price_usd": 99.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551386,
+      "includes": ["mxm-pack-l1-1-ai-governance", "mxm-pack-l1-2-mempalace-pro", "mxm-pack-l1-3-proactive-watch"]
+    },
+    {
+      "name": "mxm-pack-l2-2-growth-stack",
+      "display_name": "L2.2 Growth Stack",
+      "version": "1.0.0",
+      "description": "Persona bundle for growth-stage teams. Marketing, brand, behavioral science at scale.",
+      "source": "./packs/pack-l2-2-growth-stack",
+      "tier": "L2",
+      "price_usd": 99.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551388,
+      "includes": ["mxm-pack-l1-5-brand-design-pro", "mxm-pack-l1-6-behavioral-intelligence", "mxm-pack-l1-2-mempalace-pro"]
+    },
+    {
+      "name": "mxm-pack-l2-3-professional-os",
+      "display_name": "L2.3 Professional OS",
+      "version": "1.0.0",
+      "description": "Professional tier. Full L1 suite for solo consultants and boutique agencies.",
+      "source": "./packs/pack-l2-3-professional-os",
+      "tier": "L2",
+      "price_usd": 159.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551393,
+      "includes": ["mxm-pack-l1-1-ai-governance", "mxm-pack-l1-2-mempalace-pro", "mxm-pack-l1-3-proactive-watch", "mxm-pack-l1-4-compliance-shield", "mxm-pack-l1-5-brand-design-pro"]
+    },
+    {
+      "name": "mxm-pack-l2-4-agency-all-in",
+      "display_name": "L2.4 Agency All-In",
+      "version": "1.0.0",
+      "description": "Full L1 suite plus all six L1 packs. Agency tier with unlimited operator seats.",
+      "source": "./packs/pack-l2-4-agency-all-in",
+      "tier": "L2",
+      "price_usd": 599.99,
+      "price_unit": "mo",
+      "lemonsqueezy_variant_id": 1551410,
+      "includes": ["mxm-pack-l1-1-ai-governance", "mxm-pack-l1-2-mempalace-pro", "mxm-pack-l1-3-proactive-watch", "mxm-pack-l1-4-compliance-shield", "mxm-pack-l1-5-brand-design-pro", "mxm-pack-l1-6-behavioral-intelligence"]
+    },
+    {
+      "name": "mxm-pack-l3-1-healthcare",
+      "display_name": "L3.1 Healthcare Vertical",
+      "version": "1.0.0",
+      "description": "Vertical overlay for healthtech. HIPAA, ISO 13485, ISO 14971 enforcement. One-time purchase.",
+      "source": "./packs/pack-l3-1-healthcare",
+      "tier": "L3",
+      "price_usd": 199.99,
+      "price_unit": "one-time",
+      "lemonsqueezy_variant_id": 1551382
+    },
+    {
+      "name": "mxm-pack-l3-2-legal",
+      "display_name": "L3.2 Legal Vertical",
+      "version": "1.0.0",
+      "description": "Vertical overlay for legaltech. Privileged communication protection, privacy frameworks, conflict-of-interest patterns. One-time purchase.",
+      "source": "./packs/pack-l3-2-legal",
+      "tier": "L3",
+      "price_usd": 199.99,
+      "price_unit": "one-time",
+      "lemonsqueezy_variant_id": 1551406
+    },
+    {
+      "name": "mxm-pack-l3-3-fintech",
+      "display_name": "L3.3 Fintech Vertical",
+      "version": "1.0.0",
+      "description": "Vertical overlay for fintech. PCI-DSS, SOC 2, FINTRAC, PIPEDA enforcement. One-time purchase.",
+      "source": "./packs/pack-l3-3-fintech",
+      "tier": "L3",
+      "price_usd": 199.99,
+      "price_unit": "one-time",
+      "lemonsqueezy_variant_id": 1551383
+    },
+    {
+      "name": "mxm-pack-l3-4-govtech",
+      "display_name": "L3.4 GovTech Vertical",
+      "version": "1.0.0",
+      "description": "Vertical overlay for govtech. NIST CSF, FedRAMP, government records retention. One-time purchase.",
+      "source": "./packs/pack-l3-4-govtech",
+      "tier": "L3",
+      "price_usd": 199.99,
+      "price_unit": "one-time",
+      "lemonsqueezy_variant_id": 1551384
+    }
+  ]
+}

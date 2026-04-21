@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maxim/schemas/watch-profile.schema.json",
+  "title": "Maxim Watch Profile",
+  "description": "Per-project Proactive Watch configuration. Lives at config/watch-profile.yml. Unset fields inherit template defaults.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Master switch. If false, /mxm-watch and SessionStart integration are no-ops for this project."
+    },
+    "phase": {
+      "type": "string",
+      "enum": ["light", "full", "critical"],
+      "default": "light",
+      "description": "Enforcement phase. LIGHT (v1.0.0) — warn-only, session-start + manual. FULL (v1.0.0+) — agent triage. CRITICAL (v1.0.0+) — blocks commits."
+    },
+    "checkers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "enabled": { "type": "boolean", "default": true }
+        },
+        "additionalProperties": true
+      },
+      "description": "Per-checker configuration. Unknown keys are checker-specific and passed through to the checker."
+    },
+    "triage": {
+      "type": "object",
+      "properties": {
+        "inventory-drift":   { "type": "string", "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"], "default": "coo" },
+        "version-drift":     { "type": "string", "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"], "default": "coo" },
+        "contract-drift":    { "type": "string", "enum": ["ceo"], "default": "ceo", "description": "🔒 LOCKED — cannot be reassigned" },
+        "cross-doc-drift":   { "type": "string", "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"], "default": "coo" },
+        "orphan-refs":       { "type": "string", "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"], "default": "cto" },
+        "dependency-drift":  { "type": "string", "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"], "default": "cto" },
+        "git-hygiene":       { "type": "string", "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"], "default": "cto" },
+        "junction-drift":    { "type": "string", "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"], "default": "cto" },
+        "stale-handoff":     { "type": "string", "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"], "default": "coo" },
+        "compliance-drift":  { "type": "string", "enum": ["cso"], "default": "cso", "description": "🔒 LOCKED — cannot be reassigned" }
+      },
+      "additionalProperties": false
+    },
+    "thresholds": {
+      "type": "object",
+      "properties": {
+        "max_drift_severity": { "type": "integer", "minimum": 1, "maximum": 5, "default": 5 },
+        "fail_on_error":      { "type": "string", "enum": ["hybrid", "fail-open", "fail-closed"], "default": "hybrid" },
+        "stale_uncommitted_hours": { "type": "integer", "default": 24 },
+        "stale_unpushed_hours":    { "type": "integer", "default": 72 },
+        "stale_handoff_days":      { "type": "integer", "default": 7 }
+      }
+    },
+    "custom_checkers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "script_bash": { "type": "string" },
+          "script_ps1": { "type": "string" },
+          "triage": { "type": "string", "enum": ["ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"] },
+          "severity": { "type": "integer", "minimum": 1, "maximum": 5 }
+        }
+      }
+    }
+  }
+}

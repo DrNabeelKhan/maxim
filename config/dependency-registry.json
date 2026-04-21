@@ -1,0 +1,829 @@
+{
+  "version": "1.2.0",
+  "project": "Maxim Agent Platform \u2014 iSimplification.io",
+  "description": "Catalog of all non-Maxim dependencies: VoltAgent agents, domain dispatch table, and external upstream subtrees. Maxim agents and skills are tracked in config/agent-registry.json.",
+  "last_updated": "2026-04-13",
+  "maintainer": "DrNabeelKhan",
+  "scope": "VoltAgent agents + domain dispatch + external subtrees + Maxim-native frameworks",
+  "last_synced": {
+    "_note": "Auto-stamped by sync-sources.yml after each successful job.",
+    "weekly": {
+      "date": "2026-04-13",
+      "timestamp": "2026-04-13T07:54:55Z",
+      "job": "sync-weekly",
+      "sources": [
+        "obra/superpowers",
+        "VoltAgent/awesome-claude-code-subagents",
+        "OthmanAdi/planning-with-files"
+      ]
+    },
+    "alirezarezvani": {
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T12:28:24Z",
+      "job": "sync-alirezarezvani",
+      "source": "alirezarezvani/claude-skills",
+      "path": "community-packs/claude-skills-library/",
+      "subtree_status": "success"
+    },
+    "ui_ux_pro_max": {
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T12:16:57Z",
+      "job": "sync-ui-ux-pro-max",
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "path": "community-packs/ui-ux-pro-max/",
+      "subtree_status": "success"
+    }
+  },
+  "mxm_native_frameworks": {
+    "_note": "Maxim-authored frameworks in composable-skills/frameworks/. No upstream source \u2014 not synced.",
+    "path": "composable-skills/frameworks/",
+    "sync_source": null,
+    "sync_schedule": null,
+    "total_frameworks": 53,
+    "enumeration_status": "fully catalogued \u2014 2026-04-11",
+    "frameworks": [
+      "ab-testing",
+      "agilescrum",
+      "aida",
+      "api-design",
+      "archimate",
+      "aso",
+      "atomic-design",
+      "bizbok",
+      "brand-guidelines",
+      "ccpa",
+      "cialdinis-6-principles",
+      "cicd",
+      "cloud-architecture",
+      "cobit",
+      "cognitive-biases",
+      "com-b-model",
+      "content-calendar",
+      "core-web-vitals",
+      "design-systems",
+      "design-thinking",
+      "devsecops",
+      "dmbok",
+      "e-e-a-t",
+      "east-framework",
+      "feaf",
+      "fedramp",
+      "fogg-behavior-model",
+      "gdpr",
+      "google-search-central",
+      "growth-hacking",
+      "hipaa",
+      "hook-model",
+      "infrastructure-as-code",
+      "iso-27001",
+      "itil",
+      "jobs-to-be-done",
+      "kanban",
+      "lean-startup",
+      "llm-visibility",
+      "microservices-architecture",
+      "mitre-attck",
+      "nielsen-heuristics",
+      "nist-cybersecurity-framework",
+      "nudge-theory",
+      "okrs",
+      "owasp-top-10",
+      "pci-dss",
+      "platform-specific-writing",
+      "porters-five-forces",
+      "raci-matrix",
+      "sans-incident-response",
+      "schemaorg",
+      "search-intent-mapping",
+      "soc-2",
+      "stage-gate",
+      "sus",
+      "swot-analysis",
+      "tamsamsom",
+      "togaf",
+      "user-journey-mapping",
+      "wcag",
+      "zachman-framework",
+      "zero-trust-architecture"
+    ]
+  },
+  "voltagent": {
+    "description": "Technical agent library organized into 10 specialized subdirectories under community-packs/voltagent-subagents/.",
+    "total_subdirectories": 10,
+    "enumeration_status": "all 10 directories fully catalogued \u2014 2026-04-11",
+    "subdirectories": [
+      {
+        "id": "01-core-development",
+        "label": "Core Development",
+        "path": "community-packs/voltagent-subagents/01-core-development/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "api-designer",
+            "file": "api-designer.md"
+          },
+          {
+            "id": "backend-developer",
+            "file": "backend-developer.md"
+          },
+          {
+            "id": "electron-pro",
+            "file": "electron-pro.md"
+          },
+          {
+            "id": "frontend-developer",
+            "file": "frontend-developer.md"
+          },
+          {
+            "id": "fullstack-developer",
+            "file": "fullstack-developer.md"
+          },
+          {
+            "id": "graphql-architect",
+            "file": "graphql-architect.md"
+          },
+          {
+            "id": "microservices-architect",
+            "file": "microservices-architect.md"
+          },
+          {
+            "id": "mobile-developer",
+            "file": "mobile-developer.md"
+          },
+          {
+            "id": "ui-designer",
+            "file": "ui-designer.md"
+          },
+          {
+            "id": "websocket-engineer",
+            "file": "websocket-engineer.md"
+          }
+        ]
+      },
+      {
+        "id": "02-language-specialists",
+        "label": "Language Specialists",
+        "path": "community-packs/voltagent-subagents/02-language-specialists/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "angular-architect",
+            "file": "angular-architect.md"
+          },
+          {
+            "id": "cpp-pro",
+            "file": "cpp-pro.md"
+          },
+          {
+            "id": "csharp-developer",
+            "file": "csharp-developer.md"
+          },
+          {
+            "id": "django-developer",
+            "file": "django-developer.md"
+          },
+          {
+            "id": "dotnet-core-expert",
+            "file": "dotnet-core-expert.md"
+          },
+          {
+            "id": "dotnet-framework-4.8-expert",
+            "file": "dotnet-framework-4.8-expert.md"
+          },
+          {
+            "id": "elixir-expert",
+            "file": "elixir-expert.md"
+          },
+          {
+            "id": "expo-react-native-expert",
+            "file": "expo-react-native-expert.md"
+          },
+          {
+            "id": "fastapi-developer",
+            "file": "fastapi-developer.md"
+          },
+          {
+            "id": "flutter-expert",
+            "file": "flutter-expert.md"
+          },
+          {
+            "id": "golang-pro",
+            "file": "golang-pro.md"
+          },
+          {
+            "id": "java-architect",
+            "file": "java-architect.md"
+          },
+          {
+            "id": "javascript-pro",
+            "file": "javascript-pro.md"
+          },
+          {
+            "id": "kotlin-specialist",
+            "file": "kotlin-specialist.md"
+          },
+          {
+            "id": "laravel-specialist",
+            "file": "laravel-specialist.md"
+          },
+          {
+            "id": "nextjs-developer",
+            "file": "nextjs-developer.md"
+          },
+          {
+            "id": "php-pro",
+            "file": "php-pro.md"
+          },
+          {
+            "id": "powershell-5.1-expert",
+            "file": "powershell-5.1-expert.md"
+          },
+          {
+            "id": "powershell-7-expert",
+            "file": "powershell-7-expert.md"
+          },
+          {
+            "id": "python-pro",
+            "file": "python-pro.md"
+          },
+          {
+            "id": "rails-expert",
+            "file": "rails-expert.md"
+          },
+          {
+            "id": "react-specialist",
+            "file": "react-specialist.md"
+          },
+          {
+            "id": "rust-engineer",
+            "file": "rust-engineer.md"
+          },
+          {
+            "id": "spring-boot-engineer",
+            "file": "spring-boot-engineer.md"
+          },
+          {
+            "id": "sql-pro",
+            "file": "sql-pro.md"
+          },
+          {
+            "id": "swift-expert",
+            "file": "swift-expert.md"
+          },
+          {
+            "id": "symfony-specialist",
+            "file": "symfony-specialist.md"
+          },
+          {
+            "id": "typescript-pro",
+            "file": "typescript-pro.md"
+          },
+          {
+            "id": "vue-expert",
+            "file": "vue-expert.md"
+          }
+        ]
+      },
+      {
+        "id": "03-infrastructure",
+        "label": "Infrastructure",
+        "path": "community-packs/voltagent-subagents/03-infrastructure/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "azure-infra-engineer",
+            "file": "azure-infra-engineer.md"
+          },
+          {
+            "id": "cloud-architect",
+            "file": "cloud-architect.md"
+          },
+          {
+            "id": "database-administrator",
+            "file": "database-administrator.md"
+          },
+          {
+            "id": "deployment-engineer",
+            "file": "deployment-engineer.md"
+          },
+          {
+            "id": "devops-engineer",
+            "file": "devops-engineer.md"
+          },
+          {
+            "id": "devops-incident-responder",
+            "file": "devops-incident-responder.md"
+          },
+          {
+            "id": "docker-expert",
+            "file": "docker-expert.md"
+          },
+          {
+            "id": "incident-responder",
+            "file": "incident-responder.md"
+          },
+          {
+            "id": "kubernetes-specialist",
+            "file": "kubernetes-specialist.md"
+          },
+          {
+            "id": "network-engineer",
+            "file": "network-engineer.md"
+          },
+          {
+            "id": "platform-engineer",
+            "file": "platform-engineer.md"
+          },
+          {
+            "id": "security-engineer",
+            "file": "security-engineer.md"
+          },
+          {
+            "id": "sre-engineer",
+            "file": "sre-engineer.md"
+          },
+          {
+            "id": "terraform-engineer",
+            "file": "terraform-engineer.md"
+          },
+          {
+            "id": "terragrunt-expert",
+            "file": "terragrunt-expert.md"
+          },
+          {
+            "id": "windows-infra-admin",
+            "file": "windows-infra-admin.md"
+          }
+        ]
+      },
+      {
+        "id": "04-quality-security",
+        "label": "Quality & Security",
+        "path": "community-packs/voltagent-subagents/04-quality-security/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "accessibility-tester",
+            "file": "accessibility-tester.md"
+          },
+          {
+            "id": "ad-security-reviewer",
+            "file": "ad-security-reviewer.md"
+          },
+          {
+            "id": "ai-writing-auditor",
+            "file": "ai-writing-auditor.md"
+          },
+          {
+            "id": "architect-reviewer",
+            "file": "architect-reviewer.md"
+          },
+          {
+            "id": "chaos-engineer",
+            "file": "chaos-engineer.md"
+          },
+          {
+            "id": "code-reviewer",
+            "file": "code-reviewer.md"
+          },
+          {
+            "id": "compliance-auditor",
+            "file": "compliance-auditor.md"
+          },
+          {
+            "id": "debugger",
+            "file": "debugger.md"
+          },
+          {
+            "id": "error-detective",
+            "file": "error-detective.md"
+          },
+          {
+            "id": "penetration-tester",
+            "file": "penetration-tester.md"
+          },
+          {
+            "id": "performance-engineer",
+            "file": "performance-engineer.md"
+          },
+          {
+            "id": "powershell-security-hardening",
+            "file": "powershell-security-hardening.md"
+          },
+          {
+            "id": "qa-expert",
+            "file": "qa-expert.md"
+          },
+          {
+            "id": "security-auditor",
+            "file": "security-auditor.md"
+          },
+          {
+            "id": "test-automator",
+            "file": "test-automator.md"
+          }
+        ]
+      },
+      {
+        "id": "05-data-ai",
+        "label": "Data & AI",
+        "path": "community-packs/voltagent-subagents/05-data-ai/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "ai-engineer",
+            "file": "ai-engineer.md"
+          },
+          {
+            "id": "data-analyst",
+            "file": "data-analyst.md"
+          },
+          {
+            "id": "data-engineer",
+            "file": "data-engineer.md"
+          },
+          {
+            "id": "data-scientist",
+            "file": "data-scientist.md"
+          },
+          {
+            "id": "data-visualization-expert",
+            "file": "data-visualization-expert.md"
+          },
+          {
+            "id": "database-developer",
+            "file": "database-developer.md"
+          },
+          {
+            "id": "etl-specialist",
+            "file": "etl-specialist.md"
+          },
+          {
+            "id": "llm-engineer",
+            "file": "llm-engineer.md"
+          },
+          {
+            "id": "ml-engineer",
+            "file": "ml-engineer.md"
+          },
+          {
+            "id": "nlp-specialist",
+            "file": "nlp-specialist.md"
+          },
+          {
+            "id": "prompt-engineer",
+            "file": "prompt-engineer.md"
+          },
+          {
+            "id": "rag-architect",
+            "file": "rag-architect.md"
+          }
+        ]
+      },
+      {
+        "id": "06-developer-experience",
+        "label": "Developer Experience",
+        "path": "community-packs/voltagent-subagents/06-developer-experience/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "ci-cd-engineer",
+            "file": "ci-cd-engineer.md"
+          },
+          {
+            "id": "code-documenter",
+            "file": "code-documenter.md"
+          },
+          {
+            "id": "code-migration-expert",
+            "file": "code-migration-expert.md"
+          },
+          {
+            "id": "code-optimizer",
+            "file": "code-optimizer.md"
+          },
+          {
+            "id": "code-refactoring-expert",
+            "file": "code-refactoring-expert.md"
+          },
+          {
+            "id": "dependency-manager",
+            "file": "dependency-manager.md"
+          },
+          {
+            "id": "dev-environment-setup",
+            "file": "dev-environment-setup.md"
+          },
+          {
+            "id": "git-workflow-expert",
+            "file": "git-workflow-expert.md"
+          },
+          {
+            "id": "open-source-contributor",
+            "file": "open-source-contributor.md"
+          },
+          {
+            "id": "technical-writer",
+            "file": "technical-writer.md"
+          }
+        ]
+      },
+      {
+        "id": "07-specialized-domains",
+        "label": "Specialized Domains",
+        "path": "community-packs/voltagent-subagents/07-specialized-domains/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "blockchain-developer",
+            "file": "blockchain-developer.md"
+          },
+          {
+            "id": "embedded-systems-expert",
+            "file": "embedded-systems-expert.md"
+          },
+          {
+            "id": "game-developer",
+            "file": "game-developer.md"
+          },
+          {
+            "id": "iot-architect",
+            "file": "iot-architect.md"
+          },
+          {
+            "id": "smart-contract-auditor",
+            "file": "smart-contract-auditor.md"
+          },
+          {
+            "id": "web3-developer",
+            "file": "web3-developer.md"
+          }
+        ]
+      },
+      {
+        "id": "08-business-product",
+        "label": "Business & Product",
+        "path": "community-packs/voltagent-subagents/08-business-product/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "business-analyst",
+            "file": "business-analyst.md"
+          },
+          {
+            "id": "growth-hacker",
+            "file": "growth-hacker.md"
+          },
+          {
+            "id": "product-manager",
+            "file": "product-manager.md"
+          },
+          {
+            "id": "product-roadmap-planner",
+            "file": "product-roadmap-planner.md"
+          },
+          {
+            "id": "scrum-master",
+            "file": "scrum-master.md"
+          },
+          {
+            "id": "startup-advisor",
+            "file": "startup-advisor.md"
+          },
+          {
+            "id": "technical-pm",
+            "file": "technical-pm.md"
+          }
+        ]
+      },
+      {
+        "id": "09-meta-orchestration",
+        "label": "Meta & Orchestration",
+        "path": "community-packs/voltagent-subagents/09-meta-orchestration/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "agent-orchestrator",
+            "file": "agent-orchestrator.md"
+          },
+          {
+            "id": "context-manager",
+            "file": "context-manager.md"
+          },
+          {
+            "id": "multi-agent-coordinator",
+            "file": "multi-agent-coordinator.md"
+          },
+          {
+            "id": "persona-switcher",
+            "file": "persona-switcher.md"
+          },
+          {
+            "id": "task-decomposer",
+            "file": "task-decomposer.md"
+          },
+          {
+            "id": "workflow-designer",
+            "file": "workflow-designer.md"
+          }
+        ]
+      },
+      {
+        "id": "10-research-analysis",
+        "label": "Research & Analysis",
+        "path": "community-packs/voltagent-subagents/10-research-analysis/",
+        "status": "catalogued",
+        "agents": [
+          {
+            "id": "competitive-analyst",
+            "file": "competitive-analyst.md"
+          },
+          {
+            "id": "market-researcher",
+            "file": "market-researcher.md"
+          },
+          {
+            "id": "research-synthesizer",
+            "file": "research-synthesizer.md"
+          },
+          {
+            "id": "technical-researcher",
+            "file": "technical-researcher.md"
+          },
+          {
+            "id": "trend-analyst",
+            "file": "trend-analyst.md"
+          }
+        ]
+      }
+    ]
+  },
+  "domain_dispatch_table": {
+    "description": "Maps business domains to primary Maxim agent IDs and backing skills. All 12 domains fully covered.",
+    "domains": [
+      {
+        "domain": "Search Visibility (SEO/AEO/GEO)",
+        "primary_agents": [
+          "seo-specialist",
+          "aeo-strategist",
+          "geo-optimizer",
+          "technical-seo-auditor",
+          "keyword-intent-researcher"
+        ],
+        "skills": [
+          "marketing-skill"
+        ]
+      },
+      {
+        "domain": "AI / LLM / Agentic Systems",
+        "primary_agents": [
+          "ai-engineer",
+          "data-scientist"
+        ],
+        "skills": [
+          "senior-ml-engineer",
+          "senior-prompt-engineer",
+          "senior-computer-vision",
+          "self-improving-agent"
+        ]
+      },
+      {
+        "domain": "Security / Threat Modeling",
+        "primary_agents": [
+          "security-architect",
+          "security-auditor",
+          "penetration-tester",
+          "incident-responder",
+          "threat-analyst",
+          "vulnerability-scanner",
+          "ethical-hacker",
+          "compliance-officer"
+        ],
+        "skills": [
+          "senior-security",
+          "senior-secops",
+          "incident-commander"
+        ]
+      },
+      {
+        "domain": "Architecture / System Design",
+        "primary_agents": [
+          "enterprise-architect",
+          "solution-architect",
+          "technology-architect",
+          "data-architect",
+          "business-architect"
+        ],
+        "skills": [
+          "senior-architect",
+          "aws-solution-architect"
+        ]
+      },
+      {
+        "domain": "Data / Analytics",
+        "primary_agents": [
+          "data-scientist",
+          "analytics-reporter",
+          "experiment-tracker",
+          "data-architect"
+        ],
+        "skills": [
+          "senior-data-scientist"
+        ]
+      },
+      {
+        "domain": "Engineering / Development",
+        "primary_agents": [
+          "frontend-developer",
+          "backend-architect",
+          "mobile-app-builder",
+          "devops-automator",
+          "rapid-prototyper",
+          "api-integrator",
+          "api-tester"
+        ],
+        "skills": [
+          "senior-architect",
+          "aws-solution-architect"
+        ]
+      },
+      {
+        "domain": "Content / Marketing",
+        "primary_agents": [
+          "content-creator",
+          "article-writer",
+          "social-media-strategist",
+          "newsletter-writer",
+          "whitepaper-writer",
+          "documentation-writer"
+        ],
+        "skills": [
+          "marketing-skill"
+        ]
+      },
+      {
+        "domain": "Behavior Science / Persuasion",
+        "primary_agents": [
+          "behavioral-designer",
+          "persuasion-specialist",
+          "nudge-architect",
+          "habit-formation-coach",
+          "decision-architect",
+          "influence-strategist",
+          "conversion-optimizer",
+          "negotiation-specialist"
+        ],
+        "skills": []
+      },
+      {
+        "domain": "Enterprise Architecture / Governance",
+        "primary_agents": [
+          "governance-specialist",
+          "compliance-officer",
+          "legal-compliance-checker"
+        ],
+        "skills": [
+          "senior-architect"
+        ]
+      },
+      {
+        "domain": "Design / UX",
+        "primary_agents": [
+          "ui-designer",
+          "ux-researcher",
+          "brand-guardian",
+          "visual-storyteller",
+          "whimsy-injector",
+          "accessibility-auditor"
+        ],
+        "skills": []
+      },
+      {
+        "domain": "Product / Strategy",
+        "primary_agents": [
+          "product-strategist",
+          "competitive-analyst",
+          "market-analyst",
+          "innovation-researcher",
+          "sprint-prioritizer"
+        ],
+        "skills": []
+      },
+      {
+        "domain": "Operations / Infrastructure",
+        "primary_agents": [
+          "infrastructure-maintainer",
+          "devops-automator",
+          "workflow-optimizer",
+          "finance-tracker",
+          "support-responder"
+        ],
+        "skills": [
+          "aws-solution-architect",
+          "incident-commander"
+        ]
+      }
+    ]
+  },
+  "community_packs_registry": "config/community-pack-registry.json"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "inventory-drift",
+    "command": "bash -c 'while true; do \"${CLAUDE_PLUGIN_ROOT}/skills/proactive-watch/watch.sh\" inventory-drift 2>&1 || true; sleep 30; done'",
+    "description": "Skills, agents, and commands inventory vs filesystem. Polls every 30 seconds.",
+    "when": "always"
+  },
+  {
+    "name": "version-drift",
+    "command": "bash -c 'while true; do \"${CLAUDE_PLUGIN_ROOT}/skills/proactive-watch/watch.sh\" version-drift 2>&1 || true; sleep 30; done'",
+    "description": "Version consistency across README, project-manifest, and CHANGELOG. Polls every 30 seconds.",
+    "when": "always"
+  },
+  {
+    "name": "cross-doc-drift",
+    "command": "bash -c 'while true; do \"${CLAUDE_PLUGIN_ROOT}/skills/proactive-watch/watch.sh\" cross-doc-drift 2>&1 || true; sleep 30; done'",
+    "description": "CHANGELOG gaps and cross-document consistency checks. Polls every 30 seconds.",
+    "when": "always"
+  },
+  {
+    "name": "stale-handoff",
+    "command": "bash -c 'while true; do \"${CLAUDE_PLUGIN_ROOT}/skills/proactive-watch/watch.sh\" stale-handoff 2>&1 || true; sleep 30; done'",
+    "description": "Session memory references to deleted files or closed projects. Polls every 30 seconds.",
+    "when": "always"
+  }
+]

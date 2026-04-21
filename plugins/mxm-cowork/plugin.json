@@ -1,0 +1,30 @@
+{
+  "name": "maxim",
+  "displayName": "Maxim — ",
+  "version": "1.0.0",
+  "description": "88-agent behavioral intelligence platform. 26 skill domains, 63 frameworks, 8 MCP servers (42 tools), executive office routing, session memory, CEO automation, review queue, portfolio auto-sync. Model-agnostic.",
+  "author": "Dr. Nabeel Khan / iSimplification.io",
+  "repository": "https://github.com/DrNabeelKhan/maxim",
+  "license": "MIT",
+  "skills": [
+    "mxm-dispatch",
+    "mxm-ceo-automation",
+    "mxm-session-memory",
+    "mxm-design",
+    "mxm-security",
+    "mxm-compliance"
+  ],
+  "commands": [
+    "/mxm-help",
+    "/mxm-status",
+    "/mxm-plan",
+    "/mxm-implement",
+    "/mxm-review",
+    "/route",
+    "/ceo",
+    "/cto",
+    "/cmo"
+  ],
+  "requires": ["file-access"],
+  "tags": ["productivity", "agents", "behavioral-science", "multi-agent", "enterprise"]
+}

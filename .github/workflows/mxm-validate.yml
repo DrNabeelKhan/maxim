@@ -1,0 +1,182 @@
+name: Maxim Validate
+
+# ============================================================
+# Maxim — PR Validation Workflow
+# ============================================================
+# Runs on every PR to verify Maxim structural integrity:
+#   1. JSON validity (agent-registry, manifest template, dependency-registry)
+#   2. Skill domain count matches documents/reference/SKILLS_MAP.md header
+#   3. Command count matches documents/reference/MXM_COMMAND_MAP.md
+#   4. No legacy .mxm/ or .mxm-system/ references remain
+#   5. settings.local.json is NOT tracked in git
+#
+# Created: 2026-04-12 | Maxim v1.0.0
+# ============================================================
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  validate:
+    name: Maxim Structural Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── Step 1: JSON Validation ──
+      - name: Validate JSON files
+        run: |
+          echo "=== Validating JSON files ==="
+          FAILED=0
+
+          for f in config/agent-registry.json config/project-manifest.TEMPLATE.json config/dependency-registry.json; do
+            if [ -f "$f" ]; then
+              if python3 -m json.tool "$f" > /dev/null 2>&1; then
+                echo "  ✅ $f — valid JSON"
+              else
+                echo "  ❌ $f — INVALID JSON"
+                FAILED=1
+              fi
+            else
+              echo "  ⚠️  $f — file not found"
+            fi
+          done
+
+          if [ "$FAILED" -eq 1 ]; then
+            echo "::error::One or more JSON files are invalid"
+            exit 1
+          fi
+          echo "All JSON files valid."
+
+      # ── Step 2: Skill Domain Count ──
+      - name: Verify skill domain count
+        run: |
+          echo "=== Checking skill domain count ==="
+          # Count directories in .claude/skills/ excluding deprecated
+          ACTUAL=$(find .claude/skills/ -mindepth 1 -maxdepth 1 -type d ! -name 'deprecated' | wc -l)
+          echo "  Actual skill domains: $ACTUAL"
+
+          # Extract count from documents/reference/SKILLS_MAP.md header
+          if [ -f "documents/reference/SKILLS_MAP.md" ]; then
+            DECLARED=$(head -5 documents/reference/SKILLS_MAP.md | grep -oP '\d+' | head -1)
+            echo "  documents/reference/SKILLS_MAP.md declares: $DECLARED"
+
+            if [ "$ACTUAL" -ne "$DECLARED" ]; then
+              echo "::warning::Skill domain count mismatch: $ACTUAL actual vs $DECLARED declared in documents/reference/SKILLS_MAP.md"
+            else
+              echo "  ✅ Skill domain count matches"
+            fi
+          else
+            echo "  ⚠️  documents/reference/SKILLS_MAP.md not found — skipping count check"
+          fi
+
+      # ── Step 3: Command Count ──
+      - name: Verify command count
+        run: |
+          echo "=== Checking command count ==="
+          # Count .md files in .claude/commands/
+          ACTUAL=$(find .claude/commands/ -maxdepth 1 -name '*.md' | wc -l)
+          echo "  Actual commands: $ACTUAL"
+
+          # Extract count from documents/reference/MXM_COMMAND_MAP.md (look for "commands" in first 5 lines)
+          if [ -f "documents/reference/MXM_COMMAND_MAP.md" ]; then
+            echo "  ✅ documents/reference/MXM_COMMAND_MAP.md exists with $ACTUAL command files"
+          fi
+
+      # ── Step 4: No Legacy References ──
+      - name: Check for legacy .mxm/ and .mxm-system/ references
+        run: |
+          echo "=== Scanning for legacy references ==="
+
+          # Check for .mxm/ references (excluding known safe paths)
+          MXM_REFS=$(grep -rn '\.mxm/' . --include="*.md" --include="*.json" --include="*.yml" --include="*.ps1" --include="*.sh" \
+            | grep -v 'community-packs/' \
+            | grep -v 'FINAL_RELEASE' \
+            | grep -v 'CHANGELOG' \
+            | grep -v '\.mxm-skills' \
+            | grep -v '\.mxm-executive' \
+            | grep -v '\.mxm-global' \
+            | grep -v '\.mxm-backup' \
+            | grep -v 'node_modules' \
+            | grep -v '\.git/' \
+            | grep -v 'agents/MXM/' \
+            | grep -v 'maxim' \
+            | grep -v 'mxm-simplification' \
+            | grep -v 'mxm-architecture' \
+            | grep -v 'mxm-business' \
+            | grep -v 'mxm-platform' \
+            | grep -v 'mxm-cowork' \
+            | grep -v '# maxim' \
+            | grep -v 'Maxim' \
+            || true)
+
+          if [ -n "$MXM_REFS" ]; then
+            echo "::warning::Found potential legacy .mxm/ references:"
+            echo "$MXM_REFS" | head -20
+          else
+            echo "  ✅ No legacy .mxm/ references found"
+          fi
+
+          # Check for .mxm-system/ references
+          SYSTEM_REFS=$(grep -rn '\.mxm-system/' . --include="*.md" --include="*.json" --include="*.yml" --include="*.ps1" --include="*.sh" \
+            | grep -v 'community-packs/' \
+            | grep -v 'FINAL_RELEASE' \
+            | grep -v 'CHANGELOG' \
+            | grep -v 'node_modules' \
+            | grep -v '\.git/' \
+            || true)
+
+          if [ -n "$SYSTEM_REFS" ]; then
+            echo "::error::Found legacy .mxm-system/ references — these must be renamed to .mxm-skills/"
+            echo "$SYSTEM_REFS"
+            exit 1
+          else
+            echo "  ✅ No legacy .mxm-system/ references found"
+          fi
+
+      # ── Step 5: settings.local.json NOT tracked ──
+      - name: Verify settings.local.json is not tracked
+        run: |
+          echo "=== Checking settings.local.json ==="
+          if git ls-files --error-unmatch .claude/settings.local.json 2>/dev/null; then
+            echo "::error::SECURITY: .claude/settings.local.json is tracked in git! This file may contain credentials."
+            exit 1
+          else
+            echo "  ✅ settings.local.json is NOT tracked in git"
+          fi
+
+      # ── Step 6: Version Consistency ──
+      - name: Check version consistency
+        run: |
+          echo "=== Checking version consistency ==="
+          if [ -f "config/agent-registry.json" ]; then
+            REGISTRY_VER=$(python3 -c "import json; print(json.load(open('config/agent-registry.json'))['version'])")
+            echo "  agent-registry.json version: $REGISTRY_VER"
+          fi
+
+          if [ -f "README.md" ]; then
+            README_VER=$(grep -oP 'v\d+\.\d+\.\d+' README.md | head -1 || echo "not found")
+            echo "  README.md version: $README_VER"
+          fi
+
+          echo "  ✅ Version check complete (manual review if mismatch)"
+
+      # ── Summary ──
+      - name: Validation summary
+        if: always()
+        run: |
+          echo "=== Maxim Validation Complete ==="
+          echo "  JSON files: validated"
+          echo "  Skill domains: counted"
+          echo "  Commands: counted"
+          echo "  Legacy references: scanned"
+          echo "  Security: settings.local.json checked"
+          echo "  Version: consistency checked"

@@ -1,0 +1,126 @@
+# ── Maxim Local Config (never commit) ─────────────────────────────────────
+.claude/settings.local.json
+.claude.local/
+*.local.json
+
+# ── Maxim Session Memory (per-project, never commit) ─────────────────────
+.claude-sessions-memory/
+.mxm-skills/agents-handoff.md
+.mxm-skills/agents-skill-gaps.log
+.mxm-skills/agents-background.log
+.mxm-skills/review-queue.md
+.mxm-skills/watch-report.jsonl
+.mxm-skills/watch-errors.jsonl
+.mxm-skills/compliance-audit.jsonl
+
+# ── Claude Code harness settings (user-specific) ────────────────────────
+.claude/settings.json
+
+# ── CEO Automation session data ──────────────────────────────────────────
+.mxm-executive-summary/logs/
+.mxm-executive-summary/sessions/progress.md
+.mxm-executive-summary/sessions/tasks.md
+
+# ── Local Python environment ─────────────────────────────────────────────
+.conda/
+__pycache__/
+*.pyc
+
+# ── Private documents subfolders — never committed (history purged) ───
+# ADRs are a live private ledger Maxim writes during operator sessions.
+# build-artifacts-scripts, business, and references contain internal tooling,
+# strategy docs, and archival references. Public-facing docs stay tracked
+# under documents/guides, documents/reference, documents/governance,
+# documents/templates, and documents/cross-surface.
+documents/ADRs/
+documents/build-artifacts-scripts/
+documents/business/
+documents/references/
+
+# Legacy path alias (older commits used lowercase adr/)
+documents/adr/
+
+# Architecture docs (PRD, FRD, SRD, secrets) stay operator-local
+documents/architecture/
+
+# ── Maxim ledger state (session-local, never committed) ──────────────────
+# documents/ledgers/ holds the canonical Executable Contract ledgers.
+# Most are tracked (AGENT_SKILL_INVENTORY, MOAT_TRACKER, DEBUGGING_PLAYBOOK,
+# BUG_TRACKER), but SESSION_CONTINUITY and SPRINT_CLI_INSTRUCTIONS are
+# runtime session state — operator-local, never committed.
+documents/ledgers/SESSION_CONTINUITY.md
+documents/ledgers/SPRINT_CLI_INSTRUCTIONS.md
+
+# ── MemPalace (local data, never commit) ─────────────────────────────────
+mempalace.yaml
+.mempalace/
+
+# ── Claude runtime files ─────────────────────────────────────────────────
+.claude/scheduled_tasks.lock
+.claude/scheduled-tasks/
+
+# ── MCP Server dependencies (installed locally) ─────────────────────────
+mcp/*/node_modules/
+mcp/*/package-lock.json
+
+# ── Local scratch ────────────────────────────────────────────────────────
+tmp/
+.backup/
+tmpdir.txt
+
+# ── Local reports ────────────────────────────────────────────────────────
+reports/
+
+# ── MemPalace mining exclusions (skip non-essential content) ─────────────
+# These entries ensure mempalace mine only indexes Maxim-relevant files
+# (MemPalace respects .gitignore when scanning)
+entities.json
+
+# ── Maxim local archive (backups, sprint audits) ─────────────────────────
+.mxm-skills/archive/
+.mxm-skills/sprint-*-audit-*.txt
+
+# ── Claude Code ephemeral worktrees ──────────────────────────────────────
+.claude/worktrees/
+
+# ── Community packs (installed locally, never committed) ─────────────────
+community-packs/
+
+# ── Operator overlay for brand foundation (personal identity, never commit) ──
+.brand-foundation/personal.local/
+.brand-foundation/startups/*/
+!.brand-foundation/startups/README.md
+!.brand-foundation/startups/.gitkeep
+
+# ── Environment files (secrets, never commit) ─────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Cloudflare Worker secrets (never commit) ──────────────────────────────
+cloudflare-worker/secrets/
+cloudflare-worker/.dev.vars
+
+# ── node_modules (universal) ─────────────────────────────────────────────
+node_modules/
+**/node_modules/
+
+# ── OS/editor artifacts ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+# Pack-engine build outputs
+pack-engine/mxm-pack-engine
+pack-engine/mxm-pack-engine.exe
+
+# ── distributions/claude-plugin/ — mirrored build output (generated by build-claude-plugin.ps1) ──
+# Source files (plugin.json, settings.json, hooks/, monitors/, output-styles/, DISTRIBUTION.md) are committed.
+# Mirrored canonical content is gitignored until release-branch cut.
+distributions/claude-plugin/skills/
+distributions/claude-plugin/agents/
+distributions/claude-plugin/commands/
+distributions/claude-plugin/mcp/
+distributions/claude-plugin/bin/*.exe
+distributions/claude-plugin/bin/mxm-pack-engine
+distributions/claude-plugin/bin/mxm-pack-engine-darwin
+distributions/claude-plugin/bin/mxm-pack-engine-darwin-amd64
+distributions/claude-plugin/.mcp.json

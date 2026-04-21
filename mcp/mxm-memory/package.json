@@ -1,0 +1,14 @@
+{
+  "name": "mxm-memory",
+  "version": "1.0.0",
+  "description": "Maxim Framework — Unified memory search MCP server",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.24.0"
+  }
+}

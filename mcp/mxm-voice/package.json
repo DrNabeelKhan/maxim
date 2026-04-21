@@ -1,0 +1,28 @@
+{
+  "name": "mxm-voice",
+  "version": "1.0.0",
+  "description": "Maxim Framework — Voice-driven executive office routing MCP server. Wraps mbailey/voicemode (Whisper STT + Kokoro TTS) with hotword config and intent dispatch through executive-router.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.24.0",
+    "yaml": "^2.6.0"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DrNabeelKhan/maxim.git"
+  },
+  "keywords": [
+    "mcp",
+    "voice",
+    "whisper",
+    "kokoro",
+    "claude-code",
+    "maxim"
+  ]
+}

@@ -1,0 +1,912 @@
+version: "1.0.0"
+project: "iServices Agents Directory"
+last_updated: "2024-01-01"
+total_frameworks: 63
+categories: 9
+
+frameworks:
+  # ═════════════════════════════════════════════════════════════════════════════
+  # SEARCH & VISIBILITY FRAMEWORKS (6 frameworks)
+  # ═════════════════════════════════════════════════════════════════════════════
+  search_visibility:
+    - name: "E-E-A-T"
+      full_name: "Experience, Expertise, Authoritativeness, Trustworthiness"
+      owner: "Google Search Quality"
+      documentation: "https://developers.google.com/search/documents/fundamentals/creating-helpful-content"
+      maturity: "Established (2014, updated 2022)"
+      agents:
+        - seo-specialist
+        - article-writer
+        - content-creator
+        - authority-builder
+        - brand-guardian
+      compliance_required: true
+
+    - name: "Core Web Vitals"
+      full_name: "Web Performance Metrics"
+      owner: "Google"
+      documentation: "https://web.dev/vitals/"
+      maturity: "Established (2020)"
+      agents:
+        - seo-specialist
+        - technical-seo-auditor
+        - frontend-developer
+        - performance-benchmarker
+      compliance_required: true
+
+    - name: "Google Search Central"
+      full_name: "Google Search Guidelines"
+      owner: "Google"
+      documentation: "https://developers.google.com/search"
+      maturity: "Established (1998)"
+      agents:
+        - seo-specialist
+        - technical-seo-auditor
+        - keyword-intent-researcher
+      compliance_required: true
+
+    - name: "Schema.org"
+      full_name: "Structured Data Markup"
+      owner: "Schema.org Consortium"
+      documentation: "https://schema.org/"
+      maturity: "Established (2011)"
+      agents:
+        - aeo-strategist
+        - technical-seo-auditor
+        - article-writer
+        - documentation-writer
+      compliance_required: false
+
+    - name: "LLM Visibility"
+      full_name: "Generative Engine Optimization"
+      owner: "Industry Standard (Emerging)"
+      documentation: "https://arxiv.org/search/?query=generative+engine+optimization"
+      maturity: "Emerging (2023)"
+      agents:
+        - geo-optimizer
+        - seo-specialist
+        - article-writer
+        - authority-builder
+      compliance_required: false
+
+    - name: "Search Intent Mapping"
+      full_name: "Search Intent Classification"
+      owner: "Industry Standard"
+      documentation: "https://moz.com/learn/seo/search-intent"
+      maturity: "Established"
+      agents:
+        - keyword-intent-researcher
+        - seo-specialist
+        - content-creator
+        - article-writer
+      compliance_required: false
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # BEHAVIOR SCIENCE & PERSUASION FRAMEWORKS (8 frameworks) ⭐ UNIQUE
+  # ═════════════════════════════════════════════════════════════════════════════
+  behavior_science:
+    - name: "Cialdini's 6 Principles"
+      full_name: "Principles of Persuasion"
+      owner: "Dr. Robert Cialdini"
+      documentation: "https://www.cialdini.com/"
+      maturity: "Established (1984)"
+      agents:
+        - persuasion-specialist
+        - conversion-optimizer
+        - influence-strategist
+        - content-creator
+        - article-writer
+        - growth-hacker
+      compliance_required: true
+      ethics_required: true
+
+    - name: "Fogg Behavior Model"
+      full_name: "FBM (Behavior = Motivation × Ability × Prompt)"
+      owner: "Dr. BJ Fogg (Stanford University)"
+      documentation: "https://bjfogg.com/behavior-model/"
+      maturity: "Established (2009)"
+      agents:
+        - behavioral-designer
+        - habit-formation-coach
+        - conversion-optimizer
+        - product-strategist
+        - ux-researcher
+      compliance_required: true
+      ethics_required: true
+
+    - name: "Nudge Theory"
+      full_name: "Libertarian Paternalism"
+      owner: "Thaler & Sunstein"
+      documentation: "https://www.nudgeworld.org/"
+      maturity: "Established (2008)"
+      agents:
+        - nudge-architect
+        - decision-architect
+        - behavioral-designer
+        - product-strategist
+      compliance_required: true
+      ethics_required: true
+
+    - name: "Hook Model"
+      full_name: "Trigger-Action-Reward-Investment"
+      owner: "Nir Eyal"
+      documentation: "https://www.nirandfar.com/hooked/"
+      maturity: "Established (2014)"
+      agents:
+        - habit-formation-coach
+        - behavioral-designer
+        - product-strategist
+        - growth-hacker
+      compliance_required: true
+      ethics_required: true
+
+    - name: "COM-B Model"
+      full_name: "Capability, Opportunity, Motivation - Behavior"
+      owner: "Michie et al. (UCL Centre for Behaviour Change)"
+      documentation: "https://www.behaviourchangewheel.com/"
+      maturity: "Established (2011)"
+      agents:
+        - behavioral-designer
+        - habit-formation-coach
+        - product-strategist
+        - ux-researcher
+      compliance_required: true
+      ethics_required: true
+
+    - name: "EAST Framework"
+      full_name: "Easy, Attractive, Social, Timely"
+      owner: "Behavioural Insights Team (BIT)"
+      documentation: "https://www.bi.team/publications/"
+      maturity: "Established (2014)"
+      agents:
+        - nudge-architect
+        - conversion-optimizer
+        - behavioral-designer
+        - marketing-team
+      compliance_required: true
+      ethics_required: true
+
+    - name: "Cognitive Biases"
+      full_name: "Systematic Thinking Errors"
+      owner: "Kahneman & Tversky"
+      documentation: "https://www.nngroup.com/articles/cognitive-biases/"
+      maturity: "Established (1970s)"
+      agents:
+        - decision-architect
+        - persuasion-specialist
+        - negotiation-specialist
+        - product-strategist
+        - ux-researcher
+      compliance_required: true
+      ethics_required: true
+
+    - name: "Jobs-to-be-Done"
+      full_name: "JTBD Framework"
+      owner: "Clayton Christensen"
+      documentation: "https://www.jobs-to-be-done.com/"
+      maturity: "Established (2000s)"
+      agents:
+        - product-strategist
+        - user-researcher
+        - behavioral-designer
+        - market-analyst
+        - innovation-researcher
+      compliance_required: false
+      ethics_required: false
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # SECURITY & COMPLIANCE FRAMEWORKS (12 frameworks)
+  # ═════════════════════════════════════════════════════════════════════════════
+  security:
+    - name: "OWASP Top 10"
+      full_name: "Open Web Application Security Project"
+      owner: "OWASP Foundation"
+      documentation: "https://owasp.org/www-project-top-ten/"
+      maturity: "Established (2003, updated 2021)"
+      agents:
+        - penetration-tester
+        - security-auditor
+        - ethical-hacker
+        - security-architect
+        - backend-architect
+      compliance_required: true
+      ethics_required: true
+
+    - name: "NIST Cybersecurity Framework"
+      full_name: "NIST CSF"
+      owner: "NIST (National Institute of Standards and Technology)"
+      documentation: "https://www.nist.gov/cyberframework"
+      maturity: "Established (2014, updated 2018)"
+      agents:
+        - incident-responder
+        - security-architect
+        - threat-analyst
+        - security-auditor
+        - infrastructure-maintainer
+      compliance_required: true
+      ethics_required: false
+
+    - name: "ISO 27001"
+      full_name: "Information Security Management System"
+      owner: "ISO/IEC"
+      documentation: "https://www.iso.org/standard/27001"
+      maturity: "Established (2005, updated 2022)"
+      agents:
+        - security-auditor
+        - compliance-officer
+        - security-architect
+        - infrastructure-maintainer
+      compliance_required: true
+      ethics_required: false
+
+    - name: "SOC 2"
+      full_name: "Service Organization Control 2"
+      owner: "AICPA"
+      documentation: "https://www.aicpa.org/"
+      maturity: "Established (2010)"
+      agents:
+        - security-auditor
+        - compliance-officer
+        - infrastructure-maintainer
+        - legal-compliance-checker
+      compliance_required: true
+      ethics_required: false
+
+    - name: "GDPR"
+      full_name: "General Data Protection Regulation"
+      owner: "European Union"
+      documentation: "https://gdpr.eu/"
+      maturity: "Established (2018)"
+      agents:
+        - compliance-officer
+        - legal-compliance-checker
+        - security-architect
+        - data-architect
+        - support-responder
+      compliance_required: true
+      ethics_required: true
+
+    - name: "HIPAA"
+      full_name: "Health Insurance Portability and Accountability Act"
+      owner: "U.S. Department of Health & Human Services"
+      documentation: "https://www.hhs.gov/hipaa/"
+      maturity: "Established (1996, updated 2013)"
+      agents:
+        - compliance-officer
+        - legal-compliance-checker
+        - security-architect
+        - support-responder
+      compliance_required: true
+      ethics_required: true
+
+    - name: "CCPA"
+      full_name: "California Consumer Privacy Act"
+      owner: "State of California"
+      documentation: "https://oag.ca.gov/privacy/ccpa"
+      maturity: "Established (2020)"
+      agents:
+        - compliance-officer
+        - legal-compliance-checker
+        - support-responder
+      compliance_required: true
+      ethics_required: true
+
+    - name: "MITRE ATT&CK"
+      full_name: "Adversary Tactics and Techniques"
+      owner: "MITRE Corporation"
+      documentation: "https://attack.mitre.org/"
+      maturity: "Established (2015)"
+      agents:
+        - threat-analyst
+        - penetration-tester
+        - incident-responder
+        - security-architect
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Zero Trust Architecture"
+      full_name: "Zero Trust Security Model"
+      owner: "NIST / Industry Standard"
+      documentation: "https://csrc.nist.gov/publications/detail/sp/800-207/final"
+      maturity: "Established (2020)"
+      agents:
+        - security-architect
+        - infrastructure-maintainer
+        - security-auditor
+        - devops-automator
+      compliance_required: true
+      ethics_required: false
+
+    - name: "PCI-DSS"
+      full_name: "Payment Card Industry Data Security Standard"
+      owner: "PCI Security Standards Council"
+      documentation: "https://www.pcisecuritystandards.org/"
+      maturity: "Established (2004, updated 2022)"
+      agents:
+        - security-auditor
+        - compliance-officer
+        - security-architect
+        - backend-architect
+      compliance_required: true
+      ethics_required: false
+
+    - name: "FedRAMP"
+      full_name: "Federal Risk and Authorization Management Program"
+      owner: "U.S. General Services Administration"
+      documentation: "https://www.fedramp.gov/"
+      maturity: "Established (2011)"
+      agents:
+        - compliance-officer
+        - security-auditor
+        - infrastructure-maintainer
+      compliance_required: true
+      ethics_required: false
+
+    - name: "SANS Incident Response"
+      full_name: "SANS IR Methodology"
+      owner: "SANS Institute"
+      documentation: "https://www.sans.org/incident-response/"
+      maturity: "Established"
+      agents:
+        - incident-responder
+        - threat-analyst
+        - security-auditor
+      compliance_required: false
+      ethics_required: false
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # ENTERPRISE ARCHITECTURE FRAMEWORKS (8 frameworks) ⭐ UNIQUE
+  # ═════════════════════════════════════════════════════════════════════════════
+  enterprise_architecture:
+    - name: "TOGAF"
+      full_name: "The Open Group Architecture Framework"
+      owner: "The Open Group"
+      documentation: "https://www.opengroup.org/togaf"
+      maturity: "Established (1995, TOGAF 10 2022)"
+      agents:
+        - enterprise-architect
+        - solution-architect
+        - business-architect
+        - governance-specialist
+      compliance_required: true
+      ethics_required: false
+
+    - name: "DMBOK"
+      full_name: "Data Management Body of Knowledge"
+      owner: "DAMA International"
+      documentation: "https://www.dama.org/"
+      maturity: "Established (DMBOK2 2017)"
+      agents:
+        - data-architect
+        - enterprise-architect
+        - governance-specialist
+        - data-scientist
+      compliance_required: true
+      ethics_required: false
+
+    - name: "Zachman Framework"
+      full_name: "Zachman Framework for Enterprise Architecture"
+      owner: "Zachman International"
+      documentation: "https://zachman.com/"
+      maturity: "Established (1987)"
+      agents:
+        - enterprise-architect
+        - data-architect
+        - solution-architect
+      compliance_required: false
+      ethics_required: false
+
+    - name: "COBIT"
+      full_name: "Control Objectives for Information and Related Technologies"
+      owner: "ISACA"
+      documentation: "https://www.isaca.org/cobit"
+      maturity: "Established (1996, COBIT 2019)"
+      agents:
+        - governance-specialist
+        - compliance-officer
+        - enterprise-architect
+        - infrastructure-maintainer
+      compliance_required: true
+      ethics_required: false
+
+    - name: "ITIL"
+      full_name: "Information Technology Infrastructure Library"
+      owner: "Axelos"
+      documentation: "https://www.axelos.com/certifications/itil-service-management"
+      maturity: "Established (1989, ITIL 4 2019)"
+      agents:
+        - infrastructure-maintainer
+        - support-responder
+        - technology-architect
+        - governance-specialist
+      compliance_required: false
+      ethics_required: false
+
+    - name: "BIZBOK"
+      full_name: "Business Architecture Body of Knowledge"
+      owner: "Business Architecture Guild"
+      documentation: "https://www.businessarchitectureguild.org/"
+      maturity: "Established (2014)"
+      agents:
+        - business-architect
+        - enterprise-architect
+        - product-strategist
+        - market-analyst
+      compliance_required: false
+      ethics_required: false
+
+    - name: "FEAF"
+      full_name: "Federal Enterprise Architecture Framework"
+      owner: "U.S. Federal CIO Council"
+      documentation: "https://enterprisearchitecture.gov/"
+      maturity: "Established (1999, FEAF II 2013)"
+      agents:
+        - enterprise-architect
+        - security-architect
+        - compliance-officer
+      compliance_required: true
+      ethics_required: false
+
+    - name: "ArchiMate"
+      full_name: "Enterprise Architecture Modeling Language"
+      owner: "The Open Group"
+      documentation: "https://www.opengroup.org/archimate-forum"
+      maturity: "Established (2004)"
+      agents:
+        - enterprise-architect
+        - solution-architect
+        - business-architect
+      compliance_required: false
+      ethics_required: false
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # PRODUCT & RESEARCH FRAMEWORKS (8 frameworks)
+  # ═════════════════════════════════════════════════════════════════════════════
+  product_research:
+    - name: "Design Thinking"
+      full_name: "Human-Centered Design Methodology"
+      owner: "IDEO / Stanford d.school"
+      documentation: "https://dschool.stanford.edu/"
+      maturity: "Established (1990s)"
+      agents:
+        - innovation-researcher
+        - user-researcher
+        - ux-researcher
+        - product-strategist
+        - ui-designer
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Lean Startup"
+      full_name: "Build-Measure-Learn Methodology"
+      owner: "Eric Ries"
+      documentation: "https://theleanstartup.com/"
+      maturity: "Established (2011)"
+      agents:
+        - product-strategist
+        - innovation-researcher
+        - rapid-prototyper
+        - data-scientist
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Agile/Scrum"
+      full_name: "Iterative Development Methodology"
+      owner: "Agile Alliance / Scrum.org"
+      documentation: "https://agilemanifesto.org/"
+      maturity: "Established (2001)"
+      agents:
+        - sprint-prioritizer
+        - project-shipper
+        - experiment-tracker
+        - frontend-developer
+        - backend-architect
+      compliance_required: false
+      ethics_required: false
+
+    - name: "OKRs"
+      full_name: "Objectives and Key Results"
+      owner: "Intel / Google"
+      documentation: "https://www.whatmatters.com/"
+      maturity: "Established (1970s)"
+      agents:
+        - product-strategist
+        - sprint-prioritizer
+        - analytics-reporter
+        - project-shipper
+      compliance_required: false
+      ethics_required: false
+
+    - name: "TAM/SAM/SOM"
+      full_name: "Market Sizing Framework"
+      owner: "Industry Standard"
+      documentation: "Industry standard"
+      maturity: "Established"
+      agents:
+        - market-analyst
+        - product-strategist
+        - innovation-researcher
+        - competitive-analyst
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Porter's Five Forces"
+      full_name: "Industry Competition Analysis"
+      owner: "Michael Porter (Harvard Business School)"
+      documentation: "HBR Publications"
+      maturity: "Established (1979)"
+      agents:
+        - market-analyst
+        - competitive-analyst
+        - product-strategist
+        - innovation-researcher
+      compliance_required: false
+      ethics_required: false
+
+    - name: "SWOT Analysis"
+      full_name: "Strengths, Weaknesses, Opportunities, Threats"
+      owner: "Albert Humphrey"
+      documentation: "Industry standard"
+      maturity: "Established (1960s)"
+      agents:
+        - competitive-analyst
+        - product-strategist
+        - market-analyst
+        - business-architect
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Nielsen Heuristics"
+      full_name: "10 Usability Heuristics"
+      owner: "Jakob Nielsen"
+      documentation: "https://www.nngroup.com/articles/ten-usability-heuristics/"
+      maturity: "Established (1994)"
+      agents:
+        - usability-tester
+        - ux-researcher
+        - ui-designer
+        - product-strategist
+      compliance_required: false
+      ethics_required: false
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # CONTENT & MARKETING FRAMEWORKS (6 frameworks)
+  # ═════════════════════════════════════════════════════════════════════════════
+  content_marketing:
+    - name: "AIDA"
+      full_name: "Attention, Interest, Desire, Action"
+      owner: "E. St. Elmo Lewis"
+      documentation: "Industry standard"
+      maturity: "Established (1898)"
+      agents:
+        - article-writer
+        - content-creator
+        - social-media-strategist
+        - persuasion-specialist
+        - growth-hacker
+      compliance_required: false
+      ethics_required: true
+
+    - name: "Content Calendar"
+      full_name: "Editorial Planning Framework"
+      owner: "Industry Standard"
+      documentation: "Industry standard"
+      maturity: "Established"
+      agents:
+        - social-media-strategist
+        - article-writer
+        - content-creator
+        - newsletter-writer
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Growth Hacking"
+      full_name: "Rapid Growth Experimentation"
+      owner: "Sean Ellis"
+      documentation: "Industry standard"
+      maturity: "Established (2010)"
+      agents:
+        - growth-hacker
+        - marketing-team
+        - product-strategist
+        - analytics-reporter
+      compliance_required: false
+      ethics_required: true
+
+    - name: "ASO"
+      full_name: "App Store Optimization"
+      owner: "Industry Standard"
+      documentation: "Apple App Store, Google Play Console"
+      maturity: "Established (2008)"
+      agents:
+        - app-store-optimizer
+        - content-creator
+        - growth-hacker
+        - analytics-reporter
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Brand Guidelines"
+      full_name: "Brand Consistency Framework"
+      owner: "Industry Standard"
+      documentation: "Organization-specific"
+      maturity: "Established"
+      agents:
+        - brand-guardian
+        - content-creator
+        - ui-designer
+        - social-media-strategist
+        - article-writer
+      compliance_required: true
+      ethics_required: false
+
+    - name: "Platform-Specific Writing"
+      full_name: "Multi-Platform Content Optimization"
+      owner: "Platform Guidelines"
+      documentation: "X, LinkedIn, Medium guidelines"
+      maturity: "Established"
+      agents:
+        - article-writer
+        - social-media-strategist
+        - content-creator
+        - video-script-writer
+      compliance_required: false
+      ethics_required: false
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # ENGINEERING & DEVOPS FRAMEWORKS (6 frameworks)
+  # ═════════════════════════════════════════════════════════════════════════════
+  engineering_devops:
+    - name: "CI/CD"
+      full_name: "Continuous Integration / Continuous Deployment"
+      owner: "Industry Standard"
+      documentation: "Industry standard"
+      maturity: "Established (2000s)"
+      agents:
+        - devops-automator
+        - backend-architect
+        - api-tester
+        - infrastructure-maintainer
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Infrastructure as Code"
+      full_name: "IaC"
+      owner: "Industry Standard"
+      documentation: "Terraform, CloudFormation, etc."
+      maturity: "Established (2010s)"
+      agents:
+        - devops-automator
+        - infrastructure-maintainer
+        - security-architect
+        - backend-architect
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Microservices Architecture"
+      full_name: "Service-Oriented Architecture"
+      owner: "Industry Standard"
+      documentation: "Industry standard"
+      maturity: "Established (2010s)"
+      agents:
+        - backend-architect
+        - devops-automator
+        - api-tester
+        - security-architect
+      compliance_required: false
+      ethics_required: false
+
+    - name: "API Design"
+      full_name: "REST/GraphQL API Best Practices"
+      owner: "Industry Standard"
+      documentation: "REST, GraphQL specifications"
+      maturity: "Established"
+      agents:
+        - backend-architect
+        - api-tester
+        - documentation-writer
+        - frontend-developer
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Cloud Architecture"
+      full_name: "AWS/Azure/GCP Architecture"
+      owner: "Cloud Providers"
+      documentation: "AWS, Azure, GCP documentation"
+      maturity: "Established"
+      agents:
+        - solution-architect
+        - backend-architect
+        - devops-automator
+        - infrastructure-maintainer
+      compliance_required: false
+      ethics_required: false
+
+    - name: "DevSecOps"
+      full_name: "Development, Security, Operations"
+      owner: "Industry Standard"
+      documentation: "Industry standard"
+      maturity: "Established (2010s)"
+      agents:
+        - devops-automator
+        - security-architect
+        - security-auditor
+        - infrastructure-maintainer
+      compliance_required: true
+      ethics_required: false
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # DESIGN & UX FRAMEWORKS (5 frameworks)
+  # ═════════════════════════════════════════════════════════════════════════════
+  design_ux:
+    - name: "Design Systems"
+      full_name: "Reusable Design Component Library"
+      owner: "Industry Standard"
+      documentation: "Material Design, Carbon, etc."
+      maturity: "Established (2010s)"
+      agents:
+        - ui-designer
+        - frontend-developer
+        - brand-guardian
+        - documentation-writer
+      compliance_required: false
+      ethics_required: false
+
+    - name: "User Journey Mapping"
+      full_name: "Customer Experience Visualization"
+      owner: "Industry Standard"
+      documentation: "Industry standard"
+      maturity: "Established"
+      agents:
+        - ux-researcher
+        - user-researcher
+        - product-strategist
+        - ui-designer
+      compliance_required: false
+      ethics_required: false
+
+    - name: "WCAG"
+      full_name: "Web Content Accessibility Guidelines"
+      owner: "W3C"
+      documentation: "https://www.w3.org/WAI/WCAG/"
+      maturity: "Established (1999, WCAG 2.2 2023)"
+      agents:
+        - ui-designer
+        - frontend-developer
+        - ux-researcher
+        - compliance-officer
+      compliance_required: true
+      ethics_required: true
+
+    - name: "SUS"
+      full_name: "System Usability Scale"
+      owner: "John Brooke"
+      documentation: "Industry standard"
+      maturity: "Established (1986)"
+      agents:
+        - usability-tester
+        - ux-researcher
+        - product-strategist
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Atomic Design"
+      full_name: "Design System Methodology"
+      owner: "Brad Frost"
+      documentation: "https://atomicdesign.bradfrost.com/"
+      maturity: "Established (2013)"
+      agents:
+        - ui-designer
+        - frontend-developer
+        - design-system-lead
+      compliance_required: false
+      ethics_required: false
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # PROJECT MANAGEMENT FRAMEWORKS (4 frameworks)
+  # ═════════════════════════════════════════════════════════════════════════════
+  project_management:
+    - name: "Kanban"
+      full_name: "Visual Workflow Management"
+      owner: "Toyota (adapted for software)"
+      documentation: "https://kanban.zone/"
+      maturity: "Established (1940s, software 2000s)"
+      agents:
+        - sprint-prioritizer
+        - project-shipper
+        - experiment-tracker
+        - studio-producer
+      compliance_required: false
+      ethics_required: false
+
+    - name: "Stage-Gate"
+      full_name: "Product Development Process"
+      owner: "Robert G. Cooper"
+      documentation: "Stage-Gate International"
+      maturity: "Established (1980s)"
+      agents:
+        - rd-coordinator
+        - product-strategist
+        - project-shipper
+      compliance_required: false
+      ethics_required: false
+
+    - name: "A/B Testing"
+      full_name: "Experimentation Framework"
+      owner: "Industry Standard"
+      documentation: "Industry standard"
+      maturity: "Established"
+      agents:
+        - experiment-tracker
+        - data-scientist
+        - growth-hacker
+        - product-strategist
+        - conversion-optimizer
+      compliance_required: false
+      ethics_required: true
+
+    - name: "RACI Matrix"
+      full_name: "Responsibility Assignment Matrix"
+      owner: "Industry Standard"
+      documentation: "Industry standard"
+      maturity: "Established"
+      agents:
+        - project-shipper
+        - studio-producer
+        - governance-specialist
+      compliance_required: false
+      ethics_required: false
+
+# ═════════════════════════════════════════════════════════════════════════════
+# FRAMEWORK STATISTICS
+# ═════════════════════════════════════════════════════════════════════════════
+statistics:
+  total_frameworks: 63
+  compliance_required: 28
+  ethics_required: 15
+  categories: 9
+  agents_covered: 79
+
+  by_category:
+    search_visibility: 6
+    behavior_science: 8
+    security: 12
+    enterprise_architecture: 8
+    product_research: 8
+    content_marketing: 6
+    engineering_devops: 6
+    design_ux: 5
+    project_management: 4
+
+  top_frameworks_by_agents:
+    - framework: "Cialdini's 6 Principles"
+      agents: 6
+    - framework: "Fogg Behavior Model"
+      agents: 5
+    - framework: "Design Thinking"
+      agents: 5
+    - framework: "E-E-A-T"
+      agents: 5
+    - framework: "A/B Testing"
+      agents: 5
+
+# ═════════════════════════════════════════════════════════════════════════════
+# VALIDATION RULES
+# ═════════════════════════════════════════════════════════════════════════════
+validation:
+  rules:
+    - name: "behavior_science_ethics"
+      description: "All behavior science frameworks must have ethics_required: true"
+      check: "category == 'behavior_science' → ethics_required == true"
+    
+    - name: "security_compliance"
+      description: "Security frameworks must have compliance tracking"
+      check: "category == 'security' → compliance_required == true"
+    
+    - name: "agent_framework_mapping"
+      description: "All agents must have at least one framework"
+      check: "all agents mapped to >= 1 framework"
+    
+    - name: "documentation_required"
+      description: "All frameworks must have documentation URL"
+      check: "documentation != null"

@@ -1,0 +1,54 @@
+name = "maxim-license-api"
+main = "src/index.ts"
+compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ── Account + routing ────────────────────────────────────────────────────────
+account_id = "06fb1f612b22d6bdac1cb2155970c391"
+workers_dev = true
+
+# Custom domain (configure DNS after first deploy)
+# [[routes]]
+# pattern = "license.isystematic.com/*"
+# custom_domain = true
+
+# ── Observability ────────────────────────────────────────────────────────────
+[observability]
+enabled = true
+head_sampling_rate = 1.0
+
+# ── Environment variables (non-secret; set here or via dashboard) ────────────
+[vars]
+MXM_VERSION_MIN = "6.4.4"
+JWT_ISSUER = "https://license.isystematic.com"
+JWT_AUDIENCE = "mxm-pack-engine"
+JWT_TTL_SECONDS = "31536000"  # 12 months
+ENVIRONMENT = "production"
+
+# ── Secrets (set via `wrangler secret put <NAME>`, NEVER committed) ──────────
+# Stripe (primary processor per D-037):
+# STRIPE_API_KEY                — Stripe secret or restricted key (sk_test_ / sk_live_ / rk_live_)
+# STRIPE_WEBHOOK_SECRET         — Stripe webhook signing secret (whsec_...)
+# LemonSqueezy (secondary processor, inactive at v1.0.0 launch):
+# LEMONSQUEEZY_API_KEY          — LemonSqueezy account API key (Settings → API)
+# LEMONSQUEEZY_WEBHOOK_SECRET   — Webhook signing secret (Settings → Webhooks, shown once)
+# JWT + admin:
+# JWT_SIGNING_KEY_PRIVATE       — RS256 private key PEM (generate via `openssl genrsa -out key.pem 4096`)
+# JWT_SIGNING_KEY_PUBLIC        — Matching RS256 public key PEM (used by pack-engine to verify)
+# ADMIN_API_KEY                 — Bearer token for internal admin endpoints
+# OWNER_PUBLIC_KEYS_JSON        — JSON array of owner .pub PEMs for OWNER-1 bypass
+
+# ── KV namespace (license records) ───────────────────────────────────────────
+# Created 2026-04-21 via: wrangler kv namespace create LICENSES
+[[kv_namespaces]]
+binding = "LICENSES"
+id = "bd90ce85c3d04c958c986b33e9bf850a"
+
+# ── Durable Objects (for canary tracking — Sprint 2b+) ───────────────────────
+# [[durable_objects.bindings]]
+# name = "CANARY_REGISTRY"
+# class_name = "CanaryRegistry"
+
+# [[migrations]]
+# tag = "v1"
+# new_classes = ["CanaryRegistry"]

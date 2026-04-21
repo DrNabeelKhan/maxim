@@ -1,0 +1,79 @@
+{
+  "mxm_version_min": "1.0.0",
+  "sync_cadence": "monthly",
+  "sync_schedule": "0 6 1 * *",
+  "auto_install_required": true,
+  "packs": [
+    {
+      "id": "superpowers",
+      "display_name": "Superpowers Workflow Patterns",
+      "source": "obra/superpowers",
+      "branch": "main",
+      "install_path": "community-packs/superpowers/",
+      "dispatch_domain": "workflow",
+      "license": "MIT",
+      "required": true
+    },
+    {
+      "id": "voltagent-subagents",
+      "display_name": "VoltAgent Subagent Catalog",
+      "source": "VoltAgent/awesome-claude-code-subagents",
+      "branch": "main",
+      "install_path": "community-packs/voltagent-subagents/",
+      "dispatch_domain": "agent-catalog",
+      "license": "MIT",
+      "required": true
+    },
+    {
+      "id": "planning-with-files",
+      "display_name": "Planning With Files",
+      "source": "OthmanAdi/planning-with-files",
+      "branch": "main",
+      "install_path": "community-packs/planning-with-files/",
+      "dispatch_domain": "planning",
+      "license": "MIT",
+      "required": true
+    },
+    {
+      "id": "claude-skills-library",
+      "display_name": "Claude Skills Library",
+      "source": "alirezarezvani/claude-skills",
+      "branch": "main",
+      "install_path": "community-packs/claude-skills-library/",
+      "dispatch_domain": "general",
+      "license": "MIT",
+      "required": true
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "display_name": "UI/UX Pro Max Skill",
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "branch": "main",
+      "install_path": "community-packs/ui-ux-pro-max/",
+      "dispatch_domain": "ui-ux",
+      "license": "MIT",
+      "required": true
+    },
+    {
+      "id": "higgsfield-ai-prompts",
+      "display_name": "Higgsfield AI Media Prompts",
+      "source": "OSideMedia/higgsfield-ai-prompt-skill",
+      "branch": "main",
+      "install_path": "community-packs/higgsfield-ai-prompts/",
+      "dispatch_domain": "ai-media-generation",
+      "license": "MIT",
+      "required": true,
+      "note": "15 styles absorbed as Maxim IP in .claude/skills/ai-media-generation/cinematic-styles/. This pack provides the remaining ugc-* and automation skills."
+    },
+    {
+      "id": "design-templates",
+      "display_name": "Awesome Design Templates",
+      "source": "VoltAgent/awesome-design-md",
+      "branch": "main",
+      "install_path": "community-packs/design-templates/",
+      "dispatch_domain": "brand-design",
+      "license": "MIT",
+      "required": true
+    }
+  ]
+}

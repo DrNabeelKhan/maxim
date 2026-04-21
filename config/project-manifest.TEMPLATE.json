@@ -1,0 +1,280 @@
+{
+  "manifest_version": "2.0.0",
+  "MXM_version": "1.0.0",
+  "description": "TEMPLATE — Copy this file to config/project-manifest.json and fill in your project details. Replace ALL fields marked REQUIRED. Delete all _comment fields before committing. Schema v2.0.0 (v1.0.0) adds: status (lifecycle/gated/archived/staleness), meta (markets/ai_capabilities/ownership_type/repo_topology). Backwards-compatible: legacy fields (project.stage, project.active) preserved.",
+
+  "project": {
+    "id": "your-project-id",
+    "_comment_id": "REQUIRED. Lowercase, hyphenated. Must match keys in compliance.per_project, payment_projects, hipaa_projects, regulated_projects.",
+    "name": "Your Project Name",
+    "owner": "your-github-username",
+    "vertical": "SaaS | AI | FinTech | HealthTech | LegalTech | EdTech | Other",
+    "description": "[REQUIRED] One sentence describing what this project does and who it serves. Include market geography (CA/US/AU/EU) for compliance inference.",
+    "stage": "idea | early-stage | active | scaling | mature",
+    "active": true
+  },
+
+  "status": {
+    "_comment": "v1.0.0+ schema. Drives sync_portfolio behavior — archived projects are skipped, gated projects flagged 🔐, needs_update projects surfaced.",
+    "lifecycle": "concept",
+    "_lifecycle_options": [
+      "production",
+      "active_dev",
+      "in_progress",
+      "testing",
+      "frozen",
+      "archived",
+      "deprecated",
+      "concept",
+      "needs_update",
+      "launched"
+    ],
+    "gated": false,
+    "_gated_comment": "Set to true for regulated/sensitive projects (e.g., GulfLaw.AI). When true, Maxim refuses work until explicit user approval is given in this session.",
+    "gated_approval_required_from": null,
+    "_gated_approval_comment": "If gated:true, set this to the GitHub username or email that must approve. Approval given verbally in chat counts; Maxim logs the approval event.",
+    "archived_reason": null,
+    "_archived_reason_comment": "If lifecycle:archived, document WHY (e.g., 'Market not mature at launch — AirTap'). Used by sync_portfolio reporting.",
+    "last_activity": "YYYY-MM-DD",
+    "_last_activity_comment": "Last commit/work date. Auto-updated by SessionEnd hook + sync_portfolio. Drives staleness warnings.",
+    "staleness_warning_days": 90,
+    "_staleness_comment": "Days without activity before sync_portfolio surfaces this project as needs_update."
+  },
+
+  "meta": {
+    "_comment": "v1.0.0+ NK-universe taxonomy. Used by mxm-portfolio MCP for cross-project queries and by content-strategist/seo-specialist for market-aware copy.",
+    "ownership_type": "startup",
+    "_ownership_options": [
+      "owner",
+      "corp",
+      "startup",
+      "mega_platform",
+      "vertical",
+      "partner",
+      "lab",
+      "education",
+      "campaign"
+    ],
+    "_ownership_comment": "vertical = lives under a mega_platform parent (e.g., FixIt under iServices.io).",
+    "parent_project_id": null,
+    "_parent_comment": "If ownership_type is 'vertical', set parent's project.id (e.g., FixIt → 'iservices'). null otherwise.",
+    "markets": ["global"],
+    "_markets_options": [
+      "canada",
+      "middle_east",
+      "north_america",
+      "global",
+      "enterprise",
+      "consumer",
+      "regulated"
+    ],
+    "_markets_comment": "Multi-select array. CASL applies if 'canada'. UAE-PDPL applies if 'middle_east'. Triggers compliance.frameworks auto-suggestions.",
+    "ai_capabilities": [],
+    "_ai_capabilities_options": [
+      "agent",
+      "llm_trained",
+      "rag_enabled",
+      "mcp_connected",
+      "agentic_loop",
+      "compliance_ai",
+      "multi_model",
+      "analytics_ai"
+    ],
+    "_ai_capabilities_comment": "Multi-select. Used by /mxm-portfolio for AI capability dashboards.",
+    "repo_topology": "standalone",
+    "_repo_topology_options": [
+      "standalone",
+      "monorepo",
+      "junction",
+      "linked",
+      "submodule",
+      "upstream",
+      "downstream",
+      "mirror"
+    ],
+    "_repo_topology_comment": "Prevents confusion when Maxim detects a junction or submodule. junction-guard skill enforces read-only access through junctions."
+  },
+
+  "portfolio": [
+    {
+      "_comment": "REQUIRED. One entry per project in this portfolio. Repeat block for each project.",
+      "id": "your-project-id",
+      "name": "Your Project Name",
+      "vertical": "[REQUIRED]",
+      "stage": "[REQUIRED]"
+    }
+  ],
+
+  "compliance": {
+    "_comment": "Declare ALL markets your project targets. project.id below MUST match keys in per_project and in payment_projects/hipaa_projects/regulated_projects exactly.",
+    "_available_frameworks": [
+      "PIPEDA (CA)",
+      "PCI-DSS (payments)",
+      "TCPA (US outreach)",
+      "AU-Privacy-Act-1988 (AU)",
+      "GDPR (EU)",
+      "UAE-PDPL (UAE/Gulf)",
+      "HIPAA (US health)",
+      "SOC2 (enterprise)",
+      "ISO27001",
+      "ISO13485 (medical devices)"
+    ],
+    "frameworks": [],
+    "per_project": {
+      "your-project-id": []
+    },
+    "regulated_projects": [],
+    "payment_projects": [],
+    "hipaa_projects": []
+  },
+
+  "tech_stack": {
+    "_comment": "Fill in all subsections. Use [TBD] for anything not yet decided. Agents use this to tailor code generation, security checks, and infrastructure advice.",
+    "default_model_provider": "anthropic",
+    "supported_providers": ["anthropic", "openai", "gemini", "mistral", "local"],
+    "preferred_models": {
+      "reasoning": "claude-sonnet",
+      "code": "claude-sonnet",
+      "fast": "claude-haiku",
+      "vision": "claude-sonnet"
+    },
+    "frontend": {
+      "framework": "[TBD] e.g. Next.js 14, React 18, Vue 3, SvelteKit",
+      "ui_library": "[TBD] e.g. shadcn/ui + Tailwind CSS v4, Radix UI, Chakra UI",
+      "auth": "[TBD] e.g. Clerk, Supabase Auth, Auth0, NextAuth",
+      "hosting": "[TBD] e.g. Vercel, Netlify, CloudFront + S3"
+    },
+    "backend": {
+      "framework": "[TBD] e.g. FastAPI, Express, Django, NestJS, Go/Gin",
+      "database": "[TBD] e.g. PostgreSQL 16, MySQL 8, MongoDB 7, SQLite",
+      "cache": "[TBD] e.g. Redis 7, Memcached, none",
+      "task_queue": "[TBD] e.g. Celery + Redis, Bull, BullMQ, none",
+      "storage": "[TBD] e.g. AWS S3, Cloudflare R2, Supabase Storage",
+      "payments": "[TBD] e.g. Stripe, Paddle, LemonSqueezy, none"
+    },
+    "infrastructure": {
+      "cloud": "[TBD] e.g. AWS, GCP, Azure, DigitalOcean, Hetzner",
+      "compute": "[TBD] e.g. ECS Fargate, Lambda, Railway, Fly.io, VPS",
+      "cdn": "[TBD] e.g. CloudFront, Cloudflare, Fastly",
+      "ci_cd": "[TBD] e.g. GitHub Actions, GitLab CI, CircleCI",
+      "observability": "[TBD] e.g. Sentry + Datadog, Langfuse, OpenTelemetry, none",
+      "secrets": "[TBD] e.g. AWS Secrets Manager, HashiCorp Vault, Doppler, .env"
+    }
+  },
+
+  "domains": {
+    "_comment": "OPTIONAL. Declare all public-facing domains for this project. Used by security and infrastructure agents.",
+    "landing": "[TBD] e.g. yourapp.com",
+    "app": "[TBD] e.g. app.yourapp.com",
+    "api": "[TBD] e.g. api.yourapp.com",
+    "docs": "[TBD] e.g. docs.yourapp.com",
+    "admin": "[TBD] e.g. admin.yourapp.com or leave blank"
+  },
+
+  "development": {
+    "_comment": "OPTIONAL. Helps agents understand repo layout and workflow conventions.",
+    "monorepo_path": "[TBD] e.g. platform/ or src/ or apps/ — leave blank if not a monorepo",
+    "github_repo": "[TBD] e.g. your-org/your-repo",
+    "default_branch": "[TBD] e.g. main",
+    "workflow": "[TBD] e.g. feature branch → PR → code review → squash merge → auto-deploy"
+  },
+
+  "documents": {
+    "_comment": "OPTIONAL. Declare key project documents so agents can reference them. Paths relative to project root.",
+    "architecture": "[TBD] e.g. documents/ARCHITECTURE.md",
+    "api_reference": "[TBD] e.g. documents/API.md",
+    "deployment": "[TBD] e.g. documents/DEPLOYMENT.md",
+    "adr": "[TBD] e.g. documents/decisions/ or leave blank",
+    "runbook": "[TBD] e.g. documents/RUNBOOK.md or leave blank"
+  },
+
+  "build_target": {
+    "_comment": "Default build/test target. Claude SSHs here unless user says 'build locally'. Set default to 'local' to disable remote-first behavior.",
+    "default": "remote",
+    "remote": {
+      "host": "[TBD] e.g. 159.203.24.199 or droplet.example.com",
+      "user": "[TBD] e.g. deploy or maxim",
+      "port": 22,
+      "tailscale_ip": "[TBD] e.g. 100.77.108.64 (preferred when available)",
+      "project_path": "[TBD] e.g. /home/maxim/platform or /var/www/app",
+      "docker_compose": "[TBD] e.g. docker compose -f docker-compose.dev.yml up -d",
+      "test_command": "[TBD] e.g. docker compose exec api pytest or npm test"
+    },
+    "local_fallback": {
+      "trigger": "User says 'build locally', 'test locally', or 'run on my machine'",
+      "command": "[TBD] e.g. npm run dev or docker compose up"
+    }
+  },
+
+  "full_portfolio_registry": {
+    "_comment": "Complete list of all projects. Used by /mxm-tasks and /mxm-portfolio for cross-project awareness.",
+    "projects": []
+  },
+
+  "cross_project_patterns": {
+    "_comment": "Shared patterns across projects. Auto-detected by Maxim agents. Example: { 'auth': { 'source': 'project-a', 'used_in': ['project-b', 'project-c'] } }",
+    "patterns": {}
+  },
+
+  "jurisdiction_matrix": {
+    "_comment": "Per-project compliance jurisdictions with specific law references. Extends compliance.per_project.",
+    "projects": {}
+  },
+
+  "bootstrap_templates": {
+    "_comment": "Set selected to one of the keys below to activate a bootstrap template for /mxm-new-project.",
+    "selected": "none",
+    "saas-marketplace": {
+      "template": "bootstrap/saas-platform/",
+      "maps_to": []
+    },
+    "ai-agent-service": {
+      "template": "bootstrap/ai-agent-service/",
+      "maps_to": []
+    },
+    "compliance-app": {
+      "template": "bootstrap/compliance-app/",
+      "maps_to": []
+    },
+    "api-backend": {
+      "template": "bootstrap/api-backend/",
+      "maps_to": []
+    }
+  },
+
+  "review_queue": {
+    "_comment": "Controls how generated skills, gap fixes, and staleness items are delivered for review. 'local' writes to .mxm-skills/review-queue.md (surfaced by /mxm-ceo-morning). 'github_pr' creates branches and PRs with labels for CI validation and sprint triage.",
+    "backend": "local",
+    "github_pr": {
+      "enabled": false,
+      "repo": "",
+      "labels": ["mxm-review", "auto-generated"],
+      "base_branch": "main",
+      "reviewers": []
+    }
+  },
+
+  "agent_overrides": {
+    "_comment": "OPTIONAL. Per-project agent behavior overrides. Leave overrides[] empty for standard Maxim behavior.",
+    "description": "Per-project agent behavior overrides. Leave empty for standard Maxim behavior.",
+    "overrides": []
+  },
+
+  "super_user": {
+    "_comment": "Set enabled to true to suppress Maxim governance gates for power users. Claude's own values layer is not affected by this flag.",
+    "enabled": false,
+    "identity": "your-github-username",
+    "bypass": {
+      "cso_auto_loop": false,
+      "ethics_gate": false,
+      "compliance_pre_check": false,
+      "confidence_tagging": false,
+      "escalation_required": false
+    },
+    "note": "Set enabled: true and identity to activate super user mode. Maxim governance gates only — Claude's own values layer is not affected."
+  },
+
+  "maintainer": "your-github-username",
+  "last_updated": "YYYY-MM-DD",
+  "next_review": "YYYY-MM-DD"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "maxim",
+  "version": "1.0.0",
+  "description": "88 behavioral-science-driven agents across 7 executive offices. Governance on every output. Memory that compounds across sessions. Proactive drift detection. 64 peer-reviewed frameworks enforced at generation time.",
+  "author": {
+    "name": "Dr. Nabeel Khan",
+    "email": "nabeel@nabeelkhan.com",
+    "url": "https://maxim.isystematic.com"
+  },
+  "homepage": "https://maxim.isystematic.com",
+  "repository": "https://github.com/DrNabeelKhan/maxim",
+  "license": "BSL-1.1",
+  "contact": "https://maxim.isystematic.com/contact",
+  "keywords": [
+    "maxim",
+    "agents",
+    "behavioral-science",
+    "governance",
+    "compliance",
+    "memory",
+    "proactive-watch",
+    "ai-governance"
+  ],
+  "skills": "../skills/",
+  "agents": "../agents/",
+  "commands": "../commands/",
+  "hooks": "../hooks/hooks.json",
+  "mcpServers": "../.mcp.json",
+  "monitors": "../monitors/monitors.json",
+  "outputStyles": "../output-styles/",
+  "userConfig": {
+    "license_key": {
+      "description": "Your Maxim pack license key (from Stripe purchase email). Required to activate L1–L3 packs.",
+      "sensitive": true
+    }
+  }
+}

@@ -1,0 +1,246 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Maxim Setup Workflow
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# HOW TO USE:
+# 1. Copy THIS FILE into your PROJECT repo at: .github/workflows/mxm-setup.yml
+# 2. Copy templates/project.yml into your PROJECT repo at: templates/project.yml
+# 3. Fill in project.yml with your project details and first task
+# 4. Git push both files
+# 5. This workflow triggers automatically and scaffolds everything
+#
+# WHAT IT DOES:
+#   - Reads project.yml to get project config and task details
+#   - Generates a customized CLAUDE.md for your project
+#   - Creates .planning/ folder with task_plan.md, findings.md, progress.md
+#   - Copies all 6 Maxim subagent role files into .mxm-skills/agents/
+#   - Copies selected IDE adapter folders into your project root
+#   - Opens a GitHub Issue with full task brief ready to action
+#
+# REQUIREMENTS:
+#   - This workflow runs in YOUR PROJECT repo, not in maxim
+#   - maxim must be accessible (public or same org)
+#   - No secrets needed — uses default GITHUB_TOKEN
+#
+# RUNNING MANUALLY:
+#   Go to Actions tab > Maxim Project Setup > Run workflow
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: Maxim Project Setup
+
+on:
+  push:
+    paths:
+      - 'templates/project.yml'
+  workflow_dispatch:
+    inputs:
+      project_yml:
+        description: 'Path to project.yml'
+        required: false
+        default: 'templates/project.yml'
+
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Checkout project repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout maxim (for subagents + ide-adapters)
+        uses: actions/checkout@v4
+        with:
+          repository: DrNabeelKhan/maxim
+          path: _mxm_source
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install yq (YAML parser)
+        run: |
+          wget -qO /usr/local/bin/yq \
+            https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          chmod +x /usr/local/bin/yq
+
+      - name: Parse project.yml
+        id: config
+        run: |
+          FILE="templates/project.yml"
+          echo "PROJECT_NAME=$(yq '.project.name' $FILE)"         >> $GITHUB_OUTPUT
+          echo "PROJECT_TYPE=$(yq '.project.type' $FILE)"         >> $GITHUB_OUTPUT
+          echo "PROJECT_REPO=$(yq '.project.repo' $FILE)"         >> $GITHUB_OUTPUT
+          echo "PRIMARY_TOOL=$(yq '.project.primary_tool' $FILE)" >> $GITHUB_OUTPUT
+          echo "MODEL=$(yq '.project.model_provider' $FILE)"      >> $GITHUB_OUTPUT
+          echo "TASK_TITLE=$(yq '.task.title' $FILE)"             >> $GITHUB_OUTPUT
+          echo "TASK_BRANCH=$(yq '.task.branch' $FILE)"           >> $GITHUB_OUTPUT
+          echo "TASK_PRIORITY=$(yq '.task.priority' $FILE)"       >> $GITHUB_OUTPUT
+          # Multi-line description needs special handling
+          yq '.task.description' $FILE > /tmp/task_desc.txt
+
+      - name: Generate CLAUDE.md
+        run: |
+          cat > CLAUDE.md << EOF
+          # Maxim — ${{ steps.config.outputs.PROJECT_NAME }}
+
+          PROJECT: ${{ steps.config.outputs.PROJECT_NAME }}
+          TYPE: ${{ steps.config.outputs.PROJECT_TYPE }}
+          MXM_MODEL_PROVIDER: ${{ steps.config.outputs.MODEL }}
+
+          ## Skill Priority (ALWAYS follow this order)
+          1. Maxim Domain Skills  → skills/
+          2. Anthropic Skills    → .claude/skills/anthropic/
+          3. Antigravity Skills  → .claude/skills/antigravity/
+          4. Superpowers         → community-packs/superpowers/
+          5. Planning skills     → community-packs/planning-with-files/
+
+          ## Active Subagents
+          - .mxm-skills/agents/planner.md
+          - .mxm-skills/agents/implementer.md
+          - .mxm-skills/agents/reviewer.md
+          - .mxm-skills/agents/tester.md
+          - .mxm-skills/agents/security-analyst.md
+          - .mxm-skills/agents/release-manager.md
+
+          ## Planning Files (read these at session start)
+          - .planning/task_plan.md
+          - .planning/findings.md
+          - .planning/progress.md
+
+          ## Session Opening Instruction
+          At the start of every session: read all planning files and
+          subagent roles above before responding to anything.
+          Use Maxim domain skills first. Fall back to anthropic/ or
+          antigravity/ only when no matching Maxim skill exists.
+          EOF
+
+      - name: Generate .planning files
+        run: |
+          mkdir -p .planning
+
+          TASK_DESC=$(cat /tmp/task_desc.txt)
+
+          cat > .planning/task_plan.md << EOF
+          # Task Plan — ${{ steps.config.outputs.PROJECT_NAME }}
+          Generated: $(date +'%Y-%m-%d')
+
+          ## Goal
+          ${{ steps.config.outputs.TASK_TITLE }}
+
+          ## Description
+          ${TASK_DESC}
+
+          ## Branch
+          \`${{ steps.config.outputs.TASK_BRANCH }}\`
+
+          ## Priority
+          ${{ steps.config.outputs.TASK_PRIORITY }}
+
+          ## Tasks
+          - [ ] Review requirements and existing codebase
+          - [ ] Design component/module structure
+          - [ ] Implement core functionality
+          - [ ] Write unit and integration tests
+          - [ ] Security and compliance review
+          - [ ] PR description and release prep
+
+          ## Status
+          NOT STARTED
+          EOF
+
+          echo "# Findings — ${{ steps.config.outputs.PROJECT_NAME }}" > .planning/findings.md
+          echo "Generated: $(date +'%Y-%m-%d')" >> .planning/findings.md
+          echo "" >> .planning/findings.md
+          echo "## Research & Decisions" >> .planning/findings.md
+          echo "_(agent will populate this during planning phase)_" >> .planning/findings.md
+
+          echo "# Progress — ${{ steps.config.outputs.PROJECT_NAME }}" > .planning/progress.md
+          echo "Started: $(date +'%Y-%m-%d')" >> .planning/progress.md
+          echo "" >> .planning/progress.md
+          echo "## Completed" >> .planning/progress.md
+          echo "_(none yet)_" >> .planning/progress.md
+          echo "" >> .planning/progress.md
+          echo "## In Progress" >> .planning/progress.md
+          echo "- Setup and scaffold" >> .planning/progress.md
+          echo "" >> .planning/progress.md
+          echo "## Blocked" >> .planning/progress.md
+          echo "_(none)_" >> .planning/progress.md
+
+      - name: Copy Maxim subagents
+        run: |
+          mkdir -p .mxm-skills/agents
+          cp _mxm_source/subagents/*.md .mxm-skills/agents/
+          echo "Subagents copied: $(ls .mxm-skills/agents/)"
+
+      - name: Copy IDE adapters
+        run: |
+          for adapter in $(yq '.adapters[]' templates/project.yml); do
+            SRC="_mxm_source/ide-adapters/.$adapter"
+            if [ -d "$SRC" ]; then
+              cp -r "$SRC" ".$adapter"
+              echo "✅ Copied .$adapter"
+            else
+              echo "⚠️  Adapter .$adapter not found in maxim — skipping"
+            fi
+          done
+
+      - name: Commit scaffold
+        run: |
+          rm -rf _mxm_source
+          git config user.name "mxm-setup-bot"
+          git config user.email "actions@github.com"
+          git add .
+          git diff --staged --quiet || git commit -m \
+            "scaffold(${{ steps.config.outputs.PROJECT_NAME }}): ${{ steps.config.outputs.TASK_TITLE }}"
+          git push
+
+      - name: Create GitHub Issue — task brief
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const taskDesc = fs.readFileSync('/tmp/task_desc.txt', 'utf8').trim();
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚀 [${{ steps.config.outputs.PROJECT_NAME }}] ${{ steps.config.outputs.TASK_TITLE }}`,
+              body: `## Maxim Task Brief
+
+**Project:** ${{ steps.config.outputs.PROJECT_NAME }}
+**Type:** ${{ steps.config.outputs.PROJECT_TYPE }}
+**Branch:** \`${{ steps.config.outputs.TASK_BRANCH }}\`
+**Priority:** ${{ steps.config.outputs.TASK_PRIORITY }}
+**Model:** ${{ steps.config.outputs.MODEL }}
+**Primary Tool:** ${{ steps.config.outputs.PRIMARY_TOOL }}
+
+## Task Description
+${taskDesc}
+
+## Scaffold Completed ✅
+| File | Purpose |
+|---|---|
+| \`CLAUDE.md\` | Master agent instructions with skill priority |
+| \`.planning/task_plan.md\` | Task breakdown — update as you work |
+| \`.planning/findings.md\` | Research and decisions log |
+| \`.planning/progress.md\` | Live status tracking |
+| \`.mxm-skills/agents/\` | All 6 Maxim role definitions |
+| IDE adapter folders | Pre-configured for selected tools |
+
+## How to Start
+1. Pull latest from your repo
+2. Open in \`${{ steps.config.outputs.PRIMARY_TOOL }}\`
+3. Paste this session-opening prompt:
+
+\`\`\`
+You are Maxim for ${{ steps.config.outputs.PROJECT_NAME }}.
+Read CLAUDE.md, .planning/task_plan.md, .planning/findings.md,
+and .planning/progress.md — then confirm you are ready.
+\`\`\`
+
+---
+*Auto-generated by Maxim Setup Workflow — maxim*`,
+              labels: ["mxm-task", "setup-complete"]
+            });

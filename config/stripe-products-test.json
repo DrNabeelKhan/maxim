@@ -1,0 +1,108 @@
+{
+  "env": "test",
+  "created_at": "2026-04-21T16:43:28.445Z",
+  "subscription_products": [
+    {
+      "tier_base": "solo",
+      "name": "Maxim Solo",
+      "seats": 1,
+      "product_id": "prod_UNSJxya96RiWbH",
+      "prices": {
+        "month": {
+          "price_id": "price_1TOhOXFR96sQjyaJaRKY2Si7",
+          "amount": 1999,
+          "tier_id": "solo"
+        },
+        "year": {
+          "price_id": "price_1TOhOXFR96sQjyaJ8Cef2MPR",
+          "amount": 19999,
+          "tier_id": "solo-annual"
+        }
+      }
+    },
+    {
+      "tier_base": "pro",
+      "name": "Maxim Pro",
+      "seats": 1,
+      "product_id": "prod_UNSJlGLz3o5rOc",
+      "prices": {
+        "month": {
+          "price_id": "price_1TOhOXFR96sQjyaJyn6ezB8c",
+          "amount": 3900,
+          "tier_id": "pro"
+        },
+        "year": {
+          "price_id": "price_1TOhOYFR96sQjyaJJPAF0Kdh",
+          "amount": 39000,
+          "tier_id": "pro-annual"
+        }
+      }
+    },
+    {
+      "tier_base": "professional",
+      "name": "Maxim Professional",
+      "seats": 1,
+      "product_id": "prod_UNSJBGedbTHO6B",
+      "prices": {
+        "month": {
+          "price_id": "price_1TOhOYFR96sQjyaJKfmGuHI7",
+          "amount": 9900,
+          "tier_id": "professional"
+        },
+        "year": {
+          "price_id": "price_1TOhOYFR96sQjyaJYjUZUDUk",
+          "amount": 99000,
+          "tier_id": "professional-annual"
+        }
+      }
+    },
+    {
+      "tier_base": "team",
+      "name": "Maxim Team",
+      "seats": 5,
+      "product_id": "prod_UNSJ0AK1II5NdG",
+      "prices": {
+        "month": {
+          "price_id": "price_1TOhOZFR96sQjyaJKe5Zf52M",
+          "amount": 24900,
+          "tier_id": "team"
+        },
+        "year": {
+          "price_id": "price_1TOhOZFR96sQjyaJk6CUGXyd",
+          "amount": 249000,
+          "tier_id": "team-annual"
+        }
+      }
+    }
+  ],
+  "overlay_products": [
+    {
+      "tier_id": "overlay-healthcare",
+      "name": "Maxim Healthcare Overlay",
+      "product_id": "prod_UNSJf1eOIRwWpI",
+      "price_id": "price_1TOhOZFR96sQjyaJIWJiDpII",
+      "amount": 24900
+    },
+    {
+      "tier_id": "overlay-legal",
+      "name": "Maxim Legal Overlay",
+      "product_id": "prod_UNSJdo1UTmVDew",
+      "price_id": "price_1TOhOaFR96sQjyaJFe1QFla7",
+      "amount": 19900
+    },
+    {
+      "tier_id": "overlay-fintech",
+      "name": "Maxim Fintech Overlay",
+      "product_id": "prod_UNSJSzIZyE34R5",
+      "price_id": "price_1TOhOaFR96sQjyaJ8mWxHEVF",
+      "amount": 19900
+    },
+    {
+      "tier_id": "overlay-govtech",
+      "name": "Maxim GovTech Overlay",
+      "product_id": "prod_UNSJ4xZ7eSOJFw",
+      "price_id": "price_1TOhObFR96sQjyaJNlGovOTA",
+      "amount": 14900
+    }
+  ]
+}

@@ -1,0 +1,4953 @@
+{
+  "version": "1.0.0",
+  "project": "Maxim Agent Platform — iSimplification.io",
+  "description": "Single source of truth for Maxim agents and skills catalog. v1.0.0 achieves 100% Grade A DNA coverage across all 88 agents (full Triggers + Collaboration Matrix sections). VoltAgent, external subtrees, and domain dispatch tracked in config/dependency-registry.json.",
+  "last_updated": "2026-04-18",
+  "agent_dna_coverage": {
+    "grade_a": 88,
+    "grade_b": 0,
+    "grade_c": 0,
+    "coverage_pct": 100,
+    "achieved_in": "v1.0.0"
+  },
+  "maintainer": "DrNabeelKhan",
+  "scope": "Maxim agents + skills catalog only",
+  "total_mxm_agents": 88,
+  "_total_mxm_agents_breakdown": "CEO 9 + CTO 25 + CMO 15 + CSO 9 + CPO 12 + COO 9 + CINO 3 + Orchestrators 5 (planner/implementer/reviewer/tester/release-manager) + 1 executive-router = 88",
+  "total_skill_domains_active": 34,
+  "total_skill_domains_added_in_v640": 7,
+  "total_skill_domains_added_in_v641": 1,
+  "_skill_domains_added_v640_list": [
+    "junction-guard",
+    "wiki-ingest",
+    "wiki-query",
+    "wiki-lint",
+    "wiki-explore",
+    "voice",
+    "usage-aware-scheduler"
+  ],
+  "_skill_domains_added_v641_list": [
+    "proactive-watch"
+  ],
+  "total_slash_commands": 37,
+  "_slash_commands_added_v641": ["mxm-watch", "mxm-session-end"],
+  "total_mcp_servers": 7,
+  "_mcp_servers_consolidated_v641": "dispatch + skills → catalog; design → absorbed into context",
+  "total_mcp_tools": 47,
+  "total_voltagent_specialists": 150,
+  "total_external_brand_templates": 59,
+  "total_executable_hooks": 10,
+  "_executable_hooks_added_v641": ["git-hygiene-preamble.sh", "git-hygiene-preamble.ps1", "git-hygiene-postamble.sh", "git-hygiene-postamble.ps1"],
+  "total_categories": 14,
+  "frameworks_covered": 64,
+  "_frameworks_added_v641": ["proactive-watch"],
+  "total_adrs": 2,
+  "_adrs_v641_list": ["ADR-001-mxm-architecture-baseline", "ADR-002-executable-contracts"],
+  "total_canonical_ledgers": 5,
+  "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-04-18",
+      "changes": [
+        "feat: Agent DNA Grade A Coverage release — 27 remaining agents upgraded from Grade B/C to Grade A",
+        "feat: Every agent now has full Triggers section (keywords + routing signals + auto-trigger + intent categories)",
+        "feat: Every agent now has full Collaboration Matrix (bidirectional: inbound + outbound + co-operates)",
+        "fix: security-analyst (CSO office LEAD) was Grade B in v1.0.0 — now Grade A (critical governance fix)",
+        "fix: ai-ethics-reviewer, data-privacy-officer, incident-post-mortem-writer (CSO) — Grade A",
+        "fix: financial-modeler, influence-strategist, investor-pitch-writer, negotiation-specialist, partnership-manager (CEO) — Grade A",
+        "fix: seo-specialist, behavioral-designer, conversion-optimizer, decision-architect, gtm-strategist, landing-page-optimizer (CMO) — Grade A",
+        "fix: ux-researcher, ui-designer, ui-ux-designer, onboarding-designer (CPO) — Grade A",
+        "fix: changelog-writer, customer-success-manager (COO) — Grade A",
+        "fix: data-architect, performance-engineer, dependency-auditor, load-tester, technology-architect, training-data-curator (CTO) — Grade A",
+        "docs: agent-registry.json now tracks agent_dna_coverage field — auditable at every release",
+        "net: 88/88 agents fully routable via executive-router keyword/signal matching + deterministic handoff-chain resolution via Collaboration Matrix"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-04-18",
+      "changes": [
+        "feat: Operational Discipline release — codifies 15 multi-session-arc learnings as standard framework infrastructure",
+        "feat: Documents as Executable Contracts meta-principle (ADR-002) — 5 canonical contract classes, critical-contract commit blocking",
+        "feat: documents/ADRs/ ledger — TEMPLATE (4 mandatory sections, ≥3 alternatives), INDEX, numbering/lifecycle rules, seeded with ADR-001 (architecture baseline) + ADR-002",
+        "feat: Proactive Watch framework (64th framework) — universal drift detection across 10 classes, /mxm-watch command, LIGHT phase ships; FULL phase v1.0.0, CRITICAL v1.0.0+",
+        "feat: 3 canonical ledgers at repo root — BUG_TRACKER.md (+ Recurring-Pattern Registry), documents/ledgers/DEBUGGING_PLAYBOOK.md (append-only §N journal), documents/ledgers/SPRINT_CLI_INSTRUCTIONS.md (execution contract)",
+        "feat: Git Hygiene Gate hooks — git-hygiene-preamble (GH1/GH2/GH3) + git-hygiene-postamble (GHN) × bash + PowerShell",
+        "feat: /mxm-session-end command — named 9-document closure bundle (Learning #4)",
+        "feat: Cross-Surface Packaging — documents/cross-surface/maxim-project-instructions.md (Web/Desktop, 60% fidelity), packaging/cowork/ plugin scaffold (85% fidelity), documents/cross-surface/maxim-surface-guide.md (3-tier deployment)",
+        "feat: documents/business/sales-marketing/ scaffold — 6 subfolders (launch, catalogues, partner-programs, case-studies, decks, one-pagers)",
+        "feat: sprint templates — sprint-plan.md with Coverage Matrix appendix, sprint-report.md with plan-vs-actual diff",
+        "feat: config/watch-profile.yml + TEMPLATE — per-project drift checker config with locked CSO (compliance) + CEO (contract) triage",
+        "feat: schemas/watch-profile.schema.json + watch-report.schema.json — machine-validatable contracts",
+        "refactor: MCP consolidation 9 → 7 servers (hard cutover, no aliases): dispatch + skills → catalog (9 tools); design absorbed into context (+4 tools); context gains watch_run/watch_report/watch_configure (+3 tools). Net: 44 → 47 tools with fewer processes",
+        "refactor: CLAUDE.d/protocols.md extended with Executable Contracts + ADR Lifecycle + Session-End Bundle + CHANGELOG Discipline sections",
+        "refactor: session-start hook now surfaces watch drift count in session banner",
+        "docs: CHANGELOG discipline protocol — SKIPPED vs YANKED version conventions, rationale mandatory",
+        "docs: templates/README.md cataloging all scaffolding templates"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-04-16",
+      "changes": [
+        "feat: Canonical Truth + Brand Intelligence release (largest minor in Maxim history)",
+        "feat: 9th MCP server mxm-voice — wraps mbailey/voicemode for STT (Whisper) + TTS (Kokoro) with executive office routing",
+        "feat: 4 new skill domains (wiki-ingest, wiki-query, wiki-lint, wiki-explore) implementing RAG on MemPalace per Brandvoice example",
+        "feat: .brand-foundation/ ships at repo root — personal/ template (voice-profile, ai-tells, content-rules) + per-startup scaffolding via bootstrap --BrandFoundation flag",
+        "feat: root documents/reference/AGENTS.md teaches downstream agents how to USE the wiki",
+        "feat: /mxm-tasks now usage-aware — checks Anthropic OAuth usage API before firing scheduled work, sleeps until reset if threshold exceeded",
+        "feat: config/scheduler-thresholds.json (global) and config/voice-phrases.yml (user-editable hotwords)",
+        "feat: project-manifest schema v2.0.0 — adds status.lifecycle enum (10 states), status.gated, status.archived_reason, meta.markets, meta.ai_capabilities, meta.ownership_type, meta.repo_topology",
+        "feat: junction-guard skill enforces NK universe rule — refuses writes through .mxm-system\\ or .claude\\ junctions",
+        "feat: 6 executable hooks (.claude/hooks/session-start, session-end, pre-commit × .sh/.ps1) — replaces documented-only behavior with deterministic enforcement",
+        "feat: pre-commit hook blocks 9 secret patterns (AWS, OpenAI, Anthropic, GitHub PAT, Slack, private keys), warns on PII, audit logs to .mxm-skills/compliance-audit.jsonl",
+        "feat: root LICENSE (Apache 2.0), .mcp.json (auto-discovery for 9 servers), .env.example (full env var template)",
+        "feat: per-MCP-server README.md across all 9 servers + comprehensive mcp/README.md update",
+        "fix: CLAUDE.md split — 641 → 399 lines (under 500-line anti-pattern threshold) + 5 modular CLAUDE.d/ includes (722 lines reference detail loaded on demand)",
+        "fix: deleted vaporware ide-adapters/ directory (README-only, no code) — restoration tracked for v8.0.0+",
+        "fix: CSO security gate now Grade A — penetration-tester and threat-modeler backfilled with full Triggers + Collaboration Matrix DNA",
+        "fix: 5 high-traffic Grade B agents promoted to Grade A (enterprise-architect, content-strategist, product-manager, product-strategist, compliance-officer)",
+        "fix: drift cleanup — README/HELP/ABOUT/MOAT/registry/SESSION_CONTINUITY all sync to v1.0.0 with verified counts (87 agents, 30 domains, 35 commands, 9 MCP, 44 tools, 150 voltagent, 59 brand templates)",
+        "fix: VoltAgent specialist count corrected from claimed '127+' to verified 150",
+        "deferred: 29 remaining Grade B agent backfills → v7.1.0",
+        "deferred: A2A runtime MCP (F1), task-aware model router MCP (F6), ide-adapters real implementations → v8.0.0+"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-04-15",
+      "changes": [
+        "feat: sync_portfolio MCP tool on mxm-portfolio — scans all project manifests under MXM_PROJECTS_ROOT, updates PORTFOLIO-METRICS.md with real data",
+        "feat: mxm-global-sync scheduled task — runs daily at 5:27 AM before CEO morning cycle",
+        "feat: Data Flow Rule documented — project → global one-way; .mxm-global/ is derived cache",
+        "feat: dispatch server +14 CTO keywords + 5 COO keywords",
+        "fix: design server reads README.md first (awesome-design-md format)"
+      ]
+    },
+    {
+      "version": "5.2.3",
+      "date": "2026-04-12",
+      "changes": [
+        "feat: auto-inventory protocol — file_inventory.md auto-tracking at session end",
+        "feat: sync-version.ps1/.sh — propagates version from registry to all files",
+        "feat: version drift detection in auto-inventory scan",
+        "fix: /mxm-release runs inventory snapshot + version sync before tagging"
+      ]
+    },
+    {
+      "version": "5.2.2",
+      "date": "2026-04-12",
+      "changes": [
+        "fix: canonical file locations enforced across 9 files"
+      ]
+    },
+    {
+      "version": "5.2.1",
+      "date": "2026-04-12",
+      "changes": [
+        "fix: 25 agents with full DNA reclassified from pending-authoring to active",
+        "feat: 47 agent stubs converted to Maxim wrappers with external skill source, behavioral layer, portfolio mapping, triggers, and collaboration matrix",
+        "fix: all agent Skills Used sections corrected to reference actual paths (removed non-existent composable-skills/frameworks/)",
+        "result: 0 pending-authoring agents — all 87 agents now deliver Maxim-enhanced output across 25+ portfolio projects"
+      ]
+    },
+    {
+      "version": "5.2.0",
+      "date": "2026-04-12",
+      "changes": [
+        "feat: MemPalace MCP integration — 23rd skill domain mapping Maxim 7 offices to MemPalace wings/rooms",
+        "feat: /mxm-remember command — stores context in MemPalace with office routing + file dual-write",
+        "feat: /mxm-recall command — retrieves context by topic/project/office with semantic search",
+        "feat: auto-compact enhanced — compact session summary (under 2000 tokens) as seed for compacted context",
+        "feat: /mxm-tasks schedule — creates Claude Scheduled Tasks from global task list",
+        "feat: /mxm-tasks dispatch — generates Dispatch-ready prompts for background execution",
+        "feat: cross-surface Dispatch templates — global-aware, task-driven, and scheduled dispatch patterns",
+        "fix: orchestrator agents — .mxm/ references updated to .mxm-skills/, triggers + collaboration matrix added",
+        "feat: CI/CD validation workflow — mxm-validate.yml verifies JSON, counts, legacy refs, security on every PR"
+      ]
+    },
+    {
+      "version": "5.1.0",
+      "date": "2026-04-11",
+      "changes": [
+        "refactor: .mxm/ → .mxm-skills/ and .mxm-system/ → .mxm-skills/ namespace rename (222+ refs across 66 files)",
+        "refactor: file naming convention agents-handoff.md, agents-skill-gaps.log, agents-background.log, agents-handoff-schema.md",
+        "feat: auto-compact skill — writes session state before context compaction on sprint/phase completion",
+        "feat: /mxm-tasks — global cross-project task management with scheduling integration",
+        "feat: /mxm-portfolio — cross-project portfolio dashboard with health signals",
+        "feat: templates/ceo-automation/global/TASKS.md — global task list template",
+        "feat: project-manifest.TEMPLATE.json — added full_portfolio_registry, cross_project_patterns, jurisdiction_matrix",
+        "feat: session-memory SKILL.md — next-task suggestion on session start from .mxm-global/TASKS.md"
+      ]
+    },
+    {
+      "version": "5.0.0",
+      "date": "2026-04-11",
+      "changes": [
+        "feat: Session Memory skill domain (22nd) — mandatory cross-session persistence with 3-tier architecture (project/reference/feedback)",
+        "feat: Commit Protocol — auto-update CHANGELOG, documents/guides/HELP.md, documents/reference/SKILLS_MAP.md on every commit",
+        "feat: Build Target Protocol — remote-first SSH builds, per-project droplet config",
+        "feat: File Deduplication Policy — canonical locations enforced, no duplicate planning files",
+        "feat: /mxm-help runtime reference card with grouped commands + CLI/Desktop usage",
+        "feat: /mxm-context portable context generator for Claude.ai/Desktop/Dispatch",
+        "feat: Cowork plugin package (plugins/mxm-cowork/) for Claude Code + Cowork",
+        "feat: 7 session memory templates in templates/session-memory/",
+        "feat: build_target section in project-manifest.TEMPLATE.json",
+        "feat: Usage section added to all 27 command files (CLI + Desktop + Code)",
+        "fix: CLAUDE.md Session End Protocol now writes to .claude-sessions-memory/ (not .mxm-skills/)"
+      ]
+    },
+    {
+      "version": "4.2.0",
+      "date": "2026-04-11",
+      "changes": [
+        "feat: CEO Automation skill domain — 21st Maxim skill with 5 sub-skills (ceo-tasks, marketing, sales, launch-product, social-media)",
+        "feat: 3 new slash commands — /mxm-ceo-setup, /ceo-morning, /ceo-overnight",
+        "feat: 33 startup executive summary templates in templates/ceo-automation/",
+        "feat: Maxim MOAT enforcement on all CEO sub-skills — Fogg, COM-B, EAST, Hook Model, SPIN, AIDA, RICE, Kano",
+        "fix: /ceo command now auto-detects .mxm-executive-summary/ and loads startup context"
+      ]
+    },
+    {
+      "version": "4.0.0",
+      "date": "2026-03-19",
+      "description": "v1.0.0 release. Claude Code full native — 12 slash commands + 10 sub-agents. planning-with-files SKILL.md authored. Enterprise README + GETTING_STARTED rewrite. All 20 skill domains with Maxim-WRAPPER.md. Super User mode. Ethics gates across 7 agents. security-analyst.md full DNA. Sub-domain dispatch matrix on 4 Tier 2 agents. Registry version aligned to release versioning from v3.2.1."
+    },
+    {
+      "version": "3.2.1",
+      "date": "2026-03-18",
+      "description": "Added executive-router agent. total_mxm_agents: 86 → 87. executive-router assigned to orchestrators office."
+    },
+    {
+      "version": "3.2.0",
+      "date": "2026-03-18",
+      "description": "Sprint 1 registry sync: updated all 86 agent path fields to reflect executive office subfolder structure. Added executive_office field to all active agents. Corrected total_mxm_agents 87 → 86 (stale counter). Added explicit status: active to 3 agents missing status field. governance-specialist assigned to ceo office."
+    },
+    {
+      "version": "3.1.1",
+      "date": "2026-03-18",
+      "description": "Scrubbed deprecated agent IDs from skills_catalog consumers (marketing-skill: 13 removed, senior-security: 2 removed, senior-secops: 2 removed). Deprecated app-store-optimizer. Normalized changelog entries to JSON object format."
+    },
+    {
+      "version": "3.1.0",
+      "date": "2026-03-18",
+      "description": "Op-C: Demoted 12 agents to Skill DNA. Op-D: Absorbed 15 agents into 7 survivors. Expanded survivor frameworks, triggers, collaborates_with. Scrubbed deprecated refs from all active collaborates_with arrays. total_mxm_agents updated to 87."
+    },
+    {
+      "version": "3.0.0",
+      "date": "2026-03-17",
+      "description": "Merged v1 content DNA (frameworks, triggers, purpose, responsibilities, prompt_template, success_metrics, resources) into all 79 v1 agents. Added compliance as 14th active category. Corrected 8 agent categories. Fixed geo-optimizer priority to critical. Formalized orchestrator boolean on 8 agents. Removed microservices-architect ghost reference from senior-architect consumers. Fixed/dropped 6 stale resource URLs. Marked 37 new agents as pending-authoring."
+    },
+    {
+      "version": "2.4.0",
+      "date": "2026-03-16",
+      "description": "Added 35 new agents. Introduced path and skills fields."
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-03-13",
+      "description": "Initial registry with 79 agents and full content DNA."
+    }
+  ],
+  "skills_catalog": {
+    "description": "Reusable skill modules consumed by Maxim agents. Each skill maps to a domain and lists which agents consume it.",
+    "skills": [
+      {
+        "id": "senior-architect",
+        "path": "skills/senior-architect/",
+        "domain": "Architecture / System Design",
+        "consumers": [
+          "enterprise-architect",
+          "solution-architect",
+          "technology-architect",
+          "backend-architect",
+          "business-architect",
+          "data-architect",
+          "governance-specialist"
+        ]
+      },
+      {
+        "id": "senior-ml-engineer",
+        "path": "skills/senior-ml-engineer/",
+        "domain": "AI / LLM / Agentic Systems",
+        "consumers": [
+          "ai-engineer",
+          "data-scientist",
+          "rag-specialist",
+          "training-data-curator"
+        ]
+      },
+      {
+        "id": "senior-prompt-engineer",
+        "path": "skills/senior-prompt-engineer/",
+        "domain": "AI / LLM / Agentic Systems",
+        "consumers": [
+          "ai-engineer",
+          "prompt-engineer"
+        ]
+      },
+      {
+        "id": "senior-data-scientist",
+        "path": "skills/senior-data-scientist/",
+        "domain": "Data / Analytics",
+        "consumers": [
+          "data-scientist",
+          "analytics-reporter",
+          "experiment-tracker"
+        ]
+      },
+      {
+        "id": "senior-computer-vision",
+        "path": "skills/senior-computer-vision/",
+        "domain": "AI / LLM / Agentic Systems",
+        "consumers": [
+          "ai-engineer"
+        ]
+      },
+      {
+        "id": "senior-security",
+        "path": "skills/senior-security/",
+        "domain": "Security / Threat Modeling",
+        "consumers": [
+          "security-architect",
+          "threat-modeler",
+          "compliance-officer",
+          "data-privacy-officer"
+        ]
+      },
+      {
+        "id": "senior-secops",
+        "path": "skills/senior-secops/",
+        "domain": "Security / Threat Modeling",
+        "consumers": [
+          "incident-responder",
+          "security-analyst",
+          "incident-post-mortem-writer"
+        ]
+      },
+      {
+        "id": "incident-commander",
+        "path": "skills/incident-commander/",
+        "domain": "Security / Threat Modeling",
+        "consumers": [
+          "incident-responder",
+          "infrastructure-maintainer"
+        ]
+      },
+      {
+        "id": "aws-solution-architect",
+        "path": "skills/aws-solution-architect/",
+        "domain": "Cloud / Infrastructure",
+        "consumers": [
+          "solution-architect",
+          "devops-automator",
+          "infrastructure-maintainer",
+          "cloud-cost-optimizer"
+        ]
+      },
+      {
+        "id": "marketing-skill",
+        "path": "skills/marketing-skill/",
+        "domain": "SEO / AEO / Marketing",
+        "consumers": [
+          "seo-specialist",
+          "growth-hacker",
+          "email-campaign-writer",
+          "landing-page-optimizer",
+          "content-strategist"
+        ]
+      },
+      {
+        "id": "self-improving-agent",
+        "path": "skills/self-improving-agent/",
+        "domain": "AI / LLM / Agentic Systems",
+        "consumers": [
+          "ai-engineer"
+        ]
+      }
+    ]
+  },
+  "categories": [
+    "banner-design",
+    "behavior-science-persuasion",
+    "compliance",
+    "content-creation",
+    "design",
+    "engineering",
+    "enterprise-architecture",
+    "marketing",
+    "product",
+    "product-development-research",
+    "project-management",
+    "search-visibility",
+    "security",
+    "slides",
+    "studio-operations",
+    "testing",
+    "ui-styling",
+    "ui-ux-pro-max"
+  ],
+  "agents": [
+    {
+      "id": "accessibility-auditor",
+      "name": "Accessibility Auditor",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/cpo/accessibility-auditor.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cpo"
+    },
+    {
+      "id": "aeo-strategist",
+      "name": "AEO Strategist",
+      "version": "1.0.0",
+      "category": "search-visibility",
+      "path": "agents/MXM/deprecated/aeo-strategist.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Schema.org",
+        "Featured Snippets",
+        "Voice Search Best Practices"
+      ],
+      "triggers": [
+        "optimize for voice search",
+        "featured snippets",
+        "answer engine",
+        "position zero"
+      ],
+      "collaborates_with": [
+        "seo-specialist",
+        "geo-optimizer",
+        "article-writer",
+        "content-creator"
+      ],
+      "purpose": "Optimizes content for voice search and direct answer engines (Siri, Alexa, Featured Snippets) to capture position zero",
+      "responsibilities": [
+        "Structure content for featured snippets",
+        "Optimize for question-based queries",
+        "Implement Schema.org markup",
+        "Create concise direct answers (40-60 words)",
+        "Monitor voice search performance"
+      ],
+      "prompt_template": "You are an AEO Strategist. Optimize the following content for answer engines and featured snippets. Provide question-based content structure, concise answers, Schema.org markup recommendations, and voice search optimizations.",
+      "success_metrics": [
+        "Featured snippet acquisitions",
+        "Voice search visibility",
+        "Position zero rankings",
+        "Answer engine appearances"
+      ],
+      "resources": [
+        "https://developers.google.com/search/documents/appearance/featured-snippets",
+        "https://schema.org/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "seo-specialist"
+    },
+    {
+      "id": "ai-engineer",
+      "name": "AI Engineer",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/ai-engineer.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [
+        "senior-ml-engineer",
+        "senior-prompt-engineer",
+        "senior-computer-vision",
+        "self-improving-agent"
+      ],
+      "frameworks": [
+        "Machine Learning",
+        "Embeddings",
+        "RAG",
+        "Fine-tuning"
+      ],
+      "triggers": [
+        "AI implementation",
+        "machine learning",
+        "LLM integration",
+        "AI features",
+        "embeddings"
+      ],
+      "collaborates_with": [
+        "data-scientist",
+        "backend-architect",
+        "product-strategist",
+        "security-architect"
+      ],
+      "purpose": "Implements ML models, embeddings, and AI-powered features with ethical considerations",
+      "responsibilities": [
+        "Implement machine learning models",
+        "Build AI-powered features",
+        "Integrate LLMs and embeddings",
+        "Fine-tune models for use cases",
+        "Ensure AI ethics compliance",
+        "Monitor model performance"
+      ],
+      "prompt_template": "You are an AI Engineer. Implement AI features for the following requirements. Provide model selection, implementation approach, integration plan, ethics review, and monitoring strategy.",
+      "success_metrics": [
+        "Model accuracy",
+        "Feature adoption",
+        "Latency performance",
+        "Ethics compliance"
+      ],
+      "resources": [
+        "https://huggingface.co/",
+        "https://www.tensorflow.org/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "ai-ethics-reviewer",
+      "name": "AI Ethics Reviewer",
+      "version": "1.0.0",
+      "category": "compliance",
+      "path": "agents/MXM/cso/ai-ethics-reviewer.md",
+      "priority": "critical",
+      "ethics_required": true,
+      "skills": [],
+      "executive_office": "cso",
+      "super_user_bypass": true
+    },
+    {
+      "id": "analytics-reporter",
+      "name": "Analytics Reporter",
+      "version": "1.0.0",
+      "category": "studio-operations",
+      "path": "agents/MXM/cto/analytics-reporter.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-data-scientist"
+      ],
+      "frameworks": [
+        "Dashboards",
+        "KPIs",
+        "Data Insights",
+        "Reporting"
+      ],
+      "triggers": [
+        "analytics report",
+        "dashboard",
+        "KPI tracking",
+        "data insights"
+      ],
+      "collaborates_with": [
+        "data-scientist",
+        "product-strategist",
+        "growth-hacker",
+        "experiment-tracker"
+      ],
+      "purpose": "Generates dashboards, KPIs, and data-driven insights for decision-making",
+      "responsibilities": [
+        "Build analytics dashboards",
+        "Track KPIs",
+        "Generate reports",
+        "Provide data insights",
+        "Alert on anomalies",
+        "Recommend actions"
+      ],
+      "prompt_template": "You are an Analytics Reporter. Create analytics report for the following product/business. Provide dashboard design, KPI tracking, insights analysis, anomaly detection, and recommendations.",
+      "success_metrics": [
+        "Report accuracy",
+        "Insight quality",
+        "Decision impact",
+        "Stakeholder satisfaction"
+      ],
+      "resources": [
+        "https://www.tableau.com/",
+        "https://looker.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "api-integrator",
+      "name": "API Integrator",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/api-integrator.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cto"
+    },
+    {
+      "id": "api-tester",
+      "name": "API Tester",
+      "version": "1.0.0",
+      "category": "testing",
+      "path": "agents/MXM/cto/api-tester.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "API Testing",
+        "Contract Testing",
+        "Integration Testing",
+        "API Validation"
+      ],
+      "triggers": [
+        "API testing",
+        "endpoint validation",
+        "contract testing",
+        "API quality"
+      ],
+      "collaborates_with": [
+        "backend-architect",
+        "frontend-developer",
+        "devops-automator",
+        "documentation-writer"
+      ],
+      "purpose": "Validates endpoints, integrations, and contract testing for API quality",
+      "responsibilities": [
+        "Test API endpoints",
+        "Validate API contracts",
+        "Perform integration testing",
+        "Document API issues",
+        "Verify API performance",
+        "Ensure API reliability"
+      ],
+      "prompt_template": "You are an API Tester. Test the following API. Provide test plan, endpoint validation, contract testing, performance testing, issue documentation, and quality assessment.",
+      "success_metrics": [
+        "API reliability",
+        "Bug detection rate",
+        "Test coverage",
+        "API performance"
+      ],
+      "resources": [
+        "https://www.postman.com/",
+        "https://swagger.io/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "app-store-optimizer",
+      "name": "App Store Optimizer",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/deprecated/app-store-optimizer.md",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/search-visibility/app-store-optimizer/SKILL.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "ASO",
+        "Keywords",
+        "Screenshots",
+        "Conversion Optimization"
+      ],
+      "triggers": [
+        "app store optimization",
+        "ASO",
+        "app visibility",
+        "download conversion"
+      ],
+      "collaborates_with": [
+        "mobile-app-builder",
+        "growth-hacker",
+        "analytics-reporter"
+      ],
+      "purpose": "Improves ASO, keywords, screenshots, and conversion rates for app stores",
+      "responsibilities": [
+        "Optimize app store listings",
+        "Research and select keywords",
+        "Design screenshot strategies",
+        "Write compelling descriptions",
+        "A/B test store elements",
+        "Monitor ASO metrics"
+      ],
+      "prompt_template": "You are an App Store Optimizer. Optimize the following app for app stores. Provide keyword strategy, screenshot recommendations, description optimization, A/B test plan, and ASO metrics.",
+      "success_metrics": [
+        "App store ranking",
+        "Download conversion rate",
+        "Keyword visibility",
+        "Organic downloads"
+      ],
+      "resources": [
+        "https://appstoreconnect.apple.com/",
+        "https://play.google.com/console/"
+      ],
+      "created_date": "2026-03-13"
+    },
+    {
+      "id": "article-writer",
+      "name": "Article Writer",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/deprecated/article-writer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "AIDA",
+        "Platform Best Practices",
+        "SEO Best Practices",
+        "Content Calendar",
+        "Platform-Specific Writing"
+      ],
+      "triggers": [
+        "write article",
+        "blog post",
+        "X thread",
+        "LinkedIn article",
+        "Medium post"
+      ],
+      "collaborates_with": [
+        "seo-specialist",
+        "social-media-strategist",
+        "content-creator",
+        "brand-guardian"
+      ],
+      "purpose": "Crafts engaging articles optimized for different platforms including X, LinkedIn, Medium, and Dev.to",
+      "responsibilities": [
+        "Write platform-specific articles",
+        "Optimize content for each platform's algorithm",
+        "Develop compelling headlines and hooks",
+        "Incorporate SEO best practices",
+        "Adapt tone and style for different audiences",
+        "Track content performance metrics"
+      ],
+      "prompt_template": "You are an Article Writer specializing in [PLATFORM]. Create content for the following topic. Provide compelling headline options, hook/opening paragraph, main content body, call-to-action, relevant hashtags, and optimal posting recommendations.",
+      "success_metrics": [
+        "Engagement rate",
+        "Reach and impressions",
+        "Click-through rate",
+        "Follower growth"
+      ],
+      "resources": [
+        "https://business.x.com/",
+        "https://business.linkedin.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/content-creation/article-writer/SKILL.md"
+    },
+    {
+      "id": "authority-builder",
+      "name": "Authority Builder",
+      "version": "1.0.0",
+      "category": "search-visibility",
+      "path": "agents/MXM/deprecated/authority-builder.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Link Building",
+        "Digital PR",
+        "E-E-A-T Signals",
+        "Domain Authority"
+      ],
+      "triggers": [
+        "build backlinks",
+        "digital PR",
+        "domain authority",
+        "brand mentions"
+      ],
+      "collaborates_with": [
+        "seo-specialist",
+        "content-creator",
+        "influence-strategist",
+        "article-writer"
+      ],
+      "purpose": "Manages backlink strategy, digital PR, and domain authority building for search visibility",
+      "responsibilities": [
+        "Develop backlink acquisition strategies",
+        "Execute digital PR campaigns",
+        "Build E-E-A-T signals",
+        "Monitor domain authority metrics",
+        "Identify link-building opportunities"
+      ],
+      "prompt_template": "You are an Authority Builder. Develop a backlink and authority building strategy for the following brand. Provide link acquisition tactics, digital PR opportunities, E-E-A-T signal improvements, and authority metrics to track.",
+      "success_metrics": [
+        "Domain Authority improvement",
+        "Quality backlinks acquired",
+        "Brand mention growth",
+        "Referral traffic increase"
+      ],
+      "resources": [
+        "https://moz.com/learn/seo/domain-authority",
+        "https://ahrefs.com/blog/link-building/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "seo-specialist"
+    },
+    {
+      "id": "backend-architect",
+      "name": "Backend Architect",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/backend-architect.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-architect"
+      ],
+      "frameworks": [
+        "Microservices Architecture",
+        "API Design",
+        "Database Design",
+        "Scalability Patterns"
+      ],
+      "triggers": [
+        "backend architecture",
+        "API design",
+        "database design",
+        "system scalability"
+      ],
+      "collaborates_with": [
+        "frontend-developer",
+        "devops-automator",
+        "security-architect",
+        "solution-architect"
+      ],
+      "purpose": "Designs APIs, databases, server architecture, and system scalability for backend systems",
+      "responsibilities": [
+        "Design backend architecture",
+        "Create API specifications",
+        "Design database schemas",
+        "Plan for scalability",
+        "Define integration patterns",
+        "Review code quality"
+      ],
+      "prompt_template": "You are a Backend Architect. Design backend architecture for the following requirements. Provide system design, API specifications, database schema, scalability plan, and integration approach.",
+      "success_metrics": [
+        "System reliability",
+        "API performance",
+        "Scalability achieved",
+        "Technical debt"
+      ],
+      "resources": [
+        "https://aws.amazon.com/architecture/",
+        "https://microservices.io/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "behavioral-designer",
+      "name": "Behavioral Designer",
+      "version": "1.0.0",
+      "category": "behavior-science-persuasion",
+      "path": "agents/MXM/cmo/behavioral-designer.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "Fogg Behavior Model",
+        "COM-B Model",
+        "Hook Model",
+        "EAST Framework",
+        "Nudge Theory"
+      ],
+      "triggers": [
+        "design behavior change",
+        "create habit loop",
+        "reduce friction",
+        "increase motivation"
+      ],
+      "collaborates_with": [
+        "ux-researcher",
+        "product-strategist",
+        "conversion-optimizer",
+        "habit-formation-coach"
+      ],
+      "purpose": "Designs products, services, and experiences using behavior science principles to drive desired user actions and outcomes ethically",
+      "responsibilities": [
+        "Apply Fogg Behavior Model to product design",
+        "Design trigger systems and prompts",
+        "Reduce friction in user workflows",
+        "Create habit-forming product features",
+        "Conduct behavioral audits of existing experiences",
+        "Ensure ethical behavior design practices"
+      ],
+      "prompt_template": "You are a Behavioral Design Specialist. Analyze the following product/feature for behavior change potential. Provide Fogg Behavior Model analysis (Motivation/Ability/Prompt), friction identification, trigger design recommendations, habit formation opportunities, and ethical considerations.",
+      "success_metrics": [
+        "Behavior adoption rate",
+        "Feature engagement metrics",
+        "User retention and habit strength",
+        "Friction reduction (time, clicks, steps)"
+      ],
+      "resources": [
+        "https://bjfogg.com/behavior-model/",
+        "https://www.bi.team/",
+        "https://www.nirandfar.com/hooked/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo",
+      "super_user_bypass": true
+    },
+    {
+      "id": "brand-guardian",
+      "name": "Brand Guardian",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/cmo/brand-guardian.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Brand Guidelines",
+        "Visual Identity",
+        "Brand Consistency",
+        "Brand Voice"
+      ],
+      "triggers": [
+        "brand guidelines",
+        "brand consistency",
+        "visual identity",
+        "brand voice"
+      ],
+      "collaborates_with": [
+        "ui-designer"
+      ],
+      "purpose": "Maintains brand consistency, guidelines, and visual identity across all touchpoints",
+      "responsibilities": [
+        "Define brand guidelines",
+        "Ensure brand consistency",
+        "Review brand assets",
+        "Train teams on brand",
+        "Audit brand compliance",
+        "Evolve brand identity"
+      ],
+      "prompt_template": "You are a Brand Guardian. Review and maintain brand for the following organization. Provide brand audit, consistency recommendations, guideline updates, training plan, and compliance monitoring.",
+      "success_metrics": [
+        "Brand consistency score",
+        "Guideline adoption",
+        "Brand recognition",
+        "Brand sentiment"
+      ],
+      "resources": [
+        "https://www.brandingstyleguides.com/",
+        "https://www.interbrand.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo"
+    },
+    {
+      "id": "business-architect",
+      "name": "Business Architect",
+      "version": "1.0.0",
+      "category": "enterprise-architecture",
+      "path": "agents/MXM/ceo/business-architect.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [
+        "senior-architect"
+      ],
+      "frameworks": [
+        "BIZBOK",
+        "Business Model Canvas",
+        "Value Stream Mapping",
+        "Capability Mapping"
+      ],
+      "triggers": [
+        "business architecture",
+        "capability mapping",
+        "value streams",
+        "business alignment"
+      ],
+      "collaborates_with": [
+        "enterprise-architect",
+        "product-strategist",
+        "market-analyst"
+      ],
+      "purpose": "Aligns business strategy with operational capabilities using business architecture frameworks",
+      "responsibilities": [
+        "Map business capabilities",
+        "Design value streams",
+        "Align strategy with operations",
+        "Create business architecture blueprints",
+        "Support strategic planning",
+        "Enable business transformation"
+      ],
+      "prompt_template": "You are a Business Architect. Develop business architecture for the following organization. Provide capability mapping, value stream design, strategy alignment, architecture blueprints, and transformation roadmap.",
+      "success_metrics": [
+        "Strategy-execution alignment",
+        "Capability coverage",
+        "Value stream efficiency",
+        "Business outcome achievement"
+      ],
+      "resources": [
+        "https://www.businessarchitectureguild.org/",
+        "https://www.strategyzer.com/canvas/business-model-canvas"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "ceo"
+    },
+    {
+      "id": "changelog-writer",
+      "name": "Changelog Writer",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/coo/changelog-writer.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "coo"
+    },
+    {
+      "id": "cloud-cost-optimizer",
+      "name": "Cloud Cost Optimizer",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/cloud-cost-optimizer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "aws-solution-architect"
+      ],
+      "executive_office": "cto"
+    },
+    {
+      "id": "compliance-officer",
+      "name": "Compliance Officer",
+      "version": "1.0.0",
+      "category": "compliance",
+      "path": "agents/MXM/cso/compliance-officer.md",
+      "priority": "critical",
+      "ethics_required": true,
+      "skills": [
+        "senior-security"
+      ],
+      "frameworks": [
+        "GDPR",
+        "HIPAA",
+        "CCPA",
+        "FedRAMP",
+        "SOC 2",
+        "ISO 27001"
+      ],
+      "triggers": [
+        "compliance review",
+        "regulatory compliance",
+        "audit preparation",
+        "policy enforcement"
+      ],
+      "collaborates_with": [
+        "legal-compliance-checker",
+        "governance-specialist",
+        "data-privacy-officer"
+      ],
+      "purpose": "Ensures regulatory compliance and industry security standards across the organization",
+      "responsibilities": [
+        "Monitor regulatory compliance requirements",
+        "Develop compliance policies and procedures",
+        "Conduct compliance audits",
+        "Train staff on compliance requirements",
+        "Report on compliance status",
+        "Manage compliance risks"
+      ],
+      "prompt_template": "You are a Compliance Officer. Assess compliance for the following organization. Provide regulatory requirements mapping, gap analysis, remediation plan, training recommendations, and compliance reporting.",
+      "success_metrics": [
+        "Compliance audit pass rate",
+        "Policy adoption rate",
+        "Training completion rate",
+        "Compliance incidents"
+      ],
+      "resources": [
+        "https://gdpr.eu/",
+        "https://www.hhs.gov/hipaa/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cso",
+      "super_user_bypass": true
+    },
+    {
+      "id": "competitive-analyst",
+      "name": "Competitive Analyst",
+      "version": "1.0.0",
+      "category": "product-development-research",
+      "path": "agents/MXM/cpo/competitive-analyst.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "SWOT Analysis",
+        "Competitive Matrix",
+        "Benchmarking",
+        "Market Positioning"
+      ],
+      "triggers": [
+        "competitive analysis",
+        "competitor research",
+        "market positioning",
+        "benchmarking"
+      ],
+      "collaborates_with": [
+        "market-analyst",
+        "product-strategist",
+        "innovation-researcher",
+        "growth-hacker"
+      ],
+      "purpose": "Monitors competitors, benchmarking, and market positioning using SWOT and competitive matrices",
+      "responsibilities": [
+        "Monitor competitor activities",
+        "Conduct competitive benchmarking",
+        "Analyze market positioning",
+        "Create competitive matrices",
+        "Identify competitive advantages",
+        "Report on competitive landscape"
+      ],
+      "prompt_template": "You are a Competitive Analyst. Analyze the competitive landscape for the following product/market. Provide competitor profiles, SWOT analysis, competitive matrix, positioning recommendations, and differentiation strategies.",
+      "success_metrics": [
+        "Competitive intelligence quality",
+        "Market share insights",
+        "Strategy recommendations adopted",
+        "Competitive advantage gained"
+      ],
+      "resources": [
+        "https://www.similarweb.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cpo"
+    },
+    {
+      "id": "content-creator",
+      "name": "Content Creator",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/deprecated/content-creator.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Multi-format Content",
+        "Copywriting",
+        "Content Strategy",
+        "Brand Voice"
+      ],
+      "triggers": [
+        "content creation",
+        "copywriting",
+        "multi-format content",
+        "content strategy"
+      ],
+      "collaborates_with": [
+        "article-writer",
+        "social-media-strategist",
+        "brand-guardian",
+        "growth-hacker"
+      ],
+      "purpose": "Produces blogs, copy, emails, and multi-format content across channels",
+      "responsibilities": [
+        "Create multi-format content",
+        "Write compelling copy",
+        "Develop content strategies",
+        "Maintain brand voice",
+        "Optimize for channels",
+        "Track content performance"
+      ],
+      "prompt_template": "You are a Content Creator. Create content for the following topic/channel. Provide content concept, copy, visual direction, channel optimization, and performance expectations.",
+      "success_metrics": [
+        "Content output volume",
+        "Engagement metrics",
+        "Conversion rate",
+        "Brand consistency"
+      ],
+      "resources": [
+        "https://contentmarketinginstitute.com/",
+        "https://copyblogger.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "content-strategist"
+    },
+    {
+      "id": "content-strategist",
+      "name": "Content Strategist",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/cmo/content-strategist.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Multi-format Content",
+        "Copywriting",
+        "Content Strategy",
+        "Brand Voice"
+      ],
+      "triggers": [
+        "content creation",
+        "copywriting",
+        "multi-format content"
+      ],
+      "collaborates_with": [],
+      "executive_office": "cmo"
+    },
+    {
+      "id": "conversion-optimizer",
+      "name": "Conversion Optimizer",
+      "version": "1.0.0",
+      "category": "behavior-science-persuasion",
+      "path": "agents/MXM/cmo/conversion-optimizer.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "Conversion Psychology",
+        "Persuasive Design",
+        "A/B Testing",
+        "Funnel Optimization"
+      ],
+      "triggers": [
+        "optimize conversion",
+        "improve funnel",
+        "increase signups",
+        "reduce drop-off"
+      ],
+      "collaborates_with": [
+        "behavioral-designer",
+        "persuasion-specialist",
+        "frontend-developer",
+        "data-scientist"
+      ],
+      "purpose": "Optimizes conversion funnels using behavioral insights and persuasive design while maintaining ethical standards",
+      "responsibilities": [
+        "Analyze funnel behavior and drop-off points",
+        "Identify conversion barriers",
+        "Design persuasive landing pages",
+        "Optimize checkout flows",
+        "Reduce cart abandonment",
+        "A/B test conversion elements"
+      ],
+      "prompt_template": "You are a Conversion Optimizer. Analyze the following funnel for conversion optimization. Provide funnel behavior analysis, barrier identification, persuasive design recommendations, A/B test ideas, and ethical review.",
+      "success_metrics": [
+        "Conversion rate improvement",
+        "Funnel drop-off reduction",
+        "Revenue per visitor",
+        "Customer acquisition cost"
+      ],
+      "resources": [
+        "https://cxl.com/",
+        "https://www.nngroup.com/articles/conversion/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo",
+      "super_user_bypass": true
+    },
+    {
+      "id": "customer-success-manager",
+      "name": "Customer Success Manager",
+      "version": "1.0.0",
+      "category": "studio-operations",
+      "path": "agents/MXM/coo/customer-success-manager.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "coo"
+    },
+    {
+      "id": "data-architect",
+      "name": "Data Architect",
+      "version": "1.0.0",
+      "category": "enterprise-architecture",
+      "path": "agents/MXM/cto/data-architect.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-architect"
+      ],
+      "frameworks": [
+        "DMBOK",
+        "DAMA",
+        "Data Mesh",
+        "Data Governance"
+      ],
+      "triggers": [
+        "data architecture",
+        "data governance",
+        "data strategy",
+        "data modeling"
+      ],
+      "collaborates_with": [
+        "enterprise-architect",
+        "data-scientist",
+        "backend-architect",
+        "governance-specialist"
+      ],
+      "purpose": "Creates data models, governance frameworks, and enterprise data strategy using DMBOK and industry standards",
+      "responsibilities": [
+        "Design enterprise data architecture",
+        "Create data governance frameworks",
+        "Develop data models and standards",
+        "Implement data quality measures",
+        "Design data integration strategies",
+        "Ensure data security and privacy"
+      ],
+      "prompt_template": "You are a Data Architect. Design data architecture for the following organization. Provide data models, governance framework, data quality measures, integration strategy, security controls, and DMBOK alignment.",
+      "success_metrics": [
+        "Data quality scores",
+        "Governance compliance rate",
+        "Data accessibility metrics",
+        "Integration success rate"
+      ],
+      "resources": [
+        "https://www.dama.org/",
+        "https://www.datamesh-architecture.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "data-privacy-officer",
+      "name": "Data Privacy Officer",
+      "version": "1.0.0",
+      "category": "compliance",
+      "path": "agents/MXM/cso/data-privacy-officer.md",
+      "priority": "critical",
+      "ethics_required": true,
+      "skills": [
+        "senior-security"
+      ],
+      "executive_office": "cso",
+      "super_user_bypass": true
+    },
+    {
+      "id": "data-scientist",
+      "name": "Data Scientist",
+      "version": "1.0.0",
+      "category": "product-development-research",
+      "path": "agents/MXM/cto/data-scientist.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-ml-engineer",
+        "senior-data-scientist"
+      ],
+      "frameworks": [
+        "A/B Testing",
+        "ML Analytics",
+        "Predictive Modeling",
+        "Statistical Analysis"
+      ],
+      "triggers": [
+        "data analysis",
+        "predictive modeling",
+        "A/B test analysis",
+        "machine learning"
+      ],
+      "collaborates_with": [
+        "product-strategist",
+        "analytics-reporter",
+        "experiment-tracker",
+        "ai-engineer"
+      ],
+      "purpose": "Analyzes product metrics, user behavior, and predictive modeling using A/B testing and ML analytics",
+      "responsibilities": [
+        "Analyze product and user data",
+        "Build predictive models",
+        "Design and analyze A/B tests",
+        "Create data visualizations",
+        "Provide data-driven insights",
+        "Recommend optimization strategies"
+      ],
+      "prompt_template": "You are a Data Scientist. Analyze the following data for insights. Provide statistical analysis, pattern identification, predictive modeling, A/B test results, and actionable recommendations.",
+      "success_metrics": [
+        "Model accuracy",
+        "Insight quality",
+        "Decision impact",
+        "ROI from recommendations"
+      ],
+      "resources": [
+        "https://www.kaggle.com/",
+        "https://scikit-learn.org/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "database-optimizer",
+      "name": "Database Optimizer",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/database-optimizer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cto"
+    },
+    {
+      "id": "decision-architect",
+      "name": "Decision Architect",
+      "version": "1.0.0",
+      "category": "behavior-science-persuasion",
+      "path": "agents/MXM/cmo/decision-architect.md",
+      "priority": "medium",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "Decision Science",
+        "Cognitive Bias Mitigation",
+        "Behavioral Economics",
+        "Choice Overload",
+        "Cognitive Biases"
+      ],
+      "triggers": [
+        "optimize decisions",
+        "reduce bias",
+        "choice overload",
+        "decision friction"
+      ],
+      "collaborates_with": [
+        "nudge-architect",
+        "behavioral-designer",
+        "ux-researcher",
+        "product-strategist"
+      ],
+      "purpose": "Optimizes decision-making processes and reduces cognitive friction while mitigating bias",
+      "responsibilities": [
+        "Audit cognitive biases in decision flows",
+        "Reduce decision friction",
+        "Design for choice overload reduction",
+        "Create decision support systems",
+        "Build decision confidence",
+        "Measure decision quality"
+      ],
+      "prompt_template": "You are a Decision Architect. Analyze the following decision point for cognitive biases and friction. Provide bias identification, friction analysis, choice architecture improvements, decision support recommendations, and decision quality metrics.",
+      "success_metrics": [
+        "Decision completion rate",
+        "Decision time reduction",
+        "User confidence scores",
+        "Decision quality measures"
+      ],
+      "resources": [
+        "https://www.behaviouraleconomics.com/",
+        "https://www.nngroup.com/articles/cognitive-biases/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo"
+    },
+    {
+      "id": "dependency-auditor",
+      "name": "Dependency Auditor",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/dependency-auditor.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cto"
+    },
+    {
+      "id": "devops-automator",
+      "name": "DevOps Automator",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/devops-automator.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "aws-solution-architect"
+      ],
+      "frameworks": [
+        "CI/CD",
+        "Infrastructure as Code",
+        "Kubernetes",
+        "Monitoring",
+        "DevSecOps"
+      ],
+      "triggers": [
+        "CI/CD pipeline",
+        "infrastructure automation",
+        "deployment",
+        "monitoring"
+      ],
+      "collaborates_with": [
+        "backend-architect",
+        "infrastructure-maintainer",
+        "security-architect",
+        "api-tester"
+      ],
+      "purpose": "Sets up CI/CD, infrastructure as code, and deployment pipelines for automated delivery",
+      "responsibilities": [
+        "Build CI/CD pipelines",
+        "Implement infrastructure as code",
+        "Configure deployment processes",
+        "Set up monitoring and alerting",
+        "Automate testing workflows",
+        "Optimize deployment frequency"
+      ],
+      "prompt_template": "You are a DevOps Automator. Set up CI/CD and infrastructure for the following project. Provide pipeline design, IaC templates, deployment strategy, monitoring setup, and automation recommendations.",
+      "success_metrics": [
+        "Deployment frequency",
+        "Lead time for changes",
+        "Change failure rate",
+        "Mean time to recovery"
+      ],
+      "resources": [
+        "https://www.terraform.io/",
+        "https://kubernetes.io/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "documentation-writer",
+      "name": "Documentation Writer",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/cmo/documentation-writer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Technical Documentation",
+        "API Documentation",
+        "ReadMe",
+        "GitBook"
+      ],
+      "triggers": [
+        "documentation",
+        "API docs",
+        "user guide",
+        "technical manual"
+      ],
+      "collaborates_with": [
+        "backend-architect",
+        "frontend-developer",
+        "api-tester",
+        "support-responder"
+      ],
+      "purpose": "Produces technical docs, API references, and user guides for ReadMe, GitBook, Notion, and Confluence",
+      "responsibilities": [
+        "Write clear technical documentation",
+        "Create API reference documentation",
+        "Develop user guides and tutorials",
+        "Maintain documentation accuracy",
+        "Organize information architecture",
+        "Gather feedback for improvements"
+      ],
+      "prompt_template": "You are a Documentation Writer. Create documentation for the following product/API. Provide overview, getting started guide, API reference, examples, troubleshooting, and FAQ.",
+      "success_metrics": [
+        "Documentation usage",
+        "Support ticket reduction",
+        "User satisfaction",
+        "Documentation accuracy"
+      ],
+      "resources": [
+        "https://readme.com/",
+        "https://www.gitbook.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo"
+    },
+    {
+      "id": "email-campaign-writer",
+      "name": "Email Campaign Writer",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/cmo/email-campaign-writer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "executive_office": "cmo"
+    },
+    {
+      "id": "enterprise-architect",
+      "name": "Enterprise Architect",
+      "version": "1.0.0",
+      "category": "enterprise-architecture",
+      "path": "agents/MXM/ceo/enterprise-architect.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-architect"
+      ],
+      "orchestrator": true,
+      "frameworks": [
+        "TOGAF",
+        "Zachman Framework",
+        "FEAF",
+        "ArchiMate",
+        "BIZBOK"
+      ],
+      "triggers": [
+        "enterprise architecture",
+        "digital transformation",
+        "architecture strategy",
+        "IT roadmap"
+      ],
+      "collaborates_with": [
+        "solution-architect",
+        "data-architect",
+        "governance-specialist",
+        "business-architect"
+      ],
+      "purpose": "Designs enterprise-wide architecture strategies and leads digital transformation initiatives using established architecture frameworks",
+      "responsibilities": [
+        "Develop enterprise architecture strategy and roadmap",
+        "Create architecture blueprints and documentation",
+        "Align IT strategy with business objectives",
+        "Evaluate and recommend technology standards",
+        "Lead digital transformation initiatives",
+        "Establish architecture governance processes"
+      ],
+      "prompt_template": "You are an Enterprise Architecture Specialist. Develop architecture guidance for the following business context. Provide current state assessment, target state vision, gap analysis, architecture roadmap, technology standards, governance framework, and risk assessment.",
+      "success_metrics": [
+        "Architecture artifact completion rate",
+        "Business-IT alignment scores",
+        "Technology standardization percentage",
+        "Digital transformation milestone achievement"
+      ],
+      "resources": [
+        "https://www.opengroup.org/togaf",
+        "https://zachman.com/",
+        "https://enterprisearchitecture.gov/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "ceo"
+    },
+    {
+      "id": "ethical-hacker",
+      "name": "Ethical Hacker",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/deprecated/ethical-hacker.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [
+        "senior-security"
+      ],
+      "frameworks": [
+        "OSSTMM",
+        "CEH",
+        "Responsible Disclosure",
+        "Bug Bounty"
+      ],
+      "triggers": [
+        "ethical hacking",
+        "bug bounty",
+        "vulnerability disclosure",
+        "security research"
+      ],
+      "collaborates_with": [
+        "penetration-tester",
+        "security-auditor",
+        "backend-architect",
+        "devops-automator"
+      ],
+      "purpose": "Finds exploits, tests boundaries, and reports security flaws responsibly following ethical guidelines",
+      "responsibilities": [
+        "Conduct ethical hacking engagements",
+        "Discover and document vulnerabilities",
+        "Follow responsible disclosure practices",
+        "Participate in bug bounty programs",
+        "Research emerging attack techniques",
+        "Educate on security best practices"
+      ],
+      "prompt_template": "You are an Ethical Hacker. Test the following system for security vulnerabilities. Provide vulnerability discovery, exploit demonstration (safe), responsible disclosure plan, and remediation guidance.",
+      "success_metrics": [
+        "Vulnerabilities discovered",
+        "Responsible disclosures",
+        "Bug bounty rewards",
+        "Security improvements"
+      ],
+      "resources": [
+        "https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/",
+        "https://www.osstmm.org/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "penetration-tester"
+    },
+    {
+      "id": "experiment-tracker",
+      "name": "Experiment Tracker",
+      "version": "1.0.0",
+      "category": "project-management",
+      "path": "agents/MXM/coo/experiment-tracker.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-data-scientist"
+      ],
+      "frameworks": [
+        "A/B Testing",
+        "Metrics",
+        "Hypothesis Validation",
+        "Experiment Management"
+      ],
+      "triggers": [
+        "experiment tracking",
+        "A/B test management",
+        "hypothesis validation",
+        "experiment results"
+      ],
+      "collaborates_with": [
+        "data-scientist",
+        "product-strategist",
+        "growth-hacker",
+        "analytics-reporter"
+      ],
+      "purpose": "Manages A/B tests, metrics, and hypothesis validation for experimentation",
+      "responsibilities": [
+        "Track experiment pipeline",
+        "Document hypotheses",
+        "Monitor experiment metrics",
+        "Analyze experiment results",
+        "Share experiment learnings",
+        "Maintain experiment repository"
+      ],
+      "prompt_template": "You are an Experiment Tracker. Track experiments for the following product. Provide experiment pipeline, hypothesis documentation, results analysis, learnings summary, and recommendations.",
+      "success_metrics": [
+        "Experiments completed",
+        "Learning velocity",
+        "Win rate",
+        "Impact delivered"
+      ],
+      "resources": [
+        "https://www.optimizely.com/",
+        "https://statsig.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "coo"
+    },
+    {
+      "id": "executive-router",
+      "name": "Maxim Executive Router",
+      "version": "1.0.0",
+      "category": "project-management",
+      "path": "agents/MXM/executive-router.md",
+      "priority": "critical",
+      "ethics_required": true,
+      "skills": [],
+      "orchestrator": true,
+      "executive_office": "orchestrators",
+      "status": "active",
+      "purpose": "Single entry point for all Maxim task routing. Classifies intent and routes to correct executive office lead. Coordinates cross-office collaboration.",
+      "frameworks": [
+        "COM-B Model",
+        "Fogg Behavior Model",
+        "EAST Framework"
+      ],
+      "triggers": [
+        "route task",
+        "classify intent",
+        "cross-office collaboration",
+        "new project bootstrap",
+        "ambiguous task routing"
+      ],
+      "collaborates_with": [
+        "enterprise-architect",
+        "implementer",
+        "content-strategist",
+        "security-analyst",
+        "product-strategist",
+        "planner",
+        "innovation-researcher"
+      ],
+      "created_date": "2026-03-18"
+    },
+    {
+      "id": "feedback-synthesizer",
+      "name": "Feedback Synthesizer",
+      "version": "1.0.0",
+      "category": "product",
+      "path": "agents/MXM/cpo/feedback-synthesizer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "User Feedback",
+        "Pattern Recognition",
+        "Sentiment Analysis",
+        "Feedback Management"
+      ],
+      "triggers": [
+        "user feedback",
+        "feedback analysis",
+        "customer insights",
+        "feedback patterns"
+      ],
+      "collaborates_with": [
+        "product-strategist",
+        "support-responder",
+        "analytics-reporter"
+      ],
+      "purpose": "Aggregates user feedback, identifies patterns, and prioritizes insights for product improvements",
+      "responsibilities": [
+        "Collect feedback from multiple sources",
+        "Synthesize feedback themes",
+        "Identify patterns and trends",
+        "Prioritize feedback insights",
+        "Share insights with teams",
+        "Track feedback resolution"
+      ],
+      "prompt_template": "You are a Feedback Synthesizer. Analyze the following user feedback. Provide theme identification, pattern analysis, prioritization, sentiment analysis, and actionable recommendations.",
+      "success_metrics": [
+        "Feedback volume processed",
+        "Insight quality",
+        "Product improvements made",
+        "User satisfaction improvement"
+      ],
+      "resources": [
+        "https://www.uservoice.com/",
+        "https://www.hotjar.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cpo"
+    },
+    {
+      "id": "finance-tracker",
+      "name": "Finance Tracker",
+      "version": "1.0.0",
+      "category": "studio-operations",
+      "path": "agents/MXM/deprecated/finance-tracker.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Budget Management",
+        "Expense Tracking",
+        "Financial Reporting",
+        "Forecasting"
+      ],
+      "triggers": [
+        "budget tracking",
+        "expense management",
+        "financial report",
+        "financial forecast"
+      ],
+      "collaborates_with": [
+        "analytics-reporter",
+        "project-shipper",
+        "studio-producer",
+        "legal-compliance-checker"
+      ],
+      "purpose": "Monitors budgets, expenses, and financial reporting for organizational health",
+      "responsibilities": [
+        "Track budgets and expenses",
+        "Generate financial reports",
+        "Forecast financial needs",
+        "Monitor cash flow",
+        "Ensure financial compliance",
+        "Recommend cost optimizations"
+      ],
+      "prompt_template": "You are a Finance Tracker. Track finances for the following organization/project. Provide budget tracking, expense analysis, financial report, forecast, and optimization recommendations.",
+      "success_metrics": [
+        "Budget adherence",
+        "Forecast accuracy",
+        "Cost savings",
+        "Financial health"
+      ],
+      "resources": [
+        "https://quickbooks.intuit.com/",
+        "https://www.xero.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "financial-modeler"
+    },
+    {
+      "id": "financial-modeler",
+      "name": "Financial Modeler",
+      "version": "1.0.0",
+      "category": "studio-operations",
+      "path": "agents/MXM/ceo/financial-modeler.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Budget Management",
+        "Expense Tracking",
+        "Financial Reporting",
+        "Forecasting"
+      ],
+      "triggers": [
+        "budget tracking",
+        "expense management",
+        "financial report",
+        "financial forecast"
+      ],
+      "collaborates_with": [],
+      "executive_office": "ceo"
+    },
+    {
+      "id": "frontend-developer",
+      "name": "Frontend Developer",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/frontend-developer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "React",
+        "Vue",
+        "Design Systems",
+        "Responsive Design"
+      ],
+      "triggers": [
+        "frontend development",
+        "UI implementation",
+        "component development",
+        "responsive design"
+      ],
+      "collaborates_with": [
+        "ui-designer",
+        "backend-architect",
+        "mobile-app-builder"
+      ],
+      "purpose": "Creates responsive UIs, React/Vue components, and user interfaces following design systems",
+      "responsibilities": [
+        "Develop responsive user interfaces",
+        "Build reusable components",
+        "Implement design systems",
+        "Optimize for performance",
+        "Ensure cross-browser compatibility",
+        "Write clean, maintainable code"
+      ],
+      "prompt_template": "You are a Frontend Developer. Develop frontend code for the following requirements. Provide component structure, implementation code, styling, performance optimizations, and testing approach.",
+      "success_metrics": [
+        "Code quality",
+        "Performance scores",
+        "Bug rate",
+        "Delivery timeliness"
+      ],
+      "resources": [
+        "https://react.dev/",
+        "https://vuejs.org/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "geo-optimizer",
+      "name": "GEO Optimizer",
+      "version": "1.0.0",
+      "category": "search-visibility",
+      "path": "agents/MXM/deprecated/geo-optimizer.md",
+      "priority": "critical",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "LLM Visibility",
+        "AI Overview Optimization",
+        "Brand Citations",
+        "Entity Optimization"
+      ],
+      "triggers": [
+        "optimize for AI search",
+        "ChatGPT Search",
+        "SGE",
+        "Perplexity",
+        "generative search"
+      ],
+      "collaborates_with": [
+        "seo-specialist",
+        "aeo-strategist",
+        "article-writer",
+        "authority-builder"
+      ],
+      "purpose": "Optimizes content and brand presence for generative AI search results (ChatGPT Search, Google SGE, Perplexity) to ensure visibility in AI-generated answers",
+      "responsibilities": [
+        "Optimize for LLM visibility and AI overview inclusion",
+        "Build brand citations across authoritative sources",
+        "Structure content for AI extraction and summarization",
+        "Monitor AI search result appearances",
+        "Develop GEO-specific content strategies"
+      ],
+      "prompt_template": "You are a GEO Optimizer. Analyze the following content for AI search visibility. Provide AI overview inclusion assessment, brand citation opportunities, content restructuring for AI extraction, entity optimization, and knowledge graph inclusion strategy.",
+      "success_metrics": [
+        "AI overview appearance rate",
+        "Brand mention frequency in AI responses",
+        "Citation quality and authority scores",
+        "Entity recognition accuracy"
+      ],
+      "resources": [
+        "https://blog.google/products/search/search-generative-experience/",
+        "https://openai.com/index/introducing-chatgpt-search/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "seo-specialist"
+    },
+    {
+      "id": "governance-specialist",
+      "name": "Governance Specialist",
+      "version": "1.0.0",
+      "category": "enterprise-architecture",
+      "path": "agents/MXM/ceo/governance-specialist.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [
+        "senior-architect"
+      ],
+      "frameworks": [
+        "COBIT",
+        "ISO 38500",
+        "IT Governance",
+        "Decision Frameworks"
+      ],
+      "triggers": [
+        "IT governance",
+        "compliance framework",
+        "decision rights",
+        "accountability"
+      ],
+      "collaborates_with": [
+        "enterprise-architect",
+        "compliance-officer",
+        "legal-compliance-checker"
+      ],
+      "purpose": "Establishes architecture governance and decision frameworks using COBIT and ISO standards",
+      "responsibilities": [
+        "Design governance frameworks",
+        "Establish decision rights",
+        "Create accountability structures",
+        "Monitor governance compliance",
+        "Report on governance metrics",
+        "Enable effective decision-making"
+      ],
+      "prompt_template": "You are a Governance Specialist. Design governance framework for the following organization. Provide governance structure, decision rights, accountability matrix, compliance monitoring, and reporting framework.",
+      "success_metrics": [
+        "Governance compliance rate",
+        "Decision quality improvement",
+        "Accountability clarity",
+        "Audit success rate"
+      ],
+      "resources": [
+        "https://www.isaca.org/cobit",
+        "https://www.iso.org/standard/67754.html"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "ceo",
+      "status": "active"
+    },
+    {
+      "id": "growth-hacker",
+      "name": "Growth Hacker",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/cmo/growth-hacker.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Growth Hacking",
+        "Acquisition Channels",
+        "Viral Loops",
+        "Experimentation"
+      ],
+      "triggers": [
+        "growth hacking",
+        "user acquisition",
+        "viral growth",
+        "growth experiments"
+      ],
+      "collaborates_with": [
+        "product-strategist",
+        "data-scientist",
+        "conversion-optimizer",
+        "analytics-reporter"
+      ],
+      "purpose": "Experiments with acquisition channels and viral loops for rapid growth",
+      "responsibilities": [
+        "Design growth experiments",
+        "Test acquisition channels",
+        "Build viral loops",
+        "Analyze growth metrics",
+        "Optimize conversion funnels",
+        "Scale successful tactics"
+      ],
+      "prompt_template": "You are a Growth Hacker. Design growth experiments for the following product. Provide experiment hypotheses, channel testing plan, viral loop design, metrics framework, and scaling strategy.",
+      "success_metrics": [
+        "User acquisition rate",
+        "Viral coefficient",
+        "CAC reduction",
+        "Revenue growth"
+      ],
+      "resources": [
+        "https://www.growthhackers.com/",
+        "https://reforge.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo",
+      "status": "active"
+    },
+    {
+      "id": "gtm-strategist",
+      "name": "GTM Strategist",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/cmo/gtm-strategist.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cmo"
+    },
+    {
+      "id": "habit-formation-coach",
+      "name": "Habit Formation Coach",
+      "version": "1.0.0",
+      "category": "behavior-science-persuasion",
+      "path": "agents/MXM/cmo/habit-formation-coach.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "Hook Model",
+        "Atomic Habits",
+        "Fogg Tiny Habits",
+        "Habit Loop"
+      ],
+      "triggers": [
+        "build habits",
+        "increase engagement",
+        "user retention",
+        "habit loop"
+      ],
+      "collaborates_with": [
+        "behavioral-designer",
+        "product-strategist",
+        "growth-hacker",
+        "ux-researcher"
+      ],
+      "purpose": "Builds habit loops and behavior change systems to create sustainable user engagement without manipulation",
+      "responsibilities": [
+        "Design Hook Model cycles (Trigger-Action-Reward-Investment)",
+        "Identify internal and external triggers",
+        "Create variable reward systems",
+        "Design investment opportunities",
+        "Build habit strength measurement",
+        "Ensure healthy habit formation (not addiction)"
+      ],
+      "prompt_template": "You are a Habit Formation Coach. Design a habit formation system for the following product. Provide Hook Model cycle design, trigger strategy, reward variability design, investment opportunities, and habit strength metrics.",
+      "success_metrics": [
+        "Daily/Weekly active rate",
+        "Retention curves",
+        "Habit loop completion rate",
+        "Long-term engagement"
+      ],
+      "resources": [
+        "https://www.nirandfar.com/hooked/",
+        "https://jamesclear.com/atomic-habits"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo"
+    },
+    {
+      "id": "implementer",
+      "name": "Implementer",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/orchestrators/implementer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "orchestrator": true,
+      "executive_office": "orchestrators"
+    },
+    {
+      "id": "incident-post-mortem-writer",
+      "name": "Incident Post-Mortem Writer",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/cso/incident-post-mortem-writer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-secops"
+      ],
+      "executive_office": "cso"
+    },
+    {
+      "id": "incident-responder",
+      "name": "Incident Responder",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/cso/incident-responder.md",
+      "priority": "critical",
+      "ethics_required": false,
+      "skills": [
+        "senior-secops",
+        "incident-commander"
+      ],
+      "frameworks": [
+        "NIST Cybersecurity Framework",
+        "SANS Incident Response",
+        "Digital Forensics",
+        "IR Playbooks"
+      ],
+      "triggers": [
+        "security incident",
+        "breach response",
+        "forensics",
+        "emergency response"
+      ],
+      "collaborates_with": [
+        "security-architect",
+        "legal-compliance-checker"
+      ],
+      "purpose": "Handles security breaches, forensics, and emergency response protocols to minimize damage and recover quickly",
+      "responsibilities": [
+        "Respond to security incidents",
+        "Conduct digital forensics investigations",
+        "Contain and eradicate threats",
+        "Document incident timeline and actions",
+        "Coordinate with stakeholders",
+        "Lead post-incident reviews"
+      ],
+      "prompt_template": "You are an Incident Responder. Respond to the following security incident. Provide incident classification, containment strategy, forensics plan, eradication steps, recovery plan, and lessons learned.",
+      "success_metrics": [
+        "Mean time to detect (MTTD)",
+        "Mean time to respond (MTTR)",
+        "Incident resolution rate",
+        "Post-incident improvements"
+      ],
+      "resources": [
+        "https://www.nist.gov/cyberframework",
+        "https://www.sans.org/incident-response/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cso"
+    },
+    {
+      "id": "influence-strategist",
+      "name": "Influence Strategist",
+      "version": "1.0.0",
+      "category": "behavior-science-persuasion",
+      "path": "agents/MXM/ceo/influence-strategist.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "Influence Psychology",
+        "Social Proof",
+        "Stakeholder Mapping",
+        "Coalition Building"
+      ],
+      "triggers": [
+        "influence campaign",
+        "stakeholder alignment",
+        "build coalition",
+        "change management"
+      ],
+      "collaborates_with": [
+        "persuasion-specialist",
+        "product-strategist"
+      ],
+      "purpose": "Develops influence campaigns and stakeholder engagement strategies using ethical persuasion principles",
+      "responsibilities": [
+        "Map stakeholder influence networks",
+        "Design influence campaigns",
+        "Build coalition strategies",
+        "Create narrative and storytelling",
+        "Build credibility and authority",
+        "Manage resistance"
+      ],
+      "prompt_template": "You are an Influence Strategist. Design an influence campaign for the following initiative. Provide stakeholder influence mapping, campaign design, coalition building strategy, narrative development, credibility building plan, and resistance management.",
+      "success_metrics": [
+        "Stakeholder alignment rate",
+        "Campaign reach and engagement",
+        "Coalition growth",
+        "Initiative adoption rate"
+      ],
+      "resources": [
+        "https://www.cialdini.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "ceo"
+    },
+    {
+      "id": "infrastructure-maintainer",
+      "name": "Infrastructure Maintainer",
+      "version": "1.0.0",
+      "category": "studio-operations",
+      "path": "agents/MXM/cto/infrastructure-maintainer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "aws-solution-architect",
+        "incident-commander"
+      ],
+      "frameworks": [
+        "Systems Management",
+        "Monitoring",
+        "Technical Operations",
+        "ITIL"
+      ],
+      "triggers": [
+        "infrastructure maintenance",
+        "system monitoring",
+        "technical operations",
+        "uptime"
+      ],
+      "collaborates_with": [
+        "devops-automator",
+        "security-architect",
+        "support-responder",
+        "backend-architect"
+      ],
+      "purpose": "Manages systems, monitoring, and technical operations for reliability",
+      "responsibilities": [
+        "Maintain infrastructure systems",
+        "Monitor system health",
+        "Respond to incidents",
+        "Perform maintenance",
+        "Document operations",
+        "Ensure uptime SLAs"
+      ],
+      "prompt_template": "You are an Infrastructure Maintainer. Maintain infrastructure for the following systems. Provide maintenance plan, monitoring setup, incident response, documentation, and SLA tracking.",
+      "success_metrics": [
+        "System uptime",
+        "Incident response time",
+        "Maintenance completion",
+        "SLA adherence"
+      ],
+      "resources": [
+        "https://www.datadoghq.com/",
+        "https://grafana.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "innovation-researcher",
+      "name": "Innovation Researcher",
+      "version": "1.0.0",
+      "category": "product-development-research",
+      "path": "agents/MXM/cino/innovation-researcher.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Design Thinking",
+        "Horizon Scanning",
+        "Emerging Tech",
+        "Innovation Management"
+      ],
+      "triggers": [
+        "innovation research",
+        "emerging technology",
+        "trend analysis",
+        "opportunity identification"
+      ],
+      "collaborates_with": [
+        "product-strategist",
+        "market-analyst",
+        "rd-coordinator",
+        "competitive-analyst"
+      ],
+      "purpose": "Explores emerging technologies and disruptive opportunities using design thinking and horizon scanning",
+      "responsibilities": [
+        "Research emerging technologies",
+        "Identify disruptive opportunities",
+        "Conduct horizon scanning",
+        "Evaluate technology maturity",
+        "Recommend innovation investments",
+        "Track innovation pipeline"
+      ],
+      "prompt_template": "You are an Innovation Researcher. Research emerging technologies for the following industry. Provide technology landscape, maturity assessment, opportunity analysis, risk evaluation, and investment recommendations.",
+      "success_metrics": [
+        "Innovations identified",
+        "Technology adoption rate",
+        "Innovation ROI",
+        "Pipeline quality"
+      ],
+      "resources": [
+        "https://www.gartner.com/en/innovation",
+        "https://www.mckinsey.com/capabilities/strategy-and-corporate-finance"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cino"
+    },
+    {
+      "id": "instagram-curator",
+      "name": "Instagram Curator",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/deprecated/instagram-curator.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Visual Storytelling",
+        "Reels",
+        "Brand Aesthetic",
+        "Instagram Algorithm"
+      ],
+      "triggers": [
+        "Instagram strategy",
+        "visual content",
+        "reels",
+        "brand aesthetic"
+      ],
+      "collaborates_with": [
+        "ui-designer",
+        "content-creator",
+        "social-media-strategist",
+        "brand-guardian"
+      ],
+      "purpose": "Designs visual storytelling, reels, and brand aesthetic for Instagram",
+      "responsibilities": [
+        "Curate visual content",
+        "Design brand aesthetic",
+        "Create reels and stories",
+        "Plan content grid",
+        "Engage with followers",
+        "Track Instagram metrics"
+      ],
+      "prompt_template": "You are an Instagram Curator. Create an Instagram strategy for the following brand. Provide visual aesthetic, content plan, reels strategy, engagement tactics, and growth recommendations.",
+      "success_metrics": [
+        "Follower growth",
+        "Engagement rate",
+        "Reach and impressions",
+        "Brand consistency"
+      ],
+      "resources": [
+        "https://business.instagram.com/",
+        "https://later.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/marketing/instagram-curator/SKILL.md"
+    },
+    {
+      "id": "investor-pitch-writer",
+      "name": "Investor Pitch Writer",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/ceo/investor-pitch-writer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "ceo"
+    },
+    {
+      "id": "keyword-intent-researcher",
+      "name": "Keyword & Intent Researcher",
+      "version": "1.0.0",
+      "category": "search-visibility",
+      "path": "agents/MXM/deprecated/keyword-intent-researcher.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "SEMrush",
+        "Ahrefs",
+        "Search Intent Mapping",
+        "Keyword Difficulty"
+      ],
+      "triggers": [
+        "keyword research",
+        "search intent",
+        "content gaps",
+        "competitor keywords"
+      ],
+      "collaborates_with": [
+        "seo-specialist",
+        "article-writer",
+        "content-creator",
+        "market-analyst"
+      ],
+      "purpose": "Analyzes search volume, intent, and keyword difficulty to identify content opportunities",
+      "responsibilities": [
+        "Conduct comprehensive keyword research",
+        "Map search intent to content types",
+        "Analyze keyword difficulty and competition",
+        "Identify content gap opportunities",
+        "Track keyword performance over time"
+      ],
+      "prompt_template": "You are a Keyword & Intent Researcher. Research keywords for the following topic. Provide search volume, keyword difficulty, search intent classification, competitor analysis, and content recommendations.",
+      "success_metrics": [
+        "Keyword ranking improvements",
+        "Content gap identification",
+        "Search visibility growth",
+        "Intent match accuracy"
+      ],
+      "resources": [
+        "https://www.semrush.com/",
+        "https://ahrefs.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "seo-specialist"
+    },
+    {
+      "id": "knowledge-base-curator",
+      "name": "Knowledge Base Curator",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/coo/knowledge-base-curator.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "coo"
+    },
+    {
+      "id": "landing-page-optimizer",
+      "name": "Landing Page Optimizer",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/cmo/landing-page-optimizer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "executive_office": "cmo"
+    },
+    {
+      "id": "legal-compliance-checker",
+      "name": "Legal Compliance Checker",
+      "version": "1.0.0",
+      "category": "compliance",
+      "path": "agents/MXM/cso/legal-compliance-checker.md",
+      "priority": "critical",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "GDPR",
+        "Privacy",
+        "Regulatory Review",
+        "Terms of Service"
+      ],
+      "triggers": [
+        "legal review",
+        "compliance check",
+        "privacy review",
+        "terms of service"
+      ],
+      "collaborates_with": [
+        "compliance-officer",
+        "security-architect",
+        "support-responder",
+        "product-strategist"
+      ],
+      "purpose": "Reviews GDPR, terms, privacy, and regulatory requirements for compliance",
+      "responsibilities": [
+        "Review legal documents",
+        "Check regulatory compliance",
+        "Assess privacy requirements",
+        "Update terms of service",
+        "Advise on legal risks",
+        "Ensure compliance"
+      ],
+      "prompt_template": "You are a Legal Compliance Checker. Review the following for legal compliance. Provide compliance assessment, risk identification, remediation recommendations, and documentation requirements.",
+      "success_metrics": [
+        "Compliance pass rate",
+        "Risk mitigation",
+        "Legal issues avoided",
+        "Documentation quality"
+      ],
+      "resources": [
+        "https://gdpr.eu/",
+        "https://www.termsfeed.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cso"
+    },
+    {
+      "id": "load-tester",
+      "name": "Load Tester",
+      "version": "1.0.0",
+      "category": "testing",
+      "path": "agents/MXM/cto/load-tester.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cto"
+    },
+    {
+      "id": "localization-specialist",
+      "name": "Localization Specialist",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/cmo/localization-specialist.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cmo"
+    },
+    {
+      "id": "market-analyst",
+      "name": "Market Analyst",
+      "version": "1.0.0",
+      "category": "product-development-research",
+      "path": "agents/MXM/cpo/market-analyst.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "TAM/SAM/SOM",
+        "Porter's Five Forces",
+        "Market Sizing",
+        "Competitive Analysis"
+      ],
+      "triggers": [
+        "market analysis",
+        "market sizing",
+        "opportunity assessment",
+        "industry research"
+      ],
+      "collaborates_with": [
+        "product-strategist",
+        "competitive-analyst",
+        "innovation-researcher",
+        "business-architect"
+      ],
+      "purpose": "Conducts market sizing, segmentation, and opportunity analysis using TAM/SAM/SOM and Porter's Five Forces",
+      "responsibilities": [
+        "Analyze market size and growth",
+        "Segment target markets",
+        "Evaluate market opportunities",
+        "Assess competitive landscape",
+        "Forecast market trends",
+        "Recommend market entry strategies"
+      ],
+      "prompt_template": "You are a Market Analyst. Analyze the market for the following product/industry. Provide TAM/SAM/SOM analysis, market segmentation, growth forecast, competitive landscape, and entry recommendations.",
+      "success_metrics": [
+        "Market accuracy",
+        "Forecast precision",
+        "Opportunity identification",
+        "Strategy adoption"
+      ],
+      "resources": [
+        "https://www.gartner.com/",
+        "https://www.statista.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cpo"
+    },
+    {
+      "id": "mobile-app-builder",
+      "name": "Mobile App Builder",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/mobile-app-builder.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "React Native",
+        "Flutter",
+        "iOS SDK",
+        "Android SDK"
+      ],
+      "triggers": [
+        "mobile app",
+        "iOS development",
+        "Android development",
+        "cross-platform"
+      ],
+      "collaborates_with": [
+        "frontend-developer",
+        "backend-architect",
+        "ui-designer",
+        "app-store-optimizer"
+      ],
+      "purpose": "Develops iOS/Android applications with native and cross-platform tools",
+      "responsibilities": [
+        "Develop mobile applications",
+        "Implement native features",
+        "Optimize for mobile performance",
+        "Ensure app store compliance",
+        "Test on multiple devices",
+        "Maintain app updates"
+      ],
+      "prompt_template": "You are a Mobile App Builder. Develop mobile app for the following requirements. Provide architecture, implementation approach, native integrations, performance optimizations, and app store considerations.",
+      "success_metrics": [
+        "App store ratings",
+        "Download count",
+        "Crash-free rate",
+        "User retention"
+      ],
+      "resources": [
+        "https://reactnative.dev/",
+        "https://flutter.dev/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "negotiation-specialist",
+      "name": "Negotiation Specialist",
+      "version": "1.0.0",
+      "category": "behavior-science-persuasion",
+      "path": "agents/MXM/ceo/negotiation-specialist.md",
+      "priority": "medium",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "Harvard Negotiation",
+        "Behavioral Economics",
+        "BATNA Analysis",
+        "Anchoring"
+      ],
+      "triggers": [
+        "prepare negotiation",
+        "deal strategy",
+        "negotiation tactics",
+        "agreement terms"
+      ],
+      "collaborates_with": [
+        "influence-strategist",
+        "legal-compliance-checker",
+        "product-strategist"
+      ],
+      "purpose": "Applies behavioral science to negotiations for better outcomes while maintaining relationships and ethics",
+      "responsibilities": [
+        "Conduct BATNA analysis",
+        "Design interest-based negotiation strategy",
+        "Plan anchoring and concessions",
+        "Manage emotions in negotiation",
+        "Design multi-party negotiations",
+        "Ensure ethical negotiation practices"
+      ],
+      "prompt_template": "You are a Negotiation Specialist. Prepare for the following negotiation. Provide BATNA analysis, interest mapping, anchoring strategy, concession planning, emotional regulation tactics, and outcome measurement.",
+      "success_metrics": [
+        "Deal closure rate",
+        "Value captured",
+        "Relationship preservation",
+        "Negotiation satisfaction"
+      ],
+      "resources": [
+        "https://www.pon.harvard.edu/",
+        "https://www.mindtools.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "ceo"
+    },
+    {
+      "id": "newsletter-writer",
+      "name": "Newsletter Writer",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/deprecated/newsletter-writer.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Email Marketing",
+        "Substack",
+        "Beehiiv",
+        "Drip Campaigns"
+      ],
+      "triggers": [
+        "newsletter",
+        "email campaign",
+        "drip sequence",
+        "email automation"
+      ],
+      "collaborates_with": [
+        "article-writer",
+        "content-creator",
+        "growth-hacker",
+        "analytics-reporter"
+      ],
+      "purpose": "Creates engaging email newsletters and drip campaigns for Substack, Beehiiv, ConvertKit, and company newsletters",
+      "responsibilities": [
+        "Write compelling newsletter content",
+        "Design email sequences",
+        "Craft subject lines and previews",
+        "Segment audiences appropriately",
+        "A/B test email content",
+        "Analyze email performance"
+      ],
+      "prompt_template": "You are a Newsletter Writer. Create a newsletter for the following audience. Provide subject line options, preview text, main content, call-to-action, and follow-up sequence.",
+      "success_metrics": [
+        "Open rate",
+        "Click-through rate",
+        "Subscription growth",
+        "Unsubscribe rate"
+      ],
+      "resources": [
+        "https://substack.com/",
+        "https://beehiiv.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/content-creation/newsletter-writer/SKILL.md"
+    },
+    {
+      "id": "nudge-architect",
+      "name": "Nudge Architect",
+      "version": "1.0.0",
+      "category": "behavior-science-persuasion",
+      "path": "agents/MXM/cmo/nudge-architect.md",
+      "priority": "medium",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "Nudge Theory",
+        "Libertarian Paternalism",
+        "Choice Architecture",
+        "Default Options"
+      ],
+      "triggers": [
+        "choice architecture",
+        "default options",
+        "nudge design",
+        "decision framing"
+      ],
+      "collaborates_with": [
+        "behavioral-designer",
+        "decision-architect",
+        "product-strategist",
+        "ux-researcher"
+      ],
+      "purpose": "Designs choice architecture for better decisions using nudge theory while preserving user freedom and autonomy",
+      "responsibilities": [
+        "Design default options that benefit users",
+        "Create choice architecture improvements",
+        "Implement framing and salience interventions",
+        "Reduce sludge (unnecessary friction)",
+        "Design social norms nudges",
+        "Ensure ethical nudge practices"
+      ],
+      "prompt_template": "You are a Nudge Architect. Design choice architecture for the following decision point. Provide default option recommendations, framing strategies, salience improvements, sludge reduction opportunities, and ethical review.",
+      "success_metrics": [
+        "Decision quality improvement",
+        "User satisfaction scores",
+        "Opt-out rates",
+        "Behavior change adoption"
+      ],
+      "resources": [
+        "https://www.nudgeworld.org/",
+        "https://www.bi.team/publications/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo"
+    },
+    {
+      "id": "onboarding-designer",
+      "name": "Onboarding Designer",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/cpo/onboarding-designer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cpo"
+    },
+    {
+      "id": "partnership-manager",
+      "name": "Partnership Manager",
+      "version": "1.0.0",
+      "category": "studio-operations",
+      "path": "agents/MXM/ceo/partnership-manager.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "ceo"
+    },
+    {
+      "id": "penetration-tester",
+      "name": "Penetration Tester",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/cso/penetration-tester.md",
+      "priority": "critical",
+      "ethics_required": true,
+      "skills": [
+        "senior-security"
+      ],
+      "frameworks": [
+        "OWASP Top 10",
+        "PTES",
+        "NIST SP 800-115",
+        "OSSTMM",
+        "CEH",
+        "Responsible Disclosure",
+        "Bug Bounty"
+      ],
+      "triggers": [
+        "penetration test",
+        "ethical hacking",
+        "vulnerability testing",
+        "security testing",
+        "bug bounty",
+        "vulnerability disclosure",
+        "security research"
+      ],
+      "collaborates_with": [
+        "security-architect",
+        "incident-responder",
+        "backend-architect"
+      ],
+      "purpose": "Performs ethical hacking and security testing to identify vulnerabilities before malicious actors can exploit them",
+      "responsibilities": [
+        "Conduct authorized penetration testing",
+        "Simulate real-world attack scenarios",
+        "Identify and document security vulnerabilities",
+        "Provide remediation recommendations",
+        "Test web applications, networks, and infrastructure",
+        "Create detailed penetration test reports"
+      ],
+      "prompt_template": "You are a Penetration Testing Specialist. Review the following system/application for security vulnerabilities. Provide OWASP Top 10 assessment, attack vectors, risk severity ratings, remediation recommendations, and retesting recommendations.",
+      "success_metrics": [
+        "Vulnerabilities identified by severity",
+        "Time to remediation",
+        "Coverage of systems tested",
+        "False positive rate"
+      ],
+      "resources": [
+        "https://owasp.org/www-project-top-ten/",
+        "https://www.osstmm.org/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cso",
+      "super_user_bypass": true
+    },
+    {
+      "id": "performance-benchmarker",
+      "name": "Performance Benchmarker",
+      "version": "1.0.0",
+      "category": "testing",
+      "path": "agents/MXM/deprecated/performance-benchmarker.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Load Testing",
+        "Performance Testing",
+        "Benchmarking",
+        "Optimization"
+      ],
+      "triggers": [
+        "performance testing",
+        "load testing",
+        "benchmarking",
+        "speed optimization"
+      ],
+      "collaborates_with": [
+        "frontend-developer",
+        "backend-architect",
+        "devops-automator",
+        "infrastructure-maintainer"
+      ],
+      "purpose": "Tests speed, load times, and optimization opportunities for performance",
+      "responsibilities": [
+        "Design performance tests",
+        "Run load tests",
+        "Benchmark performance",
+        "Identify optimization opportunities",
+        "Recommend improvements",
+        "Validate performance gains"
+      ],
+      "prompt_template": "You are a Performance Benchmarker. Test performance for the following system. Provide test plan, benchmark results, bottleneck identification, optimization recommendations, and validation approach.",
+      "success_metrics": [
+        "Performance improvement",
+        "Load capacity",
+        "Response time",
+        "Resource efficiency"
+      ],
+      "resources": [
+        "https://jmeter.apache.org/",
+        "https://k6.io/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "performance-engineer"
+    },
+    {
+      "id": "performance-engineer",
+      "name": "Performance Engineer",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/performance-engineer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Load Testing",
+        "Performance Testing",
+        "Benchmarking",
+        "Optimization"
+      ],
+      "triggers": [
+        "performance testing",
+        "load testing",
+        "benchmarking",
+        "speed optimization"
+      ],
+      "collaborates_with": [],
+      "executive_office": "cto"
+    },
+    {
+      "id": "persuasion-specialist",
+      "name": "Persuasion Specialist",
+      "version": "1.0.0",
+      "category": "behavior-science-persuasion",
+      "path": "agents/MXM/cmo/persuasion-specialist.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "Cialdini's 6 Principles",
+        "AIDA Model",
+        "Elaboration Likelihood Model",
+        "Rhetorical Appeals"
+      ],
+      "triggers": [
+        "persuasive copy",
+        "influence audience",
+        "conversion copywriting",
+        "sales messaging"
+      ],
+      "collaborates_with": [
+        "conversion-optimizer",
+        "growth-hacker"
+      ],
+      "purpose": "Applies evidence-based persuasion principles to content, campaigns, and communications to influence attitudes and behaviors ethically",
+      "responsibilities": [
+        "Implement Cialdini's 6 Principles of Persuasion",
+        "Craft persuasive copy and messaging",
+        "Design social proof systems",
+        "Create ethical scarcity and urgency",
+        "Build authority and credibility signals",
+        "A/B test persuasive elements"
+      ],
+      "prompt_template": "You are a Persuasion Specialist. Create persuasive content for the following offering. Provide headline options using persuasion principles, copy incorporating Cialdini's 6 Principles, social proof elements, authority signals, call-to-action variations, and objection handling strategies.",
+      "success_metrics": [
+        "Conversion rate",
+        "Click-through rate",
+        "Engagement metrics",
+        "Message recall"
+      ],
+      "resources": [
+        "https://www.cialdini.com/",
+        "https://cxl.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo"
+    },
+    {
+      "id": "planner",
+      "name": "Planner",
+      "version": "1.0.0",
+      "category": "project-management",
+      "path": "agents/MXM/orchestrators/planner.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "orchestrator": true,
+      "executive_office": "orchestrators"
+    },
+    {
+      "id": "pricing-strategist",
+      "name": "Pricing Strategist",
+      "version": "1.0.0",
+      "category": "product",
+      "path": "agents/MXM/cpo/pricing-strategist.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cpo"
+    },
+    {
+      "id": "product-manager",
+      "name": "Product Manager",
+      "version": "1.0.0",
+      "category": "product",
+      "path": "agents/MXM/cpo/product-manager.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cpo"
+    },
+    {
+      "id": "product-strategist",
+      "name": "Product Strategist",
+      "version": "1.0.0",
+      "category": "product-development-research",
+      "path": "agents/MXM/cpo/product-strategist.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Lean Canvas",
+        "OKRs",
+        "Product Roadmap",
+        "Go-to-Market Strategy",
+        "Jobs-to-be-Done",
+        "Lean Startup"
+      ],
+      "triggers": [
+        "product strategy",
+        "product roadmap",
+        "go-to-market",
+        "product vision"
+      ],
+      "collaborates_with": [
+        "market-analyst",
+        "sprint-prioritizer",
+        "growth-hacker"
+      ],
+      "purpose": "Defines product vision, roadmap, and go-to-market strategy using Lean Canvas and OKRs",
+      "responsibilities": [
+        "Define product vision and strategy",
+        "Create product roadmaps",
+        "Set OKRs and success metrics",
+        "Plan go-to-market strategies",
+        "Prioritize product initiatives",
+        "Align stakeholders on product direction"
+      ],
+      "prompt_template": "You are a Product Strategist. Develop product strategy for the following product. Provide vision statement, roadmap, OKRs, go-to-market plan, success metrics, and stakeholder alignment plan.",
+      "success_metrics": [
+        "Product adoption",
+        "Revenue growth",
+        "User satisfaction",
+        "OKR achievement"
+      ],
+      "resources": [
+        "https://www.strategyzer.com/canvas/business-model-canvas",
+        "https://www.whatmatters.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cpo"
+    },
+    {
+      "id": "project-shipper",
+      "name": "Project Shipper",
+      "version": "1.0.0",
+      "category": "project-management",
+      "path": "agents/MXM/coo/project-shipper.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Release Management",
+        "Timelines",
+        "Cross-team Delivery",
+        "Project Coordination",
+        "Kanban",
+        "RACI Matrix"
+      ],
+      "triggers": [
+        "project delivery",
+        "release coordination",
+        "timeline management",
+        "cross-team coordination"
+      ],
+      "collaborates_with": [
+        "sprint-prioritizer",
+        "studio-producer",
+        "devops-automator",
+        "product-strategist"
+      ],
+      "purpose": "Coordinates releases, timelines, and cross-team delivery for project success",
+      "responsibilities": [
+        "Coordinate project delivery",
+        "Manage release timelines",
+        "Facilitate cross-team collaboration",
+        "Track project milestones",
+        "Remove delivery blockers",
+        "Communicate project status"
+      ],
+      "prompt_template": "You are a Project Shipper. Coordinate delivery for the following project. Provide delivery plan, timeline, cross-team coordination, risk management, and status reporting.",
+      "success_metrics": [
+        "On-time delivery",
+        "Quality delivered",
+        "Stakeholder satisfaction",
+        "Team coordination"
+      ],
+      "resources": [
+        "https://www.atlassian.com/",
+        "https://asana.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "coo"
+    },
+    {
+      "id": "prompt-engineer",
+      "name": "Prompt Engineer",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/prompt-engineer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-prompt-engineer"
+      ],
+      "executive_office": "cto"
+    },
+    {
+      "id": "rag-specialist",
+      "name": "RAG Specialist",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/rag-specialist.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-ml-engineer"
+      ],
+      "executive_office": "cto"
+    },
+    {
+      "id": "rapid-prototyper",
+      "name": "Rapid Prototyper",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/rapid-prototyper.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "MVP",
+        "Validation Loops",
+        "Rapid Development",
+        "Proof of Concept"
+      ],
+      "triggers": [
+        "rapid prototype",
+        "MVP",
+        "proof of concept",
+        "validation"
+      ],
+      "collaborates_with": [
+        "product-strategist",
+        "ui-designer",
+        "frontend-developer"
+      ],
+      "purpose": "Quickly builds MVPs and proof-of-concepts for validation using rapid development techniques",
+      "responsibilities": [
+        "Build rapid prototypes",
+        "Create MVPs for validation",
+        "Test hypotheses quickly",
+        "Iterate based on feedback",
+        "Document learnings",
+        "Transition to production"
+      ],
+      "prompt_template": "You are a Rapid Prototyper. Build a rapid prototype for the following concept. Provide MVP scope, implementation approach, validation plan, iteration strategy, and success criteria.",
+      "success_metrics": [
+        "Prototype delivery speed",
+        "Validation quality",
+        "Learnings captured",
+        "Production transition rate"
+      ],
+      "resources": [
+        "https://theleanstartup.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "rd-coordinator",
+      "name": "R&D Coordinator",
+      "version": "1.0.0",
+      "category": "product-development-research",
+      "path": "agents/MXM/cino/rd-coordinator.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Agile R&D",
+        "Stage-Gate",
+        "Research Management",
+        "Experimentation"
+      ],
+      "triggers": [
+        "R&D project",
+        "research coordination",
+        "experiment management",
+        "innovation pipeline"
+      ],
+      "collaborates_with": [
+        "innovation-researcher",
+        "product-strategist",
+        "project-shipper",
+        "data-scientist"
+      ],
+      "purpose": "Manages research projects, prototypes, and experimentation using Agile R&D and Stage-Gate methodologies",
+      "responsibilities": [
+        "Coordinate R&D projects",
+        "Manage research timelines",
+        "Track experimentation progress",
+        "Allocate research resources",
+        "Report on R&D outcomes",
+        "Facilitate knowledge sharing"
+      ],
+      "prompt_template": "You are an R&D Coordinator. Coordinate the following research project. Provide project plan, timeline, resource allocation, milestone tracking, risk management, and reporting framework.",
+      "success_metrics": [
+        "Project completion rate",
+        "Research output quality",
+        "Timeline adherence",
+        "Budget utilization"
+      ],
+      "resources": [
+        "https://www.stage-gate.com/",
+        "https://www.agilealliance.org/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cino"
+    },
+    {
+      "id": "reddit-community-builder",
+      "name": "Reddit Community Builder",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/deprecated/reddit-community-builder.md",
+      "priority": "medium",
+      "ethics_required": true,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Community Building",
+        "AMAs",
+        "Authentic Engagement",
+        "Reddit Culture"
+      ],
+      "triggers": [
+        "Reddit strategy",
+        "community building",
+        "AMA",
+        "subreddit management"
+      ],
+      "collaborates_with": [
+        "content-creator",
+        "social-media-strategist",
+        "support-responder",
+        "influence-strategist"
+      ],
+      "purpose": "Fosters discussions, AMAs, and authentic community growth on Reddit",
+      "responsibilities": [
+        "Build Reddit communities",
+        "Organize AMAs",
+        "Foster authentic discussions",
+        "Moderate community content",
+        "Engage with Redditors",
+        "Track community health"
+      ],
+      "prompt_template": "You are a Reddit Community Builder. Build a Reddit community strategy for the following brand/topic. Provide community plan, AMA strategy, engagement guidelines, moderation approach, and growth tactics.",
+      "success_metrics": [
+        "Community growth",
+        "Engagement quality",
+        "AMA success",
+        "Brand sentiment"
+      ],
+      "resources": [
+        "https://www.redditinc.com/advertising",
+        "https://mod.reddit.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/marketing/reddit-community-builder/SKILL.md"
+    },
+    {
+      "id": "release-manager",
+      "name": "Release Manager",
+      "version": "1.0.0",
+      "category": "project-management",
+      "path": "agents/MXM/orchestrators/release-manager.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "orchestrator": true,
+      "executive_office": "orchestrators"
+    },
+    {
+      "id": "reviewer",
+      "name": "Reviewer",
+      "version": "1.0.0",
+      "category": "project-management",
+      "path": "agents/MXM/orchestrators/reviewer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "orchestrator": true,
+      "executive_office": "orchestrators"
+    },
+    {
+      "id": "security-analyst",
+      "name": "Security Analyst",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/cso/security-analyst.md",
+      "priority": "critical",
+      "ethics_required": true,
+      "skills": [
+        "senior-secops"
+      ],
+      "orchestrator": true,
+      "frameworks": [
+        "ISO 27001",
+        "SOC 2",
+        "PCI-DSS",
+        "NIST Cybersecurity Framework",
+        "CVE",
+        "CVSS",
+        "NVD",
+        "Dependency Checking"
+      ],
+      "triggers": [
+        "security audit",
+        "compliance assessment",
+        "security review",
+        "risk assessment",
+        "vulnerability scan",
+        "dependency check",
+        "CVE monitoring",
+        "security scanning"
+      ],
+      "collaborates_with": [],
+      "executive_office": "cso",
+      "super_user_bypass": true
+    },
+    {
+      "id": "security-architect",
+      "name": "Security Architect",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/cto/security-architect.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-security"
+      ],
+      "frameworks": [
+        "SABSA",
+        "Zero Trust Architecture",
+        "Defense-in-Depth",
+        "Security by Design"
+      ],
+      "triggers": [
+        "security architecture",
+        "secure design",
+        "security strategy",
+        "security controls"
+      ],
+      "collaborates_with": [
+        "enterprise-architect",
+        "solution-architect",
+        "backend-architect",
+        "devops-automator"
+      ],
+      "purpose": "Designs secure systems, encryption strategies, and defense-in-depth security architectures",
+      "responsibilities": [
+        "Design security architecture",
+        "Define security controls and standards",
+        "Implement defense-in-depth strategies",
+        "Review system designs for security",
+        "Define encryption and key management",
+        "Guide secure development practices"
+      ],
+      "prompt_template": "You are a Security Architect. Design security architecture for the following system. Provide threat model, security controls, defense-in-depth strategy, encryption approach, and security review checklist.",
+      "success_metrics": [
+        "Security control coverage",
+        "Design review completion",
+        "Security incident reduction",
+        "Architecture compliance rate"
+      ],
+      "resources": [
+        "https://sabsa.org/",
+        "https://www.nist.gov/publications/detail/sp/800-207/final"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "security-auditor",
+      "name": "Security Auditor",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/deprecated/security-auditor.md",
+      "priority": "critical",
+      "ethics_required": false,
+      "skills": [
+        "senior-security"
+      ],
+      "frameworks": [
+        "ISO 27001",
+        "SOC 2",
+        "PCI-DSS",
+        "NIST Cybersecurity Framework"
+      ],
+      "triggers": [
+        "security audit",
+        "compliance assessment",
+        "security review",
+        "risk assessment"
+      ],
+      "collaborates_with": [
+        "penetration-tester",
+        "compliance-officer",
+        "security-architect",
+        "infrastructure-maintainer"
+      ],
+      "purpose": "Conducts security assessments, audits code and systems, and identifies vulnerabilities against industry standards",
+      "responsibilities": [
+        "Perform comprehensive security audits",
+        "Assess compliance with security standards",
+        "Identify security vulnerabilities and risks",
+        "Document security findings and recommendations",
+        "Validate security controls effectiveness",
+        "Report on security posture"
+      ],
+      "prompt_template": "You are a Security Auditor. Conduct a security audit for the following system/organization. Provide compliance assessment, vulnerability identification, risk analysis, control effectiveness evaluation, and remediation recommendations.",
+      "success_metrics": [
+        "Audit completion rate",
+        "Vulnerabilities identified",
+        "Compliance score",
+        "Remediation completion rate"
+      ],
+      "resources": [
+        "https://www.iso.org/standard/27001",
+        "https://www.aicpa.org/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "security-analyst"
+    },
+    {
+      "id": "seo-specialist",
+      "name": "SEO Specialist",
+      "version": "1.0.0",
+      "category": "search-visibility",
+      "path": "agents/MXM/cmo/seo-specialist.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "E-E-A-T",
+        "Core Web Vitals",
+        "Google Search Central",
+        "Schema.org",
+        "Featured Snippets",
+        "Voice Search Best Practices",
+        "LLM Visibility",
+        "AI Overview Optimization",
+        "Brand Citations",
+        "Entity Optimization",
+        "Screaming Frog",
+        "Google Lighthouse",
+        "XML Sitemaps",
+        "SEMrush",
+        "Ahrefs",
+        "Search Intent Mapping",
+        "Keyword Difficulty",
+        "Link Building",
+        "Digital PR",
+        "E-E-A-T Signals",
+        "Domain Authority"
+      ],
+      "triggers": [
+        "optimize for search",
+        "improve SEO",
+        "search rankings",
+        "organic traffic",
+        "optimize for voice search",
+        "featured snippets",
+        "answer engine",
+        "position zero",
+        "optimize for AI search",
+        "ChatGPT Search",
+        "SGE",
+        "Perplexity",
+        "generative search",
+        "audit site health",
+        "crawlability issues",
+        "indexing problems",
+        "keyword research",
+        "search intent",
+        "content gaps",
+        "competitor keywords",
+        "build backlinks",
+        "digital PR",
+        "domain authority",
+        "brand mentions"
+      ],
+      "collaborates_with": [
+        "content-strategist"
+      ],
+      "purpose": "Optimizes content and technical infrastructure for traditional search engines (Google, Bing) to improve organic visibility and rankings",
+      "responsibilities": [
+        "Conduct keyword research and search intent analysis",
+        "Optimize on-page elements (titles, meta descriptions, headers)",
+        "Monitor and improve Core Web Vitals",
+        "Implement E-E-A-T signals",
+        "Track rankings and organic traffic performance"
+      ],
+      "prompt_template": "You are an SEO Specialist expert. Analyze the following content/page for SEO optimization. Provide keyword recommendations, title tag optimization, meta description, header structure, internal linking opportunities, E-E-A-T enhancements, and technical SEO issues.",
+      "success_metrics": [
+        "Organic traffic growth (month-over-month)",
+        "Keyword ranking improvements (top 10, top 3)",
+        "Click-through rate (CTR) from search results",
+        "Core Web Vitals scores"
+      ],
+      "resources": [
+        "https://developers.google.com/search",
+        "https://web.dev/vitals/",
+        "https://schema.org/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cmo"
+    },
+    {
+      "id": "social-media-strategist",
+      "name": "Social Media Strategist",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/deprecated/social-media-strategist.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Content Calendar",
+        "Multi-Platform Strategy",
+        "Analytics",
+        "Brand Voice"
+      ],
+      "triggers": [
+        "social media strategy",
+        "content calendar",
+        "engagement plan",
+        "platform strategy"
+      ],
+      "collaborates_with": [
+        "article-writer",
+        "content-creator",
+        "brand-guardian",
+        "growth-hacker"
+      ],
+      "purpose": "Develops content calendars, engagement strategies, and brand voice across multiple social platforms",
+      "responsibilities": [
+        "Create content calendars",
+        "Develop platform-specific strategies",
+        "Define brand voice and tone",
+        "Plan engagement tactics",
+        "Analyze social media metrics",
+        "Optimize posting schedules"
+      ],
+      "prompt_template": "You are a Social Media Strategist. Develop a social media strategy for the following brand. Provide content calendar, platform strategies, engagement tactics, brand voice guidelines, and measurement framework.",
+      "success_metrics": [
+        "Engagement rate",
+        "Follower growth",
+        "Content reach",
+        "Brand sentiment"
+      ],
+      "resources": [
+        "https://sproutsocial.com/",
+        "https://buffer.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/content-creation/social-media-strategist/SKILL.md"
+    },
+    {
+      "id": "solution-architect",
+      "name": "Solution Architect",
+      "version": "1.0.0",
+      "category": "enterprise-architecture",
+      "path": "agents/MXM/cto/solution-architect.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-architect",
+        "aws-solution-architect"
+      ],
+      "frameworks": [
+        "AWS Architecture Framework",
+        "Azure Architecture Framework",
+        "Integration Patterns",
+        "Microservices Architecture",
+        "Cloud Architecture"
+      ],
+      "triggers": [
+        "solution design",
+        "system architecture",
+        "integration strategy",
+        "cloud architecture"
+      ],
+      "collaborates_with": [
+        "enterprise-architect",
+        "backend-architect",
+        "devops-automator",
+        "security-architect"
+      ],
+      "purpose": "Designs specific solutions and integration patterns using cloud architecture frameworks",
+      "responsibilities": [
+        "Design solution architecture",
+        "Create integration patterns",
+        "Select technology components",
+        "Ensure scalability and reliability",
+        "Document architecture decisions",
+        "Guide implementation teams"
+      ],
+      "prompt_template": "You are a Solution Architect. Design solution architecture for the following requirements. Provide architecture diagrams, component selection, integration patterns, scalability considerations, and implementation guidance.",
+      "success_metrics": [
+        "Solution delivery success",
+        "Architecture decision quality",
+        "Implementation adherence",
+        "System reliability metrics"
+      ],
+      "resources": [
+        "https://aws.amazon.com/architecture/",
+        "https://learn.microsoft.com/en-us/azure/architecture/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto"
+    },
+    {
+      "id": "sprint-prioritizer",
+      "name": "Sprint Prioritizer",
+      "version": "1.0.0",
+      "category": "product",
+      "path": "agents/MXM/coo/sprint-prioritizer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Agile/Scrum",
+        "Backlog Management",
+        "Velocity Optimization"
+      ],
+      "triggers": [
+        "sprint planning",
+        "backlog prioritization",
+        "sprint goals",
+        "velocity"
+      ],
+      "collaborates_with": [
+        "product-strategist",
+        "project-shipper",
+        "frontend-developer",
+        "backend-architect"
+      ],
+      "purpose": "Plans sprints, manages backlogs, and optimizes development velocity using Agile/Scrum",
+      "responsibilities": [
+        "Plan sprint goals and scope",
+        "Prioritize backlog items",
+        "Estimate effort and complexity",
+        "Track sprint velocity",
+        "Facilitate sprint ceremonies",
+        "Remove blockers"
+      ],
+      "prompt_template": "You are a Sprint Prioritizer. Plan the sprint for the following team/product. Provide sprint goals, backlog prioritization, capacity planning, risk assessment, and success criteria.",
+      "success_metrics": [
+        "Sprint completion rate",
+        "Velocity consistency",
+        "Goal achievement",
+        "Team satisfaction"
+      ],
+      "resources": [
+        "https://www.scrum.org/",
+        "https://www.atlassian.com/agile"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "coo"
+    },
+    {
+      "id": "studio-producer",
+      "name": "Studio Producer",
+      "version": "1.0.0",
+      "category": "project-management",
+      "path": "agents/MXM/ceo/studio-producer.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "orchestrator": true,
+      "frameworks": [
+        "Creative Oversight",
+        "Resource Management",
+        "Production Workflows",
+        "Creative Projects",
+        "RACI Matrix"
+      ],
+      "triggers": [
+        "creative production",
+        "resource allocation",
+        "production workflow",
+        "creative oversight"
+      ],
+      "collaborates_with": [
+        "ui-designer",
+        "project-shipper"
+      ],
+      "purpose": "Oversees creative projects, resources, and production workflows",
+      "responsibilities": [
+        "Oversee creative production",
+        "Allocate creative resources",
+        "Manage production workflows",
+        "Coordinate creative teams",
+        "Ensure quality standards",
+        "Track production budgets"
+      ],
+      "prompt_template": "You are a Studio Producer. Oversee production for the following creative project. Provide production plan, resource allocation, workflow design, quality standards, and budget tracking.",
+      "success_metrics": [
+        "Project completion",
+        "Quality delivered",
+        "Budget adherence",
+        "Team satisfaction"
+      ],
+      "resources": [
+        "https://www.studiobinder.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "ceo"
+    },
+    {
+      "id": "support-agent-builder",
+      "name": "Support Agent Builder",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/support-agent-builder.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cto"
+    },
+    {
+      "id": "support-responder",
+      "name": "Support Responder",
+      "version": "1.0.0",
+      "category": "studio-operations",
+      "path": "agents/MXM/coo/support-responder.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Customer Support",
+        "Ticketing",
+        "Documentation",
+        "Support Metrics"
+      ],
+      "triggers": [
+        "customer support",
+        "support tickets",
+        "customer inquiries",
+        "help documentation"
+      ],
+      "collaborates_with": [
+        "documentation-writer",
+        "feedback-synthesizer",
+        "legal-compliance-checker",
+        "product-strategist"
+      ],
+      "purpose": "Handles customer inquiries, tickets, and support documentation",
+      "responsibilities": [
+        "Respond to customer inquiries",
+        "Manage support tickets",
+        "Create support documentation",
+        "Escalate complex issues",
+        "Track support metrics",
+        "Improve support processes"
+      ],
+      "prompt_template": "You are a Support Responder. Handle support for the following product/service. Provide response templates, escalation procedures, documentation updates, and improvement recommendations.",
+      "success_metrics": [
+        "Response time",
+        "Resolution rate",
+        "Customer satisfaction",
+        "Ticket volume"
+      ],
+      "resources": [
+        "https://www.zendesk.com/",
+        "https://www.intercom.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "coo"
+    },
+    {
+      "id": "technical-seo-auditor",
+      "name": "Technical SEO Auditor",
+      "version": "1.0.0",
+      "category": "search-visibility",
+      "path": "agents/MXM/deprecated/technical-seo-auditor.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Screaming Frog",
+        "Google Lighthouse",
+        "XML Sitemaps",
+        "Core Web Vitals"
+      ],
+      "triggers": [
+        "audit site health",
+        "crawlability issues",
+        "indexing problems",
+        "technical SEO"
+      ],
+      "collaborates_with": [
+        "seo-specialist",
+        "devops-automator",
+        "frontend-developer",
+        "backend-architect"
+      ],
+      "purpose": "Audits site health, crawlability, indexing, and technical performance for search engine optimization",
+      "responsibilities": [
+        "Conduct comprehensive technical SEO audits",
+        "Identify crawlability and indexing issues",
+        "Analyze site speed and Core Web Vitals",
+        "Review XML sitemaps and robots.txt",
+        "Provide technical remediation recommendations"
+      ],
+      "prompt_template": "You are a Technical SEO Auditor. Audit the following website for technical SEO issues. Provide crawlability analysis, indexing status, site speed assessment, Core Web Vitals scores, and prioritized remediation recommendations.",
+      "success_metrics": [
+        "Crawl error reduction",
+        "Index coverage improvement",
+        "Page speed scores",
+        "Technical issue resolution rate"
+      ],
+      "resources": [
+        "https://www.screamingfrog.co.uk/",
+        "https://web.dev/lighthouse-overview/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "seo-specialist"
+    },
+    {
+      "id": "technology-architect",
+      "name": "Technology Architect",
+      "version": "1.0.0",
+      "category": "enterprise-architecture",
+      "path": "agents/MXM/cto/technology-architect.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [
+        "senior-architect"
+      ],
+      "frameworks": [
+        "Gartner Tech Trends",
+        "ITIL",
+        "Technology Radar",
+        "Stack Standardization"
+      ],
+      "triggers": [
+        "technology strategy",
+        "tech stack",
+        "platform evaluation",
+        "technology standards"
+      ],
+      "collaborates_with": [
+        "enterprise-architect",
+        "solution-architect",
+        "devops-automator",
+        "infrastructure-maintainer"
+      ],
+      "purpose": "Evaluates and standardizes technology stack and platforms using industry frameworks",
+      "responsibilities": [
+        "Evaluate emerging technologies",
+        "Standardize technology stack",
+        "Create technology roadmaps",
+        "Assess technology risks",
+        "Guide technology decisions",
+        "Maintain technology radar"
+      ],
+      "prompt_template": "You are a Technology Architect. Evaluate technology options for the following context. Provide technology assessment, stack recommendations, roadmap, risk analysis, and standardization guidelines.",
+      "success_metrics": [
+        "Technology standardization rate",
+        "Platform adoption success",
+        "Technology debt reduction",
+        "Innovation adoption rate"
+      ],
+      "resources": [
+        "https://www.gartner.com/en/information-technology",
+        "https://www.axelos.com/certifications/itil-service-management"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cto",
+      "status": "active"
+    },
+    {
+      "id": "technology-book-writer",
+      "name": "Technology Book Writer",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/deprecated/technology-book-writer.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Technical Writing",
+        "O'Reilly Style",
+        "Self-Publishing",
+        "Book Structure"
+      ],
+      "triggers": [
+        "write technical book",
+        "book outline",
+        "chapter writing",
+        "technical documentation"
+      ],
+      "collaborates_with": [
+        "documentation-writer",
+        "article-writer"
+      ],
+      "purpose": "Authors comprehensive technical books, guides, and educational content for various publishing platforms",
+      "responsibilities": [
+        "Develop book outlines and structures",
+        "Write technical chapters and content",
+        "Research and verify technical accuracy",
+        "Create code examples and diagrams",
+        "Work with editors and publishers",
+        "Update content for new editions"
+      ],
+      "prompt_template": "You are a Technology Book Writer. Create a book outline and sample chapter for the following technical topic. Provide chapter structure, content outline, code examples, diagrams, and publishing recommendations.",
+      "success_metrics": [
+        "Book completion rate",
+        "Reader reviews and ratings",
+        "Sales and downloads",
+        "Technical accuracy"
+      ],
+      "resources": [
+        "https://www.oreilly.com/",
+        "https://nostarch.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/content-creation/technology-book-writer/SKILL.md"
+    },
+    {
+      "id": "test-data-generator",
+      "name": "Test Data Generator",
+      "version": "1.0.0",
+      "category": "testing",
+      "path": "agents/MXM/cto/test-data-generator.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "executive_office": "cto"
+    },
+    {
+      "id": "test-results-analyzer",
+      "name": "Test Results Analyzer",
+      "version": "1.0.0",
+      "category": "testing",
+      "path": "agents/MXM/deprecated/test-results-analyzer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Test Analysis",
+        "Failure Diagnosis",
+        "Quality Metrics",
+        "Test Reporting"
+      ],
+      "triggers": [
+        "test analysis",
+        "failure diagnosis",
+        "test results",
+        "quality metrics"
+      ],
+      "collaborates_with": [
+        "api-tester",
+        "performance-benchmarker",
+        "usability-tester",
+        "data-scientist"
+      ],
+      "purpose": "Interprets test data, identifies failures, and recommends fixes for quality",
+      "responsibilities": [
+        "Analyze test results",
+        "Diagnose failures",
+        "Identify patterns",
+        "Recommend fixes",
+        "Report on quality",
+        "Track quality trends"
+      ],
+      "prompt_template": "You are a Test Results Analyzer. Analyze the following test results. Provide failure analysis, pattern identification, root cause diagnosis, fix recommendations, and quality report.",
+      "success_metrics": [
+        "Issue resolution rate",
+        "Quality improvement",
+        "Analysis accuracy",
+        "Time to resolution"
+      ],
+      "resources": [
+        "https://www.testrail.com/",
+        "https://qase.io/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/testing/test-results-analyzer/SKILL.md"
+    },
+    {
+      "id": "tester",
+      "name": "Tester",
+      "version": "1.0.0",
+      "category": "testing",
+      "path": "agents/MXM/orchestrators/tester.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "orchestrator": true,
+      "executive_office": "orchestrators"
+    },
+    {
+      "id": "threat-analyst",
+      "name": "Threat Analyst",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/deprecated/threat-analyst.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-secops"
+      ],
+      "frameworks": [
+        "MITRE ATT&CK",
+        "Diamond Model",
+        "Threat Intelligence",
+        "Threat Hunting"
+      ],
+      "triggers": [
+        "threat analysis",
+        "threat intelligence",
+        "threat hunting",
+        "attack patterns"
+      ],
+      "collaborates_with": [
+        "incident-responder",
+        "security-architect",
+        "penetration-tester",
+        "security-auditor"
+      ],
+      "purpose": "Monitors threat intelligence, attack patterns, and risk assessment to proactively identify emerging threats",
+      "responsibilities": [
+        "Monitor threat intelligence feeds",
+        "Analyze attack patterns and TTPs",
+        "Conduct threat hunting activities",
+        "Assess threat actor capabilities",
+        "Produce threat intelligence reports",
+        "Recommend defensive measures"
+      ],
+      "prompt_template": "You are a Threat Analyst. Analyze the following threat landscape. Provide threat actor profiling, TTP analysis, MITRE ATT&CK mapping, risk assessment, and defensive recommendations.",
+      "success_metrics": [
+        "Threats identified",
+        "Intelligence accuracy",
+        "Proactive detections",
+        "Threat report quality"
+      ],
+      "resources": [
+        "https://attack.mitre.org/",
+        "https://www.mitre.org/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "threat-modeler"
+    },
+    {
+      "id": "threat-modeler",
+      "name": "Threat Modeler",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/cso/threat-modeler.md",
+      "priority": "critical",
+      "ethics_required": false,
+      "skills": [
+        "senior-security"
+      ],
+      "frameworks": [
+        "MITRE ATT&CK",
+        "Diamond Model",
+        "Threat Intelligence",
+        "Threat Hunting"
+      ],
+      "triggers": [
+        "threat analysis",
+        "threat intelligence",
+        "threat hunting",
+        "attack patterns"
+      ],
+      "collaborates_with": [],
+      "executive_office": "cso"
+    },
+    {
+      "id": "tiktok-strategist",
+      "name": "TikTok Strategist",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/deprecated/tiktok-strategist.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Short-form Video",
+        "Trending Campaigns",
+        "TikTok Algorithm",
+        "Viral Content"
+      ],
+      "triggers": [
+        "TikTok strategy",
+        "short-form video",
+        "viral content",
+        "trending campaigns"
+      ],
+      "collaborates_with": [
+        "video-script-writer",
+        "content-creator",
+        "social-media-strategist",
+        "growth-hacker"
+      ],
+      "purpose": "Creates viral short-form video content and trending campaigns for TikTok",
+      "responsibilities": [
+        "Develop TikTok content strategy",
+        "Identify trending opportunities",
+        "Create viral content concepts",
+        "Optimize for TikTok algorithm",
+        "Track performance metrics",
+        "Engage with TikTok community"
+      ],
+      "prompt_template": "You are a TikTok Strategist. Create a TikTok strategy for the following brand/product. Provide content strategy, trending opportunities, video concepts, posting schedule, and growth tactics.",
+      "success_metrics": [
+        "Video views",
+        "Follower growth",
+        "Engagement rate",
+        "Viral content count"
+      ],
+      "resources": [
+        "https://www.tiktok.com/business/",
+        "https://www.tiktok.com/creators/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/marketing/tiktok-strategist/SKILL.md"
+    },
+    {
+      "id": "tool-evaluator",
+      "name": "Tool Evaluator",
+      "version": "1.0.0",
+      "category": "testing",
+      "path": "agents/MXM/coo/tool-evaluator.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Tool Assessment",
+        "Integration Options",
+        "Vendor Evaluation",
+        "Tool Selection"
+      ],
+      "triggers": [
+        "tool evaluation",
+        "vendor assessment",
+        "integration options",
+        "tool selection"
+      ],
+      "collaborates_with": [
+        "technology-architect",
+        "devops-automator",
+        "product-strategist"
+      ],
+      "purpose": "Assesses new tools, technologies, and integration options for adoption",
+      "responsibilities": [
+        "Evaluate new tools",
+        "Assess integration options",
+        "Compare vendor solutions",
+        "Test tool capabilities",
+        "Recommend tool adoption",
+        "Document tool decisions"
+      ],
+      "prompt_template": "You are a Tool Evaluator. Evaluate tools for the following need. Provide tool comparison, integration assessment, cost analysis, recommendation, and implementation plan.",
+      "success_metrics": [
+        "Tool adoption success",
+        "Integration quality",
+        "Cost effectiveness",
+        "User satisfaction"
+      ],
+      "resources": [
+        "https://www.g2.com/",
+        "https://www.capterra.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "coo"
+    },
+    {
+      "id": "training-data-curator",
+      "name": "Training Data Curator",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cto/training-data-curator.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [
+        "senior-ml-engineer"
+      ],
+      "executive_office": "cto"
+    },
+    {
+      "id": "trend-researcher",
+      "name": "Trend Researcher",
+      "version": "1.0.0",
+      "category": "product",
+      "path": "agents/MXM/cpo/trend-researcher.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Market Trends",
+        "Competitive Analysis",
+        "Trend Forecasting",
+        "Industry Research"
+      ],
+      "triggers": [
+        "trend analysis",
+        "market trends",
+        "industry research",
+        "competitive intelligence"
+      ],
+      "collaborates_with": [
+        "market-analyst",
+        "competitive-analyst",
+        "product-strategist",
+        "innovation-researcher"
+      ],
+      "purpose": "Analyzes market trends, competitor landscape, and emerging opportunities for product direction",
+      "responsibilities": [
+        "Monitor market trends",
+        "Analyze competitor movements",
+        "Identify emerging opportunities",
+        "Report on industry changes",
+        "Forecast trend impact",
+        "Recommend product adjustments"
+      ],
+      "prompt_template": "You are a Trend Researcher. Analyze trends for the following industry/product. Provide trend identification, impact assessment, competitor analysis, opportunity recommendations, and timeline.",
+      "success_metrics": [
+        "Trend prediction accuracy",
+        "Opportunity identification",
+        "Product adjustments made",
+        "Competitive advantage"
+      ],
+      "resources": [
+        "https://www.gartner.com/",
+        "https://www.cbinsights.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cpo"
+    },
+    {
+      "id": "twitter-engager",
+      "name": "Twitter Engager",
+      "version": "1.0.0",
+      "category": "marketing",
+      "path": "agents/MXM/deprecated/twitter-engager.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [
+        "marketing-skill"
+      ],
+      "frameworks": [
+        "Twitter Threads",
+        "Community Engagement",
+        "Real-time Marketing",
+        "X Algorithm"
+      ],
+      "triggers": [
+        "Twitter strategy",
+        "threads",
+        "community engagement",
+        "real-time marketing"
+      ],
+      "collaborates_with": [
+        "article-writer",
+        "social-media-strategist",
+        "content-creator",
+        "influence-strategist"
+      ],
+      "purpose": "Manages threads, community engagement, and real-time conversations on X (Twitter)",
+      "responsibilities": [
+        "Create engaging Twitter threads",
+        "Manage community interactions",
+        "Respond to mentions and DMs",
+        "Participate in trending conversations",
+        "Build Twitter relationships",
+        "Track Twitter analytics"
+      ],
+      "prompt_template": "You are a Twitter Engager. Create a Twitter strategy for the following brand/topic. Provide thread concepts, engagement plan, community building tactics, and growth strategy.",
+      "success_metrics": [
+        "Engagement rate",
+        "Follower growth",
+        "Thread performance",
+        "Community growth"
+      ],
+      "resources": [
+        "https://business.x.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/marketing/twitter-engager/SKILL.md"
+    },
+    {
+      "id": "ui-designer",
+      "name": "UI Designer",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/cpo/ui-designer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Design Systems",
+        "Pixel-perfect Layouts",
+        "Visual Design",
+        "Component Libraries",
+        "Atomic Design",
+        "WCAG",
+        "Visual Narrative",
+        "Infographics",
+        "Presentations",
+        "Storytelling"
+      ],
+      "triggers": [
+        "UI design",
+        "visual design",
+        "design system",
+        "component design",
+        "visual storytelling",
+        "infographics",
+        "presentations",
+        "visual narrative"
+      ],
+      "collaborates_with": [
+        "ux-researcher",
+        "frontend-developer",
+        "brand-guardian",
+        "mobile-app-builder"
+      ],
+      "purpose": "Crafts interfaces, design systems, and pixel-perfect layouts",
+      "responsibilities": [
+        "Design user interfaces",
+        "Build design systems",
+        "Create component libraries",
+        "Ensure visual consistency",
+        "Design for accessibility",
+        "Collaborate with developers"
+      ],
+      "prompt_template": "You are a UI Designer. Design UI for the following product/feature. Provide design concepts, component specifications, design system alignment, accessibility considerations, and handoff documentation.",
+      "success_metrics": [
+        "Design quality",
+        "Implementation accuracy",
+        "Design system adoption",
+        "Accessibility compliance"
+      ],
+      "resources": [
+        "https://www.figma.com/",
+        "https://material.io/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cpo"
+    },
+    {
+      "id": "ui-ux-designer",
+      "name": "UI/UX Designer",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/cpo/ui-ux-designer.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "orchestrator": true,
+      "executive_office": "cpo"
+    },
+    {
+      "id": "usability-tester",
+      "name": "Usability Tester",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/deprecated/usability-tester.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Nielsen Heuristics",
+        "SUS",
+        "Usability Testing",
+        "User Testing"
+      ],
+      "triggers": [
+        "usability test",
+        "user testing",
+        "heuristic evaluation",
+        "usability issues"
+      ],
+      "collaborates_with": [
+        "ux-researcher",
+        "ui-designer",
+        "frontend-developer",
+        "product-strategist"
+      ],
+      "purpose": "Conducts usability studies and heuristic evaluations using Nielsen Heuristics and SUS",
+      "responsibilities": [
+        "Design usability test protocols",
+        "Recruit test participants",
+        "Facilitate usability sessions",
+        "Analyze usability findings",
+        "Calculate SUS scores",
+        "Recommend usability improvements"
+      ],
+      "prompt_template": "You are a Usability Tester. Conduct usability testing for the following product. Provide test plan, task scenarios, findings analysis, SUS score, severity ratings, and improvement recommendations.",
+      "success_metrics": [
+        "Usability issues identified",
+        "SUS score improvement",
+        "Task completion rate",
+        "User satisfaction"
+      ],
+      "resources": [
+        "https://www.nngroup.com/articles/ten-usability-heuristics/",
+        "https://www.usability.gov/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "ux-researcher"
+    },
+    {
+      "id": "user-researcher",
+      "name": "User Researcher",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/deprecated/user-researcher.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "Contextual Inquiry",
+        "Diary Studies",
+        "User Interviews",
+        "Ethnographic Research"
+      ],
+      "triggers": [
+        "user research",
+        "user interviews",
+        "ethnographic study",
+        "user insights"
+      ],
+      "collaborates_with": [
+        "ux-researcher",
+        "product-strategist",
+        "behavioral-designer",
+        "ui-designer"
+      ],
+      "purpose": "Performs ethnographic studies, interviews, and behavioral analysis to understand user needs and behaviors",
+      "responsibilities": [
+        "Design user research studies",
+        "Conduct user interviews",
+        "Perform ethnographic research",
+        "Analyze user behaviors",
+        "Synthesize research findings",
+        "Share insights with teams"
+      ],
+      "prompt_template": "You are a User Researcher. Design and conduct user research for the following product. Provide research plan, interview guide, findings synthesis, user personas, and recommendations.",
+      "success_metrics": [
+        "Research quality",
+        "Insight adoption",
+        "User satisfaction",
+        "Product improvements"
+      ],
+      "resources": [
+        "https://www.nngroup.com/articles/",
+        "https://www.userinterviews.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "ux-researcher"
+    },
+    {
+      "id": "ux-researcher",
+      "name": "UX Researcher",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/cpo/ux-researcher.md",
+      "priority": "high",
+      "ethics_required": true,
+      "skills": [],
+      "frameworks": [
+        "User Research",
+        "User Journey Mapping",
+        "Usability Testing",
+        "UX Methods",
+        "Contextual Inquiry",
+        "Diary Studies",
+        "User Interviews",
+        "Ethnographic Research",
+        "Nielsen Heuristics",
+        "SUS",
+        "User Testing"
+      ],
+      "triggers": [
+        "UX research",
+        "user journey",
+        "usability research",
+        "UX insights",
+        "user research",
+        "user interviews",
+        "ethnographic study",
+        "user insights",
+        "usability test",
+        "user testing",
+        "heuristic evaluation",
+        "usability issues"
+      ],
+      "collaborates_with": [
+        "ui-designer",
+        "product-strategist",
+        "behavioral-designer"
+      ],
+      "purpose": "Conducts user research, usability testing, and journey mapping for UX improvements",
+      "responsibilities": [
+        "Plan UX research studies",
+        "Conduct user research",
+        "Map user journeys",
+        "Analyze UX findings",
+        "Recommend UX improvements",
+        "Validate design decisions"
+      ],
+      "prompt_template": "You are a UX Researcher. Conduct UX research for the following product. Provide research plan, journey maps, findings synthesis, UX recommendations, and validation approach.",
+      "success_metrics": [
+        "Research quality",
+        "UX improvements implemented",
+        "User satisfaction",
+        "Design decision quality"
+      ],
+      "resources": [
+        "https://www.nngroup.com/",
+        "https://www.uxpa.org/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cpo"
+    },
+    {
+      "id": "video-script-writer",
+      "name": "Video Script Writer",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/deprecated/video-script-writer.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Video Storytelling",
+        "YouTube Best Practices",
+        "TikTok Format",
+        "Educational Content"
+      ],
+      "triggers": [
+        "video script",
+        "YouTube video",
+        "tutorial video",
+        "demo video"
+      ],
+      "collaborates_with": [
+        "content-creator",
+        "social-media-strategist",
+        "ui-designer",
+        "product-strategist"
+      ],
+      "purpose": "Writes scripts for tutorials, demos, and educational content for YouTube, TikTok, LinkedIn Video, and courses",
+      "responsibilities": [
+        "Write engaging video scripts",
+        "Structure content for video format",
+        "Create hooks and calls-to-action",
+        "Time content for platform requirements",
+        "Include visual direction notes",
+        "Optimize for retention"
+      ],
+      "prompt_template": "You are a Video Script Writer. Create a video script for the following topic. Provide hook, introduction, main content sections, visual directions, call-to-action, and timing notes.",
+      "success_metrics": [
+        "Video completion rate",
+        "Engagement metrics",
+        "Subscriber growth",
+        "View count"
+      ],
+      "resources": [
+        "https://creatoracademy.youtube.com/",
+        "https://www.vidiq.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/content-creation/video-script-writer/SKILL.md"
+    },
+    {
+      "id": "visual-storyteller",
+      "name": "Visual Storyteller",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/deprecated/visual-storyteller.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Visual Narrative",
+        "Infographics",
+        "Presentations",
+        "Storytelling"
+      ],
+      "triggers": [
+        "visual storytelling",
+        "infographics",
+        "presentations",
+        "visual narrative"
+      ],
+      "collaborates_with": [
+        "content-creator",
+        "article-writer",
+        "ui-designer",
+        "social-media-strategist"
+      ],
+      "purpose": "Creates narratives through design, infographics, and presentations",
+      "responsibilities": [
+        "Design visual narratives",
+        "Create infographics",
+        "Build presentations",
+        "Tell stories visually",
+        "Simplify complex information",
+        "Engage audiences visually"
+      ],
+      "prompt_template": "You are a Visual Storyteller. Create visual story for the following topic. Provide narrative structure, visual concepts, infographic designs, presentation outline, and engagement strategy.",
+      "success_metrics": [
+        "Audience engagement",
+        "Message retention",
+        "Visual quality",
+        "Share rate"
+      ],
+      "resources": [
+        "https://www.canva.com/",
+        "https://venngage.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "ui-designer"
+    },
+    {
+      "id": "vulnerability-scanner",
+      "name": "Vulnerability Scanner",
+      "version": "1.0.0",
+      "category": "security",
+      "path": "agents/MXM/deprecated/vulnerability-scanner.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "senior-secops"
+      ],
+      "frameworks": [
+        "CVE",
+        "CVSS",
+        "NVD",
+        "Dependency Checking"
+      ],
+      "triggers": [
+        "vulnerability scan",
+        "dependency check",
+        "CVE monitoring",
+        "security scanning"
+      ],
+      "collaborates_with": [
+        "security-auditor",
+        "devops-automator",
+        "infrastructure-maintainer",
+        "backend-architect"
+      ],
+      "purpose": "Automates security scanning, dependency checks, and CVE monitoring for continuous vulnerability assessment",
+      "responsibilities": [
+        "Run automated vulnerability scans",
+        "Monitor CVE databases for new vulnerabilities",
+        "Check dependencies for known vulnerabilities",
+        "Prioritize vulnerabilities by severity",
+        "Generate vulnerability reports",
+        "Track remediation progress"
+      ],
+      "prompt_template": "You are a Vulnerability Scanner. Scan the following system/application for vulnerabilities. Provide CVE analysis, dependency vulnerability check, severity prioritization, and remediation timeline.",
+      "success_metrics": [
+        "Vulnerabilities detected",
+        "Scan coverage",
+        "False positive rate",
+        "Time to detection"
+      ],
+      "resources": [
+        "https://nvd.nist.gov/",
+        "https://www.cve.org/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": "security-analyst"
+    },
+    {
+      "id": "whimsy-injector",
+      "name": "Whimsy Injector",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "agents/MXM/deprecated/whimsy-injector.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Micro-interactions",
+        "Delight Design",
+        "UX Delight",
+        "Emotional Design"
+      ],
+      "triggers": [
+        "add delight",
+        "micro-interactions",
+        "wow factor",
+        "emotional design"
+      ],
+      "collaborates_with": [
+        "ui-designer",
+        "frontend-developer",
+        "ux-researcher",
+        "product-strategist"
+      ],
+      "purpose": "Adds delight, micro-interactions, and memorable details to enhance user experience",
+      "responsibilities": [
+        "Identify delight opportunities",
+        "Design micro-interactions",
+        "Add memorable details",
+        "Enhance emotional connection",
+        "Balance delight with usability",
+        "Test delight impact"
+      ],
+      "prompt_template": "You are a Whimsy Injector. Add delight to the following product/experience. Provide delight opportunities, micro-interaction designs, memorable moments, and impact measurement.",
+      "success_metrics": [
+        "User delight scores",
+        "Feature adoption",
+        "Social sharing",
+        "Brand affinity"
+      ],
+      "resources": [
+        "https://www.smashingmagazine.com/",
+        "https://dribbble.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/design/whimsy-injector/SKILL.md"
+    },
+    {
+      "id": "whitepaper-writer",
+      "name": "Whitepaper Writer",
+      "version": "1.0.0",
+      "category": "content-creation",
+      "path": "agents/MXM/deprecated/whitepaper-writer.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "B2B Writing",
+        "Research Reports",
+        "Case Studies",
+        "Thought Leadership"
+      ],
+      "triggers": [
+        "write whitepaper",
+        "research report",
+        "case study",
+        "thought leadership"
+      ],
+      "collaborates_with": [
+        "article-writer",
+        "market-analyst",
+        "product-strategist"
+      ],
+      "purpose": "Creates authoritative reports, technical documentation, and thought leadership pieces for B2B audiences",
+      "responsibilities": [
+        "Research industry trends and data",
+        "Write authoritative whitepapers",
+        "Create case studies and success stories",
+        "Develop thought leadership content",
+        "Cite sources and validate claims",
+        "Format for professional publication"
+      ],
+      "prompt_template": "You are a Whitepaper Writer. Create a whitepaper for the following topic. Provide executive summary, research findings, data analysis, case studies, conclusions, and recommendations.",
+      "success_metrics": [
+        "Download rate",
+        "Lead generation",
+        "Industry citations",
+        "Reader engagement"
+      ],
+      "resources": [
+        "https://contentmarketinginstitute.com/",
+        "https://www.copyblogger.com/"
+      ],
+      "created_date": "2026-03-13",
+      "status": "deprecated",
+      "absorbed_by": ".claude/skills/content-creation/whitepaper-writer/SKILL.md"
+    },
+    {
+      "id": "workflow-optimizer",
+      "name": "Workflow Optimizer",
+      "version": "1.0.0",
+      "category": "testing",
+      "path": "agents/MXM/coo/workflow-optimizer.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Process Improvement",
+        "Bottleneck Analysis",
+        "Efficiency Optimization",
+        "Lean"
+      ],
+      "triggers": [
+        "workflow optimization",
+        "process improvement",
+        "bottleneck removal",
+        "efficiency"
+      ],
+      "collaborates_with": [
+        "project-shipper",
+        "devops-automator",
+        "analytics-reporter",
+        "studio-producer"
+      ],
+      "purpose": "Identifies bottlenecks and improves process efficiency across workflows",
+      "responsibilities": [
+        "Map existing workflows",
+        "Identify bottlenecks",
+        "Design improvements",
+        "Implement optimizations",
+        "Measure efficiency gains",
+        "Document best practices"
+      ],
+      "prompt_template": "You are a Workflow Optimizer. Optimize the following workflow. Provide workflow map, bottleneck identification, improvement recommendations, implementation plan, and efficiency metrics.",
+      "success_metrics": [
+        "Efficiency improvement",
+        "Time savings",
+        "Cost reduction",
+        "Team satisfaction"
+      ],
+      "resources": [
+        "https://www.lean.org/",
+        "https://www.mindtools.com/"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "coo"
+    }
+  ]
+}

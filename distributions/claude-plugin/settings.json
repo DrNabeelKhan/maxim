@@ -1,0 +1,7 @@
+{
+  "agent": "executive-router",
+  "subagentStatusLine": {
+    "type": "command",
+    "command": "bash \"${CLAUDE_PLUGIN_ROOT}/statusline/mxm-statusline.sh\""
+  }
+}

@@ -1,0 +1,11 @@
+# Owner public keys for encryption pipeline
+#
+# Add PUBLIC RSA keys here (from bootstrap/mxm-owner-keygen-bootstrap.{ps1,sh}).
+# Filenames: owner-{machine-name}.pub
+#
+# Private keys live at ~/.mxm-packs/owner.key on each owned machine.
+# NEVER commit private keys.
+#
+# Current owners (fill in as keys are generated):
+#   owner-NK-ZBook.pub        (pending — Windows machine)
+#   owner-MacBook-Pro.pub     (pending — Mac machine)
