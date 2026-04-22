@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Status:** 6 rows at v1.0.0 — one per L1 pack. New rows land as L2 bundles, L3 verticals, and community packs ship, each pairing a pack's SKILL.md with the behavioral framework it applies per ADR-007.
+**Status:** 7 rows at v1.0.0 (6 L1 pack moats + MOAT-07 vertical-operator moat, added 2026-04-21 post community-pack audit). New rows land as L2 bundles, L3 verticals, and community packs ship, each pairing a pack's SKILL.md with the behavioral framework it applies per ADR-007.
 
 ---
 
@@ -93,6 +93,19 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Pack(s)** | L1.6 Behavioral Intelligence (flagship) · plus every other L1 cites this pack's framework registry |
 | **Primary framework** | Fogg Behavior Model / B=MAP (Fogg, 2009) · see `FRAMEWORKS_MASTER.md` §51. Supporting: Cialdini §50, Hook Model §53, EAST §55, Nudge Theory §52, TTM §59, SDT §60. |
 | **Proof** | [`packs/pack-l1-6-behavioral-intelligence/SKILL.md`](../../packs/pack-l1-6-behavioral-intelligence/SKILL.md) · [`documents/reference/FRAMEWORKS_MASTER.md`](../reference/FRAMEWORKS_MASTER.md) |
+
+---
+
+### MOAT-07 · Operator agents behind vertical compliance overlays
+
+| Field | Value |
+|---|---|
+| **Positioning claim** | Maxim ships the only Claude-native operator roster that goes beyond compliance *awareness* to compliance *authorship* — FDA submissions, MDR technical files, CAPA workflows, PCI-grade payment flows written by specialist agents who cite the exact clause. |
+| **Mechanism** | Social Learning Theory — regulator-facing documents follow strict genre conventions (tone, evidence format, citation discipline) that specialist agents replicate by modeling observed regulator-approved submissions, not by generating from compliance-rule abstractions. See `FRAMEWORKS_MASTER.md` §64 Social Learning Theory (Bandura) — roadmap v1.2. Supporting: Prospect Theory §56 for risk-weighted language; Constitutional AI for audit-trail alignment (roadmap v1.3). |
+| **Anti-pattern** | Generic LLM knows what HIPAA / MDR / PCI-DSS *require* but produces text that reads like a summary, not a submission. Regulator rejects; operator rewrites; Maxim's value didn't reach the artifact. |
+| **Pack(s)** | L3 Healthcare overlay · L3 Fintech overlay · L3 Legal overlay · L3 GovTech overlay — all four get operator rosters starting v1.4 |
+| **Primary framework** | Social Learning Theory (Bandura, 1977) · roadmap v1.2 §64 |
+| **Proof** | [`documents/reference/FRAMEWORK_ROADMAP.md`](../reference/FRAMEWORK_ROADMAP.md) — CRO operator roster + Fintech specialist domain scheduled v1.4. |
 
 ---
 

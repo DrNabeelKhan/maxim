@@ -61,7 +61,7 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 - [ ] End-to-end test: expired JWT → tool calls fail with refresh instructions
 - [ ] Rate-limit policy per tier documented and verified
 
-**Expected effort:** 4–6 engineer-days (middleware + per-MCP integration + Worker endpoint + tests + docs). Treat as higher-priority than any individual framework addition.
+**Priority.** Treat as higher-priority than any individual framework addition — the work gates every future paid-tier feature.
 
 **Non-goals for v1.1.**
 - Obfuscating MCP source code — the public-source strategy stays. Value is gated by runtime, not code secrecy.
@@ -103,9 +103,46 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 | **Constitutional AI principles** | AI Governance — Alignment | Anthropic's own framework for AI alignment. Natural fit for a Claude-native plugin; reinforces the brand-aligned distribution story. | All agents (cross-cutting) |
 | **AI Bill of Materials (AIBOM / SPDX 3.0)** | AI Governance — Supply chain | Required by EU AI Act Article 53 (GPAI models) + emerging US executive orders. Maps model lineage, training data, weights provenance. | compliance-architect, govtech overlay |
 
-**5 frameworks.** Expected effort: 3–5 days per framework (these are denser than compliance docs — require threat-model scaffolds, prompt-level checklists, and integration with `mxm-behavioral` for AI-specific audit). Total: ~3 engineer-weeks.
+**5 frameworks.** Each ships with threat-model scaffolds, prompt-level checklists, and integration with `mxm-behavioral` for AI-specific audit.
 
-**Dependencies:** v1.1 license middleware must ship first so tier-based gating can route AI governance frameworks appropriately (Starter gets awareness, Pro gets audit, Enterprise gets continuous monitoring).
+**Dependencies:** v1.1 license middleware must ship first so tier-based gating can route AI governance frameworks to the correct grant set.
+
+---
+
+## 🌐 Domain Expansions — v1.3 / v1.4 / v1.5
+
+Four new skill/operator domains ship alongside the framework releases below. Each pairs with behavioral frameworks from MASTER.
+
+### v1.3 — Revenue Operations domain (Q1 2027)
+
+Pipeline health, churn prevention, form CRO, sales engineering, customer-success playbooks, SaaS metrics, and A/B experimentation as first-class dispatchable skills under the CMO office.
+
+Behavioral framework pairing: Prospect Theory (v1.2 §66) · Diffusion of Innovations (v1.2 §67) · EAST (v1.0 §55).
+
+### v1.4 — Regulated Industries operator roster (Q2 2027)
+
+Operator agents behind the Healthcare / Legal / Fintech / GovTech overlays. Specialists for FDA submissions, MDR technical files, CAPA workflows, ISO 13485/14971 QMS, ISMS 27001 audits, GDPR deep practice. Moves vertical overlays from compliance-awareness to compliance-authorship.
+
+Behavioral framework pairing: Social Learning Theory (v1.2 §64) · Constitutional AI (v1.3).
+
+### v1.4 — Fintech Specialist domain (Q2 2027)
+
+Payment integration, quant analysis, risk modeling, investment advisory, financial modeling. Bridges CTO (payment engineering) and CSO (risk/compliance).
+
+Behavioral framework pairing: Prospect Theory (v1.2 §66) · Cognitive Biases (v1.0 §56).
+
+### v1.5 — Cinematic / Video-AI Production domain (Q3 2027)
+
+Shot language, motion design, moodboard synthesis, and recipe libraries wrapped as a dispatchable Maxim domain. Source material already bundled via the Higgsfield community pack; v1.5 adds the Maxim-native director skill that orchestrates it.
+
+Behavioral framework pairing: Emotional Design (v1.2 §68) · Hook Model (v1.0 §53).
+
+### Cross-cutting requirements (applies to all domain expansions)
+
+- Each new domain gets a moat row in `MOAT_TRACKER.md` (pattern established by MOAT-07)
+- Each new skill registered in `config/framework-mapping.yaml` for dispatch triggers
+- Each new agent in `config/agent-registry.json`
+- Each new domain counted in `AGENT_SKILL_INVENTORY.md`
 
 ---
 
@@ -154,7 +191,7 @@ Diminishing returns after the v1.2 expansion, but valuable for specialist vertic
 
 ### Tier 5 — Geographic Compliance
 
-Unlocks new regional markets. Each triggers a natural upsell to a region-specific overlay.
+Each is a region-specific data-protection or financial-compliance framework.
 
 | Region | Framework | Unlocks |
 |---|---|---|
@@ -208,7 +245,8 @@ Items occasionally requested but not on the roadmap. These may be reconsidered p
 | Date | Change | By |
 |---|---|---|
 | 2026-04-21 | Initial roadmap: 18 frameworks deferred from v1.0.0 → v1.1/v1.2 (7 compliance + 10 behavioral + 1 AI governance overlap) | Maxim v1.0.0 launch audit |
-| 2026-04-21 | v1.1 add: Runtime Hardening — MCP license middleware across all 7 servers (closes exposure gap found by launch audit). v1.3 add: AI Governance & Security — 5 frameworks (NIST AI RMF, OWASP LLM Top 10, MITRE ATLAS, Constitutional AI, AIBOM). Future Considerations appendix (Tiers 2–6 unscheduled). | Maxim v1.0.0 launch audit — round 2 |
+| 2026-04-21 | v1.1 add: Runtime Hardening — MCP license middleware across all 7 servers. v1.3 add: AI Governance & Security — 5 frameworks (NIST AI RMF, OWASP LLM Top 10, MITRE ATLAS, Constitutional AI, AIBOM). Future Considerations appendix (Tiers 2–6 unscheduled). | Maxim v1.0.0 launch |
+| 2026-04-21 | Domain Expansions scheduled: RevOps (v1.3), Regulated Industries operator roster (v1.4), Fintech Specialist domain (v1.4), Cinematic / Video-AI Production (v1.5). | Maxim v1.0.0 launch |
 
 ---
 
