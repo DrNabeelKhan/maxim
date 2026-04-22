@@ -5,7 +5,7 @@
 
 | Version | Last Updated | Owner | Canonical Reference |
 |---|---|---|---|
-| 1.0 | 2026-04-21 | `planner` (COO) | [FRAMEWORKS_MASTER.md](./FRAMEWORKS_MASTER.md) |
+| 1.1 | 2026-04-21 | `planner` (COO) | [FRAMEWORKS_MASTER.md](./FRAMEWORKS_MASTER.md) |
 
 ---
 
@@ -39,6 +39,35 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 
 **7 compliance frameworks.** Expected effort: 2–3 days per framework (template, compliance matrix, MCP integration, test cases).
 
+### 🔒 v1.1 — Runtime Hardening — MCP license middleware
+
+**Theme:** Close the runtime enforcement gap exposed by the v1.0.0 launch audit. Landing alongside the compliance expansion because enterprise/regulated buyers evaluating the new overlays will review runtime controls at the same time.
+
+**Problem.** The v1.0.0 plugin-repo ships seven MCP servers (`mxm-behavioral`, `mxm-compliance`, `mxm-context`, `mxm-memory`, `mxm-portfolio`, `mxm-catalog`, `mxm-voice`) with zero license enforcement. A license JWT is issued by the Worker on checkout-completed, but none of the MCPs validate it before serving tool calls. Code being public is a deliberate choice (standard open-core distribution pattern); runtime being ungated is a bug.
+
+**Shipped capability.**
+
+- New shared module `mcp/_shared/license-gate.ts` — single `requireValidLicense(toolName)` helper that reads `MXM_LICENSE_JWT` env var, calls the Worker `/validate` endpoint, and throws on deny/expired/revoked.
+- All 7 MCP servers call the gate at the start of every `@tool`-decorated handler. Starter tier (free) gets a short-TTL anonymous JWT with rate-limited grants; paid tiers get their checkout-issued JWT with tier-specific grant set.
+- Worker-side `/validate` endpoint logs (tool, tier, project_id, timestamp) to a KV namespace for usage analytics — feeds the portfolio dashboard and support debugging.
+- Tier-grant enforcement: the validate response includes the tier's grant list; tools that require specific grants (e.g., `mempalace_kg_add` requires `mempalace-full`) check locally after the gate clears.
+
+**Ship gates (must all be green before release):**
+- [ ] `requireValidLicense` middleware merged into all 7 MCP servers
+- [ ] Worker `/validate` endpoint deployed + KV binding live
+- [ ] Starter tier anonymous JWT issuer live (rate-limited, no paid grants)
+- [ ] End-to-end test: clone public repo without a license → tool calls fail with clear error pointing to install instructions
+- [ ] End-to-end test: paid-tier JWT → tool calls succeed + usage logged
+- [ ] End-to-end test: expired JWT → tool calls fail with refresh instructions
+- [ ] Rate-limit policy per tier documented and verified
+
+**Expected effort:** 4–6 engineer-days (middleware + per-MCP integration + Worker endpoint + tests + docs). Treat as higher-priority than any individual framework addition.
+
+**Non-goals for v1.1.**
+- Obfuscating MCP source code — the public-source strategy stays. Value is gated by runtime, not code secrecy.
+- Moving framework definitions server-side — they stay public as marketing/reference assets.
+- Real ML-driven framework scoring — deferred to v2.0.
+
 ---
 
 ## 🧠 v1.2 — Behavioral Science Expansion (target: Q4 2026)
@@ -59,6 +88,95 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 | §68 | Emotional Design Model | UX / Behavior Science — Don Norman | [nngroup.com/books/emotional-design](https://www.nngroup.com/books/emotional-design/) | 🟠 MED |
 
 **10 behavioral frameworks.** Expected effort: 3–4 days per framework (template, trigger phrases, collaboration matrix, `behavioral_audit` integration, `apply_framework` MCP wiring, test cases).
+
+---
+
+## 🤖 v1.3 — AI Governance & Security (target: Q1 2027)
+
+**Theme:** Close the AI-specific governance gap. Being a Claude Code plugin that doesn't ship AI-specific frameworks is a credibility hole the moment an enterprise procurement reviewer looks closely. Every framework below is already cited in at least one customer RFP we expect to field in 2027.
+
+| Framework | Category | Why it matters | Maps to |
+|---|---|---|---|
+| **NIST AI RMF (AI 100-1)** | AI Governance — US | De-facto US AI risk framework. Required by federal AI procurements; widely adopted by regulated industries. | All compliance overlays; CSO auto-loop |
+| **OWASP LLM Top 10** | Security — AI/LLM | Direct security framework for LLM-based apps (prompt injection, training data poisoning, model DoS). Speaks to every dev shipping with Claude. | `mxm-behavioral` + security-analyst agent |
+| **MITRE ATLAS** | Security — Adversarial ML | The MITRE ATT&CK equivalent for AI systems. Threat matrix for ML supply-chain + inference-time attacks. | security-analyst, fintech overlay |
+| **Constitutional AI principles** | AI Governance — Alignment | Anthropic's own framework for AI alignment. Natural fit for a Claude-native plugin; reinforces the brand-aligned distribution story. | All agents (cross-cutting) |
+| **AI Bill of Materials (AIBOM / SPDX 3.0)** | AI Governance — Supply chain | Required by EU AI Act Article 53 (GPAI models) + emerging US executive orders. Maps model lineage, training data, weights provenance. | compliance-architect, govtech overlay |
+
+**5 frameworks.** Expected effort: 3–5 days per framework (these are denser than compliance docs — require threat-model scaffolds, prompt-level checklists, and integration with `mxm-behavioral` for AI-specific audit). Total: ~3 engineer-weeks.
+
+**Dependencies:** v1.1 license middleware must ship first so tier-based gating can route AI governance frameworks appropriately (Starter gets awareness, Pro gets audit, Enterprise gets continuous monitoring).
+
+---
+
+## 📌 Future Considerations (Tier 2–6, unscheduled)
+
+These expansions are on the long-range map but not yet locked to a release. They will be pulled forward when customer demand, regulatory pressure, or internal bandwidth dictates. Listed here so the roadmap reflects depth of intent without overcommitting dates.
+
+### Tier 2 — Sales & GTM methodologies
+
+Strengthens CMO/COO office output to speak operator-language. Most useful for founder/agency tier customers who use Maxim to build revenue playbooks.
+
+| Framework | Why |
+|---|---|
+| Pirate Metrics (AARRR) | Acquisition / Activation / Retention / Referral / Revenue — universal SaaS funnel |
+| HEART (Google) | Happiness / Engagement / Adoption / Retention / Task success — product-analytics gold standard |
+| MEDDIC / MEDDPICC | Enterprise sales qualification |
+| Jobs Atlas | Tony Ulwick's expanded JTBD method |
+| North Star Metric framework | Cross-functional alignment around one number |
+| RICE / ICE prioritization | Roadmap scoring methods — pairs with `product-strategist` |
+
+### Tier 3 — Strategy & Org Design
+
+Differentiates Maxim's CEO/COO offices. Wardley Mapping in particular would be a standout positioning move — few AI tools ship it.
+
+| Framework | Why |
+|---|---|
+| Wardley Mapping | Most underused strategic tool of the decade; pairs with enterprise-architect |
+| Business Model Canvas | Universal startup framework |
+| Value Proposition Canvas | Companion to BMC |
+| Three Horizons | Innovation portfolio framework |
+| Team Topologies | Modern org-design framework that actually addresses Conway's Law |
+| DORA Metrics (engineering KPIs — *not* the EU regulation already in v1.1) | Lead time, deployment frequency, MTTR, change-failure rate |
+
+### Tier 4 — Behavioral Depth (beyond v1.2)
+
+Diminishing returns after the v1.2 expansion, but valuable for specialist verticals (wellness, fintech nudge design, compliance ethics).
+
+| Framework | Author |
+|---|---|
+| Tiny Habits | BJ Fogg (newer, more actionable companion to FBM) |
+| Implementation Intentions | Peter Gollwitzer — "if-then planning" |
+| Goal-Setting Theory | Locke & Latham — OKR foundation |
+| Switch Framework | Heath brothers — Rider / Elephant / Path |
+| Reactance Theory | Brehm — backlash to persuasion (critical for nudge ethics) |
+| BATNA / ZOPA | Harvard negotiation framework |
+
+### Tier 5 — Geographic Compliance
+
+Unlocks new regional markets. Each triggers a natural upsell to a region-specific overlay.
+
+| Region | Framework | Unlocks |
+|---|---|---|
+| Australia | APRA CPS 234 + Privacy Act 1988 amendments | AU fintech/enterprise |
+| Singapore | MAS TRM (Monetary Authority cyber framework) | SG fintech |
+| South Africa | POPIA | ZA enterprise |
+| Canada | Bill C-27 / AIDA (Artificial Intelligence and Data Act) | CA AI governance |
+| China | PIPL (Personal Information Protection Law) | CN market readiness |
+| India | DPDP Act 2023 | IN enterprise |
+| Japan | APPI | JP enterprise |
+
+### Tier 6 — Engineering Documentation & Quality
+
+Strengthens CTO-office outputs; mostly requested by agency-tier customers running multiple client projects.
+
+| Framework | Why |
+|---|---|
+| C4 Model | Architecture diagramming — Simon Brown; pairs with arc42 |
+| arc42 | Architecture documentation template — widely used in EU |
+| Diátaxis | Modern docs framework (Tutorial / How-to / Reference / Explanation) |
+| TDD / BDD / ATDD | Testing methodologies |
+| Conway's Law / Inverse Conway Maneuver | Org-tech alignment principle |
 
 ---
 
@@ -90,6 +208,7 @@ Items occasionally requested but not on the roadmap. These may be reconsidered p
 | Date | Change | By |
 |---|---|---|
 | 2026-04-21 | Initial roadmap: 18 frameworks deferred from v1.0.0 → v1.1/v1.2 (7 compliance + 10 behavioral + 1 AI governance overlap) | Maxim v1.0.0 launch audit |
+| 2026-04-21 | v1.1 add: Runtime Hardening — MCP license middleware across all 7 servers (closes exposure gap found by launch audit). v1.3 add: AI Governance & Security — 5 frameworks (NIST AI RMF, OWASP LLM Top 10, MITRE ATLAS, Constitutional AI, AIBOM). Future Considerations appendix (Tiers 2–6 unscheduled). | Maxim v1.0.0 launch audit — round 2 |
 
 ---
 
