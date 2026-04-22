@@ -1,34 +1,37 @@
 # 🎯 Frameworks Master Reference
 
-> Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
+> Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc. SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years).
 
+**Complete cross-reference matrix of industry frameworks — shipping and roadmap.**
 
-**Complete Cross-Reference Matrix for All 40+ Industry Frameworks**
+| Version                     | 5.1                    |
+| --------------------------- | ---------------------- |
+| Frameworks shipping v1.0.0  | **64**                 |
+| Frameworks total documented | 78 (64 shipped + 14 roadmap — 4 duplicated across roadmap tracks) |
+| Categories                  | 9                      |
+| Agents Using Frameworks     | 88 (all)               |
+| New in v1.0.0               | 🆕 2 (CCPA §16, FedRAMP §23) + Proactive Watch |
+| Deferred to v1.1 / v1.2     | 18 — see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md) |
+| Last Updated                | 2026-04-21             |
 
-| Version                 | 5.0             |
-| ----------------------- | --------------- |
-| Total Frameworks        | 78              |
-| Categories              | 9               |
-| Agents Using Frameworks | 79+             |
-| Newly Added             | 🆕 20           |
-| Last Updated            | April 2026      |
+> **Reading this file:** the §N sections below document every framework, shipped and planned. Items with 🆕 that are not yet implemented as dispatchable `SKILL.md` files are marked in this header's "Deferred" row. Those remain valid reference material and can be reasoned about by specialist agents, but are not yet wired into the automated dispatch. See the [roadmap](./FRAMEWORK_ROADMAP.md) for implementation schedule.
 
 ---
 
 ## 📊 Quick Navigation
 
-| Category                         | Frameworks | New | Quick Link                                        |
-| -------------------------------- | ---------- | --- | ------------------------------------------------- |
-| 🔍 Search & Visibility           | 6          | —   | [Jump](#-search--visibility-frameworks)           |
-| 🔐 Security & Compliance         | 24         | 🆕 9 | [Jump](#-security--compliance-frameworks)        |
-| 🏛️ Enterprise Architecture       | 8          | —   | [Jump](#-enterprise-architecture-frameworks)     |
-| 📦 Product & Research            | 8          | —   | [Jump](#-product--research-frameworks)           |
-| 📚 Content & Marketing           | 6          | —   | [Jump](#-content--marketing-frameworks)          |
-| 💻 Engineering & DevOps          | 6          | —   | [Jump](#-engineering--devops-frameworks)         |
-| 🎨 Design & UX                   | 5          | —   | [Jump](#-design--ux-frameworks)                  |
-| 📋 Project Management            | 4          | —   | [Jump](#-project-management-frameworks)          |
-| 🧠 Behavior Science & Persuasion | 19         | 🆕 10 | [Jump](#-behavior-science--persuasion-frameworks)|
-| **TOTAL**                        | **78**     | **🆕 20** | |
+| Category                         | Shipped v1.0.0 | Roadmap | Quick Link                                        |
+| -------------------------------- | -------------- | ------- | ------------------------------------------------- |
+| 🔍 Search & Visibility           | 6              | —       | [Jump](#-search--visibility-frameworks)           |
+| 🔐 Security & Compliance         | 17             | 🗺 7 v1.1 | [Jump](#-security--compliance-frameworks)       |
+| 🏛️ Enterprise Architecture       | 8              | —       | [Jump](#-enterprise-architecture-frameworks)     |
+| 📦 Product & Research            | 8              | —       | [Jump](#-product--research-frameworks)           |
+| 📚 Content & Marketing           | 6              | —       | [Jump](#-content--marketing-frameworks)          |
+| 💻 Engineering & DevOps          | 6              | —       | [Jump](#-engineering--devops-frameworks)         |
+| 🎨 Design & UX                   | 5              | —       | [Jump](#-design--ux-frameworks)                  |
+| 📋 Project Management            | 4              | —       | [Jump](#-project-management-frameworks)          |
+| 🧠 Behavior Science & Persuasion | 9 + Proactive Watch | 🗺 10 v1.2 | [Jump](#-behavior-science--persuasion-frameworks)|
+| **TOTAL**                        | **64**         | **18**  | |
 
 ---
 
@@ -2741,15 +2744,16 @@ Behavior = Capability × Opportunity × Motivation
 | 3.0     | 2026-03-01 | Expanded security frameworks                                            |
 | 4.0     | 2026-03-01 | Complete 40+ framework coverage                                         |
 | 4.1     | 2026-03-01 | Added Behavior Science & Persuasion (8 frameworks)                      |
-| 5.0     | 2026-04-01 | 🆕 Gap Analysis Update: +9 Compliance, +10 Behavioral (78 total)       |
+| 5.0     | 2026-04-01 | 🆕 Gap Analysis Update: +9 Compliance, +10 Behavioral (78 documented)  |
+| 5.1     | 2026-04-21 | Maxim v1.0.0 launch reconciliation: 64 ship today, 18 deferred to v1.1/v1.2 — see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md) |
 
 ---
 
-**Last Updated:** April 2026  
-**Version:** 5.0  
-**Maintained By:** AI Agent Directory Team  
-**Gap Analysis By:** Claude (Anthropic) — April 2026  
-**Newly Added:** 🆕 20 frameworks (9 Compliance + 10 Behavioral + 1 AI Governance)
+**Last Updated:** 2026-04-21
+**Version:** 5.1
+**Maintained By:** Maxim framework library maintainers
+**Shipping in v1.0.0:** 64 frameworks (63 SKILL.md + 1 proactive-watch.md)
+**Deferred to roadmap:** 18 frameworks — see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md) for v1.1 (compliance) and v1.2 (behavioral) schedule
 
 ---
 
