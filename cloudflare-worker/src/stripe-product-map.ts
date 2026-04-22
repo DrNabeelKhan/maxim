@@ -28,24 +28,24 @@ export interface StripeTierMapping {
 }
 
 /**
- * Price IDs loaded from config/stripe-products-test.json (2026-04-21).
- * Before accepting real payments, replace with live-mode IDs generated via:
- *   STRIPE_API_KEY=<rk_live_...> node cloudflare-worker/scripts/setup-stripe-products.mjs
- * Then commit the resulting stripe-products-live.json and update this map.
+ * Live-mode Stripe price IDs, generated 2026-04-21 via:
+ *   node cloudflare-worker/scripts/setup-stripe-products.mjs --env live
+ * Source of truth: config/stripe-products-live.json (gitignored).
+ * Products created with rk_live key (Products:Write, Prices:Write, Checkout:Write).
  */
 export const TIER_PRICE_IDS: Record<string, { price_id: string; mode: "subscription" | "payment"; cadence: "month" | "year" | "one_time" }> = {
-    "solo":                { price_id: "price_1TOhOXFR96sQjyaJaRKY2Si7", mode: "subscription", cadence: "month" },
-    "solo-annual":         { price_id: "price_1TOhOXFR96sQjyaJ8Cef2MPR", mode: "subscription", cadence: "year" },
-    "pro":                 { price_id: "price_1TOhOXFR96sQjyaJyn6ezB8c", mode: "subscription", cadence: "month" },
-    "pro-annual":          { price_id: "price_1TOhOYFR96sQjyaJJPAF0Kdh", mode: "subscription", cadence: "year" },
-    "professional":        { price_id: "price_1TOhOYFR96sQjyaJKfmGuHI7", mode: "subscription", cadence: "month" },
-    "professional-annual": { price_id: "price_1TOhOYFR96sQjyaJYjUZUDUk", mode: "subscription", cadence: "year" },
-    "team":                { price_id: "price_1TOhOZFR96sQjyaJKe5Zf52M", mode: "subscription", cadence: "month" },
-    "team-annual":         { price_id: "price_1TOhOZFR96sQjyaJk6CUGXyd", mode: "subscription", cadence: "year" },
-    "overlay-healthcare":  { price_id: "price_1TOhOZFR96sQjyaJIWJiDpII", mode: "payment",      cadence: "one_time" },
-    "overlay-legal":       { price_id: "price_1TOhOaFR96sQjyaJFe1QFla7", mode: "payment",      cadence: "one_time" },
-    "overlay-fintech":     { price_id: "price_1TOhOaFR96sQjyaJ8mWxHEVF", mode: "payment",      cadence: "one_time" },
-    "overlay-govtech":     { price_id: "price_1TOhObFR96sQjyaJNlGovOTA", mode: "payment",      cadence: "one_time" },
+    "solo":                { price_id: "price_1TOpJFFQAVcq18td7OHUtWQ3", mode: "subscription", cadence: "month" },
+    "solo-annual":         { price_id: "price_1TOpJGFQAVcq18tdABuNXq0O", mode: "subscription", cadence: "year" },
+    "pro":                 { price_id: "price_1TOpJGFQAVcq18td4z0ieGSt", mode: "subscription", cadence: "month" },
+    "pro-annual":          { price_id: "price_1TOpJGFQAVcq18tduGHzZQtE", mode: "subscription", cadence: "year" },
+    "professional":        { price_id: "price_1TOpJHFQAVcq18td9EBq9PaS", mode: "subscription", cadence: "month" },
+    "professional-annual": { price_id: "price_1TOpJHFQAVcq18tdGGpEJPf0", mode: "subscription", cadence: "year" },
+    "team":                { price_id: "price_1TOpJHFQAVcq18td6Miqlg1b", mode: "subscription", cadence: "month" },
+    "team-annual":         { price_id: "price_1TOpJHFQAVcq18tdBDRQk06j", mode: "subscription", cadence: "year" },
+    "overlay-healthcare":  { price_id: "price_1TOpJIFQAVcq18tdKpqDD0AQ", mode: "payment",      cadence: "one_time" },
+    "overlay-legal":       { price_id: "price_1TOpJIFQAVcq18tdHo367cYH", mode: "payment",      cadence: "one_time" },
+    "overlay-fintech":     { price_id: "price_1TOpJJFQAVcq18tdsN6vbCS9", mode: "payment",      cadence: "one_time" },
+    "overlay-govtech":     { price_id: "price_1TOpJJFQAVcq18tdMaKUQkue", mode: "payment",      cadence: "one_time" },
 };
 
 export const STRIPE_PRODUCT_MAP: Record<string, StripeTierMapping> = {
