@@ -11,7 +11,7 @@ layer: bridge
 Routes tasks to VoltAgent technical specialists when Maxim agents need
 deep language or framework-specific expertise.
 
-## VoltAgent Roster (127+ specialists)
+## VoltAgent Roster (150 specialists)
 
 | Category | Path | When to Route |
 |---|---|---|

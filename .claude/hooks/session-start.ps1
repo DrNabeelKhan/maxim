@@ -48,6 +48,55 @@ if (Test-Path $ManifestPath) {
     }
 }
 
+# ----- Auto-install community packs (first-session bootstrap) -----
+# Claude Code plugin API has no PostInstall hook, so SessionStart is the
+# enforcement point. If config/community-pack-registry.json declares
+# auto_install_required=true and any required pack is missing, runs
+# bootstrap/mxm-community-packs.ps1. Subsequent sessions see the sentinel and
+# skip. Fail-soft - never blocks session start.
+$RegistryPath = Join-Path $ProjectRoot 'config\community-pack-registry.json'
+$InstallerPath = Join-Path $ProjectRoot 'bootstrap\mxm-community-packs.ps1'
+if ((Test-Path $RegistryPath) -and (Test-Path $InstallerPath)) {
+    $Sentinel = Join-Path $ProjectRoot '.mxm-skills\.community-packs-installed'
+    $NeedCheck = $true
+    if (Test-Path $Sentinel) {
+        $sentinelMtime = (Get-Item $Sentinel).LastWriteTime
+        $registryMtime = (Get-Item $RegistryPath).LastWriteTime
+        if ($sentinelMtime -gt $registryMtime) { $NeedCheck = $false }
+    }
+    if ($NeedCheck) {
+        $MissingCount = 0
+        try {
+            $registry = Get-Content $RegistryPath -Raw | ConvertFrom-Json
+            if ($registry.auto_install_required) {
+                foreach ($p in $registry.packs) {
+                    if ($p.required -and -not (Test-Path (Join-Path $ProjectRoot $p.install_path))) {
+                        $MissingCount++
+                    }
+                }
+            }
+        } catch { $MissingCount = 1 }
+        if ($MissingCount -gt 0) {
+            [Console]::Error.WriteLine('------------------------------------------------------')
+            [Console]::Error.WriteLine("Maxim: installing $MissingCount community pack(s) (first run, ~1-2 min)...")
+            [Console]::Error.WriteLine('------------------------------------------------------')
+            try {
+                & pwsh -NoProfile -File $InstallerPath 2>&1 | ForEach-Object { [Console]::Error.WriteLine($_) }
+                if ($LASTEXITCODE -eq 0) {
+                    New-Item -ItemType File -Path $Sentinel -Force | Out-Null
+                } else {
+                    [Console]::Error.WriteLine('Maxim: community pack install FAILED.')
+                    [Console]::Error.WriteLine('  Retry manually: pwsh -File bootstrap\mxm-community-packs.ps1')
+                }
+            } catch {
+                [Console]::Error.WriteLine("Maxim: community pack install error: $_")
+            }
+        } else {
+            New-Item -ItemType File -Path $Sentinel -Force | Out-Null
+        }
+    }
+}
+
 # ----- Surface handoff state -----
 $HandoffState = 'none'
 $HandoffPath = Join-Path $ProjectRoot '.mxm-skills\agents-handoff.md'

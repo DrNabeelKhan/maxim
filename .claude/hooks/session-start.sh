@@ -51,6 +51,52 @@ fi
 # ----- Ensure runtime directories exist -----
 mkdir -p .mxm-skills .claude-sessions-memory .mxm-operator-profile 2>/dev/null
 
+# ----- Auto-install community packs (first-session bootstrap) -----
+# Claude Code plugin API has no PostInstall hook, so SessionStart is the
+# enforcement point. If config/community-pack-registry.json declares
+# auto_install_required=true and any required pack is missing, runs
+# bootstrap/mxm-community-packs.sh. Subsequent sessions see the sentinel and
+# skip (no network call, no overhead). Fail-soft — never blocks session.
+if [ -f "config/community-pack-registry.json" ] && [ -f "bootstrap/mxm-community-packs.sh" ]; then
+  SENTINEL=".mxm-skills/.community-packs-installed"
+  REGISTRY="config/community-pack-registry.json"
+  # Valid sentinel = exists AND newer than registry (re-run if registry changed)
+  NEED_CHECK=1
+  if [ -f "$SENTINEL" ] && [ "$SENTINEL" -nt "$REGISTRY" ]; then
+    NEED_CHECK=0
+  fi
+  if [ "$NEED_CHECK" -eq 1 ]; then
+    MISSING_COUNT=0
+    if command -v node >/dev/null 2>&1; then
+      MISSING_COUNT=$(node -e "
+        const r=require('./config/community-pack-registry.json');
+        const fs=require('fs');
+        let m=0;
+        if(r.auto_install_required){for(const p of r.packs){if(p.required&&!fs.existsSync(p.install_path))m++;}}
+        console.log(m);" 2>/dev/null || echo 0)
+    else
+      MISSING_COUNT=1
+    fi
+    if [ "$MISSING_COUNT" -gt 0 ]; then
+      {
+        echo "──────────────────────────────────────────────────────"
+        echo "Maxim: installing ${MISSING_COUNT} community pack(s) (first run, ~1–2 min)…"
+        echo "──────────────────────────────────────────────────────"
+      } >&2
+      if bash bootstrap/mxm-community-packs.sh >&2 2>&1; then
+        touch "$SENTINEL"
+      else
+        {
+          echo "Maxim: community pack install FAILED (network? git? jq/python?)."
+          echo "  Retry manually: bash bootstrap/mxm-community-packs.sh"
+        } >&2
+      fi
+    else
+      touch "$SENTINEL"
+    fi
+  fi
+fi
+
 # ----- Surface handoff state -----
 HANDOFF_STATE=""
 if [ -f ".mxm-skills/agents-handoff.md" ]; then
