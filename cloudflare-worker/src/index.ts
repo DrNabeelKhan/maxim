@@ -36,6 +36,7 @@
 import jwt from "@tsndr/cloudflare-worker-jwt";
 import { STRIPE_PRODUCT_MAP } from "./stripe-product-map";
 import { handleContact, handleContactPreflight } from "./contact";
+import { handleCheckoutSession, handleCheckoutPreflight } from "./checkout";
 import { notifySales, fmtMoney } from "./notify";
 
 export interface Env {
@@ -106,6 +107,8 @@ export default {
             if (path === "/license/revoke" && request.method === "POST") return licenseRevoke(request, env);
             if (path === "/contact" && request.method === "OPTIONS") return handleContactPreflight(request);
             if (path === "/contact" && request.method === "POST") return handleContact(request, env);
+            if (path === "/checkout/session" && request.method === "OPTIONS") return handleCheckoutPreflight(request);
+            if (path === "/checkout/session" && request.method === "POST") return handleCheckoutSession(request, env);
             return new Response("Not Found", { status: 404 });
         } catch (err: any) {
             console.error("Unhandled error:", err);
