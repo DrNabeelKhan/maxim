@@ -96,7 +96,7 @@ jobs:
         run: |
           echo "=== Scanning for legacy references ==="
 
-          # Check for .mxm/ references (excluding known safe paths)
+          # Check for .mxm/ references (excluding known safe paths and self-references)
           MXM_REFS=$(grep -rn '\.mxm/' . --include="*.md" --include="*.json" --include="*.yml" --include="*.ps1" --include="*.sh" \
             | grep -v 'community-packs/' \
             | grep -v 'FINAL_RELEASE' \
@@ -107,6 +107,8 @@ jobs:
             | grep -v '\.mxm-backup' \
             | grep -v 'node_modules' \
             | grep -v '\.git/' \
+            | grep -v '\.github/workflows/' \
+            | grep -v 'config/agent-registry.json' \
             | grep -v 'agents/MXM/' \
             | grep -v 'maxim' \
             | grep -v 'mxm-simplification' \
@@ -125,13 +127,15 @@ jobs:
             echo "  ✅ No legacy .mxm/ references found"
           fi
 
-          # Check for .mxm-system/ references
+          # Check for .mxm-system/ references (excluding the scanner itself and rename history)
           SYSTEM_REFS=$(grep -rn '\.mxm-system/' . --include="*.md" --include="*.json" --include="*.yml" --include="*.ps1" --include="*.sh" \
             | grep -v 'community-packs/' \
             | grep -v 'FINAL_RELEASE' \
             | grep -v 'CHANGELOG' \
             | grep -v 'node_modules' \
             | grep -v '\.git/' \
+            | grep -v '\.github/workflows/' \
+            | grep -v 'config/agent-registry.json' \
             || true)
 
           if [ -n "$SYSTEM_REFS" ]; then
