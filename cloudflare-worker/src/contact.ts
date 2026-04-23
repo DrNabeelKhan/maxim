@@ -158,14 +158,17 @@ export async function handleContact(request: Request, env: ContactEnv): Promise<
     }
 
     // ── Email the triage inbox (fail-soft) ──────────────────────────────────
+    // Early-adopter labels already start with "Early Adopter Program — ...", so
+    // the email subject is just "<label> from <name>" in that case. Other
+    // subjects get the "Contact form — " prefix for inbox filtering.
     const subjectLabel = subjectToLabel(subject!);
-    const emailPrefix = isEarlyAdopter
-        ? "Early Adopter Program"
-        : "Contact form";
+    const emailSubject = isEarlyAdopter
+        ? `${subjectLabel} from ${firstName} ${lastName}`
+        : `Contact form — ${subjectLabel} from ${firstName} ${lastName}`;
     await notifySales(
         {
             event: isEarlyAdopter ? "early-adopter-submission" : "contact-form",
-            subject: `${emailPrefix} — ${subjectLabel} from ${firstName} ${lastName}`,
+            subject: emailSubject,
             body: [
                 `New contact-form submission`,
                 ``,
