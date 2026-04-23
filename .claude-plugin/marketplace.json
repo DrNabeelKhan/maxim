@@ -11,6 +11,17 @@
   },
   "plugins": [
     {
+      "name": "maxim",
+      "source": "../",
+      "description": "The behavioral intelligence layer for Claude Code. 88 specialist agents across 7 executive offices, 34 skill domains, 38 slash commands, 64 behavioral frameworks, 14 compliance frameworks. Starter tier is $0 forever; paid packs install from this same marketplace after purchase. BSL 1.1 (Apache 2.0 on 2030-04-21).",
+      "version": "1.0.0",
+      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "homepage": "https://maxim.isystematic.com",
+      "license": "BSL-1.1",
+      "keywords": ["behavioral-science", "ai-governance", "compliance", "multi-agent", "claude-code", "executive-router", "drift-detection", "mempalace", "fogg-behavior-model", "com-b", "prospect-theory"],
+      "category": "base"
+    },
+    {
       "name": "mxm-pack-l1-1-ai-governance",
       "source": "./pack-l1-1-ai-governance",
       "description": "Audit trail, confidence tagging, and ethical checks on every AI decision. Primary framework: Prospect Theory (Kahneman & Tversky, 1979). MOAT-01.",

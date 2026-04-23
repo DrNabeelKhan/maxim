@@ -17,10 +17,13 @@
 ## Install in 30 seconds
 
 ```
-/plugin install maxim@anthropic-official
+/plugin marketplace add DrNabeelKhan/maxim
+/plugin install maxim@maxim-packs
 ```
 
-That command installs the full behavioral intelligence layer into Claude Code. 88+ agents across 7 executive offices. 34+ skill domains. 37+ slash commands. Three governance hooks that fire automatically. Four drift monitors running at 30-second cadence. One output style that enforces framework citation on every external-facing output.
+Those two commands install the full behavioral intelligence layer into Claude Code. 88+ agents across 7 executive offices. 34+ skill domains. 37+ slash commands. Three governance hooks that fire automatically. Four drift monitors running at 30-second cadence. One output style that enforces framework citation on every external-facing output.
+
+> Maxim's submission to the Anthropic community marketplace ([clau.de/plugin-directory-submission](https://clau.de/plugin-directory-submission)) is in flight. Once approved, `/plugin install maxim@claude-community` will also work. The commands above are the direct path and work today.
 
 **First session auto-installs 7 community packs** (150 VoltAgent specialists · Superpowers workflow patterns · Planning With Files · Claude Skills Library · UI/UX Pro Max · Higgsfield AI prompts · 59 brand design templates) via the `SessionStart` hook. Takes 1–2 minutes the first time; instant every session after. Requires `git` on PATH. Runs on macOS, Linux, and Windows with no configuration. To trigger a manual refresh (e.g. after a pack update):
 
@@ -32,10 +35,9 @@ bash bootstrap/mxm-community-packs.sh
 pwsh -File bootstrap\mxm-community-packs.ps1
 ```
 
-Commercial packs (L1 capabilities, L2 persona bundles, L3 verticals) install from the private marketplace after purchase:
+Commercial packs (L1 capabilities, L2 persona bundles, L3 verticals) install from the same marketplace after purchase — your license JWT unlocks them:
 
 ```
-/plugin marketplace add https://github.com/DrNabeelKhan/maxim
 /plugin install mxm-pack-l1-6-behavioral-intelligence@maxim-packs
 ```
 
