@@ -24,6 +24,8 @@ const SUBMISSION_TTL_SECONDS = 60 * 60 * 24 * 90; // 90 days
 
 // Subject options MUST match the <option value="..."> list in the landing-page form.
 const ALLOWED_SUBJECTS = new Set([
+    "early-adopter-application",
+    "early-adopter-inquiry",
     "sales",
     "compliance-audit",
     "partnership",
@@ -32,6 +34,14 @@ const ALLOWED_SUBJECTS = new Set([
     "media-press",
     "security-disclosure",
     "general",
+]);
+
+// Subjects that are routed to the separate Early Adopter Program triage queue.
+// Keeps application / eligibility traffic out of the general sales inbox noise
+// and lets the operator review them as a batch on the published SLA (7 days).
+const EARLY_ADOPTER_SUBJECTS = new Set([
+    "early-adopter-application",
+    "early-adopter-inquiry",
 ]);
 
 type SubmissionBody = {
@@ -136,19 +146,26 @@ export async function handleContact(request: Request, env: ContactEnv): Promise<
         client: { browser: ua.browser, os: ua.os, user_agent: userAgent },
     };
 
-    // ── Persist to KV ───────────────────────────────────────────────────────
+    // ── Persist to KV — route Early Adopter applications to a dedicated prefix ─
+    const isEarlyAdopter = EARLY_ADOPTER_SUBJECTS.has(subject!);
+    const kvKey = isEarlyAdopter
+        ? `early-adopter:${submittedAt}:${submissionId}`
+        : `submission:${submissionId}`;
     if (env.CONTACT_SUBMISSIONS) {
-        await env.CONTACT_SUBMISSIONS.put(`submission:${submissionId}`, JSON.stringify(record), {
+        await env.CONTACT_SUBMISSIONS.put(kvKey, JSON.stringify(record), {
             expirationTtl: SUBMISSION_TTL_SECONDS,
         });
     }
 
-    // ── Email the sales inbox (fail-soft) ───────────────────────────────────
+    // ── Email the triage inbox (fail-soft) ──────────────────────────────────
     const subjectLabel = subjectToLabel(subject!);
+    const emailPrefix = isEarlyAdopter
+        ? "Early Adopter Program"
+        : "Contact form";
     await notifySales(
         {
-            event: "contact-form",
-            subject: `Contact form — ${subjectLabel} from ${firstName} ${lastName}`,
+            event: isEarlyAdopter ? "early-adopter-submission" : "contact-form",
+            subject: `${emailPrefix} — ${subjectLabel} from ${firstName} ${lastName}`,
             body: [
                 `New contact-form submission`,
                 ``,
@@ -189,6 +206,8 @@ function isEmail(s: string): boolean {
 
 function subjectToLabel(key: string): string {
     const map: Record<string, string> = {
+        "early-adopter-application": "Early Adopter Program — application",
+        "early-adopter-inquiry": "Early Adopter Program — eligibility question",
         sales: "Sales / commercial licensing",
         "compliance-audit": "Compliance audit request",
         partnership: "Partnership / reseller inquiry",
