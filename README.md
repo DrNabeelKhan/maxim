@@ -23,6 +23,8 @@
 
 Those two commands install the full behavioral intelligence layer into Claude Code. 88+ agents across 7 executive offices. 34+ skill domains. 37+ slash commands. Three governance hooks that fire automatically. Four drift monitors running at 30-second cadence. One output style that enforces framework citation on every external-facing output.
 
+**Starter tier is free forever.** No credit card. 90-day Pro Trial auto-activates on install. Nothing to commit to.
+
 > Maxim's submission to the Anthropic community marketplace ([clau.de/plugin-directory-submission](https://clau.de/plugin-directory-submission)) is in flight. Once approved, `/plugin install maxim@claude-community` will also work. The commands above are the direct path and work today.
 
 **First session auto-installs 7 community packs** (150 VoltAgent specialists · Superpowers workflow patterns · Planning With Files · Claude Skills Library · UI/UX Pro Max · Higgsfield AI prompts · 59 brand design templates) via the `SessionStart` hook. Takes 1–2 minutes the first time; instant every session after. Requires `git` on PATH. Runs on macOS, Linux, and Windows with no configuration. To trigger a manual refresh (e.g. after a pack update):
@@ -35,13 +37,30 @@ bash bootstrap/mxm-community-packs.sh
 pwsh -File bootstrap\mxm-community-packs.ps1
 ```
 
-Commercial packs (L1 capabilities, L2 persona bundles, L3 verticals) install from the same marketplace after purchase — your license JWT unlocks them:
+---
+
+## 🎁 Early Adopter Program — 300 free 12-month licenses
+
+Maxim is allocating **300 free 12-month licenses** across 13 cohorts — program-level value **$540,000**, per-license value **$239.88 to $7,199.88** depending on tier.
+
+Cohorts include open-source maintainers, AI safety researchers, technical journalists, startup founders, growth marketers, copywriters, product designers, privacy and security advocates, brand designers and creators, researchers and power users, and AI ethics practitioners.
+
+**Application:** https://maxim.isystematic.com/giveaway
+**Review SLA:** 7 days from application · **Rolling review** through week 8 or until 300 licenses are issued.
+
+Every license carries the same legal terms as a commercial license, is machine-bound per ADR-005, and is non-transferable.
+
+---
+
+## Commercial tiers
+
+After the Early Adopter Program closes, commercial packs install from the same marketplace — your license JWT unlocks them:
 
 ```
 /plugin install mxm-pack-l1-6-behavioral-intelligence@maxim-packs
 ```
 
-Pricing and catalog at https://maxim.isystematic.com.
+Full catalog and pricing at https://maxim.isystematic.com/pricing.
 
 ---
 
