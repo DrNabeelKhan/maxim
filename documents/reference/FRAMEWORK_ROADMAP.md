@@ -68,6 +68,60 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 - Moving framework definitions server-side — they stay public as marketing/reference assets.
 - Real ML-driven framework scoring — deferred to v2.0.
 
+### 🧩 v1.1 — Maxim Overlay Engine (MOE)
+
+**Theme:** Shift Maxim from "a plugin among many" to **the governance layer that applies to every installed Claude Code plugin**. Architectural decision ratified in [ADR-012](../ADRs/ADR-012-overlay-engine-architecture.md).
+
+**Problem.** Maxim v1.0.0 ships 64 behavioral frameworks, 14 compliance frameworks, the confidence-tagging rubric (ADR-010), MOAT-row citation doctrine (ADR-007), and Proactive Watch drift detection. None of this applies to outputs produced by other plugins the user has installed — autocomplete tools, testing harnesses, doc generators, third-party MCP servers. Maxim's moat layer covers only Maxim-originated work, which is the wrong coverage surface for a *governance* product.
+
+**Shipped capability.**
+
+Four interception points implemented via Claude Code's existing hook API. No cooperation required from other plugin authors; no breaking change in Claude Code; no undocumented APIs.
+
+1. **`SessionStart` — overlay registry build.** Enumerate installed plugins from `~/.claude/plugins/` (or `$CLAUDE_PLUGIN_ROOT`), inspect each plugin's `plugin.json` and SKILL.md files, and compute a capability→framework pairing per capability. Cache at `.mxm-skills/overlay-registry.json` until the next plugin install/uninstall.
+2. **`UserPromptSubmit` — directive injection.** Detect third-party slash commands and prompts routing to non-Maxim capabilities. Prepend a short system directive naming (a) the matched behavioral framework, (b) the project's declared compliance frameworks, (c) the confidence-tag requirement. Directive is visible, loggable, and cannot silently rewrite operator intent.
+3. **`PreToolUse` — compliance gate.** On every tool call (Maxim's or another plugin's MCP tool, Bash, Write, Edit, Task), run the `mxm-compliance` rule set against the tool parameters. Block tool calls that touch regulated data categories (PII, PHI, PCI) without a matching framework cite. Blocks are bypassable via `MXM_OVERLAY_BYPASS=1` with a mandatory audit-trail entry — the overlay never becomes a hard DoS.
+4. **`PostToolUse` — output audit.** Call `mxm-behavioral`'s `behavioral_audit` on outputs above a size threshold. Emit the confidence tag (🟢 HIGH / 🟡 MEDIUM / 🔴 LOW) as a stderr sidebar. Log every overlay event to `.mxm-skills/overlay-log.jsonl`. Feed the event into Proactive Watch's new watch class 13 "third-party-plugin drift."
+
+**Transparency guarantees (per ADR-012 ethical guardrails).**
+- Every overlay event is logged to a plain-text JSONL the operator can read at any time.
+- Overlay annotations are always Maxim-tagged, never passed off as the wrapped plugin's own output.
+- Per-plugin opt-out via `config/overlay-profile.yml`; global disable by removing Maxim.
+- Overlay never silently modifies another plugin's output content — it adds sidebar annotations (tag + citation + compliance note), not rewrites.
+
+**Tier gating (wired through the v1.1 license middleware).**
+- **Starter** — observe mode: overlay log + confidence tags visible; no directive injection, no blocks.
+- **Solo / Pro** — directive injection + confidence audit; compliance checks emit warnings.
+- **Professional / Team** — compliance blocks enforced; Proactive Watch class 13 active.
+- **L3 vertical overlays (Healthcare / Legal / Fintech / GovTech)** — vertical-specific gates layered on top of the base MOE (e.g., Healthcare overlay blocks any tool touching PHI without a HIPAA cite, regardless of which plugin originated the call).
+
+**Ship gates (must all be green before release):**
+- [ ] `SessionStart` hook builds the overlay registry correctly across macOS / Linux / Windows
+- [ ] `UserPromptSubmit` hook injects directive with framework + compliance cite
+- [ ] `PreToolUse` hook blocks on regulated-data detection with clear bypass instructions
+- [ ] `PostToolUse` hook emits confidence tag via stderr sidebar
+- [ ] Overlay log at `.mxm-skills/overlay-log.jsonl` is readable, appendable, ignored by git
+- [ ] `config/overlay-profile.yml` template ships; per-plugin opt-out verified
+- [ ] Bypass (`MXM_OVERLAY_BYPASS=1`) logs to audit trail and is never silent
+- [ ] End-to-end test: install Maxim alongside a sample third-party plugin; verify overlay triggers on the third-party plugin's command
+- [ ] End-to-end test: tier-gated behavior matches spec (Starter observe → Professional enforce)
+- [ ] `/mxm-overlay` slash command prints current state + recent events
+- [ ] `AGENT_SKILL_INVENTORY.md` Section 9 "Overlay Engine" added with counters
+
+**Non-goals for v1.1.**
+- Cooperative plugin SDK — deferred to v2.0 (cross-provider + SDK). MOE v1.1 is hook-based and unilateral by design; the SDK is an *optional tighter integration* layer on top.
+- Output rewriting — ruled out in ADR-012 on ethical grounds. The overlay annotates; it does not rewrite.
+- A plugin-certification program — shipping v1.3 as a separate initiative after MOE has field usage.
+- Cross-provider overlay (OpenAI, Gemini, local models) — deferred to v2.0.
+
+**Why this lands in v1.1 alongside license middleware.** The overlay's tier gates *are* license-enforced features. Shipping MOE without the license middleware would leak paid-tier overlay behavior to the free tier. Shipping license middleware without MOE would gate only Maxim's own MCP tools, leaving the overlay's surface area unmonetized. The two features compose.
+
+**Follow-on work scheduled:**
+- v1.2 — Proactive Watch class 13 drift detection enhancements (detects framework non-adherence, tone drift, compliance-boundary violations in wrapped outputs)
+- v1.3 — `documents/reference/OVERLAY_PAIRINGS.md` published — the capability→framework map becomes a reviewable asset
+- v1.3 — Maxim-certified plugin badge program launches
+- v2.0 — `@maxim/plugin-sdk` ships for plugin authors who want tighter integration
+
 ---
 
 ## 🧠 v1.2 — Behavioral Science Expansion (target: Q4 2026)
@@ -247,6 +301,7 @@ Items occasionally requested but not on the roadmap. These may be reconsidered p
 | 2026-04-21 | Initial roadmap: 18 frameworks deferred from v1.0.0 → v1.1/v1.2 (7 compliance + 10 behavioral + 1 AI governance overlap) | Maxim v1.0.0 launch audit |
 | 2026-04-21 | v1.1 add: Runtime Hardening — MCP license middleware across all 7 servers. v1.3 add: AI Governance & Security — 5 frameworks (NIST AI RMF, OWASP LLM Top 10, MITRE ATLAS, Constitutional AI, AIBOM). Future Considerations appendix (Tiers 2–6 unscheduled). | Maxim v1.0.0 launch |
 | 2026-04-21 | Domain Expansions scheduled: RevOps (v1.3), Regulated Industries operator roster (v1.4), Fintech Specialist domain (v1.4), Cinematic / Video-AI Production (v1.5). | Maxim v1.0.0 launch |
+| 2026-04-23 | v1.1 adds Maxim Overlay Engine (MOE) per ADR-012. Four hook-based interception points (SessionStart / UserPromptSubmit / PreToolUse / PostToolUse) apply Maxim's behavioral, compliance, and confidence layers to every Claude Code plugin the operator has installed. Tier-gated via the v1.1 license middleware. Proactive Watch gains class 13 "third-party-plugin drift" in v1.2. OVERLAY_PAIRINGS.md publishes v1.3. | Maxim v1.0.0 launch |
 
 ---
 

@@ -63,6 +63,7 @@ documents/architecture/
 !documents/ADRs/ADR-009-pack-architecture-l1-l2-l3.md
 !documents/ADRs/ADR-010-confidence-tag-technical-educator-rubric.md
 !documents/ADRs/ADR-011-stripe-primary-payment-processor.md
+!documents/ADRs/ADR-012-overlay-engine-architecture.md
 
 # ── Maxim ledger state (session-local, never committed) ──────────────────
 # documents/ledgers/ holds the canonical Executable Contract ledgers.

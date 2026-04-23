@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-Seven Architecture Decision Records are published as public governance narrative — pricing contracts, moat doctrine, confidence rubric, community-pack policy, and payment-processor choice. Four additional ADRs covering internal system architecture (dispatch baseline, Worker license issuance, IP-protection layering, external-content boundary) remain confidential and are maintained in the operator's private ledger.
+Eight Architecture Decision Records are published as public governance narrative — pricing contracts, moat doctrine, confidence rubric, community-pack policy, payment-processor choice, and the overlay-engine architecture that makes Maxim a governance layer for every Claude Code plugin, not only its own. Four additional ADRs covering internal system architecture (dispatch baseline, Worker license issuance, IP-protection layering, external-content boundary) remain confidential and are maintained in the operator's private ledger.
 
 Every public ADR declares a commitment Maxim makes to its users — a contract that the pre-commit hook and the session-end bundle read as live state, not as history.
 
@@ -19,8 +19,9 @@ Every public ADR declares a commitment Maxim makes to its users — a contract t
 | [ADR-009](ADR-009-pack-architecture-l1-l2-l3.md) | Pack Architecture: 6 L1 + 4 L2 + 4 L3 | accepted | 2026-04-21 |
 | [ADR-010](ADR-010-confidence-tag-technical-educator-rubric.md) | Confidence Tag Technical Educator Rubric | accepted | 2026-04-21 |
 | [ADR-011](ADR-011-stripe-primary-payment-processor.md) | Stripe-primary payment processor | accepted | 2026-04-21 |
+| [ADR-012](ADR-012-overlay-engine-architecture.md) | Maxim Overlay Engine (MOE) — governance layer for every installed Claude Code plugin | accepted | 2026-04-23 |
 
-**Published:** 7 · **Accepted:** 7 · **Superseded:** 0 · **Rejected:** 0
+**Published:** 8 · **Accepted:** 8 · **Superseded:** 0 · **Rejected:** 0
 
 ---
 
