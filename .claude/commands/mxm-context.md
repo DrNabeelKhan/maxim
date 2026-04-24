@@ -1,3 +1,7 @@
+---
+description: Load project context — reads config/project-manifest.json, .mxm-skills/agents-handoff.md, and session memory. Outputs the cold-start briefing.
+---
+
 # /mxm-context
 
 Generates a portable Maxim context block for use in Claude.ai, Claude Desktop, or Claude Dispatch. Reads your project's manifest, CLAUDE.project.md, and session memory to produce a single paste-ready text block.

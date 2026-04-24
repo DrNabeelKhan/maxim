@@ -1,3 +1,7 @@
+---
+description: Portfolio view across projects — reads config/project-manifest.json from every registered project, surfaces cross-project drift and priorities.
+---
+
 # /mxm-portfolio
 
 ## Usage

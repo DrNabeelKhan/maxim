@@ -1,3 +1,7 @@
+---
+description: Reorganize project files, documents, and artifacts — dedupe policy, canonical-path enforcement, documents/ structure rebuild.
+---
+
 # /mxm-organize
 
 ## Usage

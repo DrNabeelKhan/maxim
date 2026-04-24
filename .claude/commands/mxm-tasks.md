@@ -1,3 +1,7 @@
+---
+description: Scheduled task runner — usage-aware scheduler that respects Claude usage limits and pauses work when thresholds are exceeded.
+---
+
 # /mxm-tasks
 
 ## Usage

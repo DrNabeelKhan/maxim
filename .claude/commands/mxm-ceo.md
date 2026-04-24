@@ -1,3 +1,7 @@
+---
+description: Routes to the CEO Office. Lead: enterprise-architect. Scope: strategy, vision, finance, partnerships, enterprise architecture, governance.
+---
+
 # /mxm-ceo
 
 ## Usage

@@ -1,3 +1,7 @@
+---
+description: Write a memory note to MemPalace — tagged, indexed, queryable in future sessions via /mxm-recall.
+---
+
 # /mxm-remember
 
 ## Usage

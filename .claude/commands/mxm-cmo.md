@@ -1,3 +1,7 @@
+---
+description: Routes to the CMO Office. Lead: content-strategist. Scope: marketing, brand, content, SEO, conversion, behavioral design.
+---
+
 # /mxm-cmo
 
 ## Usage

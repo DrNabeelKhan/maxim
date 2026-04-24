@@ -1,3 +1,7 @@
+---
+description: Dispatches to the full design skill roster — UI styling, design systems, brand, banner design, slides, UI/UX pro max master orchestrator.
+---
+
 # /mxm-design
 
 ## Usage

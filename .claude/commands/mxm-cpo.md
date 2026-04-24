@@ -1,3 +1,7 @@
+---
+description: Routes to the CPO Office. Lead: product-strategist. Scope: product strategy, UX, UI, market research, user feedback.
+---
+
 # /mxm-cpo
 
 ## Usage

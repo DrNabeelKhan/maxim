@@ -1,3 +1,7 @@
+---
+description: One-time CEO automation setup — wires .mxm-executive-summary/ context, portfolio scheduled tasks, and CEO-office agent roster.
+---
+
 # /mxm-ceo-setup
 
 ## Usage

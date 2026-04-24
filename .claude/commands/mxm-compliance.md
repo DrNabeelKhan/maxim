@@ -1,3 +1,7 @@
+---
+description: Run the compliance MCP on current context. Checks against 14 frameworks: GDPR, PIPEDA, PCI-DSS, SOC2, HIPAA, UAE-PDPL, CASL, FINTRAC, EU AI Act, ISO 27001/13485/14971, NIST CSF, WCAG 2.1.
+---
+
 # /mxm-compliance
 
 ## Usage

@@ -1,3 +1,7 @@
+---
+description: Routes to the COO Office. Lead: planner. Scope: operations, delivery, support, sprints, experiments.
+---
+
 # /mxm-coo
 
 ## Usage

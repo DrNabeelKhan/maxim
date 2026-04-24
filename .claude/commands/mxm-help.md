@@ -1,3 +1,7 @@
+---
+description: Show Maxim command catalog, office routing table, and confidence-tag rubric. First stop for new users.
+---
+
 # /mxm-help
 
 Displays the Maxim command reference card organized by function group. Works in Claude Code, Claude CLI, Claude Desktop.

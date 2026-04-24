@@ -1,3 +1,7 @@
+---
+description: Routes to the CSO Office. Lead: security-analyst. Scope: security, compliance, privacy, ethics, risk, incident response.
+---
+
 # /mxm-cso
 
 ## Usage

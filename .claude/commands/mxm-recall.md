@@ -1,3 +1,7 @@
+---
+description: Cross-session memory recall — queries MemPalace semantic knowledge graph for prior decisions, artifacts, and context.
+---
+
 # /mxm-recall
 
 ## Usage

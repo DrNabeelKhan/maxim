@@ -1,3 +1,7 @@
+---
+description: Bootstrap a new project with ARIA scaffolding — project-manifest, watch-profile, brand-foundation, session-memory, operator-profile.
+---
+
 # /mxm-new-project
 
 ## Usage

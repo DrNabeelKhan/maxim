@@ -1,3 +1,7 @@
+---
+description: Security review — dispatches to CSO office security-analyst with threat modeling, OWASP checklist, and compliance cross-reference.
+---
+
 # /mxm-security
 
 ## Usage

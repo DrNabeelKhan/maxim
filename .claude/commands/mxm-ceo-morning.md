@@ -1,3 +1,7 @@
+---
+description: CEO morning cycle — overnight-delta summary, priority queue, finance + partnerships scan, blockers surfaced, next-24h plan generated from portfolio state.
+---
+
 # /mxm-ceo-morning
 
 ## Usage

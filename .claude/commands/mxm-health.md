@@ -1,3 +1,7 @@
+---
+description: Project health dashboard — runs Proactive Watch drift detection across 10 classes, surfaces gaps, review queue, skill-gap log, handoff state.
+---
+
 # /mxm-health
 
 ## Usage

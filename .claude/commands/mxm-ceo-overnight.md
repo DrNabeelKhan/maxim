@@ -1,3 +1,7 @@
+---
+description: CEO overnight cycle — scheduled automation that runs while the operator sleeps, processes portfolio signals, and prepares the morning brief.
+---
+
 # /mxm-ceo-overnight
 
 ## Usage

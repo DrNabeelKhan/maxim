@@ -1,3 +1,7 @@
+---
+description: Current session status — active handoff state, open skill gaps, pending review queue, drift class alerts.
+---
+
 # /mxm-status
 
 ## Usage

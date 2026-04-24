@@ -1,3 +1,7 @@
+---
+description: Routes to the CINO Office. Lead: innovation-researcher. Scope: innovation, R&D, emerging tech, horizon scanning, cross-domain synthesis.
+---
+
 # /mxm-cino
 
 ## Usage

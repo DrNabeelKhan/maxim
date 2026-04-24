@@ -1,3 +1,7 @@
+---
+description: Routes to the CTO Office. Lead: implementer. Scope: engineering, infrastructure, data, AI, APIs, DevOps, cloud.
+---
+
 # /mxm-cto
 
 ## Usage

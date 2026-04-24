@@ -1,3 +1,7 @@
+---
+description: Executive router — classifies unknown-intent tasks and routes to the correct office. First stop when you are not sure which /mxm-{office} to invoke.
+---
+
 # /mxm-route
 
 ## Usage

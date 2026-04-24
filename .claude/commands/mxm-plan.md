@@ -1,3 +1,7 @@
+---
+description: Planning mode — wraps Planning-With-Files community pack with Maxim behavioral overlay (Fogg B=MAP, COM-B) and confidence tagging.
+---
+
 # /mxm-plan
 
 ## Usage

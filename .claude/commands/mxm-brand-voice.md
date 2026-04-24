@@ -1,3 +1,7 @@
+---
+description: Three-layer brand foundation voice system. Subcommands: calibrate / update / scan / reset. Loads ARIA base + operator overlay + startup overlay, scans drafts for AI-tells.
+---
+
 # /mxm-brand-voice
 
 ## Usage

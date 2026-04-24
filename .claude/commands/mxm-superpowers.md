@@ -1,3 +1,7 @@
+---
+description: Activate the Superpowers workflow pattern set — brainstorming, TDD, systematic debugging, subagent dispatch, git worktrees, writing plans.
+---
+
 # /mxm-superpowers
 
 ## Usage

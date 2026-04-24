@@ -1,3 +1,7 @@
+---
+description: Capability-inventory update — refreshes AGENT_SKILL_INVENTORY.md from filesystem reality. Narrower than /mxm-session-end.
+---
+
 # /mxm-update
 
 ## Usage

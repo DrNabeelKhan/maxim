@@ -1,3 +1,7 @@
+---
+description: SEO mode — dispatches to CMO office with search-visibility skill, E-E-A-T framework, structured data, and search-intent mapping.
+---
+
 # /mxm-seo
 
 ## Usage

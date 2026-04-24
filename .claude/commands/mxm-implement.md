@@ -1,3 +1,7 @@
+---
+description: Implementation mode — dispatches to CTO office implementer agent with test-first discipline, Superpowers TDD integration, and commit protocol.
+---
+
 # /mxm-implement
 
 ## Usage

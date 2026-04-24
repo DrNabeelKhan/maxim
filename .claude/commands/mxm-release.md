@@ -1,3 +1,7 @@
+---
+description: Ship a version — wraps session-end bundle + version bump + CHANGELOG update + MOAT_TRACKER review + tag creation.
+---
+
 # /mxm-release
 
 ## Usage

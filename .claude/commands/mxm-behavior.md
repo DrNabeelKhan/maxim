@@ -1,3 +1,7 @@
+---
+description: Apply a behavioral framework from FRAMEWORKS_MASTER to any task. Dispatches to behavior-science-persuasion skill with Fogg, COM-B, Cialdini, Hook Model, EAST, or Prospect Theory.
+---
+
 # /mxm-behavior
 
 ## Usage

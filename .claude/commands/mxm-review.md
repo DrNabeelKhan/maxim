@@ -1,3 +1,7 @@
+---
+description: Code or document review — dispatches to the reviewer agent with framework citation requirements and confidence tagging.
+---
+
 # /mxm-review
 
 ## Usage
