@@ -12,10 +12,8 @@
     {
       "name": "maxim",
       "source": {
-        "source": "git-subdir",
-        "url": "https://github.com/DrNabeelKhan/maxim.git",
-        "path": ".",
-        "ref": "main"
+        "source": "github",
+        "repo": "DrNabeelKhan/maxim"
       },
       "description": "The behavioral intelligence layer for Claude Code. 88 specialist agents across 7 executive offices, 34 skill domains, 38 slash commands, 64 behavioral frameworks, 14 compliance frameworks. Starter tier is $0 forever; paid packs install from this same marketplace after purchase. BSL 1.1 (Apache 2.0 on 2030-04-21).",
       "version": "1.0.0",
