@@ -97,6 +97,45 @@ if [ -f "config/community-pack-registry.json" ] && [ -f "bootstrap/mxm-community
   fi
 fi
 
+# ----- Auto-install MCP server dependencies (first-session bootstrap) -----
+# Each MCP server (mcp/mxm-*/) is a self-contained Node package. Without
+# node_modules, Claude Code's MCP spawn fails with ERR_MODULE_NOT_FOUND for
+# @modelcontextprotocol/sdk and the user sees an MCP timeout. This block
+# detects missing deps and runs the installer once. Sentinel prevents the
+# check on subsequent sessions.
+if [ -d "mcp" ] && [ -f "bootstrap/mxm-mcp-install.sh" ] && command -v npm >/dev/null 2>&1; then
+  MCP_SENTINEL=".mxm-skills/.mcp-deps-installed"
+  if [ ! -f "$MCP_SENTINEL" ]; then
+    # Quick check: is at least one mcp/mxm-*/node_modules missing?
+    NEEDS_INSTALL=0
+    for srv in mcp/mxm-*/; do
+      [ -d "$srv" ] || continue
+      [ -f "$srv/package.json" ] || continue
+      if [ ! -d "$srv/node_modules" ]; then NEEDS_INSTALL=1; break; fi
+    done
+    if [ "$NEEDS_INSTALL" -eq 1 ]; then
+      {
+        echo "──────────────────────────────────────────────────────"
+        echo "Maxim: installing MCP server dependencies (first run, ~30–60 sec)…"
+        echo "──────────────────────────────────────────────────────"
+      } >&2
+      if bash bootstrap/mxm-mcp-install.sh >&2 2>&1; then
+        touch "$MCP_SENTINEL"
+        {
+          echo "Maxim: MCP servers ready. Restart this session to load them."
+        } >&2
+      else
+        {
+          echo "Maxim: MCP install FAILED."
+          echo "  Retry manually: bash bootstrap/mxm-mcp-install.sh --force"
+        } >&2
+      fi
+    else
+      touch "$MCP_SENTINEL"
+    fi
+  fi
+fi
+
 # ----- Surface handoff state -----
 HANDOFF_STATE=""
 if [ -f ".mxm-skills/agents-handoff.md" ]; then

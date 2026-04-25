@@ -27,14 +27,32 @@ Those two commands install the full behavioral intelligence layer into Claude Co
 
 > Maxim's submission to the Anthropic community marketplace ([clau.de/plugin-directory-submission](https://clau.de/plugin-directory-submission)) is in flight. Once approved, `/plugin install maxim@claude-community` will also work. The commands above are the direct path and work today.
 
-**First session auto-installs 7 community packs** (150 VoltAgent specialists · Superpowers workflow patterns · Planning With Files · Claude Skills Library · UI/UX Pro Max · Higgsfield AI prompts · 59 brand design templates) via the `SessionStart` hook. Takes 1–2 minutes the first time; instant every session after. Requires `git` on PATH. Runs on macOS, Linux, and Windows with no configuration. To trigger a manual refresh (e.g. after a pack update):
+**First session auto-installs:**
+1. **7 community packs** (150 VoltAgent specialists · Superpowers workflow patterns · Planning With Files · Claude Skills Library · UI/UX Pro Max · Higgsfield AI prompts · 59 brand design templates) — via `bootstrap/mxm-community-packs.{sh,ps1}`
+2. **MCP server dependencies** for the 7 bundled MCP servers (`@modelcontextprotocol/sdk`, `zod`) — via `bootstrap/mxm-mcp-install.{sh,ps1}`
+
+Both run automatically through the `SessionStart` hook on first session (~1–2 min for community packs, ~30–60 sec for MCP deps). Requires `git` and `npm` on PATH. Runs on macOS, Linux, and Windows with no configuration.
+
+> **If you hit `MCP server failed: timeout` during the very first session**, the SessionStart hook may not have finished installing MCP dependencies before Claude Code tried to spawn them. Run the installer manually, then restart the session:
+>
+> ```bash
+> # macOS / Linux
+> bash bootstrap/mxm-mcp-install.sh
+>
+> # Windows
+> pwsh -File bootstrap\mxm-mcp-install.ps1
+> ```
+
+To trigger a manual refresh (e.g. after a pack update):
 
 ```bash
 # macOS / Linux
 bash bootstrap/mxm-community-packs.sh
+bash bootstrap/mxm-mcp-install.sh
 
 # Windows
 pwsh -File bootstrap\mxm-community-packs.ps1
+pwsh -File bootstrap\mxm-mcp-install.ps1
 ```
 
 ---

@@ -97,6 +97,44 @@ if ((Test-Path $RegistryPath) -and (Test-Path $InstallerPath)) {
     }
 }
 
+# ----- Auto-install MCP server dependencies (first-session bootstrap) -----
+# Each MCP server (mcp\mxm-*\) is a self-contained Node package. Without
+# node_modules, Claude Code's MCP spawn fails with ERR_MODULE_NOT_FOUND
+# and the user sees an MCP timeout. This block detects missing deps and
+# runs the installer once. Sentinel prevents the check on subsequent sessions.
+$McpInstaller = Join-Path $ProjectRoot 'bootstrap\mxm-mcp-install.ps1'
+$McpDir = Join-Path $ProjectRoot 'mcp'
+if ((Test-Path $McpDir) -and (Test-Path $McpInstaller) -and (Get-Command npm -ErrorAction SilentlyContinue)) {
+    $McpSentinel = Join-Path $ProjectRoot '.mxm-skills\.mcp-deps-installed'
+    if (-not (Test-Path $McpSentinel)) {
+        $needsInstall = $false
+        Get-ChildItem -Directory -Path (Join-Path $ProjectRoot 'mcp\mxm-*') | ForEach-Object {
+            if ((Test-Path (Join-Path $_.FullName 'package.json')) -and -not (Test-Path (Join-Path $_.FullName 'node_modules'))) {
+                $needsInstall = $true
+            }
+        }
+        if ($needsInstall) {
+            [Console]::Error.WriteLine('------------------------------------------------------')
+            [Console]::Error.WriteLine('Maxim: installing MCP server dependencies (first run, ~30-60 sec)...')
+            [Console]::Error.WriteLine('------------------------------------------------------')
+            try {
+                & pwsh -NoProfile -File $McpInstaller 2>&1 | ForEach-Object { [Console]::Error.WriteLine($_) }
+                if ($LASTEXITCODE -eq 0) {
+                    New-Item -ItemType File -Path $McpSentinel -Force | Out-Null
+                    [Console]::Error.WriteLine('Maxim: MCP servers ready. Restart this session to load them.')
+                } else {
+                    [Console]::Error.WriteLine('Maxim: MCP install FAILED.')
+                    [Console]::Error.WriteLine('  Retry manually: pwsh -File bootstrap\mxm-mcp-install.ps1 -Force')
+                }
+            } catch {
+                [Console]::Error.WriteLine("Maxim: MCP install error: $_")
+            }
+        } else {
+            New-Item -ItemType File -Path $McpSentinel -Force | Out-Null
+        }
+    }
+}
+
 # ----- Surface handoff state -----
 $HandoffState = 'none'
 $HandoffPath = Join-Path $ProjectRoot '.mxm-skills\agents-handoff.md'
