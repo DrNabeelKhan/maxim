@@ -6,8 +6,7 @@
   },
   "metadata": {
     "description": "Maxim commercial pack marketplace. 14 packs across 3 tiers: L1 capabilities, L2 persona bundles, L3 verticals. Licensed per-purchase via Stripe (primary; LemonSqueezy secondary, dormant until v1.0.1 per ADR-011), validated via Cloudflare Worker RS256 JWT.",
-    "version": "1.0.0",
-    "pluginRoot": "./packs"
+    "version": "1.0.0"
   },
   "plugins": [
     {
@@ -20,164 +19,320 @@
       },
       "description": "The behavioral intelligence layer for Claude Code. 88 specialist agents across 7 executive offices, 34 skill domains, 38 slash commands, 64 behavioral frameworks, 14 compliance frameworks. Starter tier is $0 forever; paid packs install from this same marketplace after purchase. BSL 1.1 (Apache 2.0 on 2030-04-21).",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com",
       "license": "BSL-1.1",
-      "keywords": ["behavioral-science", "ai-governance", "compliance", "multi-agent", "claude-code", "executive-router", "drift-detection", "mempalace", "fogg-behavior-model", "com-b", "prospect-theory"],
+      "keywords": [
+        "behavioral-science",
+        "ai-governance",
+        "compliance",
+        "multi-agent",
+        "claude-code",
+        "executive-router",
+        "drift-detection",
+        "mempalace",
+        "fogg-behavior-model",
+        "com-b",
+        "prospect-theory"
+      ],
       "category": "base"
     },
     {
       "name": "mxm-pack-l1-1-ai-governance",
-      "source": "./pack-l1-1-ai-governance",
+      "source": "./packs/pack-l1-1-ai-governance",
       "description": "Audit trail, confidence tagging, and ethical checks on every AI decision. Primary framework: Prospect Theory (Kahneman & Tversky, 1979). MOAT-01.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l1",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l1", "ai-governance", "prospect-theory", "audit-trail"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l1",
+        "ai-governance",
+        "prospect-theory",
+        "audit-trail"
+      ],
       "category": "governance"
     },
     {
       "name": "mxm-pack-l1-2-mempalace-pro",
-      "source": "./pack-l1-2-mempalace-pro",
+      "source": "./packs/pack-l1-2-mempalace-pro",
       "description": "Cross-session memory that resumes your project where you left it. Primary framework: Cognitive Load Theory (Sweller, 1988). MOAT-02.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l1",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l1", "memory", "cognitive-load-theory", "mempalace"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l1",
+        "memory",
+        "cognitive-load-theory",
+        "mempalace"
+      ],
       "category": "memory"
     },
     {
       "name": "mxm-pack-l1-3-proactive-watch",
-      "source": "./pack-l1-3-proactive-watch",
+      "source": "./packs/pack-l1-3-proactive-watch",
       "description": "Ten drift classes scanned continuously. Catches regressions before they ship. Primary framework: Signal Detection Theory (Green & Swets, 1966). MOAT-03.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l1",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l1", "drift-detection", "signal-detection-theory"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l1",
+        "drift-detection",
+        "signal-detection-theory"
+      ],
       "category": "governance"
     },
     {
       "name": "mxm-pack-l1-4-compliance-shield",
-      "source": "./pack-l1-4-compliance-shield",
+      "source": "./packs/pack-l1-4-compliance-shield",
       "description": "14 regulated-industry frameworks enforced at the MCP layer. Audit-ready on demand. Primary framework: COM-B (Michie et al., 2011). MOAT-04.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l1",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l1", "compliance", "com-b", "gdpr", "hipaa", "pci-dss", "soc2"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l1",
+        "compliance",
+        "com-b",
+        "gdpr",
+        "hipaa",
+        "pci-dss",
+        "soc2"
+      ],
       "category": "compliance"
     },
     {
       "name": "mxm-pack-l1-5-brand-design-pro",
-      "source": "./pack-l1-5-brand-design-pro",
+      "source": "./packs/pack-l1-5-brand-design-pro",
       "description": "Brand voice locked across AI outputs. 15 cinematic styles. Design that doesn't read as AI. Primary framework: Dual Process Theory (Kahneman, 2011). MOAT-05.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l1",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l1", "brand", "design", "dual-process-theory"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l1",
+        "brand",
+        "design",
+        "dual-process-theory"
+      ],
       "category": "brand"
     },
     {
       "name": "mxm-pack-l1-6-behavioral-intelligence",
-      "source": "./pack-l1-6-behavioral-intelligence",
+      "source": "./packs/pack-l1-6-behavioral-intelligence",
       "description": "64 peer-reviewed behavioral frameworks applied to every Maxim output. The flagship moat. Primary framework: Fogg Behavior Model B=MAP (Fogg, 2009). MOAT-06.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l1",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l1", "behavioral-science", "fogg-behavior-model", "b-map"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l1",
+        "behavioral-science",
+        "fogg-behavior-model",
+        "b-map"
+      ],
       "category": "behavioral-science"
     },
     {
       "name": "mxm-pack-l2-1-founder-os",
-      "source": "./pack-l2-1-founder-os",
+      "source": "./packs/pack-l2-1-founder-os",
       "description": "Persona bundle for solo founders. Combines AI Governance, MemPalace Pro, and Proactive Watch. Ships as part of Pro tier at $39/mo per ADR-009.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l2",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l2", "bundle", "founder"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l2",
+        "bundle",
+        "founder"
+      ],
       "category": "bundle"
     },
     {
       "name": "mxm-pack-l2-2-growth-stack",
-      "source": "./pack-l2-2-growth-stack",
+      "source": "./packs/pack-l2-2-growth-stack",
       "description": "Persona bundle for growth-stage teams. Marketing, brand, behavioral science at scale.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l2",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l2", "bundle", "growth", "marketing"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l2",
+        "bundle",
+        "growth",
+        "marketing"
+      ],
       "category": "bundle"
     },
     {
       "name": "mxm-pack-l2-3-professional-os",
-      "source": "./pack-l2-3-professional-os",
+      "source": "./packs/pack-l2-3-professional-os",
       "description": "Full L1 suite for solo consultants and boutique agencies. Five L1 packs.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l2",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l2", "bundle", "professional"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l2",
+        "bundle",
+        "professional"
+      ],
       "category": "bundle"
     },
     {
       "name": "mxm-pack-l2-4-agency-all-in",
-      "source": "./pack-l2-4-agency-all-in",
+      "source": "./packs/pack-l2-4-agency-all-in",
       "description": "Full L1 suite plus all six L1 packs. Agency tier with unlimited operator seats.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l2",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l2", "bundle", "agency"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l2",
+        "bundle",
+        "agency"
+      ],
       "category": "bundle"
     },
     {
       "name": "mxm-pack-l3-1-healthcare",
-      "source": "./pack-l3-1-healthcare",
+      "source": "./packs/pack-l3-1-healthcare",
       "description": "Healthcare vertical overlay. HIPAA, ISO 13485, ISO 14971, FHIR/HL7 enforcement. One-time purchase.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l3",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l3", "healthcare", "hipaa", "iso-13485", "iso-14971"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l3",
+        "healthcare",
+        "hipaa",
+        "iso-13485",
+        "iso-14971"
+      ],
       "category": "vertical"
     },
     {
       "name": "mxm-pack-l3-2-legal",
-      "source": "./pack-l3-2-legal",
+      "source": "./packs/pack-l3-2-legal",
       "description": "Legal vertical overlay. Privileged communication protection, privacy frameworks, conflict-of-interest patterns. One-time purchase.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l3",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l3", "legal", "privilege", "ethics-walls"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l3",
+        "legal",
+        "privilege",
+        "ethics-walls"
+      ],
       "category": "vertical"
     },
     {
       "name": "mxm-pack-l3-3-fintech",
-      "source": "./pack-l3-3-fintech",
+      "source": "./packs/pack-l3-3-fintech",
       "description": "Fintech vertical overlay. PCI-DSS, SOC 2, FINTRAC, PIPEDA enforcement. One-time purchase.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l3",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l3", "fintech", "pci-dss", "soc2", "fintrac"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l3",
+        "fintech",
+        "pci-dss",
+        "soc2",
+        "fintrac"
+      ],
       "category": "vertical"
     },
     {
       "name": "mxm-pack-l3-4-govtech",
-      "source": "./pack-l3-4-govtech",
+      "source": "./packs/pack-l3-4-govtech",
       "description": "GovTech vertical overlay. NIST CSF, FedRAMP, records retention. One-time purchase.",
       "version": "1.0.0",
-      "author": { "name": "Dr. Nabeel Khan", "email": "nabeel@nabeelkhan.com" },
+      "author": {
+        "name": "Dr. Nabeel Khan",
+        "email": "nabeel@nabeelkhan.com"
+      },
       "homepage": "https://maxim.isystematic.com/pricing#l3",
       "license": "proprietary",
-      "keywords": ["maxim", "pack", "l3", "govtech", "nist-csf", "fedramp"],
+      "keywords": [
+        "maxim",
+        "pack",
+        "l3",
+        "govtech",
+        "nist-csf",
+        "fedramp"
+      ],
       "category": "vertical"
     }
   ]
