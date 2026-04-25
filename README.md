@@ -27,11 +27,24 @@ Those two commands install the full behavioral intelligence layer into Claude Co
 
 > Maxim's submission to the Anthropic community marketplace ([clau.de/plugin-directory-submission](https://clau.de/plugin-directory-submission)) is in flight. Once approved, `/plugin install maxim@claude-community` will also work. The commands above are the direct path and work today.
 
+**Prerequisites** (verify before installing):
+- **`git`** on PATH — used to clone community packs at first session
+- **`node` + `npm`** on PATH (Node.js LTS 20.x or higher) — required for the 7 bundled MCP servers and their dependencies
+
+```bash
+# Verify both are available:
+git --version    # any 2.x is fine
+node --version   # v20.x or higher
+npm --version    # 10.x or higher
+```
+
+If `npm` is missing, install Node.js — `brew install node` on macOS, the LTS installer from https://nodejs.org elsewhere, or nvm if you manage multiple versions. Without Node.js, the MCP servers will fail to spawn and Claude Code will report `MCP server failed: timeout`.
+
 **First session auto-installs:**
 1. **7 community packs** (150 VoltAgent specialists · Superpowers workflow patterns · Planning With Files · Claude Skills Library · UI/UX Pro Max · Higgsfield AI prompts · 59 brand design templates) — via `bootstrap/mxm-community-packs.{sh,ps1}`
 2. **MCP server dependencies** for the 7 bundled MCP servers (`@modelcontextprotocol/sdk`, `zod`) — via `bootstrap/mxm-mcp-install.{sh,ps1}`
 
-Both run automatically through the `SessionStart` hook on first session (~1–2 min for community packs, ~30–60 sec for MCP deps). Requires `git` and `npm` on PATH. Runs on macOS, Linux, and Windows with no configuration.
+Both run automatically through the `SessionStart` hook on first session (~1–2 min for community packs, ~30–60 sec for MCP deps). Runs on macOS, Linux, and Windows with no configuration.
 
 > **If you hit `MCP server failed: timeout` during the very first session**, the SessionStart hook may not have finished installing MCP dependencies before Claude Code tried to spawn them. Run the installer manually, then restart the session:
 >
