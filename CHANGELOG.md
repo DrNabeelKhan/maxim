@@ -8,6 +8,62 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.1.0-rc.1 — 2026-04-27 — License middleware (v1.1.A) — release candidate
+
+First v1.1 release candidate. Ships v1.1.A complete: license middleware foundation,
+Worker /issue + /validate endpoints, 7 MCP servers gated, E2E test fixtures.
+v1.1.B (Maxim Overlay Engine) and v1.1.C (7 compliance frameworks) follow as
+separate sprints; v1.1.0 final tag will combine A + B + C per FRAMEWORK_ROADMAP.
+
+### Added (v1.1.A)
+
+- **`cloudflare-worker/src/v11a-license.ts`** — Two new public Worker endpoints:
+  - `POST /issue {machine_fingerprint, client_version} → {jwt, tier, grants, expires_at}`
+    Anonymous Starter JWT issuer. 30-day TTL. Rate-limited (≤10/day per fingerprint, ≤100/h per IP).
+  - `POST /validate {jwt} → {valid, tier, grants, expires_at, refresh_url?}`
+    Daily-heartbeat validator. Verifies signature, checks revocation, returns server-side authoritative tier + grants.
+    Rate-limited (≤50/day per fingerprint, ≤1000/h per IP).
+- **`mcp/_shared/license-gate.mjs`** — Full license-gate middleware (ESM). Cache-file logic at
+  `~/.mxm-packs/license-state.json`, owner-key bypass (full, no JWT, tagged 🔵 SUPER USER), JWT signature
+  verification via local public key, fire-and-forget 24h heartbeat (never blocks tool calls), first-run flow
+  that hits Worker `/issue` and writes cache atomically. Per locked design G1–G7.
+- **`mcp/_shared/license-pubkey.pem`** — Mirror of `pack-engine/internal/jwt/keys/public.pem` for offline
+  JWT verification (defense-in-depth against cache tampering).
+- **`mcp/_shared/license-gate.test.mjs`** — E2E test fixture covering: owner-bypass, FIRST_RUN_FAILED,
+  JWT_EXPIRED, JWT_INVALID (tampered signature), GRANTS_INSUFFICIENT, SUCCESS, CACHE_CORRUPT, plus
+  live-Worker tests gated on `MXM_E2E_LIVE_WORKER=1`. **9/9 pass.**
+- **All 7 MCP servers gated** via `wrapServerWithLicenseGate(server, "<name>", grantMap?)` (1 import + 1 call
+  per server, ~50 lines total). Tier-specific grants mapped: `mxm-compliance` requires `compliance-14`,
+  `mxm-behavioral` requires `behavioral-audit-unlimited`, `mxm-memory` KG ops require `mempalace-semantic`,
+  `mxm-voice` requires `voice-10min-per-day` (status check is free across tiers).
+
+### Ship gates (FRAMEWORK_ROADMAP § v1.1.A)
+
+| Gate | Status |
+|---|---|
+| `requireValidLicense` middleware merged into all 7 MCP servers | 🟢 |
+| Worker `/validate` endpoint deployed + KV binding live | 🟡 code ready · operator deploys |
+| Starter tier anonymous JWT issuer live | 🟡 code ready · operator deploys |
+| E2E test: clone repo without license → tool calls fail with clear error | 🟢 (FIRST_RUN_FAILED test) |
+| E2E test: paid-tier JWT → tool calls succeed + usage logged | 🟡 requires deployed Worker (live test gated on env flag) |
+| E2E test: expired JWT → fail with refresh instructions | 🟢 (JWT_EXPIRED test) |
+| Rate-limit policy per tier documented and verified | 🟢 (`v11a-license.ts` enforces) |
+
+4 of 7 gates green by code; 3 require Worker deployment by operator. **v1.1.0 final ships
+when Worker is deployed AND v1.1.B + v1.1.C land.** This rc.1 captures all v1.1.A code in
+a tagged release candidate so testers can install via `/plugin install maxim@maxim-packs`
+and exercise the gating once Worker is live.
+
+### Known carry-over for v1.1.0 final
+
+- v1.1.B Maxim Overlay Engine (per ADR-012) — 4-hook architecture; 11 ship gates
+- v1.1.C 7 compliance frameworks (EU AI Act, ISO 42001, SOX, CIS Controls, DORA, NIST SP 800-53, LGPD)
+- Worker deployment to `https://maxim-license-api.isystematic.workers.dev` with `JWT_SIGNING_KEY_PRIVATE`
+  + `JWT_SIGNING_KEY_PUBLIC` secrets bound; KV namespaces (LICENSES, RATE_LIMIT) already provisioned
+- `ADR-013-license-middleware-design.md` — capture locked v1.1.A design as ratified ADR
+
+---
+
 ## v1.0.1 — 2026-04-27 — Session 15: agent merge + count alignment + v1.1.A foundation + count-drift codification
 
 Multi-track session covering plugin MCP path bugfix, agent roster expansion, capability-count drift fix across 30+ surfaces, v1.1.A license middleware Phase B-1 foundation, and codification of the inventory-vs-marketing-copy drift class (Class 11) with companion `bootstrap/sync-counts` tool.

@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Maxim commercial pack marketplace. 14 packs across 3 tiers: L1 capabilities, L2 persona bundles, L3 verticals. Licensed per-purchase via Stripe (primary; LemonSqueezy secondary, dormant until v1.0.1 per ADR-011), validated via Cloudflare Worker RS256 JWT.",
-    "version": "1.0.1"
+    "version": "1.1.0-rc.1"
   },
   "plugins": [
     {
@@ -15,8 +15,8 @@
         "source": "url",
         "url": "https://github.com/DrNabeelKhan/maxim.git"
       },
-      "description": "The behavioral intelligence layer for Claude Code. 90 specialist agents across 7 executive offices, 34 skill domains, 38 slash commands, 64 behavioral frameworks, 14 compliance frameworks. Starter tier is $0 forever; paid packs install from this same marketplace after purchase. BSL 1.1 (Apache 2.0 on 2030-04-21).",
-      "version": "1.0.1",
+      "description": "The behavioral intelligence layer for Claude Code. 90 specialist agents across 7 executive offices, 34 skill domains, 38 slash commands, 64 behavioral frameworks, 14 compliance frameworks, license-gated MCP middleware (v1.1.A). Starter tier is $0 forever; paid packs install from this same marketplace after purchase. BSL 1.1 (Apache 2.0 on 2030-04-21).",
+      "version": "1.1.0-rc.1",
       "author": {
         "name": "Dr. Nabeel Khan",
         "email": "nabeel@nabeelkhan.com"

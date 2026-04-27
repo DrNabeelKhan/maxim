@@ -15,6 +15,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { readFile, writeFile, stat } from "node:fs/promises";
 import { join } from "node:path";
+import { wrapServerWithLicenseGate } from "../_shared/license-gate.mjs";
 
 const MXM_GLOBAL = process.env.MXM_GLOBAL_PATH || "E:/Projects/.mxm-global";
 
@@ -30,6 +31,9 @@ const server = new McpServer({
   name: "mxm-portfolio",
   version: "1.0.0",
 });
+
+// v1.1.A — license gate (fail-closed at JWT expiry; owner.key bypass; first-run silent issue)
+wrapServerWithLicenseGate(server, "mxm-portfolio");
 
 // --- Tool: get_portfolio_overview ---
 server.tool(

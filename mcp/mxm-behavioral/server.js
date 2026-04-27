@@ -13,6 +13,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import { wrapServerWithLicenseGate } from "../_shared/license-gate.mjs";
 
 // Domain → framework mapping (from documents/reference/FRAMEWORKS_MASTER.md 63 frameworks)
 const DOMAIN_FRAMEWORKS = {
@@ -83,6 +84,13 @@ const FRAMEWORK_DETAILS = {
 const server = new McpServer({
   name: "mxm-behavioral",
   version: "1.0.0",
+});
+
+// v1.1.A — license gate. behavioral-audit-unlimited grant required for full audit (Solo+).
+// Starter tier gets framework-stubs-10 only; behavioral_audit gated to paid tiers.
+wrapServerWithLicenseGate(server, "mxm-behavioral", {
+  behavioral_audit: ["behavioral-audit-unlimited"],
+  apply_framework: ["frameworks-64"],
 });
 
 // --- Tool: recommend_frameworks ---

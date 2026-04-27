@@ -29,6 +29,7 @@ import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprot
 import { existsSync, readFileSync, appendFileSync, mkdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { parse as parseYaml } from 'yaml';
+import { requireValidLicense, LicenseError } from '../_shared/license-gate.mjs';
 
 // ---------------------------------------------------------------------------
 // Config
@@ -209,8 +210,34 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
   ],
 }));
 
+// v1.1.A — license gate. voice grants vary by tier:
+//   Pro Trial: voice-10min-per-day; Professional+: voice-unlimited.
+// We require voice-10min-per-day as the floor; tier-aware quota enforcement is v1.1.B.
+const VOICE_GRANT_MAP = {
+  voice_invoke_command: ["voice-10min-per-day"],
+  voice_brief_office: ["voice-10min-per-day"],
+  voice_capture_decision: ["voice-10min-per-day"],
+  voice_status: [], // status check is free across tiers
+};
+
 server.setRequestHandler(CallToolRequestSchema, async (req) => {
   const { name, arguments: args } = req.params;
+
+  // License gate — fail-closed for paid tools, fail-open for status
+  try {
+    await requireValidLicense(`mxm-voice.${name}`, VOICE_GRANT_MAP[name] || []);
+  } catch (err) {
+    const isLicenseErr = err instanceof LicenseError;
+    return {
+      content: [{
+        type: 'text',
+        text: isLicenseErr
+          ? `Maxim license check failed: ${err.code} — ${err.message}`
+          : `License gate error: ${err.message}`,
+      }],
+      isError: true,
+    };
+  }
 
   // ---- voice_status ----
   if (name === 'voice_status') {

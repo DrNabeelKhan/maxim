@@ -38,6 +38,7 @@ import { STRIPE_PRODUCT_MAP } from "./stripe-product-map";
 import { handleContact, handleContactPreflight } from "./contact";
 import { handleCheckoutSession, handleCheckoutPreflight } from "./checkout";
 import { notifySales, fmtMoney } from "./notify";
+import { handleAnonymousIssue, handleValidate } from "./v11a-license";
 
 export interface Env {
     // Vars
@@ -109,6 +110,9 @@ export default {
             if (path === "/contact" && request.method === "POST") return handleContact(request, env);
             if (path === "/checkout/session" && request.method === "OPTIONS") return handleCheckoutPreflight(request);
             if (path === "/checkout/session" && request.method === "POST") return handleCheckoutSession(request, env);
+            // v1.1.A — public license endpoints (no admin auth, rate-limited per fingerprint + IP)
+            if (path === "/issue" && request.method === "POST") return handleAnonymousIssue(request, env);
+            if (path === "/validate" && request.method === "POST") return handleValidate(request, env);
             return new Response("Not Found", { status: 404 });
         } catch (err: any) {
             console.error("Unhandled error:", err);

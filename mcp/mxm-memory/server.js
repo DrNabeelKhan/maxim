@@ -15,6 +15,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { readFile, readdir, writeFile, appendFile } from "node:fs/promises";
 import { join } from "node:path";
+import { wrapServerWithLicenseGate } from "../_shared/license-gate.mjs";
 
 async function safeRead(filePath) {
   try {
@@ -27,6 +28,14 @@ async function safeRead(filePath) {
 const server = new McpServer({
   name: "mxm-memory",
   version: "1.0.0",
+});
+
+// v1.1.A — license gate. mempalace-semantic grant required for KG operations (Pro+).
+// Starter gets mempalace-local file-mode only; KG queries gated to paid tiers.
+wrapServerWithLicenseGate(server, "mxm-memory", {
+  mempalace_kg_add: ["mempalace-semantic"],
+  mempalace_kg_query: ["mempalace-semantic"],
+  mempalace_kg_invalidate: ["mempalace-semantic"],
 });
 
 // --- Tool: search_memory ---

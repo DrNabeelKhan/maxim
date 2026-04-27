@@ -23,6 +23,7 @@ import { z } from "zod";
 import { readFile, readdir } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { join } from "node:path";
+import { wrapServerWithLicenseGate } from "../_shared/license-gate.mjs";
 
 const MXM_ROOT = process.env.MXM_ROOT || "E:/Projects/Maxim/maxim";
 const DESIGN_MD_DIR = join(MXM_ROOT, "community-packs/design-templates/design-md");
@@ -40,6 +41,9 @@ const server = new McpServer({
   name: "mxm-context",
   version: "1.1.0",
 });
+
+// v1.1.A — license gate (fail-closed at JWT expiry; owner.key bypass; first-run silent issue)
+wrapServerWithLicenseGate(server, "mxm-context");
 
 // --- Tool: get_manifest ---
 server.tool(

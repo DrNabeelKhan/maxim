@@ -15,6 +15,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { wrapServerWithLicenseGate } from "../_shared/license-gate.mjs";
 
 const MXM_ROOT = process.env.MXM_ROOT || "E:/Projects/Maxim/maxim";
 
@@ -138,6 +139,13 @@ function lookupFramework(name) {
 const server = new McpServer({
   name: "mxm-compliance",
   version: "1.0.0",
+});
+
+// v1.1.A — license gate. compliance-14 grant required for full framework dispatch (Pro+).
+wrapServerWithLicenseGate(server, "mxm-compliance", {
+  check_compliance: ["compliance-14"],
+  generate_dpia: ["dpia-generation"],
+  generate_dpa: ["dpa-generation"],
 });
 
 // --- Tool: check_compliance ---
