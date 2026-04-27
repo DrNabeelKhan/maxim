@@ -16,7 +16,7 @@
     "gated": false,
     "gated_approval_required_from": null,
     "archived_reason": null,
-    "last_activity": "2026-04-21",
+    "last_activity": "2026-04-27",
     "staleness_warning_days": 30,
     "last_sprint": "v1.0.0-authoring",
     "launch_status": "v1.0.0 initial commit pending Gate D push"
@@ -311,8 +311,8 @@
     "overrides": []
   },
   "maintainer": "DrNabeelKhan",
-  "last_updated": "2026-04-21",
-  "next_review": "2026-05-21",
+  "last_updated": "2026-04-27",
+  "next_review": "2026-05-27",
   "super_user": {
     "enabled": true,
     "identity": "DrNabeelKhan",

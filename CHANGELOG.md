@@ -8,6 +8,48 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.0.0 — 2026-04-27 — Launch Bug-Bash (install path verified end-to-end)
+
+Single live macOS install (alsalman's MacBook, accessed via Tailscale SSH) surfaced and resolved five blocker bugs that local Windows structural tests could not catch. **Plugin install is now end-to-end verified working** on a real Mac. Anthropic community marketplace submission still pending operator action.
+
+### Fixed (in order of discovery)
+
+- **BUG-001 · marketplace.json schema** — base `maxim` plugin entry's `source: "../"` was rejected by the marketplace validator. Switched to `git-subdir` form (commit `8a82be1`).
+- **BUG-002 · slash commands not registering** — 34 of 38 `mxm-*.md` files lacked YAML frontmatter; Claude Code's loader silently skips command files without a `description:` field. Added frontmatter to all 34 (commit `c4e93f0`).
+- **BUG-003 · "permission denied" on bootstrap scripts** — every `.sh` in the repo (60 files: 7 hooks + 6 bootstrap + 8 distribution mirrors + others) was tracked as `100644`. Set exec bit on all (commit `e3d6008`).
+- **BUG-004 · MCP server timeout on first install** — MCP servers are Node packages with `node_modules/` gitignored; nothing installs deps automatically. Added `bootstrap/mxm-mcp-install.{sh,ps1}` and wired auto-run into SessionStart hook (commit `82385c9`). README now documents Node.js as a hard prerequisite (commit `4b7fcd2`).
+- **BUG-005 · only 1% of plugin files materialized on disk** — `git-subdir` source with `path: "."` triggered Claude Code's plugin loader to apply a `/*` + `!/*/` sparse-checkout filter, excluding every directory. Of 917 tracked files, only 8 root-level files installed. Switched maxim's source to `url` form which performs a full clone (commit `cee9aa6`).
+
+### Added (alongside the fixes)
+
+- **`bootstrap/mxm-mcp-install.{sh,ps1}`** — per-MCP-server `npm install` runner with sentinel-based skip-on-subsequent-sessions
+- **Hardened `bootstrap/mxm-community-packs.sh`** — picks best-available JSON parser (`jq` → `python3` → `python` → `node`), fixes subshell counter bug via tempfile, adds `git`-on-PATH check
+- **README prerequisites block** — explicit Node.js requirement with verification commands and macOS install instructions
+- **`documents/ledgers/BUG_TRACKER.md`** — first 5 entries (BUG-001..BUG-005) with full repro, root cause, fix, regression guard. PATTERN-01 added: cross-platform structural assumptions.
+- **`documents/ledgers/DEBUGGING_PLAYBOOK.md`** — §1 entry capturing the meta-pattern: structural tests passing while live install fails. Methodology and transferable lesson documented.
+
+### Adjacent landings (separate from the bug-bash but in the same window)
+
+- **ADR-012 Maxim Overlay Engine** — published. Architectural commitment to apply Maxim's behavioral / compliance / confidence layers to every Claude Code plugin via the four hook interception points. INDEX bumped to 8 published ADRs.
+- **MOAT-07** — "Operator agents behind vertical compliance overlays" added to MOAT_TRACKER. Mechanism: Social Learning Theory (Bandura, 1977).
+- **`/giveaway` page** — full Early Adopter Program: 300 licenses, $540K value, 13 cohorts, application flow via `/contact`.
+- **`/early-adopters` opt-in public wall** — skeleton ships empty; populates as approvals land.
+- **Per-page Open Graph images** — root `/opengraph-image` (three-layer moat stack) and `/giveaway/opengraph-image` (terminal session showing Maxim governing a Claude session).
+- **Hero CTA flip** — install command + giveaway CTA primary; pricing demoted to tertiary link.
+- **Header nav reorder** — Why → Docs → Frameworks → Giveaway (red accent) → Pricing.
+- **Worker `/contact`** — accepts two new subjects (`early-adopter-application`, `early-adopter-inquiry`), routes them to a dedicated KV key prefix.
+- **Domain expansion roadmap** — `FRAMEWORK_ROADMAP.md` v1.1 expanded with v1.3 (RevOps domain + AI Governance frameworks), v1.4 (Regulated Industries operator roster + Fintech), v1.5 (Cinematic / Video-AI Production).
+
+### Known carry-over
+
+- Anthropic community marketplace submission at `clau.de/plugin-directory-submission` — pending operator action; payload prepared.
+- Live `$1` Stripe smoke test — pending operator action.
+- Founder bio in `landing-page/components/FounderBlock.tsx` — placeholder text remains.
+- Cloudflare API token shared earlier in chat — should be revoked.
+- macOS-install CI hardening — v1.1 hardening item; would have caught BUG-003/004/005 before users.
+
+---
+
 ## v1.0.0 — 2026-04-21 — First Public Release
 
 **Positioning.** The behavioral intelligence layer for Claude. Every output cites a mechanism. Every session runs drift detection. Every commit enforces Documents as Executable Contracts.
