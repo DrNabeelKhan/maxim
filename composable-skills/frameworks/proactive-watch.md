@@ -12,7 +12,7 @@
 ## Purpose
 
 AI-coded projects accumulate silent regressions:
-- Docs say 88 agents, filesystem has 89
+- Docs say 90 agents, filesystem has 91
 - README says v1.0.0, agent-registry says v1.0.0
 - CHANGELOG claims feature X, command file is missing
 - Bug-042 marked open, code path was deleted weeks ago
@@ -24,9 +24,9 @@ The **meta-principle** backing this framework: *every document is an executable 
 
 ---
 
-## The 10 Universal Drift Classes
+## The 11 Universal Drift Classes
 
-Every AI-coded project accumulates drift in these 10 classes. The framework ships a checker for each; projects enable/disable per `watch-profile.yml`.
+Every AI-coded project accumulates drift in these 11 classes. The framework ships a checker for each; projects enable/disable per `watch-profile.yml`.
 
 | # | Class | Typical Example | Default Triage |
 |---|---|---|---|
@@ -40,8 +40,26 @@ Every AI-coded project accumulates drift in these 10 classes. The framework ship
 | 8 | **junction-drift** | Broken symlinks, wrong junction targets (Windows-specific) | CTO |
 | 9 | **stale-handoff** | `.claude-sessions-memory/handoff.md` older than N days | COO |
 | 10 | **compliance-drift** | Secret committed, PII leaked, license mismatch | CSO 🔒 |
+| 11 | **surface-claims-drift** | Marketing/docs/landing-page hard-codes a count that doesn't match `AGENT_SKILL_INVENTORY.md` | COO |
 
 **🔒 Locked triage:** compliance-drift and contract-drift cannot be re-routed by adopting projects. They preserve Maxim governance integrity.
+
+### Class 11 — surface-claims-drift (added v1.0.1, 2026-04-27)
+
+**Why this class exists.** Class 1 (inventory-drift) catches *filesystem-vs-inventory* mismatch — when `agents/MXM/cino/` has 4 files but `AGENT_SKILL_INVENTORY.md` says 3. Class 11 catches the **complementary** failure mode: *inventory-vs-marketing-copy* drift — when `AGENT_SKILL_INVENTORY.md` says 90 but `README.md` says 88, the landing page's `<StatCell number="88">` says 88, and the pack catalogue still says 88. Without this class, capability counts diverge silently across docs / marketing / website until a human catches it months later.
+
+**Algorithm (LIGHT phase):**
+
+1. Read `documents/ledgers/AGENT_SKILL_INVENTORY.md` and extract canonical numbers for each tracked counter (Section 1: Agents; Section 2: Skill Domains; Section 3: Slash Commands; Section 4: MCP Servers + Tools; Section 5: Hook Scripts; Section 6: Frameworks; Section 7: Compliance).
+2. For each counter, scan **declared surface paths** (configurable in `watch-profile.yml`) for hard-coded number literals adjacent to keyword anchors (`agents`, `frameworks`, `commands`, `MCP servers`, `compliance frameworks`, `hooks`, `skill domains`).
+3. Pattern: `\b(\d{1,4})\+?\s+(?:specialist\s+|governed\s+|peer-reviewed\s+)?{anchor}\b` (case-insensitive; allows `+`-suffix for "90+ agents").
+4. Each numeric mismatch with INVENTORY emits a drift event of severity 3 (warn-only in LIGHT; FULL phase auto-routes to COO review queue).
+
+**False-positive guards.** Pattern requires the keyword anchor adjacent. Currency (`$X.88`), SVG coordinates (`y: 88`), and percentages (`88%`) are excluded by construction since none has the keyword adjacent. Versioned historical docs (`maxim-pack-catalog-v1.0.0.md`) are excluded by glob (`**/v[0-9]*-*.md`). CHANGELOG.md and ADR INDEX.md are excluded — they preserve point-in-time accurate version entries.
+
+**Cross-repo scan.** The `landing-page/` repo is a sibling project that consumes Maxim's identity. Class 11 resolves it via `cross_repo_targets` in `watch-profile.yml` and `MAXIM_LANDING_PAGE` env var. If the env var is unset, landing-page is silently skipped (not flagged as drift) — operator explicitly opts in.
+
+**Companion tooling.** When drift is flagged, `bootstrap/sync-counts.{sh,ps1}` propagates inventory counts mechanically to all declared surfaces. The tool is idempotent — running on a clean tree is a no-op. See [`bootstrap/sync-counts.sh`](../../bootstrap/sync-counts.sh) for the canonical implementation.
 
 ---
 
@@ -168,7 +186,7 @@ thresholds:
 `.mxm-skills/watch-report.jsonl` — one line per detected drift, any tool can consume.
 
 ```json
-{"ts":"2026-04-18T12:00Z","phase":"light","project":"maxim","drift_class":"inventory-drift","severity":3,"declared":88,"actual":89,"evidence":"agents/MXM/ceo/new-agent.md","triage":"coo","action":"review-queue"}
+{"ts":"2026-04-18T12:00Z","phase":"light","project":"maxim","drift_class":"inventory-drift","severity":3,"declared":90,"actual":91,"evidence":"agents/MXM/ceo/new-agent.md","triage":"coo","action":"review-queue"}
 ```
 
 Severity scale (1–5):

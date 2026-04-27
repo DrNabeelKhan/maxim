@@ -9,7 +9,7 @@ One-page adopter reference. Global-first architecture — install once, every pr
 ```
 GLOBAL LAYER  %USERPROFILE%\.claude\          (set up once via install-global.ps1)
 ├── CLAUDE.md                 Universal dispatch rules — every session loads this
-├── agents\                   All 87 Maxim agents
+├── agents\                   All 90 Maxim agents
 ├── skills\                   All 20 Maxim domain skills
 └── commands\                 All slash commands (/mxm-plan, /mxm-status, etc.)
 

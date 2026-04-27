@@ -8,7 +8,7 @@
 
 The Maxim core framework is licensed under Business Source License 1.1 with a 4-year conversion to Apache 2.0. The core is free for non-pack production use today, and fully open-source in four years regardless of anything the Licensor decides later. Use it internally, use it with clients, fork it, ship it inside your own product. The only restriction is that you cannot resell a competing commercial pack catalog. That restriction is ratified by ADR-005.
 
-**The free Starter tier is an Executable Contract (ADR-004).** It is not crippleware. It is the complete Maxim governance substrate with 88 agents, 34 skill domains, 37 slash commands, 64 behavioral frameworks, 47 MCP tools, and 4 free drift-detection watch classes. Packs layer specific enforcement and compounding intelligence on top of that substrate.
+**The free Starter tier is an Executable Contract (ADR-004).** It is not crippleware. It is the complete Maxim governance substrate with 90 agents, 34 skill domains, 37 slash commands, 64 behavioral frameworks, 47 MCP tools, and 4 free drift-detection watch classes. Packs layer specific enforcement and compounding intelligence on top of that substrate.
 
 ---
 
@@ -16,7 +16,7 @@ The Maxim core framework is licensed under Business Source License 1.1 with a 4-
 
 | Tier | Price | Position |
 |---|---|---|
-| **Starter** | $0 forever | Acquisition floor — 88 agents, 34 domains, 37 commands, 4 watch classes, CEO Automation, 10 framework stubs, MemPalace local file mode, basic compliance advisory. |
+| **Starter** | $0 forever | Acquisition floor — 90 agents, 34 domains, 37 commands, 4 watch classes, CEO Automation, 10 framework stubs, MemPalace local file mode, basic compliance advisory. |
 | **Pro Trial** | $0, 90 days auto-activated on install | Activation bridge — Starter + full 10 watch classes + 50 behavioral_audit/mo + 3 compliance frameworks (GDPR, SOC2, PIPEDA) + MemPalace semantic + ADR-010 rubric + 10 min/day voice + 20 brand overlays/mo. |
 | **Solo (MOAT anchor)** | **$19.99/mo** | The behavioral intelligence specialist. Unlimited behavioral_audit, all 64 behavioral frameworks, nudge design, persuasion tools, TTM stage detection. No compliance depth, no brand/design tools, no team features, no overlays. |
 | **Pro** | $39/mo | Solo + 14 compliance frameworks + full Proactive Watch + MemPalace semantic + brand overlay (20/mo). |

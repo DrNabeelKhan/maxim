@@ -50,7 +50,7 @@ github.com/DrNabeelKhan/maxim
 ### About section (gear icon → Edit repository details)
 
 **Description** (350 char max):
-> The Claude-native operating system. 88 governed agents across 7 executive offices. 64 behavioral frameworks. 14 compliance frameworks. Continuous drift detection. Documents as Executable Contracts. One `git pull` updates every project.
+> The Claude-native operating system. 90 governed agents across 7 executive offices. 64 behavioral frameworks. 14 compliance frameworks. Continuous drift detection. Documents as Executable Contracts. One `git pull` updates every project.
 
 **Website:** `https://maxim.isystematic.com`
 
@@ -76,7 +76,7 @@ canadian-tech
 - 1280×640 PNG, <1 MB
 - Dark background (matches landing), emerald accent
 - Maxim logo + "The Claude-native operating system for AI-assisted work"
-- Key numbers: `88 agents · 64 frameworks · 14 compliance · one git pull`
+- Key numbers: `90 agents · 64 frameworks · 14 compliance · one git pull`
 - No stock photos, no AI faces
 
 ---
@@ -112,7 +112,7 @@ The README is the GitHub-native document. It must render clean in GitHub's markd
 [![Version](https://img.shields.io/badge/version-v1.0.0-emerald)](CHANGELOG.md)
 [![License Core](https://img.shields.io/badge/core-BSL--1.1-blue)](LICENSE)
 [![License Packs](https://img.shields.io/badge/packs-Proprietary-red)](LICENSE.pack.md)
-[![Agents](https://img.shields.io/badge/agents-88%20(100%25%20Grade%20A)-emerald)](documents/ledgers/AGENT_SKILL_INVENTORY.md)
+[![Agents](https://img.shields.io/badge/agents-90%20(100%25%20Grade%20A)-emerald)](documents/ledgers/AGENT_SKILL_INVENTORY.md)
 [![Skills](https://img.shields.io/badge/skills-34%20domains-emerald)](documents/ledgers/AGENT_SKILL_INVENTORY.md)
 [![Frameworks](https://img.shields.io/badge/frameworks-64-emerald)](documents/reference/FRAMEWORKS_MASTER.md)
 [![Compliance](https://img.shields.io/badge/compliance-14%20frameworks-emerald)](mcp/mxm-compliance/)
@@ -132,7 +132,7 @@ The README is the GitHub-native document. It must render clean in GitHub's markd
 
 <p align="center">
   <b>The Claude-native operating system for AI-assisted work.</b><br>
-  88 governed agents · 64 behavioral frameworks · 14 compliance frameworks<br>
+  90 governed agents · 64 behavioral frameworks · 14 compliance frameworks<br>
   Continuous drift detection · Documents as Executable Contracts · One <code>git pull</code>
 </p>
 
@@ -197,7 +197,7 @@ Pull from `documents/ledgers/AGENT_SKILL_INVENTORY.md`. Stable numbers.
 
 | Category | Count | Source |
 |---|---:|---|
-| Specialist Agents | 88 (100% Grade A DNA) | [`agents/MXM/`](agents/MXM/) |
+| Specialist Agents | 90 (100% Grade A DNA) | [`agents/MXM/`](agents/MXM/) |
 | Skill Domains | 34 | [`.claude/skills/`](.claude/skills/) |
 | Slash Commands | 37 | [`.claude/commands/`](.claude/commands/) |
 | MCP Servers | 7 (47 tools) | [`mcp/`](mcp/) |
@@ -212,7 +212,7 @@ Pull from `documents/ledgers/AGENT_SKILL_INVENTORY.md`. Stable numbers.
 
 Each capability = `### Heading` + 2-sentence summary + small screenshot + link-out.
 
-1. **Executive Offices Architecture** → 7 offices with 88 governed agents
+1. **Executive Offices Architecture** → 7 offices with 90 governed agents
 2. **CSO Auto-Loop** → non-bypassable compliance gate
 3. **Proactive Watch** → continuous drift detection at SessionStart
 4. **Documents as Executable Contracts** → ADR-002 meta-principle
@@ -265,7 +265,7 @@ Maxim dispatches every task through a deterministic 5-layer sequence:
 Layer 1: .claude/skills/          ← Maxim domain skills (supreme authority)
 Layer 2: community-packs/claude-skills-library/  ← vendored deep knowledge (MIT, read-only)
 Layer 3: composable-skills/       ← workflow engine (TDD, debugging, planning)
-Layer 4: agents/MXM/{office}/    ← 88 specialist agents across 7 offices
+Layer 4: agents/MXM/{office}/    ← 90 specialist agents across 7 offices
 Layer 5: behavioral + compliance  ← CLAUDE.md universal + 64 frameworks + 14 regulations
 ```
 
@@ -507,7 +507,7 @@ Only surface user-facing features (not internal refactors).
 
 **Content:**
 - Top-left: Maxim logo
-- Center: headline "The Claude-native operating system" with subhead "88 agents · 64 frameworks · 14 compliance · Documents as Executable Contracts"
+- Center: headline "The Claude-native operating system" with subhead "90 agents · 64 frameworks · 14 compliance · Documents as Executable Contracts"
 - Bottom-right: github.com/DrNabeelKhan/maxim
 - Dark background, emerald accent, Inter Medium 48pt for headline, 24pt for subhead
 - Subtle grid pattern or circuit-board texture

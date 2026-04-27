@@ -8,6 +8,47 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.0.1 — 2026-04-27 — Session 15: agent merge + count alignment + v1.1.A foundation + count-drift codification
+
+Multi-track session covering plugin MCP path bugfix, agent roster expansion, capability-count drift fix across 30+ surfaces, v1.1.A license middleware Phase B-1 foundation, and codification of the inventory-vs-marketing-copy drift class (Class 11) with companion `bootstrap/sync-counts` tool.
+
+### Fixed
+
+- **BUG-O-03 · plugin MCP path resolution** — All 7 `plugin:maxim:mxm-*` MCP servers were failing with `✗ Failed to connect` because `.mcp.json` used relative `args: ["./mcp/<name>/server.js"]` paths that resolved against user cwd, not plugin install dir. Substituted Claude Code's `${CLAUDE_PLUGIN_ROOT}` placeholder. All 7 MCPs now `✓ Connected` end-to-end.
+- **Pre-existing inventory drift fix** — `agents/MXM/cino/skill-synthesizer.md` existed on filesystem since v1.0.0 but was never registered in `config/agent-registry.json`. Added registry entry. Filesystem ↔ registry ↔ INVENTORY now all align at 90 agents.
+- **AGENT_SKILL_INVENTORY.md Section 1 breakdown** — Per-office row counts (CEO 14, CTO 17, CMO 11, CINO 6, Orchestrators 9) were fictitious — they summed to 88 but bore no relation to filesystem reality. Rewrote table to match filesystem (CEO 9, CTO 25, CMO 15, CSO 9, CPO 12, COO 10, CINO 4, Orchestrators 5, Executive Router 1 = 90).
+
+### Added
+
+- **`agents/MXM/cino/cost-analyst.md`** — CINO specialist agent migrated from aria-simplification project. Triages cost-dimension Proactive Watch alerts; classifies traffic / regression / abuse / model_change; bounded throttle proposals. Frameworks: Prospect Theory, Anchoring, COM-B. Slotted as CINO specialist under `innovation-researcher` per [`AGENT_ROSTER_v1.2_PROPOSAL.md`](documents/reference/AGENT_ROSTER_v1.2_PROPOSAL.md).
+- **`agents/MXM/coo/sre-analyst.md`** — COO specialist agent migrated from aria-simplification project. Triages SLO + data-integrity alerts; correlates with deploy timeline + error-budget posture; bounded remediation (rollback, hotfix, scaling, pager). Frameworks: Error Budget (Google SRE), Blameless Postmortems, EAST. Slotted as COO specialist under `planner`.
+- **`cloudflare-worker/grants.json`** — Single source of truth for tier→grants and pack→grants mappings (v1.1.A locked design G4). 6 tiers (starter, pro_trial, solo, pro, professional, team) + 4 vertical overlay packs (healthcare, legal, fintech, govtech) + 54-grant catalog. Mirrored to pack-engine at build time. Validated: all grant references match catalog (no orphans).
+- **`mcp/_shared/license-gate.js`** — v1.1.A Phase B-1: `requireValidLicense(toolName, requiredGrants)` helper with cache-file logic, owner-key bypass (full bypass per locked decision G6, tagged 🔵 SUPER USER), JWT expiry hard gate, 24h heartbeat fire-and-forget, fingerprint subprocess wiring. 5 paths verified end-to-end (FIRST_RUN_REQUIRED, JWT_EXPIRED, GRANTS_INSUFFICIENT, SUCCESS, fingerprint-degrades-gracefully). Phase B-2 (Worker endpoints), B-3 (7 MCP server wiring), B-4 (E2E tests) follow next session.
+- **Proactive Watch Class 11 — `surface-claims-drift`** — New drift class detects inventory-vs-marketing-copy mismatch (e.g., `AGENT_SKILL_INVENTORY.md` says 90 but README says 88). Complementary to Class 1 (filesystem-vs-inventory). Codified in [`composable-skills/frameworks/proactive-watch.md`](composable-skills/frameworks/proactive-watch.md), [`config/watch-profile.yml`](config/watch-profile.yml), [`config/watch-profile.TEMPLATE.yml`](config/watch-profile.TEMPLATE.yml). Driver counter bumped 10→11 in [`/mxm-watch`](.claude/commands/mxm-watch.md), [`/mxm-health`](.claude/commands/mxm-health.md), [`mxm-mode`](distributions/claude-plugin/output-styles/mxm-mode.md) descriptions.
+- **`bootstrap/sync-counts.{sh,ps1}`** — Companion propagation tool for Class 11. Reads INVENTORY canonical counts, propagates to all declared surfaces (markdown + landing-page TSX). Idempotent on clean tree. Conservative regex requires either `+` suffix or adjective prefix (specialist/governed/Maxim/peer-reviewed) to avoid false positives on per-office breakdowns / complexity thresholds / historical changelog entries. 3 acceptance gates passed: clean-tree no-op, synthetic 90→91 bump propagates correctly, restore + re-run no-op.
+- **Commit Protocol updates** — [`CLAUDE.md`](CLAUDE.md) + [`CLAUDE.d/protocols.md`](CLAUDE.d/protocols.md) gained explicit trigger row: when commit touches `agents/MXM/**`, `.claude/skills/**`, `.claude/commands/**`, `mcp/**`, `composable-skills/frameworks/**`, or `.claude/hooks/**`, run `bootstrap/sync-counts.{sh,ps1}` before commit. Pre-commit hook fails-closed on residual drift unless `[surface-claims-drift-ack: <reason>]` is in commit message.
+
+### Changed
+
+- **Total agent count: 88 → 90** (cost-analyst + sre-analyst added; skill-synthesizer registry drift fixed)
+- **Per-office breakdown updated**: COO 9 → 10, CINO 3 → 4 (sre-analyst, cost-analyst). All other offices unchanged.
+- **30+ surfaces propagated**: README, CLAUDE.md, ABOUT, PACKS, HELP, GETTING_STARTED, MXM_RUNDOWN, MARKETPLACE_SUBMISSION, DISTRIBUTION, mxm-mode, demo-scenarios, PROMPT_maxim-capabilities-demo, ASSEMBLY, voice-profile, FRAMEWORK_ROADMAP, FRAMEWORKS_MASTER, AGENT_ROSTER_v1.2_PROPOSAL, ADR-001, ADR-004, ADRs/INDEX, mcp/mxm-catalog/README, proactive-watch (composable + skill), maxim-pack-catalog, maxim-one-pager, maxim-catalogue, repo-page-design-spec — all current-state agent count claims aligned to 90. Plus 9 landing-page TSX/TS files (layout, structured-data, opengraph-image, pricing, comparisons, frameworks, docs/page, docs/first-run, PricingLadder, WhatYoureMissing).
+
+### Architectural decisions ratified
+
+v1.1.A license middleware design fully locked across 7 gates (validation cadence, JWT schemas, KV schema, rate limits, grant location, key rotation deferral, owner-unlock bypass behavior, env-var injection path, fingerprint algorithm reuse, anonymous Starter TTL, outage behavior). Full design captured at [`memory/project_v1.1.A_locked_design.md`](C:/Users/SDO/.claude/projects/E--Projects-Maxim/memory/project_v1.1.A_locked_design.md). ADR will land alongside Phase B-2 implementation.
+
+### Known carry-over
+
+- v1.1.A Phase B-2 (Worker `/issue` + `/validate` endpoints, KV namespace, anon JWT issuer) — next session
+- v1.1.A Phase B-3 (wire `requireValidLicense` into 7 MCP server tool handlers) — next session
+- v1.1.A Phase B-4 (E2E test fixtures + 7 ship gates) — next session
+- v1.1.B (MOE per ADR-012) — separate sprint after v1.1.A green
+- v1.1.C (7 compliance frameworks) — after MOE
+- Decision A2 (~/.claude/{CLAUDE.md, agents, commands, skills} reparse-point cleanup) — deferred from this session per operator's prioritization
+
+---
+
 ## v1.0.0 — 2026-04-27 — Launch Bug-Bash (install path verified end-to-end)
 
 Single live macOS install (alsalman's MacBook, accessed via Tailscale SSH) surfaced and resolved five blocker bugs that local Windows structural tests could not catch. **Plugin install is now end-to-end verified working** on a real Mac. Anthropic community marketplace submission still pending operator action.

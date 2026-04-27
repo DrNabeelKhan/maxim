@@ -27,7 +27,7 @@ One per office, plus the router.
 
 | Command | Source | Purpose | Cowork Notes |
 |---|---|---|---|
-| `/mxm-watch` | `../../.claude/commands/mxm-watch.md` | Drift detection (all 10 classes) | Manual invoke only — no SessionStart hook |
+| `/mxm-watch` | `../../.claude/commands/mxm-watch.md` | Drift detection (all 11 classes) | Manual invoke only — no SessionStart hook |
 | `/mxm-session-end` | `../../.claude/commands/mxm-session-end.md` | 9-doc closure bundle | Advisory — user runs real updates in their CLI repo |
 | `/mxm-update` | `../../.claude/commands/mxm-update.md` | Capability inventory sync | Advisory |
 | `/mxm-release` | `../../.claude/commands/mxm-release.md` | Release flow | Advisory only — actual release happens in CLI |

@@ -1,0 +1,318 @@
+{
+  "$schema": "./grants-schema.json",
+  "_": "Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc. SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years per ADR-005)",
+
+  "schema": "maxim-grants-v1",
+  "version": "1.0.0",
+  "last_updated": "2026-04-27",
+  "owner": "Worker — single source of truth for tier→grants and pack→grants mappings. Mirrored to pack-engine at build time. ANY tier or grant change starts here.",
+
+  "tiers": {
+    "starter": {
+      "display_name": "Starter",
+      "price_usd_monthly": 0,
+      "jwt_ttl_days": 30,
+      "auto_issued": true,
+      "anonymous": true,
+      "description": "Free forever per ADR-004. The full governance substrate — not crippleware.",
+      "grants": [
+        "agents-all",
+        "skills-all",
+        "commands-all",
+        "executive-routing",
+        "ceo-automation",
+        "framework-stubs-10",
+        "watch-classes-4",
+        "mempalace-local",
+        "compliance-advisory-basic",
+        "confidence-tagging",
+        "brand-templates-59"
+      ],
+      "rate_limits": {
+        "issue_per_machine_per_day": 10,
+        "validate_per_machine_per_day": 50
+      }
+    },
+
+    "pro_trial": {
+      "display_name": "Pro Trial",
+      "price_usd_monthly": 0,
+      "jwt_ttl_days": 90,
+      "auto_issued": true,
+      "auto_activates_on_install": true,
+      "description": "90-day Pro Trial auto-activated on first install. Activation bridge between Starter and Solo.",
+      "grants": [
+        "agents-all",
+        "skills-all",
+        "commands-all",
+        "executive-routing",
+        "ceo-automation",
+        "watch-classes-10",
+        "behavioral-audit-50-per-month",
+        "compliance-3",
+        "mempalace-semantic",
+        "adr-010-rubric",
+        "voice-10min-per-day",
+        "brand-overlays-20-per-month",
+        "framework-stubs-10",
+        "compliance-advisory-basic",
+        "confidence-tagging",
+        "brand-templates-59"
+      ],
+      "rate_limits": {
+        "issue_per_machine_per_day": 5,
+        "validate_per_machine_per_day": 50
+      }
+    },
+
+    "solo": {
+      "display_name": "Solo (MOAT anchor)",
+      "price_usd_monthly": 19.99,
+      "jwt_ttl_days": 365,
+      "description": "The behavioral intelligence specialist. MOAT anchor tier.",
+      "grants": [
+        "agents-all",
+        "skills-all",
+        "commands-all",
+        "executive-routing",
+        "ceo-automation",
+        "watch-classes-10",
+        "behavioral-audit-unlimited",
+        "frameworks-64",
+        "nudge-design",
+        "persuasion-tools",
+        "ttm-stage-detection",
+        "framework-stubs-10",
+        "mempalace-local",
+        "compliance-advisory-basic",
+        "confidence-tagging",
+        "brand-templates-59"
+      ],
+      "rate_limits": {
+        "issue_per_machine_per_day": 5,
+        "validate_per_machine_per_day": 50
+      }
+    },
+
+    "pro": {
+      "display_name": "Pro",
+      "price_usd_monthly": 39,
+      "jwt_ttl_days": 365,
+      "description": "Solo + compliance + Proactive Watch full + MemPalace semantic + brand overlay.",
+      "grants": [
+        "agents-all",
+        "skills-all",
+        "commands-all",
+        "executive-routing",
+        "ceo-automation",
+        "watch-classes-10",
+        "behavioral-audit-unlimited",
+        "frameworks-64",
+        "nudge-design",
+        "persuasion-tools",
+        "ttm-stage-detection",
+        "compliance-14",
+        "proactive-watch-full",
+        "mempalace-semantic",
+        "brand-overlays-20-per-month",
+        "framework-stubs-10",
+        "compliance-advisory-basic",
+        "confidence-tagging",
+        "brand-templates-59"
+      ],
+      "rate_limits": {
+        "issue_per_machine_per_day": 5,
+        "validate_per_machine_per_day": 50
+      }
+    },
+
+    "professional": {
+      "display_name": "Professional",
+      "price_usd_monthly": 99,
+      "jwt_ttl_days": 365,
+      "description": "Pro + unlimited Brand & Design Pro + unlimited voice + priority support.",
+      "grants": [
+        "agents-all",
+        "skills-all",
+        "commands-all",
+        "executive-routing",
+        "ceo-automation",
+        "watch-classes-10",
+        "behavioral-audit-unlimited",
+        "frameworks-64",
+        "nudge-design",
+        "persuasion-tools",
+        "ttm-stage-detection",
+        "compliance-14",
+        "proactive-watch-full",
+        "mempalace-semantic",
+        "brand-design-pro-unlimited",
+        "voice-unlimited",
+        "priority-support",
+        "framework-stubs-10",
+        "compliance-advisory-basic",
+        "confidence-tagging",
+        "brand-templates-59"
+      ],
+      "rate_limits": {
+        "issue_per_machine_per_day": 5,
+        "validate_per_machine_per_day": 50
+      }
+    },
+
+    "team": {
+      "display_name": "Team",
+      "price_usd_monthly": 249,
+      "seats": 5,
+      "jwt_ttl_days": 365,
+      "description": "Professional × 5 seats + shared MemPalace KG + team audit trails.",
+      "grants": [
+        "agents-all",
+        "skills-all",
+        "commands-all",
+        "executive-routing",
+        "ceo-automation",
+        "watch-classes-10",
+        "behavioral-audit-unlimited",
+        "frameworks-64",
+        "nudge-design",
+        "persuasion-tools",
+        "ttm-stage-detection",
+        "compliance-14",
+        "proactive-watch-full",
+        "mempalace-team-shared",
+        "team-audit-trails",
+        "brand-design-pro-unlimited",
+        "voice-unlimited",
+        "priority-support",
+        "team-seats-5",
+        "framework-stubs-10",
+        "compliance-advisory-basic",
+        "confidence-tagging",
+        "brand-templates-59"
+      ],
+      "rate_limits": {
+        "issue_per_machine_per_day": 5,
+        "validate_per_machine_per_day": 50
+      }
+    }
+  },
+
+  "packs": {
+    "healthcare-overlay": {
+      "display_name": "Healthcare Vertical Overlay",
+      "price_usd_one_time": 249,
+      "compatible_tiers": ["pro", "professional", "team"],
+      "description": "HIPAA-deep + ISO 13485 + ISO 14971 + FDA submission scaffolding. Stackable on any paid tier.",
+      "grants_added": [
+        "compliance-hipaa-deep",
+        "compliance-iso-13485",
+        "compliance-iso-14971",
+        "fda-submission-scaffolding",
+        "mdr-technical-file-template",
+        "vertical-overlay-healthcare"
+      ]
+    },
+
+    "legal-overlay": {
+      "display_name": "Legal Vertical Overlay",
+      "price_usd_one_time": 199,
+      "compatible_tiers": ["pro", "professional", "team"],
+      "description": "DPIA-grade privacy + jurisdictional compliance map + DPA generation. Stackable on any paid tier.",
+      "grants_added": [
+        "dpia-generation",
+        "jurisdictional-map-full",
+        "dpa-generation",
+        "vendor-dpa-generation",
+        "regulatory-mapping",
+        "vertical-overlay-legal"
+      ]
+    },
+
+    "fintech-overlay": {
+      "display_name": "Fintech Vertical Overlay",
+      "price_usd_one_time": 199,
+      "compatible_tiers": ["pro", "professional", "team"],
+      "description": "PCI-DSS deep + SOX + DORA + payment-flow modeling. Stackable on any paid tier.",
+      "grants_added": [
+        "compliance-pci-dss-deep",
+        "compliance-sox",
+        "compliance-dora",
+        "payment-flow-modeling",
+        "fraud-detection-frameworks",
+        "vertical-overlay-fintech"
+      ]
+    },
+
+    "govtech-overlay": {
+      "display_name": "GovTech Vertical Overlay",
+      "price_usd_one_time": 149,
+      "compatible_tiers": ["pro", "professional", "team"],
+      "description": "FedRAMP-foundation NIST SP 800-53 + AIBOM + ISO 42001. Stackable on any paid tier.",
+      "grants_added": [
+        "compliance-nist-sp-800-53",
+        "compliance-iso-42001",
+        "aibom-generation",
+        "fedramp-readiness-audit",
+        "vertical-overlay-govtech"
+      ]
+    }
+  },
+
+  "grants_catalog": {
+    "agents-all": "All Maxim specialist agents (90 as of v1.0.1; auto-tracks AGENT_SKILL_INVENTORY.md Section 1)",
+    "skills-all": "All Maxim domain skills (34 as of v1.0.0; auto-tracks AGENT_SKILL_INVENTORY.md Section 2)",
+    "commands-all": "All Maxim slash commands (38 as of v1.0.0; auto-tracks AGENT_SKILL_INVENTORY.md Section 3)",
+    "executive-routing": "Executive office routing via /mxm-route and /mxm-{office} commands",
+    "ceo-automation": "CEO Automation skill — overnight + morning briefing cycles",
+    "framework-stubs-10": "10 behavioral framework stubs (names + descriptions; not full deep-dive)",
+    "frameworks-64": "All 64 behavioral frameworks fully dispatchable (FRAMEWORKS_MASTER.md complete)",
+    "watch-classes-4": "4 free Proactive Watch drift classes (inventory, version, cross-doc, stale-handoff)",
+    "watch-classes-10": "All 10 Proactive Watch drift classes",
+    "proactive-watch-full": "Full Proactive Watch including triage routing and recurring-pattern detection",
+    "behavioral-audit-50-per-month": "behavioral_audit MCP tool capped at 50 calls per month",
+    "behavioral-audit-unlimited": "behavioral_audit MCP tool unlimited",
+    "nudge-design": "Nudge Theory dispatch + design tools",
+    "persuasion-tools": "Cialdini-grounded persuasion framework dispatch",
+    "ttm-stage-detection": "Transtheoretical Model stage-of-change detection (v1.2 framework)",
+    "compliance-3": "3 compliance frameworks: GDPR, SOC2, PIPEDA",
+    "compliance-14": "All 14 compliance frameworks (GDPR, PIPEDA, PCI-DSS, SOC2, HIPAA, UAE-PDPL, CASL, FINTRAC, EU AI Act, ISO 27001, ISO 13485, ISO 14971, NIST CSF, WCAG 2.1)",
+    "compliance-hipaa-deep": "HIPAA depth beyond compliance-14 (BAAs, ePHI flow modeling, breach notification)",
+    "compliance-iso-13485": "ISO 13485 medical device QMS depth",
+    "compliance-iso-14971": "ISO 14971 medical device risk management depth",
+    "compliance-pci-dss-deep": "PCI-DSS depth beyond compliance-14 (SAQ generation, cardholder-data-flow modeling)",
+    "compliance-sox": "Sarbanes-Oxley financial controls (v1.1 framework)",
+    "compliance-dora": "EU DORA financial operational resilience (v1.1 framework)",
+    "compliance-nist-sp-800-53": "NIST SP 800-53 controls baseline (v1.1 framework)",
+    "compliance-iso-42001": "ISO 42001 AI Management System (v1.1 framework)",
+    "compliance-advisory-basic": "Compliance awareness + advisory; non-blocking",
+    "mempalace-local": "MemPalace local file mode (no semantic search)",
+    "mempalace-semantic": "MemPalace semantic search + KG queries (full)",
+    "mempalace-team-shared": "MemPalace shared KG across team seats with audit trail",
+    "team-audit-trails": "Per-seat audit logs visible to team admin",
+    "team-seats-5": "Up to 5 team member seats under one billing entity",
+    "voice-10min-per-day": "Voice mode capped at 10 minutes/day (Whisper STT + Kokoro TTS)",
+    "voice-unlimited": "Voice mode unlimited",
+    "brand-overlays-20-per-month": "Brand voice overlay applied to up to 20 outputs per month",
+    "brand-design-pro-unlimited": "Brand & Design Pro skill suite unlimited",
+    "brand-templates-59": "59 brand DESIGN.md templates (MIT-licensed; cannot be revoked)",
+    "adr-010-rubric": "Technical Educator confidence rubric (Basis, Gap, Mitigation, Next)",
+    "confidence-tagging": "🟢🟡🔴 confidence tags on every output",
+    "priority-support": "Priority support queue access",
+    "fda-submission-scaffolding": "FDA submission template + 510(k) scaffolding (Healthcare)",
+    "mdr-technical-file-template": "EU MDR technical file template (Healthcare)",
+    "dpia-generation": "Data Protection Impact Assessment full generation (Legal)",
+    "jurisdictional-map-full": "Cross-jurisdictional compliance map (GDPR/PIPEDA/UAE-PDPL/CCPA/LGPD/PIPL/HIPAA/PCI-DSS) (Legal)",
+    "dpa-generation": "Data Processing Addendum generation (Legal)",
+    "vendor-dpa-generation": "Vendor DPA tailored to project compliance scope (Legal)",
+    "regulatory-mapping": "Multi-framework regulatory mapping (Legal)",
+    "payment-flow-modeling": "Payment-flow data model + cardholder-data scope analysis (Fintech)",
+    "fraud-detection-frameworks": "Fraud detection framework dispatch (Fintech)",
+    "aibom-generation": "AI Bill of Materials (SPDX 3.0) generation (GovTech, EU AI Act Art. 53)",
+    "fedramp-readiness-audit": "FedRAMP readiness audit checklist (GovTech)",
+    "vertical-overlay-healthcare": "Healthcare vertical overlay flag",
+    "vertical-overlay-legal": "Legal vertical overlay flag",
+    "vertical-overlay-fintech": "Fintech vertical overlay flag",
+    "vertical-overlay-govtech": "GovTech vertical overlay flag"
+  }
+}

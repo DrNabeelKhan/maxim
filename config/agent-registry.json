@@ -2,9 +2,9 @@
   "version": "1.0.0",
   "project": "Maxim Agent Platform — iSimplification.io",
   "description": "Single source of truth for Maxim agents and skills catalog. v1.0.0 achieves 100% Grade A DNA coverage across all 88 agents (full Triggers + Collaboration Matrix sections). VoltAgent, external subtrees, and domain dispatch tracked in config/dependency-registry.json.",
-  "last_updated": "2026-04-18",
+  "last_updated": "2026-04-27",
   "agent_dna_coverage": {
-    "grade_a": 88,
+    "grade_a": 90,
     "grade_b": 0,
     "grade_c": 0,
     "coverage_pct": 100,
@@ -12,8 +12,8 @@
   },
   "maintainer": "DrNabeelKhan",
   "scope": "Maxim agents + skills catalog only",
-  "total_mxm_agents": 88,
-  "_total_mxm_agents_breakdown": "CEO 9 + CTO 25 + CMO 15 + CSO 9 + CPO 12 + COO 9 + CINO 3 + Orchestrators 5 (planner/implementer/reviewer/tester/release-manager) + 1 executive-router = 88",
+  "total_mxm_agents": 90,
+  "_total_mxm_agents_breakdown": "CEO 9 + CTO 25 + CMO 15 + CSO 9 + CPO 12 + COO 10 + CINO 4 + Orchestrators 5 (planner/implementer/reviewer/tester/release-manager) + 1 executive-router = 90",
   "total_skill_domains_active": 34,
   "total_skill_domains_added_in_v640": 7,
   "total_skill_domains_added_in_v641": 1,
@@ -46,6 +46,17 @@
   "total_canonical_ledgers": 5,
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
   "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-04-27",
+      "changes": [
+        "feat: cost-analyst agent (CINO office) — triages cost-dimension Proactive Watch alerts; classifies traffic/regression/abuse/model_change; bounded throttle proposals. Frameworks: Prospect Theory, Anchoring, COM-B.",
+        "feat: sre-analyst agent (COO office) — triages SLO and data-integrity alerts; correlates with deploy timeline + error-budget posture. Frameworks: Error Budget (Google SRE), Blameless Postmortems, EAST.",
+        "fix: skill-synthesizer agent (CINO office) — pre-existing filesystem-vs-registry drift; agent file existed at agents/MXM/cino/skill-synthesizer.md but was never registered in agent-registry.json. Adding now to align registry with filesystem reality.",
+        "net: total agents 88 → 90 in declared inventory (CINO 3 → 4 with cost-analyst added; COO 9 → 10 with sre-analyst added). Filesystem reality previously already had 89 agents due to skill-synthesizer drift; net addition is +2 actual + 1 drift correction.",
+        "context: agents migrated forward from aria-simplification project after Session 14 ARIA→Maxim consolidation; promoted to plugin roster per AGENT_ROSTER_v1.2_PROPOSAL.md (cost-analyst as CINO specialist under innovation-researcher; sre-analyst as COO specialist under planner)."
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "2026-04-18",
@@ -1120,6 +1131,72 @@
       ],
       "created_date": "2026-03-13",
       "executive_office": "cpo"
+    },
+    {
+      "id": "cost-analyst",
+      "name": "Cost Analyst",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/cino/cost-analyst.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "engineering",
+        "proactive-watch"
+      ],
+      "frameworks": [
+        "Prospect Theory",
+        "Anchoring",
+        "COM-B"
+      ],
+      "triggers": [
+        "cost",
+        "spend",
+        "LLM spend",
+        "token spend",
+        "infra cost",
+        "cost spike",
+        "bill anomaly",
+        "throttle",
+        "tier migration",
+        "cache warming",
+        "model pinning",
+        "provider pricing",
+        "COGS"
+      ],
+      "collaborates_with": [
+        "innovation-researcher",
+        "security-analyst",
+        "sre-analyst",
+        "product-strategist",
+        "pricing-strategist",
+        "planner",
+        "financial-modeler"
+      ],
+      "purpose": "Triages cost-dimension Proactive Watch alerts; classifies LLM and infrastructure spend spikes (traffic / regression / abuse / model_change); proposes bounded mitigation (throttle, cache warming, pinning, tier migration) without unilateral action",
+      "responsibilities": [
+        "Classify cost spikes as traffic / regression / abuse / model_change",
+        "Compute baseline spend (30-day rolling + 7-day short-term) and detect deviations beyond 2σ",
+        "Propose soft throttle (≤0.7× baseline) or hard throttle (CRITICAL + >3σ with founder approval)",
+        "Cross-loop security-analyst on abuse classification (geo/IP fingerprint anomalies)",
+        "Cross-loop sre-analyst on infra-level cost (DB/Redis/vector) vs LLM token spend",
+        "Detect provider-initiated price/quality changes via model-card lineage; recommend pinning",
+        "Auto-close benign traffic-class alerts within 2σ of growth-adjusted baseline",
+        "Escalate CRITICAL severity within 5 minutes of alert creation"
+      ],
+      "prompt_template": "You are a Cost Analyst. Triage the following cost-dimension Proactive Watch alert. Classify as traffic / regression / abuse / model_change. Compute baseline deviation. Propose bounded mitigation: soft throttle, hard throttle (with founder approval only), cache warming, model pinning, or tier migration. Never apply throttles unilaterally and never write customer-facing messaging.",
+      "success_metrics": [
+        "Alert auto-close rate for benign traffic-class events",
+        "Classification accuracy (traffic vs regression vs abuse vs model_change)",
+        "Mean time to triage decision",
+        "Cross-loop fire rate (security on abuse, sre on infra cost) on correctly correlated alerts"
+      ],
+      "resources": [
+        "https://www.kahneman.org/",
+        "https://www.who.int/teams/health-promotion/behavioural-and-cultural-insights/com-b"
+      ],
+      "created_date": "2026-04-27",
+      "executive_office": "cino"
     },
     {
       "id": "content-creator",
@@ -3616,6 +3693,57 @@
       "executive_office": "cmo"
     },
     {
+      "id": "skill-synthesizer",
+      "name": "Skill Synthesizer",
+      "version": "1.0.0",
+      "category": "product-development-research",
+      "path": "agents/MXM/cino/skill-synthesizer.md",
+      "priority": "medium",
+      "ethics_required": false,
+      "skills": [],
+      "frameworks": [
+        "Fogg Behavior Model",
+        "COM-B",
+        "Cialdini — Social Proof",
+        "Availability Heuristic"
+      ],
+      "triggers": [
+        "skill synthesis",
+        "extract pattern",
+        "generate SKILL.md",
+        "codify workflow",
+        "reusable pattern",
+        "task trajectory"
+      ],
+      "collaborates_with": [
+        "innovation-researcher",
+        "rd-coordinator",
+        "executive-router"
+      ],
+      "purpose": "After complex tasks (complexity ≥ 8/10), inspects task trajectory and extracts generalizable patterns into reusable SKILL.md drafts; queries claude-mem for similar past patterns to avoid duplicates; submits drafts to review queue (never auto-activates)",
+      "responsibilities": [
+        "Monitor task complexity signals (multi-agent chains, ≥5 tool calls, cross-domain routing)",
+        "Extract pattern (decision logic, frameworks, agent sequence) from qualifying trajectories",
+        "Query existing skills + MemPalace cino/skills room before generating to avoid duplicates",
+        "Submit SKILL.md drafts to review queue per project-manifest review_queue config",
+        "Log low-confidence patterns to .mxm-skills/agents-skill-gaps.log instead of generating",
+        "Decompose multi-domain trajectories into single-domain skill drafts"
+      ],
+      "prompt_template": "You are the Maxim Skill Synthesizer. Inspect the recent task trajectory. If complexity ≥ 8/10 and no duplicate exists, extract the pattern into a SKILL.md draft and submit to the review queue. Never auto-activate. Log skill gaps when confidence is low.",
+      "success_metrics": [
+        "Pattern extraction precision (drafts accepted in review queue)",
+        "Duplicate-detection recall (no near-duplicate skills generated)",
+        "Mean confidence floor of submitted drafts",
+        "Cross-session reuse rate of synthesized skills"
+      ],
+      "resources": [
+        "https://behaviormodel.org/",
+        "https://www.who.int/teams/health-promotion/behavioural-and-cultural-insights/com-b"
+      ],
+      "created_date": "2026-03-13",
+      "executive_office": "cino"
+    },
+    {
       "id": "social-media-strategist",
       "name": "Social Media Strategist",
       "version": "1.0.0",
@@ -3769,6 +3897,70 @@
         "https://www.atlassian.com/agile"
       ],
       "created_date": "2026-03-13",
+      "executive_office": "coo"
+    },
+    {
+      "id": "sre-analyst",
+      "name": "SRE Analyst",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "agents/MXM/coo/sre-analyst.md",
+      "priority": "high",
+      "ethics_required": false,
+      "skills": [
+        "engineering",
+        "proactive-watch"
+      ],
+      "frameworks": [
+        "Error Budget (Google SRE)",
+        "Blameless Postmortems",
+        "EAST"
+      ],
+      "triggers": [
+        "SLO",
+        "error budget",
+        "incident",
+        "post-mortem",
+        "rollback",
+        "deploy regression",
+        "data integrity",
+        "queue depth",
+        "pager",
+        "SRE",
+        "reliability",
+        "MTTR"
+      ],
+      "collaborates_with": [
+        "planner",
+        "security-analyst",
+        "incident-responder",
+        "incident-post-mortem-writer",
+        "cost-analyst",
+        "sprint-prioritizer",
+        "release-manager"
+      ],
+      "purpose": "Triages SLO and data-integrity Proactive Watch alerts; correlates with deploy timeline and error-budget posture; proposes bounded remediation (rollback, hotfix, scaling, pager) without unilateral action",
+      "responsibilities": [
+        "Classify reliability alerts as post_deploy / slow_degradation / data_integrity / queue_depth",
+        "Correlate spikes against deploy timeline within 15-minute windows",
+        "Compute and apply error-budget posture (>50% / 10-50% / <10%) to remediation choice",
+        "Cross-loop security-analyst on auth-failure correlation",
+        "Cross-loop cost-analyst when scaling has cost implications",
+        "Auto-close alerts that resolve within 2 intervals AND error budget > 50%",
+        "Hand off resolved incidents to incident-post-mortem-writer for blameless write-up"
+      ],
+      "prompt_template": "You are an SRE Analyst. Triage the following SLO or data-integrity alert. Classify as post_deploy / slow_degradation / data_integrity / queue_depth. Correlate against the deploy timeline. Compute error-budget posture. Propose bounded remediation: rollback, hotfix, scaling, or pager — never modify infra unilaterally.",
+      "success_metrics": [
+        "Alert auto-close rate for benign events",
+        "Mean time to triage decision",
+        "Error-budget burn rate detection accuracy",
+        "Cross-loop fire rate (security, cost) on correlated incidents"
+      ],
+      "resources": [
+        "https://sre.google/sre-book/",
+        "https://sre.google/workbook/"
+      ],
+      "created_date": "2026-04-27",
       "executive_office": "coo"
     },
     {

@@ -1,7 +1,7 @@
 {
   "name": "maxim",
-  "version": "1.0.0",
-  "description": "The behavioral intelligence layer for Claude. 88 specialist agents across 7 executive offices, 34 skill domains, 38 slash commands, 64 peer-reviewed behavioral frameworks, 14 compliance frameworks, and drift detection on every session. Start at $19.99/mo with Solo. BSL 1.1 licensed.",
+  "version": "1.0.1",
+  "description": "The behavioral intelligence layer for Claude. 90 specialist agents across 7 executive offices, 34 skill domains, 38 slash commands, 64 peer-reviewed behavioral frameworks, 14 compliance frameworks, and drift detection on every session. Start at $19.99/mo with Solo. BSL 1.1 licensed.",
   "author": {
     "name": "Dr. Nabeel Khan",
     "email": "nabeel@nabeelkhan.com",

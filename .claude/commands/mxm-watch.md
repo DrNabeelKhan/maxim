@@ -12,7 +12,7 @@ confidence_default: 🟢 HIGH
 # /mxm-watch
 
 > **Proactive Watch** — continuous enforcement of the Executable Contracts meta-principle.
-> Catches drift at every invocation across 10 drift classes. Reports with severity, triage routing, and evidence.
+> Catches drift at every invocation across 11 drift classes. Reports with severity, triage routing, and evidence.
 
 ---
 
@@ -39,7 +39,7 @@ Both would have been caught by `/mxm-watch` at session start. This command makes
 
 ---
 
-## What It Checks (10 drift classes)
+## What It Checks (11 drift classes)
 
 | # | Class | Triage | Catches |
 |---|---|---|---|
@@ -53,6 +53,7 @@ Both would have been caught by `/mxm-watch` at session start. This command makes
 | 8 | junction-drift | CTO | Broken symlinks / Windows junctions |
 | 9 | stale-handoff | COO | handoff.md > 7 days old |
 | 10 | compliance-drift | CSO 🔒 | Secret patterns, PII, license mismatch |
+| 11 | surface-claims-drift | COO | Marketing/docs/landing-page hard-codes a count that disagrees with INVENTORY |
 
 🔒 = locked triage (contract-drift always → CEO; compliance-drift always → CSO).
 

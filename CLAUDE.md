@@ -59,7 +59,7 @@ CLAUDE.md was split in v1.0.0 from ~900 lines into a slim main + modular referen
 | [`CLAUDE.d/session-memory.md`](CLAUDE.d/session-memory.md) | Storage map, project detection, junction auto-heal, full Session Start/End protocols, data flow, junction read-only enforcement, auto-inventory, staleness prevention, version sync, multi-project safety |
 | [`CLAUDE.d/protocols.md`](CLAUDE.d/protocols.md) | **Documents as Executable Contracts (v1.0.0+)**, Commit Protocol, New Skill Domain Checklist, Build Target Protocol, File Deduplication Policy, Project Scaffold Standard, ADR Lifecycle Protocol |
 | [`CLAUDE.d/dispatch.md`](CLAUDE.d/dispatch.md) | Domain Dispatch Table (24 domains incl. v1.0.0 wiki + voice), Conflict Resolution, Cross-Agent Collaboration, Confidence Tagging legend, Workflow Patterns |
-| [`CLAUDE.d/office-catalog.md`](CLAUDE.d/office-catalog.md) | Full agent roster across 7 offices + orchestrators (88 agents) |
+| [`CLAUDE.d/office-catalog.md`](CLAUDE.d/office-catalog.md) | Full agent roster across 7 offices + orchestrators (90 agents) |
 | [`documents/ADRs/`](documents/ADRs/) | **Architecture Decision Records (v1.0.0+)** — canonical ledger: INDEX.md, TEMPLATE.md, README.md, individual ADRs |
 | [`CLAUDE.d/repo-map.md`](CLAUDE.d/repo-map.md) | Authoritative repo structure map + per-project structure |
 
@@ -233,7 +233,7 @@ All tasks route through the executive-router unless an explicit office is named.
 | `/mxm-route` | Executive Router | `executive-router` | Unknown intent — classify and route automatically |
 | `/mxm-wiki` | Wiki skills (v1.0.0+) | `wiki-ingest`/`query`/`lint`/`explore` | Knowledge ingestion + cross-project query on MemPalace |
 | `/mxm-voice` | Voice skill (v1.0.0+) | `mxm-voice` MCP | Voice-driven office routing (requires mbailey/voicemode) |
-| `/mxm-watch` | Proactive Watch (v1.0.0+) | `proactive-watch` skill | Drift detection across 10 classes; runs auto in SessionStart |
+| `/mxm-watch` | Proactive Watch (v1.0.0+) | `proactive-watch` skill | Drift detection across 11 classes; runs auto in SessionStart |
 | `/mxm-session-end` | Session closure bundle (v1.0.0+) | `planner` (COO) | Mandatory 9-document ritual at end of any non-trivial session |
 
 ### Auto-Escalation Rules
@@ -245,7 +245,7 @@ These rules apply regardless of which office is active:
 3. **CSO arbitration** — compliance conflicts → security-analyst resolves
 4. **Unroutable tasks** → executive-router logs to `.mxm-skills/agents-skill-gaps.log` and requests clarification
 
-**Full agent roster (87 agents across 7 offices + orchestrators):** [`CLAUDE.d/office-catalog.md`](CLAUDE.d/office-catalog.md).
+**Full agent roster (90 agents across 7 offices + orchestrators):** [`CLAUDE.d/office-catalog.md`](CLAUDE.d/office-catalog.md).
 
 ---
 
@@ -276,6 +276,8 @@ Before every commit, check if it touches:
 - `.brand-foundation/` → **`documents/ledgers/AGENT_SKILL_INVENTORY.md`** (Section 8)
 
 **`documents/ledgers/AGENT_SKILL_INVENTORY.md` is the single source of truth for capability counts.** It must match reality on every commit.
+
+**Capability-count propagation (v1.0.1+):** Whenever a commit touches any of `agents/MXM/**`, `.claude/skills/**`, `.claude/commands/**`, `mcp/**`, `composable-skills/frameworks/**`, or `.claude/hooks/**`, the capability count may have changed. Before commit, run `bootstrap/sync-counts.{sh,ps1}` from repo root — the tool reads `documents/ledgers/AGENT_SKILL_INVENTORY.md` and propagates counts to all declared surfaces (markdown docs + landing-page TSX + JSON breakdown comments) per `config/watch-profile.yml` § `surface-claims-drift`. Idempotent on a clean tree (running twice is a no-op). Drift the tool can't auto-resolve gets flagged in `.mxm-skills/watch-report.jsonl` for manual review. See [Proactive Watch Class 11](composable-skills/frameworks/proactive-watch.md) for the underlying detection model.
 
 Deterministic secret/PII scanning runs as `.claude/hooks/pre-commit.{sh,ps1}` (executable hook). **Full Commit Protocol + Build Target + File Dedup:** [`CLAUDE.d/protocols.md`](CLAUDE.d/protocols.md).
 
@@ -401,7 +403,7 @@ When any threshold is exceeded, scheduled tasks sleep until `resets_at`. Usage i
 | `CLAUDE.d/session-memory.md` | Full session/memory protocols (split from CLAUDE.md in v1.0.0) |
 | `CLAUDE.d/protocols.md` | Executable Contracts + Commit/Build/Dedup/Skill Domain protocols + ADR Lifecycle + Session-End Bundle + CHANGELOG Discipline |
 | `CLAUDE.d/dispatch.md` | Domain Dispatch Table + Conflict Resolution + Workflows |
-| `CLAUDE.d/office-catalog.md` | 88 agents across 7 offices |
+| `CLAUDE.d/office-catalog.md` | 90 agents across 7 offices |
 | `CLAUDE.d/repo-map.md` | Authoritative repo structure |
 | `documents/ADRs/` | Architecture Decision Records — canonical ledger (v1.0.0+) |
 | `documents/ADRs/README.md` | ADR rules: numbering, lifecycle, when to write |

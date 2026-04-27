@@ -82,7 +82,7 @@ Plugin submitter should check https://docs.claude.com/claude-code/plugins/market
 | Plugin name | `maxim` |
 | Display name | Maxim |
 | Version | 6.4.4 |
-| Description | 88+ behavioral-science-driven agents across 7 executive offices. Peer-reviewed frameworks enforced on every output. |
+| Description | 90+ behavioral-science-driven agents across 7 executive offices. Peer-reviewed frameworks enforced on every output. |
 | Author | Dr. Nabeel Khan / iSystematic |
 | License | BSL 1.1 |
 | Homepage | https://maxim.isystematic.com |

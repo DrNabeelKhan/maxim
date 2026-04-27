@@ -2,26 +2,27 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.0.0 · **Last verified:** 2026-04-21
+**Version:** v1.0.1 · **Last verified:** 2026-04-27
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
 ---
 
-## Section 1 — Specialist Agents (88)
+## Section 1 — Specialist Agents (90)
 
 | Office | Lead | Count | Path |
 |---|---|---:|---|
-| CEO — strategy, finance, partnerships | `enterprise-architect` | 14 | `agents/MXM/ceo/` |
-| CTO — engineering, infrastructure, AI | `implementer` | 17 | `agents/MXM/cto/` |
-| CMO — marketing, brand, SEO, content | `content-strategist` | 11 | `agents/MXM/cmo/` |
+| CEO — strategy, finance, partnerships | `enterprise-architect` | 9 | `agents/MXM/ceo/` |
+| CTO — engineering, infrastructure, AI | `implementer` | 25 | `agents/MXM/cto/` |
+| CMO — marketing, brand, SEO, content | `content-strategist` | 15 | `agents/MXM/cmo/` |
 | CSO — security, compliance, ethics | `security-analyst` | 9 | `agents/MXM/cso/` |
 | CPO — product, UX, research | `product-strategist` | 12 | `agents/MXM/cpo/` |
 | COO — delivery, sprints, operations | `planner` | 10 | `agents/MXM/coo/` |
-| CINO — R&D, horizon scanning | `innovation-researcher` | 6 | `agents/MXM/cino/` |
-| Orchestrators (executive-router, wiki, watch, voice) | `executive-router` | 9 | `agents/MXM/` |
+| CINO — R&D, horizon scanning | `innovation-researcher` | 4 | `agents/MXM/cino/` |
+| Orchestrators (planner, implementer, reviewer, tester, release-manager) | `executive-router` | 5 | `agents/MXM/orchestrators/` |
+| Executive Router | `executive-router` | 1 | `agents/MXM/executive-router.md` |
 
-**Total agents: 88.** Registry: `config/agent-registry.json`.
+**Total agents: 90.** Registry: `config/agent-registry.json`. Net delta from v1.0.0 (88 → 90): cost-analyst (CINO) + sre-analyst (COO) added 2026-04-27 from aria-simplification migration; skill-synthesizer (CINO) registry drift fix.
 
 ---
 

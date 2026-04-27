@@ -14,7 +14,7 @@
 | Tool | Purpose |
 |---|---|
 | `route_task` | Route a task to the correct office + lead agent + skills, with confidence score |
-| `list_agents` | List all 88 Maxim agents, optionally filtered by office |
+| `list_agents` | List all 90 Maxim agents, optionally filtered by office |
 | `get_agent_dna` | Get the full markdown (DNA) of a specific agent |
 | `list_offices` | List all 7 executive offices with leads + agent counts |
 | `get_handoff_chain` | Get the planner → implementer → reviewer → tester → release-manager chain for a task |

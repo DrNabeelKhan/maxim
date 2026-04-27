@@ -19,7 +19,7 @@ A free tier is not a marketing promise; it is an API contract. Users who install
 
 The Starter free tier is defined as an Executable Contract in `documents/guides/PACKS.md` § Starter. The contract names:
 
-- The 88 agents, 34 domains, 37 commands, 4 Proactive Watch classes, CEO Automation, 10 framework stubs, MemPalace local file mode, and basic compliance advisory as in-scope and permanent.
+- The 90 agents, 34 domains, 37 commands, 4 Proactive Watch classes, CEO Automation, 10 framework stubs, MemPalace local file mode, and basic compliance advisory as in-scope and permanent.
 - Everything else (full watch classes, behavioral_audit beyond first 50/mo, MemPalace semantic, multi-framework compliance, brand overlays, unlimited voice) as out-of-scope and requiring a paid tier.
 
 The pack-engine tier resolver (`pack-engine tier`) returns `"starter"` when no valid license is present; no code path may promote a Starter user to a paid feature without a valid JWT or active trial.

@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Status:** 5 entries logged + RESOLVED — the v1.0.0 launch install bug-bash (2026-04-21..2026-04-27). All five surfaced only on a real macOS install; structural Windows tests passed throughout. See DEBUGGING_PLAYBOOK.md §1 for the meta-pattern.
+**Status:** 6 entries logged + RESOLVED — v1.0.0 launch install bug-bash (BUG-001..005, 2026-04-21..2026-04-27) + Session 15 plugin MCP path fix (BUG-006, 2026-04-27). All previous P0/P1 bugs were structural assumptions; BUG-006 was a path-resolution oversight that surfaced when verifying MCP connectivity. See DEBUGGING_PLAYBOOK.md §1 for the cross-platform-assumptions meta-pattern.
 
 ---
 
@@ -97,6 +97,17 @@ _(None.)_
 | **Root cause** | `git-subdir` source type with `path: "."` triggers Claude Code's plugin loader to apply a sparse-checkout filter of `/*` + `!/*/` — i.e. "include all top-level files, exclude all top-level directories." For a plugin at the repo root this means ONLY the 8 root-level files (CHANGELOG, CLAUDE.md, README, LICENSE, .env.example, .gitignore, .mcp.json, CONTRIBUTING) check out. The other 909 files (every command, agent, hook, skill, MCP server, bootstrap script, plugin.json itself) are excluded. Install reports success because the manifest validates from cache, but the runtime is broken because nothing is on disk to load. |
 | **Fix** | `cee9aa6` — switched maxim's `source` from `git-subdir` to `url`: `{ source: "url", url: "https://github.com/DrNabeelKhan/maxim.git" }`. The `url` source type does a full clone (no sparse-checkout filter). Verified end-to-end on the Mac: install dir went from 8 entries to 23, all 38 commands present, all 7 MCP servers present, all hooks present, `claude plugin validate` ✔. |
 | **Regression guard** | PATTERN-01 macOS-install CI would catch this; structural Windows tests cannot. Also add a post-install assertion: count of files in `~/.claude/plugins/cache/<marketplace>/<plugin>/<version>/` must be ≥ 80% of `git ls-files | wc -l` from the source repo. |
+
+### BUG-006 · All 7 plugin:maxim:mxm-* MCP servers fail to connect
+
+| Field | Value |
+|---|---|
+| **Reported** | 2026-04-27 (Session 14 close — `claude mcp list` showed all 7 with `✗ Failed to connect`) |
+| **Severity** | P0 — total MCP feature unreachable from any project that wasn't `E:/Projects/Maxim/plugin-repo/` itself |
+| **Status** | RESOLVED 2026-04-27 (Session 15) |
+| **Root cause** | `.mcp.json` declared each of the 7 servers with relative `args: ["./mcp/<name>/server.js"]` paths. Claude Code spawns the MCP child with the user's project cwd, not the plugin install dir; Node then can't find `./mcp/<name>/server.js` because that path doesn't exist in the user's project. The path-resolution assumption was inherited from local-development semantics where cwd happens to be the plugin repo. |
+| **Fix** | Replaced `./mcp/<name>/server.js` with `${CLAUDE_PLUGIN_ROOT}/mcp/<name>/server.js` in all 7 server entries of `.mcp.json` (single-file edit, 7 lines). `${CLAUDE_PLUGIN_ROOT}` is Claude Code's documented placeholder that expands to the plugin install dir at spawn time. Pattern is used by other working plugins (claude-mem, vercel). Verified: `claude mcp list` from non-plugin-repo cwd now shows all 7 as `✓ Connected` with paths expanded to `C:/Users/SDO/.claude/plugins/cache/maxim-packs/maxim/1.0.0/mcp/<name>/server.js`. |
+| **Regression guard** | `.mcp.json` schema test should reject any entry with `args[0]` starting with `./` or `../`; CI can lint via `jq -e '.mcpServers | to_entries | map(select(.value.args[0] | test("^\\.\\.?/"))) | length == 0'`. v1.1 hardening item: add a `claude mcp list` parse to the macOS-install CI to assert all 7 connect from a fresh-cloned location. |
 
 ---
 

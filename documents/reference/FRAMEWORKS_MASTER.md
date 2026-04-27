@@ -9,7 +9,7 @@
 | Frameworks shipping v1.0.0  | **64**                 |
 | Frameworks total documented | 78 (64 shipped + 14 roadmap — 4 duplicated across roadmap tracks) |
 | Categories                  | 9                      |
-| Agents Using Frameworks     | 88 (all)               |
+| Agents Using Frameworks     | 90 (all)               |
 | New in v1.0.0               | 🆕 2 (CCPA §16, FedRAMP §23) + Proactive Watch |
 | Deferred to v1.1 / v1.2     | 18 — see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md) |
 | Last Updated                | 2026-04-21             |

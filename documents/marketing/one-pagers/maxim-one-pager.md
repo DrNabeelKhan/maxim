@@ -22,7 +22,7 @@ A **governed multi-agent operating system** running across every Claude surface 
 
 **Documents as Executable Contracts.** Five canonical ledgers (inventory, changelog, moat, bug, debugging) and an ADR ledger are treated as contracts — drift between declared and actual reality blocks commits.
 
-**100% Grade A agent DNA.** All 88 agents declare bilateral Collaboration Matrix. Executive-router resolves any task deterministically. No hallucinated routing.
+**100% Grade A agent DNA.** All 90 agents declare bilateral Collaboration Matrix. Executive-router resolves any task deterministically. No hallucinated routing.
 
 **CSO auto-loop.** Security-analyst agent reviews every task touching regulated data. Non-bypassable. BLOCK / COMPLIANT / REMEDIATE verdicts across 14 compliance frameworks.
 
@@ -36,7 +36,7 @@ A **governed multi-agent operating system** running across every Claude surface 
 
 |  |  |
 |---|---|
-| **88** | Specialist agents across 7 executive offices (100% Grade A DNA) |
+| **90** | Specialist agents across 7 executive offices (100% Grade A DNA) |
 | **34** | Skill domains with dispatcher + behavioral wrapper + sub-skills |
 | **37** | Slash commands, all `/mxm-*` prefixed |
 | **7** | MCP servers (47 tools) · behavioral, compliance, memory, portfolio, voice, context, catalog |
@@ -73,7 +73,7 @@ A **governed multi-agent operating system** running across every Claude surface 
 
 **Without Maxim:** every Claude session starts cold. Compliance is manual. No behavioral science. Every project independent. Generic agents. Version drift.
 
-**With Maxim:** sessions resume full context. Compliance automatic. 64 behavioral frameworks applied structurally. Portfolio-wide awareness. 88 governed specialists. Zero drift via `git pull` + Proactive Watch.
+**With Maxim:** sessions resume full context. Compliance automatic. 64 behavioral frameworks applied structurally. Portfolio-wide awareness. 90 governed specialists. Zero drift via `git pull` + Proactive Watch.
 
 **The math:** a human chief of staff costs $200K. A compliance officer costs $150K. A behavioral scientist costs $160K. A 15-person marketing team costs $1.5M+. Maxim replaces all of them — governed, tireless, deepening with every session — for the cost of a Claude subscription + pack licenses.
 

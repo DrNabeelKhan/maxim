@@ -195,7 +195,7 @@ This manual step will be automated in v1.0.0.
 | `mcp/` servers (7 post-consolidation) | ✅ | As connector configs |
 | `.claude/hooks/` | ❌ | No hook runtime in Cowork |
 | `config/project-manifest.json` | ❌ | Per-project file, not plugin |
-| `agents/MXM/` (88 agent MDs) | ❌ | Agents are skill-internal references |
+| `agents/MXM/` (90 agent MDs) | ❌ | Agents are skill-internal references |
 | `community-packs/` (claude-skills, UI library) | ❌ | Optional; bloats plugin size |
 | `.brand-foundation/personal/` | ❌ | User-specific; must upload |
 | `documents/ADRs/` | ❌ | Project governance; user uploads if needed |

@@ -10,7 +10,7 @@
 
 ## 0. TL;DR — The 30-Second Pitch
 
-Maxim is a **behavioral intelligence layer** for AI agents. Instead of generic prompts, every output is driven by peer-reviewed behavioral science (64 frameworks) and routed through 88 specialist agents across 7 executive offices (CEO/CTO/CMO/CSO/CPO/COO/CINO).
+Maxim is a **behavioral intelligence layer** for AI agents. Instead of generic prompts, every output is driven by peer-reviewed behavioral science (64 frameworks) and routed through 90 specialist agents across 7 executive offices (CEO/CTO/CMO/CSO/CPO/COO/CINO).
 
 **Free core** = open-source (BSL 1.1) — use it forever, fork it, audit it.
 **Premium packs** = the moat — 14 products across 3 layers:
@@ -28,7 +28,7 @@ Everything composable. Nothing locked behind enterprise sales calls.
 ```
                          ┌─────────────────────────┐
                          │     FREE CORE (BSL 1.1) │
-                         │  88 agents · 4 watch    │
+                         │  90 agents · 4 watch    │
                          │  classes · 10 framework │
                          │  stubs · 59 brand tmpl  │
                          │  CEO automation · voice │
@@ -581,7 +581,7 @@ One-time $199.99 each. Stack on top of any L1 or L2 subscription (requires minim
 | Feature | Free | L1.1 AI Gov | L1.6 Beh Intel | Founder OS | Growth Stack | Pro OS | Agency All-In |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | Price | $0 | $19.99 | $79.99 | $99.99 | $99.99 | $159.99 | $599.99 |
-| 88 Maxim agents | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 90 Maxim agents | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | CEO automation | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Executive routing | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 10 framework stubs | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -648,7 +648,7 @@ Per [ADR-004](../../../adr/ADR-004-free-tier-spec-executable-contract.md), these
 - 10 framework stubs (names + descriptions; full frameworks gated to L1.6)
 - CEO Automation skill (full)
 - Executive office routing (all 7 offices)
-- 88 Maxim agents
+- 90 Maxim agents
 - 59 brand templates (MIT-locked — cannot be revoked)
 - 4 Proactive Watch checker classes (inventory/session/version/changelog)
 - Confidence tagging 🟢🟡🔴
@@ -658,7 +658,7 @@ Per [ADR-004](../../../adr/ADR-004-free-tier-spec-executable-contract.md), these
 - MemPalace (local only, without KG — 4 MCP tools of 19)
 
 **Never going behind a paywall:**
-- The 88 Maxim agents
+- The 90 Maxim agents
 - CEO Automation
 - 59 MIT templates
 - 4 free Proactive Watch classes
@@ -684,7 +684,7 @@ A: Subscriptions stop billing at cancellation. Verticals (one-time) remain with 
 A: Yes. Prorated via LemonSqueezy. Contact support for enterprise-scale migrations.
 
 **Q: Is there a free trial?**
-A: Maxim's free core IS the trial — it's permanently free, not time-limited. You experience the 88 agents, CEO automation, confidence tagging, and 4 Proactive Watch classes before paying a cent.
+A: Maxim's free core IS the trial — it's permanently free, not time-limited. You experience the 90 agents, CEO automation, confidence tagging, and 4 Proactive Watch classes before paying a cent.
 
 **Q: Do you have enterprise / team pricing?**
 A: v1.0.0 ships with Agency All-In at $599.99/mo. Enterprise-specific features (SAML/SSO, dedicated support, SOC2-audited infra) arrive with Pack 6 in v7.5+. For custom enterprise needs before v7.5, contact `https://maxim.isystematic.com/contact`.
@@ -700,7 +700,7 @@ A: Yes — see the early adopter promo (300 licenses, 12-month free) for the pre
 ## 8. Positioning Snapshot (for website hero copy)
 
 ### Headline options
-- *"The behavioral intelligence layer for AI agents. 64 frameworks. 88 specialists. One moat."*
+- *"The behavioral intelligence layer for AI agents. 64 frameworks. 90 specialists. One moat."*
 - *"Your AI agents should act like professionals. Maxim makes them."*
 - *"Free core. Premium moat. Transparent pricing. Every pack starts at $19.99."*
 
@@ -713,7 +713,7 @@ A: Yes — see the early adopter promo (300 licenses, 12-month free) for the pre
          └──────────┬───────────┘
                     │
          ┌──────────┴───────────┐
-         │   THE INFRASTRUCTURE │  88 agents, 22 MCP tools,
+         │   THE INFRASTRUCTURE │  90 agents, 22 MCP tools,
          │   (free core)        │  7 executive offices
          └──────────┬───────────┘
                     │

@@ -29,7 +29,7 @@ Every public ADR declares a commitment Maxim makes to its users — a contract t
 
 Four ADRs describe Maxim's internal architecture and are not published. They cover:
 
-- **ADR-001** — agent dispatch baseline + the 7-office / 88-agent topology
+- **ADR-001** — agent dispatch baseline + the 7-office / 90-agent topology
 - **ADR-003** — license-issuance infrastructure (Cloudflare Worker + KV schema)
 - **ADR-005** — the five-layer IP protection architecture (encryption, JWT binding, machine fingerprinting, obfuscation stack)
 - **ADR-006** — external-content boundary rule (how Maxim composes with community packs without leaking them into Maxim-authored output)

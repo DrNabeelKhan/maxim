@@ -86,7 +86,7 @@ Apply Fogg + COM-B + Present-Bias principles when surfacing drift:
 
 Output language:
 - ✗ Bad: "Drift detected"
-- ✓ Good: "Declared 88 agents, filesystem has 89 — add to documents/ledgers/AGENT_SKILL_INVENTORY.md §1 (60s fix)"
+- ✓ Good: "Declared 90 agents, filesystem has 91 — add to documents/ledgers/AGENT_SKILL_INVENTORY.md §1 (60s fix)"
 
 ---
 
@@ -120,7 +120,7 @@ The skill is itself a proactive loop. Additionally:
 ```
 Maxim WATCH (light)
   Drift detected : 3
-  ⚠ inventory-drift: declared 88 agents, filesystem has 89 (severity 3)
+  ⚠ inventory-drift: declared 90 agents, filesystem has 91 (severity 3)
   ⚠ version-drift: README badge v1.0.0, registry v1.0.0 (severity 3)
   ⚠ stale-handoff: handoff.md 9 days old (severity 2)
   Checker errors : 0
@@ -130,14 +130,14 @@ Maxim WATCH (light)
 ### JSONL report (machine-readable)
 
 ```jsonl
-{"ts":"2026-04-18T12:00Z","phase":"light","project":"maxim","drift_class":"inventory-drift","severity":3,"declared":88,"actual":89,"evidence":"agents/MXM/ceo/new-agent.md","triage":"coo","action":"review-queue"}
+{"ts":"2026-04-18T12:00Z","phase":"light","project":"maxim","drift_class":"inventory-drift","severity":3,"declared":90,"actual":91,"evidence":"agents/MXM/ceo/new-agent.md","triage":"coo","action":"review-queue"}
 ```
 
 ---
 
 ## Checker Execution Model
 
-The skill ships two unified drivers that implement all 10 checkers:
+The skill ships two unified drivers that implement all 11 checkers (Classes 1–10 from v1.0.0; Class 11 surface-claims-drift added v1.0.1 with companion tool `bootstrap/sync-counts.{sh,ps1}` for mechanical propagation):
 - `watch.sh` — bash (Linux/macOS/Git-Bash)
 - `watch.ps1` — PowerShell 7+ (Windows primary, cross-platform)
 
@@ -158,8 +158,8 @@ Each driver accepts one argument: the checker name. Running `watch.sh all` runs 
 | File | Purpose |
 |---|---|
 | `SKILL.md` | this file — skill contract |
-| `watch.sh` | unified bash driver implementing all 10 checkers |
-| `watch.ps1` | unified PowerShell driver implementing all 10 checkers |
+| `watch.sh` | unified bash driver implementing all 11 checkers |
+| `watch.ps1` | unified PowerShell driver implementing all 11 checkers |
 | `schemas/watch-profile.schema.json` | validates per-project `config/watch-profile.yml` |
 | `schemas/watch-report.schema.json` | validates JSONL output lines |
 

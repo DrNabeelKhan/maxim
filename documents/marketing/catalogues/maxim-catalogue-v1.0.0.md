@@ -22,7 +22,7 @@ Core framework is free (BSL 1.1, converts to Apache 2.0 in 4 years). Six premium
 
 | Capability | Free | Compliance Shield | Behavioral Intelligence | MemPalace Pro | Vertical OS | Brand & Design Pro | Agency Command |
 |---|---|---|---|---|---|---|---|
-| **Agent catalog — 88 agents** | ✅ Full | ✅ + 6 enforcement overlays (CSO) | ✅ + 6 pro overlays (behavioral CMO) | ✅ | ✅ + vertical cluster | ✅ + enforcer agent | ✅ + white-label per client |
+| **Agent catalog — 90 agents** | ✅ Full | ✅ + 6 enforcement overlays (CSO) | ✅ + 6 pro overlays (behavioral CMO) | ✅ | ✅ + vertical cluster | ✅ + enforcer agent | ✅ + white-label per client |
 | **Grade A agent DNA (Triggers + Collab Matrix)** | ✅ 100% | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **34 skill domains** | ✅ Full | ✅ | ✅ | ✅ | ✅ + vertical skills | ✅ | ✅ |
 | **37 slash commands** | ✅ Full | ✅ + `/mxm-compliance-audit`, `/mxm-ropa` | ✅ + `/mxm-behavior-audit`, `/mxm-ab-brief` | ✅ + advanced `/mxm-recall` filters | ✅ + vertical commands | ✅ + `/mxm-brand-audit` | ✅ + `/mxm-client-*` |
@@ -71,7 +71,7 @@ Core framework is free (BSL 1.1, converts to Apache 2.0 in 4 years). Six premium
 
 | Surface | Fidelity | What works | What's limited |
 |---|---|---|---|
-| Claude Code / Cursor / Windsurf / Continue | 100% | All 37 commands, all 88 agents, all 7 MCP servers, all 10 hooks, bootstrap scripts | Nothing limited |
+| Claude Code / Cursor / Windsurf / Continue | 100% | All 37 commands, all 90 agents, all 7 MCP servers, all 10 hooks, bootstrap scripts | Nothing limited |
 | Cowork plugin (`packaging/cowork/`) | 85% | Commands + agents + most MCP tools | Some local hooks fall back to passive mode |
 | Claude Desktop / claude.ai Projects (`documents/cross-surface/maxim-project-instructions.md`) | 60% | Agent catalog + skill routing + behavioral wrappers | Hooks unavailable; MCP servers need Desktop connector; pack-gated content unavailable without local engine |
 

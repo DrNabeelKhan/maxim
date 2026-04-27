@@ -67,12 +67,15 @@ Before creating any git commit, Claude MUST check and update these files if the 
 | Any **sprint start / close** | `documents/ledgers/SPRINT_CLI_INSTRUCTIONS.md` CLI block + `.claude-sessions-memory/sprints/SPRINT-NNN-{plan,report}.md` |
 | Any **customer-facing copy** (launch, catalogue, deck, one-pager, case study, partner program) | Place under `documents/business/sales-marketing/{subfolder}/` — never at repo root |
 | Any **2+ bugs sharing root cause** | Add `PATTERN-NN` entry to `BUG_TRACKER.md` Recurring-Pattern Registry + lint/hook rule to prevent recurrence |
+| **Any commit that may have changed a tracked capability count** (touches `agents/MXM/**`, `.claude/skills/**`, `.claude/commands/**`, `mcp/**`, `composable-skills/frameworks/**`, `.claude/hooks/**`) | Run `bootstrap/sync-counts.{sh,ps1}` from repo root. Tool reads `documents/ledgers/AGENT_SKILL_INVENTORY.md` and propagates counts to all declared surfaces (markdown + landing-page TSX + JSON breakdowns) per `config/watch-profile.yml` § `surface-claims-drift`. Idempotent on a clean tree. Surfaces the tool can't auto-resolve are written to `.mxm-skills/watch-report.jsonl` for manual review. |
 
 This is NOT optional. Every commit message should reflect what ancillary files were updated.
 
 The deterministic version of secret/PII scanning AND contract-drift checks run as `.claude/hooks/pre-commit.{sh,ps1}` (executable hook).
 
 **Critical-contract block:** If `documents/ledgers/AGENT_SKILL_INVENTORY.md` or an ACCEPTED ADR is out of sync with the commit, the hook rejects the commit unless `[contract-drift-ack: <reason>]` is present in the commit message.
+
+**Capability-count drift block (v1.0.1+):** If the pre-commit hook detects surface-claims-drift (Class 11) — e.g., README claims 88 agents but `AGENT_SKILL_INVENTORY.md` says 90 — the commit is rejected unless `bootstrap/sync-counts.{sh,ps1}` was run successfully OR `[surface-claims-drift-ack: <reason>]` is present in the commit message. Acknowledgment is intended for cases where divergence is intentional (e.g., describing an upcoming v1.2 target distinct from current state).
 
 ---
 

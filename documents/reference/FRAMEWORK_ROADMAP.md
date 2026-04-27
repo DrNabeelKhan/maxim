@@ -124,9 +124,50 @@ Four interception points implemented via Claude Code's existing hook API. No coo
 
 ---
 
-## 🧠 v1.2 — Behavioral Science Expansion (target: Q4 2026)
+## 🧠 v1.2 — Behavioral Expansion + UX Accessibility Overhaul (target: Q4 2026)
 
-**Theme:** Double the behavioral-science surface. Strengthens the core moat claim ("behavioral intelligence") with 10 additional dispatchable frameworks spanning motivation, decision-making, social psychology, and emotional design.
+**Theme:** Double the behavioral-science surface AND fix the moat-accessibility gap. v1.0's office-prefixed commands and generic agent names bury the moat behind internal abstractions. v1.2 ships the behavioral expansion (10 frameworks) PLUS the three coordinated UX changes that make Maxim's value visible to non-power-users.
+
+**Locked design (Session 14, 2026-04-27):** Full proposal in [`AGENT_ROSTER_v1.2_PROPOSAL.md`](./AGENT_ROSTER_v1.2_PROPOSAL.md).
+
+**Bundling decision:** v1.1.5 (originally proposed as standalone TIER 1 verb-first surface) is DISSOLVED into v1.2. No public-stability concern — only 2 testing users; both will update plugin before next session. Coherent narrative: v1.1 = enterprise-readiness; v1.2 = adoption story.
+
+### v1.2.A — TIER 1 verb-first command surface (NEW)
+
+7 hero commands routing invisibly through executive-router:
+- `/mxm-build <X>`, `/mxm-fix <X>`, `/mxm-ship <X>`, `/mxm-plan <X>`, `/mxm-review <X>`, `/mxm-explain <X>`, `/mxm-help`
+
+Effort: ~5–8 dev-days.
+
+### v1.2.B — TIER 3 persona commands (NEW — 5 personas)
+
+| Persona | Sub-commands | Moat unlocked |
+|---|---|---|
+| `/mxm-legal` | jurisdictional-map, privacy-impact, contract-review, vendor-dpa, regulatory-map | 14 compliance frameworks with jurisdictional logic |
+| `/mxm-arch` | capability-map, wardley-map, tech-radar, c4-diagram, adr, vendor-eval | Wardley + TOGAF + C4 native (rare in AI tools) |
+| `/mxm-secure` | threat-model, owasp, sbom, incident, compliance-posture, ai-risk | Triple OWASP + AIBOM + NIST AI RMF + MITRE ATLAS |
+| `/mxm-founder` | pitch-deck, gtm-plan, runway-model, pricing, business-model-canvas, competitive-moat | Strategyzer + behavioral pricing + MOAT_TRACKER surfaced |
+| `/mxm-pm` | prd, user-story, okr, prioritize, jtbd | INVEST + OKR + RICE + Jobs Atlas |
+
+~28 sub-commands total. Effort: ~8–10 dev-days.
+
+**Deferred to v1.2.x patches** (full sketches preserved in proposal): `/mxm-research`, `/mxm-devops`, `/mxm-data`, `/mxm-designer`.
+
+### v1.2.C — Agent roster expansion (NEW)
+
+Improve 7 current office leads (deeper DNA, better triggers, smarter routing) + ADD ~25 named specialists per moat. Office leads become routers; specialists deliver depth. Two-tier dispatch within each office.
+
+Per-office target counts: CEO 9 / CTO 18 / CMO 10 / CSO 19 / CPO 8 / COO 8 / CINO 8 + ~10 orchestrators = ~90 total. Current count is 90 (cost-analyst + sre-analyst aria-simplification merge landed 2026-04-27); net delta from here to v1.2 target is 0 by count, all delta is renames + DNA improvements rather than net-new files.
+
+Effort: ~5–8 dev-days (mostly content authoring).
+
+### v1.2.D — Comprehensive `/mxm-help` system (NEW)
+
+9 modes: no-arg (auto-detect persona) / `<persona>` quick-start / commands / agents / frameworks / compliance / moat / getting-started / `frameworks <id>` deep-dive. Auto-detect from `project-manifest.json`; persona cache at `.mxm-skills/operator-persona.txt`. Effort: ~2–3 days.
+
+### v1.2.E — 10 Behavioral Science frameworks (originally scheduled)
+
+Doubles the behavioral-science surface. Strengthens the core moat claim ("behavioral intelligence") with 10 additional dispatchable frameworks spanning motivation, decision-making, social psychology, and emotional design.
 
 | § in MASTER | Framework | Category | Reference | Priority |
 |---|---|---|---|---|
@@ -141,7 +182,23 @@ Four interception points implemented via Claude Code's existing hook API. No coo
 | §67 | Diffusion of Innovations | Behavior Science — Adoption curves | [diffusionofinnovations.com](https://www.diffusionofinnovations.com/) | 🟠 MED |
 | §68 | Emotional Design Model | UX / Behavior Science — Don Norman | [nngroup.com/books/emotional-design](https://www.nngroup.com/books/emotional-design/) | 🟠 MED |
 
-**10 behavioral frameworks.** Expected effort: 3–4 days per framework (template, trigger phrases, collaboration matrix, `behavioral_audit` integration, `apply_framework` MCP wiring, test cases).
+**10 behavioral frameworks.** Expected effort: 3–4 days per framework × 10 = ~30–40 dev-days.
+
+### v1.2.F — Proactive Watch class 13 drift (originally scheduled)
+
+Detects framework non-adherence, tone drift, compliance-boundary violations in third-party plugin outputs. Extends MOE PostToolUse audit. Effort: ~3–5 days.
+
+### v1.2 total effort
+
+| Workstream | Effort |
+|---|---|
+| 1.2.A — TIER 1 verb-first | ~5–8 days |
+| 1.2.B — TIER 3 personas (5) | ~8–10 days |
+| 1.2.C — Agent roster expansion | ~5–8 days |
+| 1.2.D — `/mxm-help` system | ~2–3 days |
+| 1.2.E — 10 behavioral frameworks | ~30–40 days |
+| 1.2.F — Class 13 drift | ~3–5 days |
+| **Total** | **~52–75 dev-days** |
 
 ---
 

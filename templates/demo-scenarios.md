@@ -25,9 +25,9 @@ Ten scenarios that show a representative slice of Maxim's capability surface in 
 /plugin install maxim@maxim-packs
 ```
 
-**Expected visible output:** marketplace added, plugin cached, 88 agents + 34 skills + 38 commands + 7 MCP servers registered. Then type `/` and let Claude Code show the slash-command autocomplete — the screen fills with `/mxm-*` commands.
+**Expected visible output:** marketplace added, plugin cached, 90 agents + 34 skills + 38 commands + 7 MCP servers registered. Then type `/` and let Claude Code show the slash-command autocomplete — the screen fills with `/mxm-*` commands.
 
-**Narration cue:** "One command. Eighty-eight specialists, thirty-four skills, seven MCP servers. Installed."
+**Narration cue:** "One command. Ninety specialists, thirty-four skills, seven MCP servers. Installed."
 
 ---
 
@@ -105,13 +105,13 @@ Maxim SESSION START
 
 **Why:** shows the governance layer working without being asked.
 
-First, create drift manually: edit `documents/ledgers/AGENT_SKILL_INVENTORY.md` to claim "95 agents" (wrong — should be 88). Save.
+First, create drift manually: edit `documents/ledgers/AGENT_SKILL_INVENTORY.md` to claim "95 agents" (wrong — should be 90). Save.
 
 Close Claude Code. Restart: `claude`.
 
 **Expected:** SessionStart banner shows `Drift: 1 class flagged`. Running `/mxm-watch` reports:
 ```
-inventory-drift: AGENT_SKILL_INVENTORY.md:agents — declared 95, actual 88
+inventory-drift: AGENT_SKILL_INVENTORY.md:agents — declared 95, actual 90
 ```
 
 **Narration cue:** "I lied in a ledger. Maxim caught it before anyone else read the file."
@@ -186,7 +186,7 @@ Then:
 
 - **Total raw footage:** aim for 10–12 minutes across 10 scenarios. Final cut probably 4–6 minutes.
 - **Cut order for hype reel:** 1 → 2 → 3 → 4 → 7 → 6 → 5 → 9 (install → routing → mechanism → rubric → compliance gate → drift → session → close). Skip 8 and 10 for the short cut; keep them for the long cut.
-- **Intro card (5s):** logo + "Maxim for Claude Code — 88 specialists, 64 frameworks, $19.99/month."
+- **Intro card (5s):** logo + "Maxim for Claude Code — 90 specialists, 64 frameworks, $19.99/month."
 - **Outro card (5s):** `maxim.isystematic.com/pricing` + QR code linking to same.
 - **Transitions:** hard cuts between scenarios. No fade. Maxim is a governance tool, not a lifestyle brand — restrained is on-voice.
 - **Captions:** burn in the Confidence tag lines (🟢 HIGH, 🟡 MEDIUM, 🔴 BLOCKED) as overlays when they appear on screen. That is the shot that sells the product.

@@ -78,6 +78,51 @@ checkers:
     # delegates to mxm-compliance MCP when available
     # in LIGHT phase, scans tracked files for high-signal secret patterns only
 
+  surface-claims-drift:             # added v1.0.1 — class 11
+    enabled: true
+    source_of_truth: documents/ledgers/AGENT_SKILL_INVENTORY.md
+    surface_paths:
+      - "*.md"
+      - "documents/**/*.md"
+      - ".claude/**/*.md"
+      - "templates/**/*.md"
+      - "distributions/**/*.md"
+      - "packaging/**/*.md"
+      - "composable-skills/**/*.md"
+      - "config/agent-registry.json"
+    excluded_paths:
+      - "CHANGELOG.md"                     # historical version entries are point-in-time accurate
+      - "documents/ADRs/INDEX.md"          # historical superseded ADRs
+      - "**/v[0-9]*-*.md"                  # versioned historical docs (e.g., maxim-pack-catalog-v1.0.0.md)
+      - "**/changelog/**"                   # any changelog directory
+      - "**/migration-log*"                 # operational ledgers preserve historical state
+    # cross_repo_targets:                  # uncomment + configure if a sibling marketing/landing repo exists
+    #   - path: "../landing-page"          # resolved relative to repo root
+    #     env_override: MAXIM_LANDING_PAGE
+    #     file_globs:
+    #       - "**/*.tsx"
+    #       - "**/*.ts"
+    #     excluded:
+    #       - "app/changelog/**"
+    #       - "app/roadmap/**"
+    anchors:
+      - keyword: "agents"
+        section: "Section 1 — Specialist Agents"
+      - keyword: "skill domains"
+        section: "Section 2 — Domain Skills"
+      - keyword: "commands"
+        section: "Section 3 — Slash Commands"
+      - keyword: "MCP servers"
+        section: "Section 4 — MCP Servers"
+      - keyword: "MCP tools"
+        section: "Section 4 — MCP Servers"
+      - keyword: "hooks"
+        section: "Section 5 — Hooks"
+      - keyword: "frameworks"
+        section: "Section 6 — Behavioral Frameworks"
+      - keyword: "compliance frameworks"
+        section: "Section 7 — Compliance Frameworks"
+
 triage:
   inventory-drift: coo
   version-drift: coo
@@ -89,6 +134,7 @@ triage:
   junction-drift: cto
   stale-handoff: coo
   compliance-drift: cso             # 🔒 LOCKED — cannot override
+  surface-claims-drift: coo         # added v1.0.1
 
 thresholds:
   max_drift_severity: 5             # not enforced in LIGHT (warn-only)

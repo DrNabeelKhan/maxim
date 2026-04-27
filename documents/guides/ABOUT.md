@@ -1,6 +1,6 @@
 # Maxim: The Operating System for AI-Assisted Work
 
-> 88+ governed agents. 34 skill domains. 7 MCP servers (55 tools). 79 behavioral science frameworks. 14 executable hooks. 10 ADRs ratified. Documents as Executable Contracts.
+> 90+ governed agents. 34 skill domains. 7 MCP servers (55 tools). 79 behavioral science frameworks. 14 executable hooks. 10 ADRs ratified. Documents as Executable Contracts.
 > One `/plugin install maxim@anthropic-official` powers every project you build.
 
 ---
@@ -39,7 +39,7 @@ Maxim didn't compete with these repos. It consumed their best ideas and elevated
 
 | Capability | marketingskills | hermes-agent | awesome-design-md | Maxim |
 |---|---|---|---|---|
-| Specialist agents | 0 | 1 (self) | 0 | **88+ (100% Grade A DNA)** |
+| Specialist agents | 0 | 1 (self) | 0 | **90+ (100% Grade A DNA)** |
 | Skill domains | 1 (marketing) | 26 (categories) | 1 (design) | **34** |
 | Behavioral science frameworks | 0 | 0 | 0 | **79** |
 | Compliance enforcement | None | None | None | **GDPR, PIPEDA, SOC2, PCI-DSS, HIPAA, UAE-PDPL, FINTRAC, 14 frameworks total** |
@@ -87,7 +87,7 @@ These are not suggestions. They are the dispatch logic. When you run `/mxm-cmo w
 Layer 1: .claude/skills/           ← Maxim domain skills (supreme authority)
 Layer 2: community-packs/          ← community pack ecosystem (vendored, read-only)
 Layer 3: composable-skills/        ← workflow engine (TDD, debugging, planning)
-Layer 4: agents/Maxim/{office}/     ← 88+ specialist agents across 7 offices (100% Grade A DNA)
+Layer 4: agents/Maxim/{office}/     ← 90+ specialist agents across 7 offices (100% Grade A DNA)
 Layer 5: behavioral layer          ← CLAUDE.md universal rules + frameworks
 ```
 
@@ -122,7 +122,7 @@ Maxim is installed once. Every project links to it:
 ~/.claude/CLAUDE.md  → maxim/CLAUDE.md       (one file, all projects)
 ~/.claude/commands/  → maxim/.claude/commands/ (37 commands, all projects)
 ~/.claude/skills/    → maxim/.claude/skills/   (34 domains, all projects)
-~/.claude/agents/    → maxim/agents/           (88 agents, all projects)
+~/.claude/agents/    → maxim/agents/           (90 agents, all projects)
 ```
 
 `git pull` in maxim updates every project instantly. No per-project copies. No version drift. No maintenance burden.
@@ -141,10 +141,10 @@ Per-project, only identity files are created: `project-manifest.json`, `CLAUDE.p
 | **CMO** | content-strategist | 15 agents | Marketing, brand, SEO, content, growth |
 | **CSO** | security-analyst | 9 agents | Security, compliance, privacy, ethics |
 | **CPO** | product-strategist | 12 agents | Product, UX/UI, research, pricing |
-| **COO** | planner | 9 agents | Operations, delivery, sprints, support |
-| **CINO** | innovation-researcher | 3 agents | R&D, emerging tech, horizon scanning |
+| **COO** | planner | 10 agents | Operations, delivery, sprints, support |
+| **CINO** | innovation-researcher | 4 agents | R&D, emerging tech, horizon scanning |
 
-Plus 5 cross-office orchestrators + 1 executive-router = **88 agents total**. All 88 carry Grade A DNA (Triggers + bilateral Collaboration Matrix).
+Plus 5 cross-office orchestrators + 1 executive-router = **90 agents total**. All 90 carry Grade A DNA (Triggers + bilateral Collaboration Matrix).
 
 ### 34 Skill Domains (100% with root dispatchers)
 Every domain has a SKILL.md (orchestrator), Maxim-WRAPPER.md (behavioral layer), and sub-skills that route to specialist agents. Marketing alone has a hub-and-spoke architecture with dedicated sub-skills. The `wiki` family (ingest, query, lint, explore), `voice`, `junction-guard`, `usage-aware-scheduler`, and `proactive-watch` domains complete the 34-domain inventory.
@@ -198,7 +198,7 @@ If you are managing a portfolio of projects across multiple verticals with compl
 - Compliance is automatic. CSO auto-loop, jurisdiction-specific pre-enforcement
 - 79 behavioral frameworks applied structurally, not on request
 - Portfolio-wide awareness across tasks, metrics, and synergies for 22 projects
-- 88+ specialist agents (100% Grade A DNA) with governed handoff chains and bilateral Collaboration Matrix
+- 90+ specialist agents (100% Grade A DNA) with governed handoff chains and bilateral Collaboration Matrix
 - One `git pull` updates everything. zero drift, zero maintenance (Proactive Watch catches drift at session start)
 
 ### The Math
@@ -214,7 +214,7 @@ Maxim gives you all of them. governed, tireless, and improving with every sessio
 /plugin install maxim@anthropic-official
 ```
 
-One command installs the full framework. 88+ agents, 34 skill domains, 37 slash commands, 7 MCP servers, 55 tools, 14 executable hooks, 79 behavioral frameworks. Free tier fully functional on install.
+One command installs the full framework. 90+ agents, 34 skill domains, 37 slash commands, 7 MCP servers, 55 tools, 14 executable hooks, 79 behavioral frameworks. Free tier fully functional on install.
 
 ```
 /plugin marketplace add https://github.com/DrNabeelKhan/maxim
@@ -230,7 +230,7 @@ For source-level integration or non-Claude-Code IDE work, see [documents/guides/
 
 **Maxim v1.0.0:** 
 
-88+ agents (100% Grade A DNA). 34 skill domains. 37 commands. 7 MCP servers (55 tools). 79 frameworks. 14 executable hooks. 10 ADRs ratified. 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
+90+ agents (100% Grade A DNA). 34 skill domains. 37 commands. 7 MCP servers (55 tools). 79 frameworks. 14 executable hooks. 10 ADRs ratified. 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
 
 **License:** BSL 1.1 core with 4-year Apache 2.0 conversion per ADR-005. Commercial packs licensed separately via LemonSqueezy.
 

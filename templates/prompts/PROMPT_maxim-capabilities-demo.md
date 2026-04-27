@@ -8,7 +8,7 @@
 
 ## Prompt
 
-You have Maxim Framework v6.3.0 with 8 MCP servers (42 tools), 88 agents, 26 skill domains, and 31 commands. Run through every capability using real portfolio tasks. After each, show the result and the /mxm-* command that would handle it in a project session.
+You have Maxim Framework v1.0.1 with 7 MCP servers (47 tools), 90 agents, 34 skill domains, and 38 commands. Run through every capability using real portfolio tasks. After each, show the result and the /mxm-* command that would handle it in a project session.
 
 ---
 

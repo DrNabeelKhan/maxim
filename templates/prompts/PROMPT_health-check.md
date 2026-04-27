@@ -22,7 +22,7 @@ Report: `Global install: [OK — symlinked to {path}] | [MISSING — run install
 
 ### Layer 2 — MCP Servers
 
-Check all 8 Maxim MCP servers:
+Check all 7 Maxim MCP servers:
 
 | Server | Test Call | Expected |
 |---|---|---|

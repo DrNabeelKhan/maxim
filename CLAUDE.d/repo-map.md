@@ -76,7 +76,7 @@ maxim/
 │   └── frameworks/                         63 framework wrappers (AIDA, OKR, JTBD, COM-B, etc.)
 │
 ├── agents/                                 ← AGENT CATALOG (Layer 4)
-│   ├── Maxim/                               ← 87 Maxim agents
+│   ├── Maxim/                               ← 90 Maxim agents
 │   │   ├── orchestrators/                  ← planner, implementer, reviewer, tester, release-manager
 │   │   ├── ceo/ (9) · cto/ (25) · cmo/ (15) · cso/ (9) · cpo/ (12) · coo/ (9) · cino/ (3)
 │   │   ├── executive-router.md             ← meta-orchestrator

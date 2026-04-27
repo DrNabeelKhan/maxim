@@ -3,7 +3,7 @@
 > **Start at $19.99 with Solo. The behavioral intelligence specialist for Claude.**
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Agents](https://img.shields.io/badge/agents-88+-green)
+![Agents](https://img.shields.io/badge/agents-90+-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-78-orange)
 ![Skills](https://img.shields.io/badge/skill_domains-34-purple)
 ![Commands](https://img.shields.io/badge/commands-37-yellow)
@@ -21,7 +21,7 @@
 /plugin install maxim@maxim-packs
 ```
 
-Those two commands install the full behavioral intelligence layer into Claude Code. 88+ agents across 7 executive offices. 34+ skill domains. 37+ slash commands. Three governance hooks that fire automatically. Four drift monitors running at 30-second cadence. One output style that enforces framework citation on every external-facing output.
+Those two commands install the full behavioral intelligence layer into Claude Code. 90+ agents across 7 executive offices. 34+ skill domains. 37+ slash commands. Three governance hooks that fire automatically. Four drift monitors running at 30-second cadence. One output style that enforces framework citation on every external-facing output.
 
 **Starter tier is free forever.** No credit card. 90-day Pro Trial auto-activates on install. Nothing to commit to.
 
@@ -97,7 +97,7 @@ Full catalog and pricing at https://maxim.isystematic.com/pricing.
 
 ## What Maxim Is
 
-Maxim is a **behavioral intelligence layer** that runs on top of any AI model. It is not a prompt library. It is not a chatbot wrapper. It is a governed, multi-agent operating system with 88+ specialists, 34 skill domains, executive office routing, inter-agent handoff protocol, voice-driven invocation, RAG-backed knowledge graph, usage-aware scheduling, Proactive Watch drift detection, and behavioral science embedded at every layer.
+Maxim is a **behavioral intelligence layer** that runs on top of any AI model. It is not a prompt library. It is not a chatbot wrapper. It is a governed, multi-agent operating system with 90+ specialists, 34 skill domains, executive office routing, inter-agent handoff protocol, voice-driven invocation, RAG-backed knowledge graph, usage-aware scheduling, Proactive Watch drift detection, and behavioral science embedded at every layer.
 
 The moat is not the tools. It is **Fogg Behavior Model, COM-B, EAST, Hook Model, and 64 peer-reviewed frameworks** baked into every skill, applied automatically rather than on request. Every output is confidence-tagged. Every security or compliance signal triggers the CSO auto-loop. Every release passes through a governed chain. Every document is treated as an Executable Contract with drift detection running on every session start.
 
@@ -135,7 +135,7 @@ LAYER 3 — composable-skills/       Workflow Engine
            superpowers/ · planning-with-files/ · frameworks/ (63)
 
 LAYER 4 — agents/                  Agent Catalog
-           88 Maxim agents · 150 VoltAgent specialists across 10 categories
+           90 Maxim agents · 150 VoltAgent specialists across 10 categories
 
 LAYER 5 — mcp/                     MCP Servers (cross-surface intelligence)
            9 servers · 44 tools — auto-discovered via root .mcp.json
@@ -205,7 +205,7 @@ See [`documents/guides/GETTING_STARTED.md`](documents/guides/GETTING_STARTED.md)
 | [`documents/reference/MXM_COMMAND_MAP.md`](documents/reference/MXM_COMMAND_MAP.md) | All slash commands with examples |
 | [`documents/reference/SKILLS_MAP.md`](documents/reference/SKILLS_MAP.md) | 33 skill domains with capability map |
 | [`documents/reference/FRAMEWORKS_MASTER.md`](documents/reference/FRAMEWORKS_MASTER.md) | 63 behavioral frameworks |
-| [`config/agent-registry.json`](config/agent-registry.json) | Full agent catalog (88 agents) |
+| [`config/agent-registry.json`](config/agent-registry.json) | Full agent catalog (90 agents) |
 | [`documents/ledgers/AGENT_SKILL_INVENTORY.md`](documents/ledgers/AGENT_SKILL_INVENTORY.md) | Authoritative inventory: every agent, skill, command, MCP tool, hook — updated on every count change |
 | [`mcp/README.md`](mcp/README.md) | 9 MCP servers · 44 tools (auto-discovery via `.mcp.json`) |
 | [`documents/reference/AGENTS.md`](documents/reference/AGENTS.md) | Downstream agent instructions (wiki + brand foundation usage, v1.0.0+) |
