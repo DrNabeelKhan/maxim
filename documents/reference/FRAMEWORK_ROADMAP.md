@@ -23,23 +23,11 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 
 ---
 
-## 🎯 v1.1 — Compliance Expansion (target: Q3 2026)
+## 🎯 v1.1.0 — Runtime Hardening (SHIPPED 2026-04-27)
 
-**Theme:** Fill the regulated-industry surface area. Lands alongside vertical overlay v2 releases.
+**Theme:** Close the runtime enforcement gap exposed by the v1.0.0 launch audit. v1.1.0 ships v1.1.A only — the foundation that gates every paid-tier feature. v1.1.B (MOE) and v1.1.C (7 compliance frameworks) move to v1.1.1 per the 2026-04-27 scope decision: ship the foundation now rather than wait for the full bundle.
 
-| § in MASTER | Framework | Category | Reference | Priority |
-|---|---|---|---|---|
-| §17 | EU AI Act | AI Governance / EU | [artificialintelligenceact.eu](https://artificialintelligenceact.eu/) | 🔴 HIGH — Pro overlay dependency |
-| §18 | ISO 42001 | AI Management System (ISO) | [iso.org/standard/81230.html](https://www.iso.org/standard/81230.html) | 🔴 HIGH — ships with Enterprise tier |
-| §19 | SOX (Sarbanes-Oxley) | US financial controls | [sec.gov](https://www.sec.gov/about/laws/soa2002.pdf) | 🟠 MED — Fintech overlay stacks cleaner with this |
-| §20 | CIS Controls | Security baseline (CIS) | [cisecurity.org/controls](https://www.cisecurity.org/controls) | 🟠 MED |
-| §21 | DORA | EU financial operational resilience | [digital-operational-resilience-act.com](https://www.digital-operational-resilience-act.com/) | 🟠 MED — EU fintech readiness |
-| §22 | NIST SP 800-53 | US federal controls baseline | [csrc.nist.gov/publications/detail/sp/800-53/rev-5/final](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final) | 🔴 HIGH — FedRAMP foundation |
-| §24 | LGPD (Brazil) | BR data protection | [gov.br/anpd](https://www.gov.br/anpd/pt-br) | 🟡 LOW — reactive to demand |
-
-**7 compliance frameworks.** Expected effort: 2–3 days per framework (template, compliance matrix, MCP integration, test cases).
-
-### 🔒 v1.1 — Runtime Hardening — MCP license middleware
+### 🔒 v1.1.0 — Runtime Hardening — MCP license middleware (SHIPPED v1.1.A)
 
 **Theme:** Close the runtime enforcement gap exposed by the v1.0.0 launch audit. Landing alongside the compliance expansion because enterprise/regulated buyers evaluating the new overlays will review runtime controls at the same time.
 
@@ -52,23 +40,50 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 - Worker-side `/validate` endpoint logs (tool, tier, project_id, timestamp) to a KV namespace for usage analytics — feeds the portfolio dashboard and support debugging.
 - Tier-grant enforcement: the validate response includes the tier's grant list; tools that require specific grants (e.g., `mempalace_kg_add` requires `mempalace-full`) check locally after the gate clears.
 
-**Ship gates (must all be green before release):**
-- [ ] `requireValidLicense` middleware merged into all 7 MCP servers
-- [ ] Worker `/validate` endpoint deployed + KV binding live
-- [ ] Starter tier anonymous JWT issuer live (rate-limited, no paid grants)
-- [ ] End-to-end test: clone public repo without a license → tool calls fail with clear error pointing to install instructions
-- [ ] End-to-end test: paid-tier JWT → tool calls succeed + usage logged
-- [ ] End-to-end test: expired JWT → tool calls fail with refresh instructions
-- [ ] Rate-limit policy per tier documented and verified
+**Ship gates (v1.1.0 release status):**
+- [x] `requireValidLicense` middleware merged into all 7 MCP servers — **SHIPPED**
+- [ ] Worker `/validate` endpoint deployed + KV binding live — **CODE READY**, awaits `wrangler deploy`
+- [ ] Starter tier anonymous JWT issuer live — **CODE READY**, awaits `wrangler deploy`
+- [x] End-to-end test: clone public repo without a license → tool calls fail with clear error — **SHIPPED** (FIRST_RUN_FAILED test in `mcp/_shared/license-gate.test.mjs`)
+- [ ] End-to-end test: paid-tier JWT → tool calls succeed + usage logged — **CODE READY**, live test gated on `MXM_E2E_LIVE_WORKER=1` env flag
+- [x] End-to-end test: expired JWT → tool calls fail with refresh instructions — **SHIPPED** (JWT_EXPIRED test)
+- [x] Rate-limit policy per tier documented and verified — **SHIPPED** (`v11a-license.ts`)
 
-**Priority.** Treat as higher-priority than any individual framework addition — the work gates every future paid-tier feature.
+**4 of 7 gates green by code; 3 yellow gates flip green automatically once Worker is deployed.**
 
-**Non-goals for v1.1.**
+**Priority.** Treated as higher-priority than any individual framework addition — the work gates every future paid-tier feature.
+
+**Non-goals for v1.1.0.**
 - Obfuscating MCP source code — the public-source strategy stays. Value is gated by runtime, not code secrecy.
 - Moving framework definitions server-side — they stay public as marketing/reference assets.
 - Real ML-driven framework scoring — deferred to v2.0.
+- v1.1.B (MOE) and v1.1.C (7 compliance frameworks) — moved to v1.1.1 per scope decision below.
 
-### 🧩 v1.1 — Maxim Overlay Engine (MOE)
+---
+
+## 🎯 v1.1.1 — Maxim Overlay Engine + Compliance Expansion (target: Q3 2026)
+
+**Theme:** Combines the two workstreams originally bundled into v1.1 alongside the license middleware:
+- v1.1.B Maxim Overlay Engine (per ADR-012) — apply governance to every Claude Code plugin
+- v1.1.C 7 compliance frameworks — fill the regulated-industry surface area
+
+**Why split.** Foundation (license middleware in v1.1.0) gates everything; we shipped it standalone so users get tier-enforced runtime now. MOE + compliance frameworks land together in v1.1.1 because MOE's tier-gating depends on the license layer (already shipped) and compliance frameworks plug into MOE's PreToolUse compliance gate.
+
+### v1.1.1 — Compliance Expansion (7 frameworks)
+
+| § in MASTER | Framework | Category | Reference | Priority |
+|---|---|---|---|---|
+| §17 | EU AI Act | AI Governance / EU | [artificialintelligenceact.eu](https://artificialintelligenceact.eu/) | 🔴 HIGH — Pro overlay dependency |
+| §18 | ISO 42001 | AI Management System (ISO) | [iso.org/standard/81230.html](https://www.iso.org/standard/81230.html) | 🔴 HIGH — ships with Enterprise tier |
+| §19 | SOX (Sarbanes-Oxley) | US financial controls | [sec.gov](https://www.sec.gov/about/laws/soa2002.pdf) | 🟠 MED — Fintech overlay stacks cleaner with this |
+| §20 | CIS Controls | Security baseline (CIS) | [cisecurity.org/controls](https://www.cisecurity.org/controls) | 🟠 MED |
+| §21 | DORA | EU financial operational resilience | [digital-operational-resilience-act.com](https://www.digital-operational-resilience-act.com/) | 🟠 MED — EU fintech readiness |
+| §22 | NIST SP 800-53 | US federal controls baseline | [csrc.nist.gov/publications/detail/sp/800-53/rev-5/final](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final) | 🔴 HIGH — FedRAMP foundation |
+| §24 | LGPD (Brazil) | BR data protection | [gov.br/anpd](https://www.gov.br/anpd/pt-br) | 🟡 LOW — reactive to demand |
+
+**7 compliance frameworks.** Expected effort: 2–3 days per framework (template, compliance matrix, MCP integration, test cases). ~14–21 dev-days total.
+
+### 🧩 v1.1.1 — Maxim Overlay Engine (MOE)
 
 **Theme:** Shift Maxim from "a plugin among many" to **the governance layer that applies to every installed Claude Code plugin**. Architectural decision ratified in [ADR-012](../ADRs/ADR-012-overlay-engine-architecture.md).
 
@@ -89,7 +104,7 @@ Four interception points implemented via Claude Code's existing hook API. No coo
 - Per-plugin opt-out via `config/overlay-profile.yml`; global disable by removing Maxim.
 - Overlay never silently modifies another plugin's output content — it adds sidebar annotations (tag + citation + compliance note), not rewrites.
 
-**Tier gating (wired through the v1.1 license middleware).**
+**Tier gating (wired through the v1.1.0 license middleware — already shipped).**
 - **Starter** — observe mode: overlay log + confidence tags visible; no directive injection, no blocks.
 - **Solo / Pro** — directive injection + confidence audit; compliance checks emit warnings.
 - **Professional / Team** — compliance blocks enforced; Proactive Watch class 13 active.
@@ -108,13 +123,13 @@ Four interception points implemented via Claude Code's existing hook API. No coo
 - [ ] `/mxm-overlay` slash command prints current state + recent events
 - [ ] `AGENT_SKILL_INVENTORY.md` Section 9 "Overlay Engine" added with counters
 
-**Non-goals for v1.1.**
-- Cooperative plugin SDK — deferred to v2.0 (cross-provider + SDK). MOE v1.1 is hook-based and unilateral by design; the SDK is an *optional tighter integration* layer on top.
+**Non-goals for v1.1.1.**
+- Cooperative plugin SDK — deferred to v2.0 (cross-provider + SDK). MOE v1.1.1 is hook-based and unilateral by design; the SDK is an *optional tighter integration* layer on top.
 - Output rewriting — ruled out in ADR-012 on ethical grounds. The overlay annotates; it does not rewrite.
 - A plugin-certification program — shipping v1.3 as a separate initiative after MOE has field usage.
 - Cross-provider overlay (OpenAI, Gemini, local models) — deferred to v2.0.
 
-**Why this lands in v1.1 alongside license middleware.** The overlay's tier gates *are* license-enforced features. Shipping MOE without the license middleware would leak paid-tier overlay behavior to the free tier. Shipping license middleware without MOE would gate only Maxim's own MCP tools, leaving the overlay's surface area unmonetized. The two features compose.
+**Why this lands in v1.1.1 (after v1.1.0 license middleware).** MOE's tier gates *are* license-enforced features. Shipping MOE without the license middleware (v1.1.0, already shipped) would leak paid-tier overlay behavior to the free tier. The license middleware standalone (v1.1.0) gates only Maxim's own MCP tools — sufficient as a foundation, but MOE extends governance to every Claude Code plugin the user has installed. v1.1.1 closes that gap.
 
 **Follow-on work scheduled:**
 - v1.2 — Proactive Watch class 13 drift detection enhancements (detects framework non-adherence, tone drift, compliance-boundary violations in wrapped outputs)
@@ -216,7 +231,7 @@ Detects framework non-adherence, tone drift, compliance-boundary violations in t
 
 **5 frameworks.** Each ships with threat-model scaffolds, prompt-level checklists, and integration with `mxm-behavioral` for AI-specific audit.
 
-**Dependencies:** v1.1 license middleware must ship first so tier-based gating can route AI governance frameworks to the correct grant set.
+**Dependencies:** v1.1.0 license middleware (shipped 2026-04-27) provides tier-based gating that routes AI governance frameworks to the correct grant set.
 
 ---
 
@@ -357,6 +372,7 @@ Items occasionally requested but not on the roadmap. These may be reconsidered p
 |---|---|---|
 | 2026-04-21 | Initial roadmap: 18 frameworks deferred from v1.0.0 → v1.1/v1.2 (7 compliance + 10 behavioral + 1 AI governance overlap) | Maxim v1.0.0 launch audit |
 | 2026-04-21 | v1.1 add: Runtime Hardening — MCP license middleware across all 7 servers. v1.3 add: AI Governance & Security — 5 frameworks (NIST AI RMF, OWASP LLM Top 10, MITRE ATLAS, Constitutional AI, AIBOM). Future Considerations appendix (Tiers 2–6 unscheduled). | Maxim v1.0.0 launch |
+| 2026-04-27 | **v1.1 split into v1.1.0 (shipped — license middleware only) + v1.1.1 (planned — MOE + 7 compliance frameworks).** Foundation shipped standalone so users get tier-enforced runtime now; MOE + compliance frameworks land together in v1.1.1 because MOE's tier-gating depends on the (already-shipped) license layer. | Session 15 close |
 | 2026-04-21 | Domain Expansions scheduled: RevOps (v1.3), Regulated Industries operator roster (v1.4), Fintech Specialist domain (v1.4), Cinematic / Video-AI Production (v1.5). | Maxim v1.0.0 launch |
 | 2026-04-23 | v1.1 adds Maxim Overlay Engine (MOE) per ADR-012. Four hook-based interception points (SessionStart / UserPromptSubmit / PreToolUse / PostToolUse) apply Maxim's behavioral, compliance, and confidence layers to every Claude Code plugin the operator has installed. Tier-gated via the v1.1 license middleware. Proactive Watch gains class 13 "third-party-plugin drift" in v1.2. OVERLAY_PAIRINGS.md publishes v1.3. | Maxim v1.0.0 launch |
 

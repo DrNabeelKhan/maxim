@@ -1,7 +1,7 @@
 {
   "name": "maxim",
-  "version": "1.1.0-rc.1",
-  "description": "90 behavioral-science-driven agents across 7 executive offices. Governance on every output. Memory that compounds across sessions. Proactive drift detection. 64 peer-reviewed frameworks enforced at generation time. License-gated MCP middleware (v1.1.A).",
+  "version": "1.1.0",
+  "description": "90 behavioral-science-driven agents across 7 executive offices. Governance on every output. Memory that compounds across sessions. Proactive drift detection. 64 peer-reviewed frameworks enforced at generation time. License-gated MCP middleware.",
   "author": {
     "name": "Dr. Nabeel Khan",
     "email": "nabeel@nabeelkhan.com",

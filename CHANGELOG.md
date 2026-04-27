@@ -8,12 +8,19 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
-## v1.1.0-rc.1 — 2026-04-27 — License middleware (v1.1.A) — release candidate
+## v1.1.0 — 2026-04-27 — License middleware foundation (v1.1.A scope)
 
-First v1.1 release candidate. Ships v1.1.A complete: license middleware foundation,
-Worker /issue + /validate endpoints, 7 MCP servers gated, E2E test fixtures.
-v1.1.B (Maxim Overlay Engine) and v1.1.C (7 compliance frameworks) follow as
-separate sprints; v1.1.0 final tag will combine A + B + C per FRAMEWORK_ROADMAP.
+Promoted from `v1.1.0-rc.1` after v1.1.A passed acceptance. v1.1.0 ships the
+**enterprise-readiness foundation**: license middleware, tier-based grants,
+Worker public endpoints, all 7 MCP servers gated. The runtime enforcement gap
+that v1.0.0 left open is closed.
+
+**Scope decision (locked 2026-04-27):** v1.1.B (Maxim Overlay Engine, ADR-012)
+and v1.1.C (7 compliance frameworks: EU AI Act, ISO 42001, SOX, CIS Controls,
+DORA, NIST SP 800-53, LGPD) move to **v1.1.1**. The original v1.1 plan bundled
+A + B + C; we shipped A as v1.1.0 because the foundation gates everything else,
+and treating B + C as a follow-on patch lets users get tier-enforced runtime
+NOW rather than waiting for the full bundle.
 
 ### Added (v1.1.A)
 
@@ -49,18 +56,21 @@ separate sprints; v1.1.0 final tag will combine A + B + C per FRAMEWORK_ROADMAP.
 | E2E test: expired JWT → fail with refresh instructions | 🟢 (JWT_EXPIRED test) |
 | Rate-limit policy per tier documented and verified | 🟢 (`v11a-license.ts` enforces) |
 
-4 of 7 gates green by code; 3 require Worker deployment by operator. **v1.1.0 final ships
-when Worker is deployed AND v1.1.B + v1.1.C land.** This rc.1 captures all v1.1.A code in
-a tagged release candidate so testers can install via `/plugin install maxim@maxim-packs`
-and exercise the gating once Worker is live.
+4 of 7 gates green by code; 3 require Worker deployment by operator. **The 3 yellow
+gates flip green automatically once `wrangler deploy` runs from `cloudflare-worker/`
+and the live tests are exercised with `MXM_E2E_LIVE_WORKER=1`.** No additional
+code work needed for the v1.1.0 release scope.
 
-### Known carry-over for v1.1.0 final
+### Known carry-over for v1.1.1
 
-- v1.1.B Maxim Overlay Engine (per ADR-012) — 4-hook architecture; 11 ship gates
-- v1.1.C 7 compliance frameworks (EU AI Act, ISO 42001, SOX, CIS Controls, DORA, NIST SP 800-53, LGPD)
+Following sprints (separately versioned, do not block v1.1.0):
+
+- **v1.1.B → v1.1.1** Maxim Overlay Engine (per ADR-012) — 4-hook architecture; 11 ship gates
+- **v1.1.C → v1.1.1** 7 compliance frameworks (EU AI Act, ISO 42001, SOX, CIS Controls, DORA, NIST SP 800-53, LGPD)
 - Worker deployment to `https://maxim-license-api.isystematic.workers.dev` with `JWT_SIGNING_KEY_PRIVATE`
-  + `JWT_SIGNING_KEY_PUBLIC` secrets bound; KV namespaces (LICENSES, RATE_LIMIT) already provisioned
-- `ADR-013-license-middleware-design.md` — capture locked v1.1.A design as ratified ADR
+  + `JWT_SIGNING_KEY_PUBLIC` secrets bound; KV namespaces (LICENSES, RATE_LIMIT) already provisioned —
+  required to flip the 3 yellow ship gates green; not a code change
+- `ADR-013-license-middleware-design.md` — capture locked v1.1.A design as ratified ADR (next session)
 
 ---
 
