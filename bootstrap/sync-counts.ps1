@@ -109,6 +109,7 @@ Write-Log "  frameworks=$Frameworks compliance=$Compliance"
 $ExcludePatterns = @(
     'CHANGELOG\.md$'
     'documents[\\/]ADRs[\\/]INDEX\.md$'
+    'documents[\\/]ledgers[\\/]DEBUGGING_PLAYBOOK\.md$'
     '[\\/]v[0-9][0-9.]*-[a-zA-Z0-9-]+\.md$'
     '[\\/]changelog[\\/]'
     'migration-log'

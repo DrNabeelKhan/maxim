@@ -113,6 +113,7 @@ log "  frameworks=${FRAMEWORKS:-?} compliance=${COMPLIANCE:-?}"
 EXCLUDE_PATTERNS=(
   '/CHANGELOG\.md$'
   '/documents/ADRs/INDEX\.md$'
+  '/documents/ledgers/DEBUGGING_PLAYBOOK\.md$'  # append-only journal of past patterns; historical refs preserved
   '/v[0-9][0-9.]*-[a-zA-Z0-9-]+\.md$'   # versioned historical (maxim-pack-catalog-v1.0.0.md)
   '/changelog/'                           # any directory named changelog
   '/migration-log'

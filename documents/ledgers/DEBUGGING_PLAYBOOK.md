@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Status:** 1 entry — §1 captures the v1.0.0 launch install bug-bash (2026-04-21..2026-04-27).
+**Status:** 2 entries — §1 captures the v1.0.0 launch install bug-bash (2026-04-21..2026-04-27); §2 captures the Session 15 capability-count drift codification ("DNA gap").
 
 ---
 
@@ -60,6 +60,42 @@ After hypothesis 9 we hit a wall — Windows structural tests kept passing, but 
 **Methodology that worked.** Tailscale SSH key auth → `git status` inside install dir → read `.git/info/sparse-checkout` → cross-reference to known plugin source types in the official Anthropic marketplace. Total time from "stuck" to root cause: ~5 SSH commands, ~10 minutes once SSH was set up. Time spent before SSH was set up (guessing from local-only signals): ~3 days across 3 round-trips with the user.
 
 **Cross-links:** BUG-001..BUG-005 (all five resolved bugs) · PATTERN-01 (cross-platform structural assumptions) · ADR-008 (community pack system) · `documents/sales/TEST_MAC_ENVIRONMENT.md` (private — Tailscale SSH setup, ARCHIVED 2026-04-27).
+
+---
+
+### §2 — 2026-04-27 — Capability-count drift across surfaces (the "DNA gap")
+
+**Context.** Total agent count moved 88 → 90 (cost-analyst + sre-analyst migration from aria-simplification). What looked like a one-line `documents/ledgers/AGENT_SKILL_INVENTORY.md` edit turned into a 30+ file sweep across plugin-repo (markdown docs, JSON breakdown comments, ADR examples, marketing collateral, proactive-watch teaching examples) plus a 9-file sweep across `landing-page/` (TSX/TS files: layout descriptions, Open Graph image, structured data, comparisons, pricing copy). Several stale claims (e.g., `87 Maxim agents` in `CLAUDE.d/repo-map.md`) had been silently drifting since v1.0.0 ship. Operator caught the pattern: "Honestly this should be in your project DNA."
+
+**Hypothesis tree (in order considered, with what ruled each in/out):**
+
+1. **AGENT_SKILL_INVENTORY.md is the only place the count lives.** ✗ Wrong. Named "single source of truth" but counts duplicated across 30+ markdown files + JSON + landing-page TSX. Operator's reaction was the diagnostic — they'd seen this pattern before across the 14-session arc.
+2. **A simple regex sweep `\d+ agents` → new count works.** ✗ Wrong on three false-positive classes:
+   - **Per-office breakdowns**: `25 agents` for CTO Office is correct as 25, not 90 (per-office count, not global). Found in `CLAUDE.d/office-catalog.md` and `AGENT_SKILL_INVENTORY.md` Section 1 itself.
+   - **Complexity thresholds**: `>= 3 agents` in agent definition files (cost-analyst.md, skill-synthesizer.md) refers to "≥ N agents in a chain" as a complexity signal, not a count claim.
+   - **Historical changelog entries**: `87 agents` / `88 agents` in `config/agent-registry.json`'s internal `changelog[]` array describes past release states; rewriting them corrupts history.
+3. **Forward-looking spec documents are also exempt.** ✓ Confirmed during acceptance test. `documents/reference/AGENT_ROSTER_v1.2_PROPOSAL.md` mentions `24 specialist commands` as a v1.2 plan target — not the global current command count. Naive regex would have rewritten 24→38, corrupting the plan doc. Same for `documents/proposals/v1.0.x-count-drift-codification.md`.
+4. **One regex pattern covers both bare `\d+ agents` and adjective-prefixed `\d+ specialist agents`.** ✗ Decided against. **Required adjective prefix or `+` suffix** — bare form too ambiguous. Strict pattern: `\b\d+\+\s+kw\b` (open-ended) OR `\b\d+\s+(specialist|governed|peer-reviewed|Maxim)\s+kw\b` (adjectival). Bare `\d+ kw` deliberately not matched — Class 11 detection still flags those, sync-counts skips them, humans review manually.
+
+**Root cause (the meta-pattern).** `AGENT_SKILL_INVENTORY.md` is named source-of-truth but enforces nothing — load-bearing document with no automated downstream propagation. Every other surface that quotes the number is hand-written by humans, who copy-paste the count from wherever they last saw it. Drift is the default state; alignment is the exception. Proactive Watch Class 1 (filesystem-vs-inventory) catches one drift class; the *complementary* class — inventory-vs-marketing-copy — was uncovered Session 15.
+
+**Fix.** Three coordinated changes shipped in v1.0.1:
+
+1. **Proactive Watch Class 11 — `surface-claims-drift`** — codified in `composable-skills/frameworks/proactive-watch.md`. Detects mismatches between INVENTORY and any declared surface (markdown + JSON + landing-page TSX). Configured per `config/watch-profile.yml` with explicit exclusion patterns (CHANGELOG.md, ADR INDEX, `**/v[0-9]*-*.md` versioned historical docs, `**/changelog/**` directories, `documents/proposals/`, `AGENT_ROSTER_v1.x_PROPOSAL.md` forward-looking specs).
+2. **`bootstrap/sync-counts.{sh,ps1}`** — companion mechanical-propagation tool. Reads INVENTORY canonical counts (parses each Section's `(N)` header), propagates to all declared surfaces via single perl invocation per file (with grep pre-filter for performance — Windows/Git-Bash cuts 8 perl spawns × 1117 files from ~7 min projected to ~1.3 min observed). Idempotent on clean tree (running on no-drift state is a no-op). Conservative regex avoids the three false-positive classes from hypothesis 2.
+3. **Commit Protocol rule** in `CLAUDE.md` + `CLAUDE.d/protocols.md`: when commit touches `agents/MXM/**`, `.claude/skills/**`, `.claude/commands/**`, `mcp/**`, `composable-skills/frameworks/**`, or `.claude/hooks/**`, run `bootstrap/sync-counts.{sh,ps1}` before commit. Pre-commit hook fails-closed on residual drift unless `[surface-claims-drift-ack: <reason>]` in commit message.
+
+**Regression guard.** Three layers:
+
+1. **Class 11 detection in every session** — runs as part of LIGHT-phase Proactive Watch on every SessionStart. Catches drift introduced between sync-counts runs.
+2. **`bootstrap/sync-counts.{sh,ps1}` mechanical propagation** — bumps inventory once, propagates everywhere, idempotent. Acceptance-tested with synthetic 90→91 bump (correctly flagged 21 plugin-repo + 4 landing-page surfaces; back to 0 after restore).
+3. **Commit Protocol fails-closed** when residual drift detected post-sync — operator must explicitly acknowledge intentional divergence.
+
+**The transferable lesson.** "Single source of truth" is a property of the SYSTEM, not of any one document. If the count is duplicated across N surfaces and propagation is manual, the document with the canonical number is one of N+1 places that drift; declaring it source-of-truth changes nothing on its own. Source-of-truth requires either (a) build-time templating (single declaration, derived everywhere) or (b) detection + mechanical propagation tooling that runs in the commit-time loop. Maxim chose (b) for v1.0.1 — templating would have invasively rewritten 30+ markdown files and broken human-readability. Cost: building two tools (Class 11 + sync-counts). Benefit: future count changes become idempotent + auditable.
+
+**Methodology that worked.** Operator's "this should be in your project DNA" feedback flipped the framing from "let me sweep this" to "let me prevent the next sweep." Acceptance test wasn't traditional unit tests — it was running sync-counts against the just-finished manual sweep and counting how many ADDITIONAL surfaces it caught (12 in plugin-repo, all confirmed legitimate stale claims my manual sweep missed). The synthetic 90→91 INVENTORY bump test confirmed forward-direction correctness. The restore + re-run test confirmed idempotency.
+
+**Cross-links:** Operator feedback `~/.claude/projects/E--Projects-Maxim/memory/feedback_capability_count_propagation.md` · `composable-skills/frameworks/proactive-watch.md` Class 11 spec · `bootstrap/sync-counts.{sh,ps1}` · `config/watch-profile.{yml,TEMPLATE.yml}` Class 11 config · `CLAUDE.md` + `CLAUDE.d/protocols.md` (Commit Protocol updated) · `documents/proposals/v1.0.x-count-drift-codification.md` (full proposal).
 
 ---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.

@@ -93,6 +93,7 @@ checkers:
     excluded_paths:
       - "CHANGELOG.md"                     # historical version entries are point-in-time accurate
       - "documents/ADRs/INDEX.md"          # historical superseded ADRs
+      - "documents/ledgers/DEBUGGING_PLAYBOOK.md"  # append-only journal; historical examples preserved
       - "**/v[0-9]*-*.md"                  # versioned historical docs (e.g., maxim-pack-catalog-v1.0.0.md)
       - "**/changelog/**"                   # any changelog directory
       - "**/migration-log*"                 # operational ledgers preserve historical state

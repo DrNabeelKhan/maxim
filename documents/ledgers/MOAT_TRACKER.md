@@ -107,6 +107,17 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Primary framework** | Social Learning Theory (Bandura, 1977) · roadmap v1.2 §64 |
 | **Proof** | [`documents/reference/FRAMEWORK_ROADMAP.md`](../reference/FRAMEWORK_ROADMAP.md) — CRO operator roster + Fintech specialist domain scheduled v1.4. |
 
+### MOAT-08 · Runtime tier enforcement (license middleware) · v1.1.0 SHIPPED
+
+| Field | Value |
+|---|---|
+| **Positioning claim** | Maxim is the only Claude-native plugin where paid features are enforced at the MCP layer, not on the honor system — every tool call hits a tier gate locally (cache-file fast path, no network on hot path), with grant verification, JWT signature check, daily heartbeat for revocation propagation, and a Worker-issued JWT that ties tier to the machine fingerprint. Open-source code; gated runtime. |
+| **Mechanism** | Operant Conditioning + Loss Aversion — paid tiers receive features that are demonstrably absent on Starter (not "limited" — *absent*, with `GRANTS_INSUFFICIENT` errors that name the tier upgrade path). Loss-frame language at the gate ("compliance-14 grant not present in your starter tier") drives upgrade conversion harder than gain-framed marketing copy. See `FRAMEWORKS_MASTER.md` §X Prospect Theory + §Y Operant Conditioning — both shipped v1.0.0. |
+| **Anti-pattern** | Open-source plugins that gate paid features by trust ("please upgrade to use this") — easily bypassed; doesn't scale; no audit trail. Or commercial plugins that gate by code obfuscation — public-source contradiction. Maxim's pattern: public source, runtime gate, transparent grant catalog (`cloudflare-worker/grants.json`). |
+| **Pack(s)** | All paid tiers (Solo $19.99 / Pro $39 / Professional $99 / Team $249) + 4 vertical overlays (Healthcare $249 / Legal $199 / Fintech $199 / GovTech $149). Tier-specific grants documented in `cloudflare-worker/grants.json` (54-grant catalog). |
+| **Primary framework** | Prospect Theory (Kahneman & Tversky 1979) — loss-frame at the gate · roadmap §66. Supporting: Operant Conditioning §65 for tier-progression behavior shaping. |
+| **Proof** | v1.1.0 SHIPPED 2026-04-27. `mcp/_shared/license-gate.mjs` (419 lines) + `cloudflare-worker/src/v11a-license.ts` (361 lines) + 9/9 E2E tests passing in `mcp/_shared/license-gate.test.mjs`. All 7 MCP servers gated. CHANGELOG.md v1.1.0 entry. Locked design captured at `~/.claude/projects/E--Projects-Maxim/memory/project_v1.1.A_locked_design.md` (G1–G7). ADR-013 pending in v1.1.1 sprint. |
+
 ---
 
 ## Decommissioned Claims
