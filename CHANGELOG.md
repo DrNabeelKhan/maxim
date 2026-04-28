@@ -8,6 +8,61 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.1.0.2 — 2026-04-27 — Plugin-upgrade MCP install fix (BUG-007)
+
+Hotfix on v1.1.0.1. Resolves a P0 bug where every plugin upgrade leaves the new
+install dir without `node_modules` for the 7 MCP servers, causing all of them
+to `✗ Failed to connect` in `claude mcp list`. Also fixes a related issue
+where opening any project that isn't `plugin-repo` itself would never trigger
+a successful MCP install.
+
+### Root cause (two co-occurring bugs)
+
+Both in `.claude/hooks/session-start.{sh,ps1}` MCP-install block:
+
+1. **Sentinel was project-relative** (`.mxm-skills/.mcp-deps-installed`) but
+   plugin deps live per-plugin-version at
+   `~/.claude/plugins/cache/maxim-packs/maxim/<v>/mcp/<name>/node_modules/`.
+   After upgrade, the project's old sentinel said "installed" → hook skipped
+   install on the new version's empty dir.
+2. **Wrong cwd for the install.** Hook used `cd $PROJECT_ROOT` then checked +
+   installed against project-relative `mcp/` paths. This happened to work only
+   when the project IS `plugin-repo` itself. For any other project, npm install
+   ran in the wrong dir or skipped entirely.
+
+### Fixed (v1.1.0.2)
+
+- `.claude/hooks/session-start.sh` and `.claude/hooks/session-start.ps1`:
+  - Resolve `PLUGIN_ROOT` from `$CLAUDE_PLUGIN_ROOT` env var (set by Claude
+    Code when invoking hooks via plugin.json), with a script-location fallback
+    for manual invocation
+  - Sentinel moved to `$PLUGIN_ROOT/.mcp-deps-installed` — plugin-version-scoped
+    so every fresh install + every upgrade triggers a clean dependency check
+  - The `mcp/<name>/node_modules` existence check now reads from PLUGIN's
+    `mcp/`, not PROJECT's
+  - Bootstrap invocation pushes cwd to `$PLUGIN_ROOT` so npm install lands in
+    the plugin's `mcp/` subdirs
+
+### Tester / operator action after upgrade
+
+```
+/plugin uninstall maxim@maxim-packs
+/plugin install maxim@maxim-packs
+# Restart Claude Code session ONCE → SessionStart hook installs MCP deps
+# Restart Claude Code session AGAIN → MCPs spawn with deps now present
+```
+
+After v1.1.0.2 ships, the chicken-and-egg "install deps before MCP spawn" is
+still 2 restarts — collapsing to 1 restart requires a synchronous pre-spawn
+hook (tracked as v1.1.0.3 candidate per BUG-007 regression-guard notes).
+
+### Resolves
+
+- **BUG-007** — Plugin-upgrade leaves new install dir without node_modules →
+  all 7 MCPs fail. Filed in `documents/ledgers/BUG_TRACKER.md`.
+
+---
+
 ## v1.1.0.1 — 2026-04-27 — Pro Trial auto-activation (Class 11 surface-claims-drift fix)
 
 Hotfix on v1.1.0. Wires the `pro_trial.auto_activates_on_install` promise from

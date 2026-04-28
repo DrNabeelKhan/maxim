@@ -100,15 +100,25 @@ fi
 # ----- Auto-install MCP server dependencies (first-session bootstrap) -----
 # Each MCP server (mcp/mxm-*/) is a self-contained Node package. Without
 # node_modules, Claude Code's MCP spawn fails with ERR_MODULE_NOT_FOUND for
-# @modelcontextprotocol/sdk and the user sees an MCP timeout. This block
-# detects missing deps and runs the installer once. Sentinel prevents the
-# check on subsequent sessions.
-if [ -d "mcp" ] && [ -f "bootstrap/mxm-mcp-install.sh" ] && command -v npm >/dev/null 2>&1; then
-  MCP_SENTINEL=".mxm-skills/.mcp-deps-installed"
+# @modelcontextprotocol/sdk and the user sees an MCP timeout.
+#
+# BUG-007 fix (v1.1.0.2): MCP servers spawn from the PLUGIN install dir
+# (~/.claude/plugins/cache/maxim-packs/maxim/<version>/mcp/), NOT the project
+# dir. Dependency install + sentinel must therefore be plugin-version-scoped:
+# (a) plugin upgrade leaves the new install dir without node_modules while a
+#     project-relative sentinel says "already installed" → all 7 MCPs fail;
+# (b) opening any project that ISN'T plugin-repo itself → the old code tried
+#     to install into the project's mcp/ subdirs (wrong dir entirely).
+#
+# CLAUDE_PLUGIN_ROOT is set by Claude Code when this hook is invoked via
+# plugin.json. Fallback derives from script location for manual invocation.
+PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/../.." 2>/dev/null && pwd)}"
+if [ -n "$PLUGIN_ROOT" ] && [ -d "$PLUGIN_ROOT/mcp" ] && [ -f "$PLUGIN_ROOT/bootstrap/mxm-mcp-install.sh" ] && command -v npm >/dev/null 2>&1; then
+  MCP_SENTINEL="$PLUGIN_ROOT/.mcp-deps-installed"
   if [ ! -f "$MCP_SENTINEL" ]; then
-    # Quick check: is at least one mcp/mxm-*/node_modules missing?
+    # Quick check: is at least one PLUGIN's mcp/mxm-*/node_modules missing?
     NEEDS_INSTALL=0
-    for srv in mcp/mxm-*/; do
+    for srv in "$PLUGIN_ROOT"/mcp/mxm-*/; do
       [ -d "$srv" ] || continue
       [ -f "$srv/package.json" ] || continue
       if [ ! -d "$srv/node_modules" ]; then NEEDS_INSTALL=1; break; fi
@@ -119,7 +129,8 @@ if [ -d "mcp" ] && [ -f "bootstrap/mxm-mcp-install.sh" ] && command -v npm >/dev
         echo "Maxim: installing MCP server dependencies (first run, ~30–60 sec)…"
         echo "──────────────────────────────────────────────────────"
       } >&2
-      if bash bootstrap/mxm-mcp-install.sh >&2 2>&1; then
+      # Bootstrap script reads cwd-relative mcp/, so push cwd to PLUGIN_ROOT
+      if (cd "$PLUGIN_ROOT" && bash "$PLUGIN_ROOT/bootstrap/mxm-mcp-install.sh" >&2 2>&1); then
         touch "$MCP_SENTINEL"
         {
           echo "Maxim: MCP servers ready. Restart this session to load them."
@@ -127,7 +138,7 @@ if [ -d "mcp" ] && [ -f "bootstrap/mxm-mcp-install.sh" ] && command -v npm >/dev
       else
         {
           echo "Maxim: MCP install FAILED."
-          echo "  Retry manually: bash bootstrap/mxm-mcp-install.sh --force"
+          echo "  Retry manually: cd \"$PLUGIN_ROOT\" && bash bootstrap/mxm-mcp-install.sh --force"
         } >&2
       fi
     else

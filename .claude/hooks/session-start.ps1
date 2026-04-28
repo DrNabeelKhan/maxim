@@ -100,15 +100,24 @@ if ((Test-Path $RegistryPath) -and (Test-Path $InstallerPath)) {
 # ----- Auto-install MCP server dependencies (first-session bootstrap) -----
 # Each MCP server (mcp\mxm-*\) is a self-contained Node package. Without
 # node_modules, Claude Code's MCP spawn fails with ERR_MODULE_NOT_FOUND
-# and the user sees an MCP timeout. This block detects missing deps and
-# runs the installer once. Sentinel prevents the check on subsequent sessions.
-$McpInstaller = Join-Path $ProjectRoot 'bootstrap\mxm-mcp-install.ps1'
-$McpDir = Join-Path $ProjectRoot 'mcp'
-if ((Test-Path $McpDir) -and (Test-Path $McpInstaller) -and (Get-Command npm -ErrorAction SilentlyContinue)) {
-    $McpSentinel = Join-Path $ProjectRoot '.mxm-skills\.mcp-deps-installed'
+# and the user sees an MCP timeout.
+#
+# BUG-007 fix (v1.1.0.2): MCP servers spawn from PLUGIN install dir, NOT
+# PROJECT dir. Sentinel + install paths must be plugin-version-scoped.
+# CLAUDE_PLUGIN_ROOT is set by Claude Code when this hook is invoked via
+# plugin.json; fallback derives from script location for manual invocation.
+$PluginRoot = if ($env:CLAUDE_PLUGIN_ROOT) {
+    $env:CLAUDE_PLUGIN_ROOT
+} else {
+    try { (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path } catch { $null }
+}
+$McpInstaller = if ($PluginRoot) { Join-Path $PluginRoot 'bootstrap\mxm-mcp-install.ps1' } else { $null }
+$McpDir = if ($PluginRoot) { Join-Path $PluginRoot 'mcp' } else { $null }
+if ($PluginRoot -and (Test-Path $McpDir) -and (Test-Path $McpInstaller) -and (Get-Command npm -ErrorAction SilentlyContinue)) {
+    $McpSentinel = Join-Path $PluginRoot '.mcp-deps-installed'
     if (-not (Test-Path $McpSentinel)) {
         $needsInstall = $false
-        Get-ChildItem -Directory -Path (Join-Path $ProjectRoot 'mcp\mxm-*') | ForEach-Object {
+        Get-ChildItem -Directory -Path (Join-Path $PluginRoot 'mcp\mxm-*') | ForEach-Object {
             if ((Test-Path (Join-Path $_.FullName 'package.json')) -and -not (Test-Path (Join-Path $_.FullName 'node_modules'))) {
                 $needsInstall = $true
             }
@@ -118,13 +127,19 @@ if ((Test-Path $McpDir) -and (Test-Path $McpInstaller) -and (Get-Command npm -Er
             [Console]::Error.WriteLine('Maxim: installing MCP server dependencies (first run, ~30-60 sec)...')
             [Console]::Error.WriteLine('------------------------------------------------------')
             try {
-                & pwsh -NoProfile -File $McpInstaller 2>&1 | ForEach-Object { [Console]::Error.WriteLine($_) }
-                if ($LASTEXITCODE -eq 0) {
-                    New-Item -ItemType File -Path $McpSentinel -Force | Out-Null
-                    [Console]::Error.WriteLine('Maxim: MCP servers ready. Restart this session to load them.')
-                } else {
-                    [Console]::Error.WriteLine('Maxim: MCP install FAILED.')
-                    [Console]::Error.WriteLine('  Retry manually: pwsh -File bootstrap\mxm-mcp-install.ps1 -Force')
+                # Bootstrap script reads cwd-relative mcp/, so push cwd to PluginRoot
+                Push-Location $PluginRoot
+                try {
+                    & pwsh -NoProfile -File $McpInstaller 2>&1 | ForEach-Object { [Console]::Error.WriteLine($_) }
+                    if ($LASTEXITCODE -eq 0) {
+                        New-Item -ItemType File -Path $McpSentinel -Force | Out-Null
+                        [Console]::Error.WriteLine('Maxim: MCP servers ready. Restart this session to load them.')
+                    } else {
+                        [Console]::Error.WriteLine('Maxim: MCP install FAILED.')
+                        [Console]::Error.WriteLine("  Retry manually: cd `"$PluginRoot`"; pwsh -File bootstrap\mxm-mcp-install.ps1 -Force")
+                    }
+                } finally {
+                    Pop-Location
                 }
             } catch {
                 [Console]::Error.WriteLine("Maxim: MCP install error: $_")

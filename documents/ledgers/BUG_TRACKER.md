@@ -111,6 +111,20 @@ _(None.)_
 
 ---
 
+### BUG-007 · Plugin-upgrade leaves new install dir without node_modules → all 7 MCPs fail
+
+| Field | Value |
+|---|---|
+| **Reported** | 2026-04-27 (Session 16, post-v1.1.0 release — `/plugin uninstall maxim@maxim-packs && /plugin install` followed by `claude mcp list` showed all 7 `plugin:maxim:mxm-*` as `✗ Failed to connect`. Worked again only after manually running `npm install` in 7 of `~/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/<name>/`). |
+| **Severity** | P0 — every plugin upgrade breaks MCP servers for every user. Fresh install in any project that isn't `plugin-repo` itself was already permanently broken even on v1.0.0. BUG-006 fixed the spawn-path; BUG-007 fixes the dependency-install path. |
+| **Status** | RESOLVED v1.1.0.2 (2026-04-27) |
+| **Root cause** | Two co-occurring bugs in `.claude/hooks/session-start.{sh,ps1}` MCP-install block: **(1)** Sentinel was project-relative (`.mxm-skills/.mcp-deps-installed`) but plugin deps live per-plugin-version at `~/.claude/plugins/cache/maxim-packs/maxim/<v>/mcp/<name>/node_modules/`. After upgrade, the project's old sentinel said "installed" so the hook skipped install on the new version's empty dir. **(2)** Even when the hook DID run, it used `cd $PROJECT_ROOT` then checked + installed against project-relative `mcp/` paths — happens to work only when the project IS `plugin-repo` itself. For any other project, npm install ran in the wrong dir or skipped entirely. |
+| **Fix** | Both hooks now resolve `PLUGIN_ROOT` from `$CLAUDE_PLUGIN_ROOT` env var (set by Claude Code when invoking hooks via plugin.json) with a script-location fallback for manual invocation. Sentinel moved to `$PLUGIN_ROOT/.mcp-deps-installed` (plugin-version-scoped: each `cache/maxim-packs/maxim/<v>/` gets its own sentinel; absent on every fresh install/upgrade). The `mcp/<name>/node_modules` existence check + bootstrap invocation both push cwd to `$PLUGIN_ROOT` so npm install lands in the plugin's mcp/ subdirs, not the project's. Mirror fix in PS1 hook. |
+| **Verification (v1.1.0.2)** | After upgrade `/plugin uninstall maxim@maxim-packs && /plugin install maxim@maxim-packs`, the FIRST session-restart fires SessionStart hook → detects missing `~/.claude/plugins/cache/maxim-packs/maxim/<new-v>/mcp/<*>/node_modules` (sentinel absent in new dir) → runs `npm install` in plugin-relative `mcp/` subdirs → second session-restart loads MCPs `✓ Connected`. Tested locally on Windows (Git-Bash + PowerShell). |
+| **Regression guard** | Add CI step: simulate a fresh install + restart cycle in a non-plugin-repo cwd; assert `claude mcp list` shows all 7 connected. v1.1.0.3 candidate: collapse the bootstrap-skip-on-restart-required to a single restart by spawning bootstrap synchronously before any MCP server lookup (requires Claude Code plugin API change OR spawn-time hook lifecycle redesign). |
+
+---
+
 ## WontFix
 
 _(None.)_
