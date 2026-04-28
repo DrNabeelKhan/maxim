@@ -8,6 +8,74 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.1.0.3 — 2026-04-27 — Single-restart upgrade (BUG-007 follow-up)
+
+Hotfix on v1.1.0.2. Collapses the post-upgrade restart cycle from 2 → 1.
+
+### Problem
+
+v1.1.0.2 fixed BUG-007 by making the SessionStart hook plugin-version-scoped.
+But the hook runs AFTER Claude Code has already attempted to spawn the 7 MCP
+servers (which fail on a fresh install because node_modules are missing). User
+had to restart twice: first to trigger the hook's install, second to spawn
+with deps present. Acceptable for power users, painful for testers.
+
+### Fix
+
+New synchronous wrapper `mcp/_shared/spawn-with-deps.mjs`. Each MCP server in
+`.mcp.json` now spawns through this wrapper. On every spawn:
+
+1. Resolves `PLUGIN_ROOT` from the requested server.js path
+2. Quick-checks if all 7 `mcp/mxm-*/node_modules` exist + plugin-scoped
+   sentinel `.mcp-deps-installed` is present
+3. If missing: acquires file-lock (`$PLUGIN_ROOT/.mcp-install-lock`),
+   `npm install`s any missing server, writes sentinel, releases lock
+4. Dynamically imports the requested `server.js` (stdio inherited; wrapper
+   writes only to stderr to keep stdout clean for MCP JSON-RPC traffic)
+
+File-lock prevents concurrent installs from parallel MCP server spawns —
+Claude Code spawns all 7 in parallel at session start. Stale-lock detection
+(>5 min mtime) recovers from crashed installers without manual cleanup.
+
+### Added
+
+- `mcp/_shared/spawn-with-deps.mjs` (215 lines, ESM, Node 18+) — full wrapper
+  with file-lock, stale-lock recovery, per-server install timeout (90s),
+  failure tolerance (continues installing remaining servers if one fails),
+  cross-platform path handling (`pathToFileURL` for Windows drive letters).
+
+### Changed
+
+- `.mcp.json` — all 7 server entries now have args `[wrapper_path, server_path]`
+  instead of `[server_path]`. Wrapper transparently spawns the underlying
+  server.
+
+### Verified (end-to-end smoke test)
+
+- Removed `mcp/mxm-context/node_modules` + sentinel
+- Ran wrapper: detected missing dep, installed mxm-context (`installed: 1,
+  skipped: 6`), wrote sentinel, imported server.js
+- Server.js exited gracefully when stdin closed; wrapper exited 0
+- Sentinel metadata correctly captured: `installed_at`, `installed_count`,
+  `skipped_count`, `plugin_root`, `installer`
+
+### Tester / operator action after upgrade
+
+```
+/plugin uninstall maxim@maxim-packs
+/plugin install maxim@maxim-packs
+# Restart Claude Code ONCE → wrapper installs deps before spawning server
+# All 7 MCPs Connect on first try
+```
+
+### Resolves
+
+- **BUG-007** — final piece. v1.1.0.2 fixed the install correctness
+  (plugin-scoped sentinel + cwd). v1.1.0.3 fixes the install timing
+  (synchronous, before MCP spawn).
+
+---
+
 ## v1.1.0.2 — 2026-04-27 — Plugin-upgrade MCP install fix (BUG-007)
 
 Hotfix on v1.1.0.1. Resolves a P0 bug where every plugin upgrade leaves the new

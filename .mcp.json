@@ -1,10 +1,13 @@
 {
   "$schema": "https://modelcontextprotocol.io/schema/mcp.json",
-  "_comment": "Maxim v1.0.0 — declarative MCP server registry. Consolidated from 9 servers (v1.0.0) to 7 servers. dispatch + skills → catalog; design absorbed into context; context also gained watch_* tools. 47 tools total across 7 servers.",
+  "_comment": "Maxim v1.0.0 — declarative MCP server registry. Consolidated from 9 servers (v1.0.0) to 7 servers. dispatch + skills → catalog; design absorbed into context; context also gained watch_* tools. 47 tools total across 7 servers. v1.1.0.3 (2026-04-27): each server now spawns through mcp/_shared/spawn-with-deps.mjs which synchronously installs missing node_modules before importing the actual server.js, collapsing post-upgrade install flow from 2 restarts to 1 (BUG-007 follow-up).",
   "mcpServers": {
     "mxm-portfolio": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/mxm-portfolio/server.js"],
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
+        "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-portfolio/server.js"
+      ],
       "description": "Portfolio metrics, project state, sync_portfolio across 21+ projects (7 tools)",
       "env": {
         "MXM_PROJECTS_ROOT": "${MXM_PROJECTS_ROOT:-E:/Projects}"
@@ -12,32 +15,50 @@
     },
     "mxm-context": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/mxm-context/server.js"],
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
+        "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-context/server.js"
+      ],
       "description": "Project context + design refs + drift detection. 13 tools (v1.0.0: absorbed design, added watch_run/watch_report/watch_configure)"
     },
     "mxm-catalog": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/mxm-catalog/server.js"],
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
+        "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-catalog/server.js"
+      ],
       "description": "Agent + office + skill + command catalog. 9 tools (v1.0.0: merged from dispatch + skills)"
     },
     "mxm-compliance": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/mxm-compliance/server.js"],
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
+        "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-compliance/server.js"
+      ],
       "description": "14 compliance frameworks (GDPR, PIPEDA, HIPAA, PCI-DSS, SOC2, UAE-PDPL, CASL, FINTRAC, EU AI Act, ISO 27001/13485/14971, NIST CSF, WCAG). 5 tools"
     },
     "mxm-behavioral": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/mxm-behavioral/server.js"],
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
+        "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-behavioral/server.js"
+      ],
       "description": "64 behavioral science frameworks (Fogg, COM-B, EAST, Hook, Cialdini, JTBD, AIDA, Nudge Theory, Proactive Watch + 55 more). 5 tools"
     },
     "mxm-memory": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/mxm-memory/server.js"],
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
+        "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-memory/server.js"
+      ],
       "description": "Session history, decision log, memory search/store across project boundaries. 4 tools"
     },
     "mxm-voice": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/mxm-voice/server.js"],
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
+        "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-voice/server.js"
+      ],
       "description": "Voice-driven executive office routing. Wraps mbailey/voicemode for STT (Whisper) + TTS (Kokoro). Requires VoiceMode plugin installed. 4 tools",
       "env": {
         "VOICEMODE_REQUIRED": "false"
