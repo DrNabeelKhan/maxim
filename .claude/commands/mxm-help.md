@@ -16,12 +16,20 @@ Displays the Maxim command reference card organized by function group. Works in 
 Output this reference card:
 
 ```
-Maxim v1.0.0 — Command Reference
+Maxim v1.1.0 — Command Reference
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LICENSING (auto on first install — no setup needed)
+  Day 0           First /issue call → 90-day Pro Trial JWT auto-activated
+  Day 1–90        Full Pro tier: behavioral audit, semantic MemPalace,
+                  10-class Proactive Watch, 3 compliance frameworks
+  Day 91+         Falls back to Starter (free forever per ADR-004) —
+                  governance substrate intact, paid features gated
+  Owner-key       Bypass at ~/.mxm-packs/owner.key (RSA-4096 machine-bound)
 
 GETTING STARTED
   /mxm-help           This reference card
-  /mxm-status         System health check — install mode, skill gaps, compliance
+  /mxm-status         System health check — license tier, skill gaps, drift
   /mxm-new-project    Create new project — 11 files + session memory
   /mxm-ceo-setup      Set up CEO automation — 30 templates + .mxm-executive-summary/
   /mxm-update         Update project to latest Maxim version
@@ -32,7 +40,7 @@ OFFICES (route to specialist teams)
   /mxm-ceo             Strategy · Finance · Enterprise Architecture
   /mxm-cto             Engineering · AI · APIs · DevOps · Data
   /mxm-cmo             Marketing · Content · SEO · Brand · Growth
-  /mxm-cso             Security · Compliance · Privacy · Ethics
+  /mxm-cso             Security · Compliance · Privacy · Ethics (auto-loop on regulated data)
   /mxm-cpo             Product · UX/UI · Research · Pricing
   /mxm-coo             Planning · Delivery · Operations · Support
   /mxm-cino            Innovation · R&D · Emerging Tech
@@ -48,9 +56,17 @@ SPECIALISTS (run any time)
   /mxm-design         Full design team — UX + UI + brand + behavioral science
   /mxm-seo            Search visibility — Google, voice search, AI answers
   /mxm-security       Security audit — threat modeling, CSO auto-loop
-  /mxm-compliance     Regulatory — GDPR, HIPAA, SOC2, PCI-DSS, ISO 27001
-  /mxm-behavior       Behavioral science — Fogg, COM-B, EAST, Hook Model
+  /mxm-compliance     14 frameworks: GDPR, HIPAA, SOC2, PCI-DSS, ISO 27001/13485/14971,
+                      UAE-PDPL, CASL, FINTRAC, EU AI Act, NIST CSF, WCAG, PIPEDA
+  /mxm-behavior       64 behavioral frameworks — Fogg, COM-B, EAST, Hook, Cialdini, Prospect Theory…
+  /mxm-watch          Proactive Watch — 11 drift classes, runs auto on session start
   /mxm-superpowers    Advanced workflows — TDD, parallel agents, debugging
+  /mxm-wiki           Cross-project knowledge layer (MemPalace-backed)
+  /mxm-voice          Voice-driven office routing (requires VoiceMode plugin)
+
+MEMORY + RECALL
+  /mxm-remember       Write a memory note to MemPalace (tagged, queryable)
+  /mxm-recall         Cross-session memory recall via MemPalace knowledge graph
 
 USAGE ACROSS PLATFORMS
   Claude Code:    /mxm-help
@@ -59,7 +75,13 @@ USAGE ACROSS PLATFORMS
   Claude.ai:      run /mxm-context to generate paste-ready context
   Claude Dispatch: /dispatch then reference .mxm-executive-summary/ files
 
-Maxim v1.0.0 · 87 agents · 23 skill domains · 31 commands · 63 frameworks
+Maxim v1.1.0 · 90 specialist agents · 34 skill domains · 38 commands · 64 frameworks
+14 compliance frameworks · 7 MCP servers (47 tools) · 11 ADRs · BSL-1.1 licensed
+
+Coming in v1.2 (Q4 2026): verb-first commands (/mxm-build, /mxm-fix, /mxm-ship)
++ persona commands (/mxm-legal, /mxm-arch, /mxm-secure, /mxm-founder, /mxm-pm)
++ 25 named specialists across 7 offices + persona-aware /mxm-help.
+See documents/reference/AGENT_ROSTER_v1.2_PROPOSAL.md for the full design.
 ```
 
 ### Tag output: 🟢 HIGH

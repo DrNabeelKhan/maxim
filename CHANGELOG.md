@@ -8,6 +8,51 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.1.0.4 — 2026-04-28 — `/mxm-help` content drift fix (Class 11)
+
+`/mxm-help` was outputting v1.0.0-era counts (`87 agents · 23 skill domains ·
+31 commands · 63 frameworks`). Reality per `AGENT_SKILL_INVENTORY.md`:
+**90 agents · 34 skill domains · 38 commands · 64 frameworks**. Exactly the
+kind of surface-claims-drift that Class 11 was codified to catch in v1.0.1.
+
+Caught on a manual `/mxm-help` run during testing-customer onboarding —
+the very FIRST command a new user runs was lying about the product's
+capability counts.
+
+### Fixed
+
+- `.claude/commands/mxm-help.md` — counts updated to current INVENTORY
+  ground-truth, version bumped `v1.0.0 → v1.1.0`, footer line aligned.
+
+### Added
+
+- **LICENSING section** at the top — explains the 90-day Pro Trial
+  auto-activation flow (v1.1.0.1) so first-time users immediately see what
+  they get for free, including owner-key bypass mention.
+- **MEMORY + RECALL** section — surfaces `/mxm-remember` + `/mxm-recall`
+  (MemPalace-backed cross-session memory).
+- **/mxm-watch** to specialists list — Proactive Watch with 11 classes
+  (was previously underexposed).
+- **/mxm-wiki** + **/mxm-voice** to specialists list.
+- **v1.2 preview footer** — pointing at AGENT_ROSTER_v1.2_PROPOSAL.md so
+  testers know the verb-first + persona surface is locked and incoming.
+
+### Why this matters
+
+`/mxm-help` is the FIRST surface a new user touches. Stale counts here
+undermine credibility immediately — even when every internal doc is
+correct (it was). This is exactly the gap Class 11 + `bootstrap/sync-counts.sh`
+were built for; we caught one Class 11 had not yet learned to scan.
+
+### Follow-up (filed for v1.1.1 sync-counts hardening)
+
+Add `.claude/commands/mxm-help.md` to the regex pattern set scanned by
+`bootstrap/sync-counts.sh` — version + count claims in user-facing
+command output should auto-update from INVENTORY on every commit.
+Tracked as a Class 11 regression-guard improvement.
+
+---
+
 ## v1.1.0.3 — 2026-04-27 — Single-restart upgrade (BUG-007 follow-up)
 
 Hotfix on v1.1.0.2. Collapses the post-upgrade restart cycle from 2 → 1.
