@@ -8,6 +8,68 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.1.0.1 — 2026-04-27 — Pro Trial auto-activation (Class 11 surface-claims-drift fix)
+
+Hotfix on v1.1.0. Wires the `pro_trial.auto_activates_on_install` promise from
+`grants.json` that v1.1.0 shipped declared but did not honor at runtime.
+
+**The gap.** v1.1.0 ships `pro_trial` as a defined tier in `grants.json` with
+`auto_activates_on_install: true`. The `/issue` endpoint did not check that flag —
+all anonymous fingerprints received Starter JWTs regardless of first-install status.
+This is a textbook **Class 11 surface-claims-drift** finding: a published capability
+exists in spec but is not dispatchable at runtime.
+
+**The fix.** New `selectIssueTier()` helper in `cloudflare-worker/src/v11a-license.ts`:
+- First `/issue` from a fingerprint → 90-day Pro Trial JWT (per `grants.json` TTL)
+- Re-issue during trial window → same expiry timestamp anchored to first install
+  (idempotent — no extension via reinstall)
+- Re-issue after trial expiry → falls back to 30-day Starter (auto-renewable forever per ADR-004)
+- Trial state tracked via permanent `fp_lifecycle:{fingerprint}` KV markers
+- Defensive: malformed lifecycle markers fail-soft to "no marker" rather than crashing
+
+**Server-side change only — no plugin update required.** Existing v1.0.0 / v1.1.0
+plugin installs benefit immediately on next `/issue` call. Owner-key bypass
+unaffected.
+
+### Added (v1.1.0.1)
+
+- `cloudflare-worker/src/v11a-license.ts`:
+  - `PRO_TRIAL_TTL_DAYS` / `PRO_TRIAL_TTL_SECONDS` constants
+  - `FpLifecycle` interface — `{first_seen_at, pro_trial_expires_at}`
+  - `selectIssueTier()` helper with one-shot trial enforcement + idempotent re-issue
+  - Defensive try/catch around `KV.get(key, "json")` with type-guard on shape
+  - `auto_activates_on_install?: boolean` field added to `GrantsConfig.tiers`
+- `mcp/_shared/license-gate.test.mjs`:
+  - 4 new live tests (replaces 2 existing live tests that used real machine fingerprint):
+    - `[live] /issue with fresh fp returns Pro Trial JWT (90-day, Class 11 fix)`
+    - `[live] /validate returns tier + grants for valid Pro Trial JWT`
+    - `[live] /issue is idempotent during pro_trial — re-issue returns same expiry`
+    - `[live] /issue returns starter after pro_trial expired (via wrangler KV)`
+  - `freshTestFingerprint()` helper using `crypto.randomBytes(32).toString("hex")` —
+    eliminates production KV pollution from the operator's real-machine state
+  - Test 4 uses `wrangler kv key put --path=<tempfile>` for cross-platform JSON injection
+
+### Changed
+
+- `handleAnonymousIssue()` now calls `selectIssueTier()` instead of hardcoding `"starter"`.
+  All downstream KV writes + JWT claims use the selected tier.
+- KV `issuance:` and `license:` records now include `first_install: boolean` field for
+  audit-log clarity (which `/issue` calls were trial-activation events).
+
+### Verification
+
+- 11/11 tests pass (was 9/9 + 2 live skip; now 7 unit + 4 live = 11 total).
+- Worker re-deployed: Version `54be3b40-6b81-452f-830d-60afbf830ad4`.
+- KV state verified: 6 `fp_lifecycle:*` keys created during test runs (confirms
+  pro_trial activation firing end-to-end).
+
+### Resolves
+
+- Class 11 surface-claims-drift instance: grants.json `pro_trial.auto_activates_on_install`
+  promise now honored by Worker `/issue` handler.
+
+---
+
 ## v1.1.0 — 2026-04-27 — License middleware foundation (v1.1.A scope)
 
 Promoted from `v1.1.0-rc.1` after v1.1.A passed acceptance. v1.1.0 ships the

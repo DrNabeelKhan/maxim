@@ -34,6 +34,10 @@ import type { Env } from "./index";
 const ANON_STARTER_TTL_DAYS = 30;
 const ANON_STARTER_TTL_SECONDS = ANON_STARTER_TTL_DAYS * 24 * 3600;
 
+// Pro Trial JWT TTL: 90 days per grants.json (auto-activated on first install)
+const PRO_TRIAL_TTL_DAYS = 90;
+const PRO_TRIAL_TTL_SECONDS = PRO_TRIAL_TTL_DAYS * 24 * 3600;
+
 // Rate-limit thresholds per locked design G3
 const RATE_LIMITS = {
     issue: {
@@ -53,6 +57,7 @@ interface GrantsConfig {
         display_name: string;
         jwt_ttl_days: number;
         anonymous?: boolean;
+        auto_activates_on_install?: boolean;
         grants: string[];
         rate_limits: { issue_per_machine_per_day: number; validate_per_machine_per_day: number };
     }>;
@@ -60,6 +65,74 @@ interface GrantsConfig {
 }
 
 const GRANTS = grantsConfig as unknown as GrantsConfig;
+
+// Fingerprint-lifecycle marker schema (KV key: fp_lifecycle:{fingerprint}, no TTL)
+//
+// Tracks whether a machine fingerprint has ever started a Pro Trial. Used by
+// selectIssueTier() to enforce one-shot pro_trial activation per machine.
+interface FpLifecycle {
+    first_seen_at: number;        // unix seconds — when /issue was first called for this fingerprint
+    pro_trial_expires_at: number; // unix seconds — when the original pro_trial JWT issued at first_seen_at expires
+}
+
+// Determines which tier to issue based on fingerprint history.
+//   - First /issue from a fingerprint → pro_trial (90 days), if pro_trial.auto_activates_on_install
+//   - Re-issue during trial window → pro_trial with ORIGINAL expiry (idempotent — no extension via reinstall)
+//   - Re-issue after trial window → starter (30-day anonymous, auto-renewable forever)
+//   - If pro_trial tier missing or auto_activates_on_install=false → always starter
+//
+// Class 11 (surface-claims-drift) resolution: honors grants.json
+// pro_trial.auto_activates_on_install promise.
+async function selectIssueTier(
+    env: Env,
+    fp: string,
+    now: number,
+): Promise<{ tier: "starter" | "pro_trial"; expiresAtSeconds: number; isFirstInstall: boolean }> {
+    const proTrialTier = GRANTS.tiers["pro_trial"];
+    if (!proTrialTier || !proTrialTier.auto_activates_on_install) {
+        return { tier: "starter", expiresAtSeconds: now + ANON_STARTER_TTL_SECONDS, isFirstInstall: false };
+    }
+
+    const lifecycleKey = `fp_lifecycle:${fp}`;
+    // Defensive: malformed lifecycle markers (e.g., from manual ops or test injection)
+    // fail-soft to "no marker" rather than crashing the request.
+    let existing: FpLifecycle | null = null;
+    if (env.LICENSES) {
+        try {
+            existing = (await env.LICENSES.get(lifecycleKey, "json")) as FpLifecycle | null;
+            // Type-guard: ensure expected shape
+            if (existing && (typeof existing.first_seen_at !== "number" || typeof existing.pro_trial_expires_at !== "number")) {
+                console.warn(`fp_lifecycle:${fp.slice(0, 16)}... malformed shape; treating as absent`);
+                existing = null;
+            }
+        } catch (err) {
+            console.warn(`fp_lifecycle:${fp.slice(0, 16)}... read failed (${(err as Error).message}); treating as absent`);
+            existing = null;
+        }
+    }
+
+    if (!existing) {
+        const proTrialExp = now + PRO_TRIAL_TTL_SECONDS;
+        if (env.LICENSES) {
+            // Fail-soft: if KV write fails, request still succeeds. Race: simultaneous
+            // /issue calls from same fp may both bypass first-time check; both JWTs
+            // share same expiry — effectively idempotent.
+            await env.LICENSES.put(
+                lifecycleKey,
+                JSON.stringify({ first_seen_at: now, pro_trial_expires_at: proTrialExp } satisfies FpLifecycle),
+            );
+        }
+        return { tier: "pro_trial", expiresAtSeconds: proTrialExp, isFirstInstall: true };
+    }
+
+    if (existing.pro_trial_expires_at > now) {
+        // Idempotent: re-issue during trial returns SAME expiry (anchored to first_seen_at)
+        return { tier: "pro_trial", expiresAtSeconds: existing.pro_trial_expires_at, isFirstInstall: false };
+    }
+
+    // Trial used up — starter from now on (auto-renewable every 30 days, free forever per ADR-004)
+    return { tier: "starter", expiresAtSeconds: now + ANON_STARTER_TTL_SECONDS, isFirstInstall: false };
+}
 
 // =====================================================================
 // POST /issue — anonymous Starter JWT issuer
@@ -99,15 +172,16 @@ export async function handleAnonymousIssue(request: Request, env: Env): Promise<
         );
     }
 
-    // Issue Starter JWT
-    const starterTier = GRANTS.tiers["starter"];
-    if (!starterTier) {
-        console.error("grants.json missing starter tier");
+    // Issue tier-appropriate JWT (pro_trial on first install per Class 11 fix, then starter)
+    const now = Math.floor(Date.now() / 1000);
+    const tierSelection = await selectIssueTier(env, fp, now);
+    const issuedTier = GRANTS.tiers[tierSelection.tier];
+    if (!issuedTier) {
+        console.error(`grants.json missing ${tierSelection.tier} tier`);
         return jsonResp({ error: "internal_grants_error" }, 500);
     }
 
-    const now = Math.floor(Date.now() / 1000);
-    const expSeconds = now + ANON_STARTER_TTL_SECONDS;
+    const expSeconds = tierSelection.expiresAtSeconds;
     const expiresAtIso = new Date(expSeconds * 1000).toISOString();
     const jwtId = crypto.randomUUID();
 
@@ -119,13 +193,13 @@ export async function handleAnonymousIssue(request: Request, env: Env): Promise<
         iat: now,
         exp: expSeconds,
         jti: jwtId,
-        // v1.1.A claims
-        tier: "starter",
-        grants: starterTier.grants,
+        // v1.1.A claims (tier from selectIssueTier)
+        tier: tierSelection.tier,
+        grants: issuedTier.grants,
         machine_fingerprint: fp,
         client_version: clientVersion,
         // Legacy claims for pack-engine compatibility
-        product_id: "starter",
+        product_id: tierSelection.tier,
         packs: [],
         billing: "free",
         order_id: jwtId,
@@ -142,19 +216,20 @@ export async function handleAnonymousIssue(request: Request, env: Env): Promise<
         await Promise.allSettled([
             env.LICENSES.put(
                 issuanceKey,
-                JSON.stringify({ tier: "starter", jwt_id: jwtId, fingerprint: fp, client_version: clientVersion, ts: now }),
+                JSON.stringify({ tier: tierSelection.tier, jwt_id: jwtId, fingerprint: fp, client_version: clientVersion, ts: now, first_install: tierSelection.isFirstInstall }),
                 { expirationTtl: ttl30d },
             ),
             env.LICENSES.put(
                 licenseKey,
                 JSON.stringify({
-                    tier: "starter",
-                    grants: starterTier.grants,
+                    tier: tierSelection.tier,
+                    grants: issuedTier.grants,
                     fingerprint: fp,
                     issued_at: new Date(now * 1000).toISOString(),
                     expires_at: expiresAtIso,
                     status: "active",
                     anonymous: true,
+                    first_install: tierSelection.isFirstInstall,
                 }),
             ),
         ]);
@@ -162,8 +237,8 @@ export async function handleAnonymousIssue(request: Request, env: Env): Promise<
 
     return jsonResp({
         jwt: signedJwt,
-        tier: "starter",
-        grants: starterTier.grants,
+        tier: tierSelection.tier,
+        grants: issuedTier.grants,
         expires_at: expiresAtIso,
     });
 }

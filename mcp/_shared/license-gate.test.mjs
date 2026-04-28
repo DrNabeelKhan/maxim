@@ -265,37 +265,115 @@ test("CACHE_CORRUPT on malformed JSON", async () => {
 // Live-Worker tests (skipped unless MXM_E2E_LIVE_WORKER=1)
 // =====================================================================
 
-test("[live] /issue returns valid Starter JWT", async () => {
+// Helper: generate a fresh random 64-hex fingerprint for test isolation
+// (avoids polluting the operator's real-machine KV state in production)
+function freshTestFingerprint() {
+  return crypto.randomBytes(32).toString("hex");
+}
+
+test("[live] /issue with fresh fp returns Pro Trial JWT (90-day, Class 11 fix)", async () => {
   if (process.env.MXM_E2E_LIVE_WORKER !== "1") {
     console.log("    [skip] set MXM_E2E_LIVE_WORKER=1 to run");
     return;
   }
-  const fp = _internal.getMachineFingerprint();
-  if (!fp) throw new Error("no fingerprint available");
+  const fp = freshTestFingerprint();
   const r = await _internal.postJson(`${_internal.WORKER_URL}/issue`, {
     machine_fingerprint: fp,
     client_version: "test/1.0.0",
   });
   assertEq(typeof r.jwt, "string");
-  assertEq(r.tier, "starter");
+  assertEq(r.tier, "pro_trial");
   assertEq(Array.isArray(r.grants), true);
+  // Pro Trial grants must include behavioral-audit-50-per-month (Pro Trial signature grant)
+  assertEq(r.grants.includes("behavioral-audit-50-per-month"), true, "pro_trial grants includes behavioral-audit-50-per-month");
   assertEq(typeof r.expires_at, "string");
+  // Expiry should be ~90 days from now (allow ±1 day for clock + network)
+  const daysFromNow = (new Date(r.expires_at).getTime() - Date.now()) / 86_400_000;
+  if (daysFromNow < 89 || daysFromNow > 91) {
+    throw new Error(`pro_trial expiry ${daysFromNow.toFixed(2)}d from now, expected 89–91d`);
+  }
 });
 
-test("[live] /validate returns tier + grants for valid JWT", async () => {
+test("[live] /validate returns tier + grants for valid Pro Trial JWT", async () => {
   if (process.env.MXM_E2E_LIVE_WORKER !== "1") {
     console.log("    [skip] set MXM_E2E_LIVE_WORKER=1 to run");
     return;
   }
-  const fp = _internal.getMachineFingerprint();
+  const fp = freshTestFingerprint();
   const issued = await _internal.postJson(`${_internal.WORKER_URL}/issue`, {
     machine_fingerprint: fp,
     client_version: "test/1.0.0",
   });
   const validated = await _internal.postJson(`${_internal.WORKER_URL}/validate`, { jwt: issued.jwt });
   assertEq(validated.valid, true);
-  assertEq(validated.tier, "starter");
+  assertEq(validated.tier, "pro_trial");
   assertEq(Array.isArray(validated.grants), true);
+});
+
+test("[live] /issue is idempotent during pro_trial — re-issue returns same expiry", async () => {
+  if (process.env.MXM_E2E_LIVE_WORKER !== "1") {
+    console.log("    [skip] set MXM_E2E_LIVE_WORKER=1 to run");
+    return;
+  }
+  const fp = freshTestFingerprint();
+  const r1 = await _internal.postJson(`${_internal.WORKER_URL}/issue`, {
+    machine_fingerprint: fp,
+    client_version: "test/1.0.0",
+  });
+  // 250ms gap to ensure any KV write propagates before second call
+  await new Promise((res) => setTimeout(res, 250));
+  const r2 = await _internal.postJson(`${_internal.WORKER_URL}/issue`, {
+    machine_fingerprint: fp,
+    client_version: "test/1.0.0",
+  });
+  assertEq(r1.tier, "pro_trial");
+  assertEq(r2.tier, "pro_trial");
+  // Idempotency: same expiry timestamp anchored to first /issue (no extension via reinstall)
+  assertEq(r1.expires_at, r2.expires_at, "re-issue during trial returns same expiry");
+});
+
+test("[live] /issue returns starter after pro_trial expired (via wrangler KV)", async () => {
+  if (process.env.MXM_E2E_LIVE_WORKER !== "1") {
+    console.log("    [skip] set MXM_E2E_LIVE_WORKER=1 to run");
+    return;
+  }
+  const fp = freshTestFingerprint();
+  const lifecycleKey = `fp_lifecycle:${fp}`;
+  const expiredMarker = JSON.stringify({ first_seen_at: 0, pro_trial_expires_at: 100 }); // 1970 — well in past
+  // Use --path with a tempfile to avoid Windows cmd quoting issues
+  const tempFile = path.join(os.tmpdir(), `mxm-test-marker-${process.pid}-${Date.now()}.json`);
+  fs.writeFileSync(tempFile, expiredMarker, "utf8");
+  const wrangler = (args) =>
+    execSync(`npx wrangler ${args}`, {
+      cwd: path.resolve(process.cwd(), "cloudflare-worker"),
+      stdio: ["ignore", "pipe", "pipe"],
+      encoding: "utf8",
+    });
+  try {
+    // Inject expired-trial marker for fresh fp via --path (cross-platform safe)
+    wrangler(`kv key put --binding=LICENSES "${lifecycleKey}" --path="${tempFile}"`);
+  } catch (err) {
+    console.log("    [skip] wrangler unavailable or KV write failed: " + err.message.split("\n")[0]);
+    try { fs.unlinkSync(tempFile); } catch {}
+    return;
+  }
+  try {
+    const r = await _internal.postJson(`${_internal.WORKER_URL}/issue`, {
+      machine_fingerprint: fp,
+      client_version: "test/1.0.0",
+    });
+    assertEq(r.tier, "starter", "post-trial /issue should return starter");
+    assertEq(r.grants.includes("behavioral-audit-50-per-month"), false, "starter does NOT include pro_trial grants");
+    // Starter expiry should be ~30 days
+    const daysFromNow = (new Date(r.expires_at).getTime() - Date.now()) / 86_400_000;
+    if (daysFromNow < 29 || daysFromNow > 31) {
+      throw new Error(`starter expiry ${daysFromNow.toFixed(2)}d from now, expected 29–31d`);
+    }
+  } finally {
+    // Cleanup — remove KV marker + tempfile so KV doesn't accumulate orphans
+    try { wrangler(`kv key delete --binding=LICENSES "${lifecycleKey}"`); } catch {}
+    try { fs.unlinkSync(tempFile); } catch {}
+  }
 });
 
 // =====================================================================

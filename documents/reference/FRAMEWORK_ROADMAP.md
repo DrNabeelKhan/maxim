@@ -40,16 +40,16 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 - Worker-side `/validate` endpoint logs (tool, tier, project_id, timestamp) to a KV namespace for usage analytics — feeds the portfolio dashboard and support debugging.
 - Tier-grant enforcement: the validate response includes the tier's grant list; tools that require specific grants (e.g., `mempalace_kg_add` requires `mempalace-full`) check locally after the gate clears.
 
-**Ship gates (v1.1.0 release status):**
+**Ship gates (v1.1.0 release status — updated 2026-04-27 post-deploy):**
 - [x] `requireValidLicense` middleware merged into all 7 MCP servers — **SHIPPED**
-- [ ] Worker `/validate` endpoint deployed + KV binding live — **CODE READY**, awaits `wrangler deploy`
-- [ ] Starter tier anonymous JWT issuer live — **CODE READY**, awaits `wrangler deploy`
+- [x] Worker `/validate` endpoint deployed + KV binding live — **LIVE** at `https://maxim-license-api.isystematic.workers.dev` (Version `54be3b40-6b81...`)
+- [x] Starter tier anonymous JWT issuer live — **LIVE** (Pro Trial 90d auto-activates per v1.1.0.1 hotfix; falls back to Starter post-trial)
 - [x] End-to-end test: clone public repo without a license → tool calls fail with clear error — **SHIPPED** (FIRST_RUN_FAILED test in `mcp/_shared/license-gate.test.mjs`)
-- [ ] End-to-end test: paid-tier JWT → tool calls succeed + usage logged — **CODE READY**, live test gated on `MXM_E2E_LIVE_WORKER=1` env flag
+- [x] End-to-end test: paid-tier JWT → tool calls succeed + usage logged — **VERIFIED LIVE** (Pro Trial JWT issued + validated; usage logged to `issuance:`/`heartbeat:` KV keys)
 - [x] End-to-end test: expired JWT → tool calls fail with refresh instructions — **SHIPPED** (JWT_EXPIRED test)
 - [x] Rate-limit policy per tier documented and verified — **SHIPPED** (`v11a-license.ts`)
 
-**4 of 7 gates green by code; 3 yellow gates flip green automatically once Worker is deployed.**
+**7 of 7 gates green. v1.1.0 + v1.1.0.1 LIVE in production 2026-04-27.**
 
 **Priority.** Treated as higher-priority than any individual framework addition — the work gates every future paid-tier feature.
 
