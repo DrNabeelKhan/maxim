@@ -8,6 +8,58 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.1.1 — 2026-04-28 — Self-update + public install docs
+
+Resolves a tester-onboarding pain point that became impossible to ignore over
+the v1.1.0.1 → v1.1.0.4 patch chain. Every micro-fix to a slash command, skill,
+or hook required testers to run `/plugin uninstall` + `/plugin install` and
+restart Claude Code TWICE (once for the spawn-with-deps wrapper to npm-install
+node_modules, once for the new code to load). ~2 minutes of friction per patch.
+Multiplied across 4 patches in 24 hours, the upgrade UX dominated the
+experience.
+
+### Added
+
+- **`bootstrap/mxm-self-update.sh`** + **`bootstrap/mxm-self-update.ps1`** — fast
+  in-place updater. Pulls latest commits in the marketplace cache, syncs content
+  into the install cache while preserving `node_modules/`, sentinels, and lock
+  files. Updates `installed_plugins.json` `gitCommitSha` + `lastUpdated`.
+- **`.claude/commands/mxm-self-update.md`** — `/mxm-self-update` slash command.
+  Cross-platform (auto-detects bash vs PowerShell).
+- **`documents/INSTALL.md`** — public-facing install / upgrade / uninstall guide.
+  Covers prerequisites, base plugin install, three pack-strategy options
+  (L1 individuals, L2 bundles, L3 verticals), verification via `claude mcp list`,
+  upgrade via `/mxm-self-update`, uninstall (with `--scope user` flag for
+  troubleshooting), troubleshooting common failures, support channels.
+
+### Tester upgrade flow
+
+**Before v1.1.1 (~2 min, 2 restarts):**
+```
+/plugin uninstall maxim@maxim-packs
+/plugin install maxim@maxim-packs
+restart Claude Code (first restart — wrapper installs node_modules)
+restart Claude Code (second restart — MCPs load with deps)
+```
+
+**After v1.1.1 (~5 sec + 1 restart):**
+```
+/mxm-self-update
+restart Claude Code
+```
+
+### Roadmap implication
+
+- v1.1.1 (this) — self-update + install docs (SHIPPED 2026-04-28)
+- v1.1.2 (was v1.1.1) — Maxim Overlay Engine + 7 compliance frameworks. Renumbered to keep the patch chain clean. See `documents/reference/FRAMEWORK_ROADMAP.md` § v1.1.2.
+
+### Non-goals
+
+- Updating installed packs (only the base plugin in v1.1.1 — pack updates land in v1.1.1.x or v1.1.2)
+- Cross-version migration helpers — major bumps (v1.1.x → v1.2.x) still require full reinstall
+
+---
+
 ## v1.1.0.4 — 2026-04-28 — `/mxm-help` content drift fix (Class 11)
 
 `/mxm-help` was outputting v1.0.0-era counts (`87 agents · 23 skill domains ·

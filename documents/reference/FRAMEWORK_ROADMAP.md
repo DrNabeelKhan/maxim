@@ -61,15 +61,39 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 
 ---
 
-## 🎯 v1.1.1 — Maxim Overlay Engine + Compliance Expansion (target: Q3 2026)
+## 🎯 v1.1.1 — Self-Update + Public Install Docs (SHIPPED 2026-04-28)
+
+**Theme:** Operator pain → tester pain. Every patch release between v1.1.0 and v1.1.0.4 forced a `/plugin uninstall` + `/plugin install` + 2 restarts cycle on testers. Total: ~2 minutes of friction per micro-fix. Multiplied across the 4 patches in 24 hours, the upgrade UX dominated the user experience.
+
+**Shipped capability.**
+
+- **`bootstrap/mxm-self-update.{sh,ps1}`** — fast in-place updater. Pulls latest from marketplace cache (git pull), syncs content into install cache (excludes `.git/`, `node_modules/`, `.mcp-deps-installed` sentinel, `.mcp-install-lock`), updates `installed_plugins.json` `gitCommitSha` + `lastUpdated`. Preserves npm-installed deps so MCPs don't need to re-bootstrap.
+- **`.claude/commands/mxm-self-update.md`** — `/mxm-self-update` slash command wrapper. Cross-platform (bash + ps1) detection.
+- **`documents/INSTALL.md`** — public-facing install / upgrade / uninstall guide. Covers base plugin install, choosing among 14 packs (L1 individuals vs L2 bundles vs L3 verticals), verification, fast-path upgrade via `/mxm-self-update`, troubleshooting, support channels, license terms.
+
+**Tester upgrade flow (after v1.1.1):**
+```
+/mxm-self-update           # ~5 sec
+restart Claude Code        # node_modules preserved, single restart
+```
+
+vs. previous flow (~2 min, 2 restarts).
+
+**Non-goals for v1.1.1.**
+- Updating installed packs (only the base plugin — pack updates land in v1.1.1.x or v1.1.2)
+- Cross-version migration helpers (e.g. v1.1.x → v1.2.x). Major-version bumps still require full reinstall.
+
+---
+
+## 🎯 v1.1.2 — Maxim Overlay Engine + Compliance Expansion (target: Q3 2026)
 
 **Theme:** Combines the two workstreams originally bundled into v1.1 alongside the license middleware:
 - v1.1.B Maxim Overlay Engine (per ADR-012) — apply governance to every Claude Code plugin
 - v1.1.C 7 compliance frameworks — fill the regulated-industry surface area
 
-**Why split.** Foundation (license middleware in v1.1.0) gates everything; we shipped it standalone so users get tier-enforced runtime now. MOE + compliance frameworks land together in v1.1.1 because MOE's tier-gating depends on the license layer (already shipped) and compliance frameworks plug into MOE's PreToolUse compliance gate.
+**Why split.** Foundation (license middleware in v1.1.0) gates everything; we shipped it standalone so users get tier-enforced runtime now. v1.1.1 (self-update + install docs) shipped 2026-04-28 to unblock tester onboarding. MOE + compliance frameworks land together in v1.1.2 because MOE's tier-gating depends on the license layer (already shipped) and compliance frameworks plug into MOE's PreToolUse compliance gate.
 
-### v1.1.1 — Compliance Expansion (7 frameworks)
+### v1.1.2 — Compliance Expansion (7 frameworks)
 
 | § in MASTER | Framework | Category | Reference | Priority |
 |---|---|---|---|---|
