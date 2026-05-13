@@ -65,5 +65,46 @@ if (-not (Test-Path $HandoffFile)) {
 "@ | Set-Content -Path $HandoffFile
 }
 
+# ----- Topology: child rollup to parent (ADR-013) -----
+try {
+    $ManifestPath2 = Join-Path $ProjectRoot 'config\project-manifest.json'
+    if (Test-Path $ManifestPath2) {
+        $topo2 = (Get-Content $ManifestPath2 -Raw | ConvertFrom-Json -ErrorAction SilentlyContinue).topology
+        if ($topo2 -and $topo2.kind -eq 'child' -and $topo2.parent) {
+            $ParentPath = $topo2.parent
+            if (Test-Path $ParentPath) {
+                $ParentMemDir = Join-Path $ParentPath '.claude-sessions-memory'
+                if (-not (Test-Path $ParentMemDir)) { New-Item -ItemType Directory -Path $ParentMemDir -Force | Out-Null }
+                $RollupFile = Join-Path $ParentMemDir 'children-rollup.md'
+                $ChildProjectId = 'unknown'
+                try {
+                    $cm2 = Get-Content $ManifestPath2 -Raw | ConvertFrom-Json -ErrorAction SilentlyContinue
+                    if ($cm2 -and $cm2.project -and $cm2.project.id) { $ChildProjectId = $cm2.project.id }
+                } catch {}
+                $ChildHandoffStatus = 'READY'
+                try {
+                    $chp2 = Join-Path $ProjectRoot '.mxm-skills\agents-handoff.md'
+                    if (Test-Path $chp2) {
+                        $cl2 = (Select-String -Path $chp2 -Pattern '^\*?\*?Status:' | Select-Object -First 1).Line
+                        if ($cl2) { $ChildHandoffStatus = ($cl2 -replace '\*','' -replace '^Status:\s*','').Trim().Substring(0,[Math]::Min(20,$cl2.Length)) }
+                    }
+                } catch {}
+                $ChildSummary2 = ''
+                try {
+                    $hf2 = Join-Path $ProjectRoot '.claude-sessions-memory\handoff.md'
+                    if (Test-Path $hf2) {
+                        $ll2 = (Get-Content $hf2 -ErrorAction SilentlyContinue | Where-Object {$_.Trim()-ne'' -and -not $_.StartsWith('#')} | Select-Object -Last 1)
+                        if ($ll2) { $ChildSummary2 = $ll2.Trim().Substring(0,[Math]::Min(80,$ll2.Trim().Length)) }
+                    }
+                } catch {}
+                Add-Content -Path $RollupFile -Value "[$NowIso] | $ChildProjectId | $ChildHandoffStatus | $ChildSummary2" -ErrorAction SilentlyContinue
+            }
+        }
+    }
+} catch {
+    $GapLogPath = Join-Path $ProjectRoot '.mxm-skills\agents-skill-gaps.log'
+    Add-Content -Path $GapLogPath -Value "[$NowIso] [topology-rollup-warn] child->parent rollup failed: $_" -ErrorAction SilentlyContinue
+}
+
 [Console]::Error.WriteLine("Maxim SessionEnd: $Today marker written")
 exit 0

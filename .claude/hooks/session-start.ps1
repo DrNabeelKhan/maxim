@@ -191,6 +191,48 @@ if ((Test-Path $WatchScript) -and (Test-Path $WatchProfile)) {
     }
 }
 
+# ----- Topology: parent dashboard (ADR-013, step 11.5) -----
+$ChildrenLines = @()
+try {
+    if (Test-Path $ManifestPath) {
+        $topo = (Get-Content $ManifestPath -Raw | ConvertFrom-Json -ErrorAction SilentlyContinue).topology
+        if ($topo -and $topo.kind -eq 'parent' -and $topo.children) {
+            foreach ($ChildPath in $topo.children) {
+                $ChildId = Split-Path $ChildPath -Leaf
+                try {
+                    $cm = Get-Content (Join-Path $ChildPath 'config\project-manifest.json') -Raw -ErrorAction SilentlyContinue | ConvertFrom-Json -ErrorAction SilentlyContinue
+                    if ($cm -and $cm.project -and $cm.project.id) { $ChildId = $cm.project.id }
+                } catch {}
+                if (-not (Test-Path (Join-Path $ChildPath 'config\project-manifest.json'))) {
+                    $ChildrenLines += "    $($ChildId.PadRight(16)) ⚪ NO DATA"
+                    continue
+                }
+                $ChildStatus = 'UNKNOWN'
+                try {
+                    $chp = Join-Path $ChildPath '.mxm-skills\agents-handoff.md'
+                    if (Test-Path $chp) {
+                        $cl = (Select-String -Path $chp -Pattern '^\*?\*?Status:' | Select-Object -First 1).Line
+                        if ($cl) { $ChildStatus = ($cl -replace '\*','' -replace '^Status:\s*','').Trim().Substring(0,[Math]::Min(16,$cl.Length)) }
+                    }
+                } catch {}
+                $StatusEmoji = switch -Wildcard ($ChildStatus) { 'READY*' {'🟢'} 'PARTIAL*' {'🟡'} 'BLOCKED*' {'🔴'} 'FAILED*' {'🔴'} default {'⚪'} }
+                $ChildSummary = ''
+                try {
+                    $rp = Join-Path $ChildPath '.claude-sessions-memory\children-rollup.md'
+                    if (-not (Test-Path $rp)) { $rp = Join-Path $ChildPath '.claude-sessions-memory\handoff.md' }
+                    if (Test-Path $rp) {
+                        $ll = (Get-Content $rp -ErrorAction SilentlyContinue | Where-Object {$_.Trim()-ne''} | Select-Object -Last 1)
+                        if ($ll) { $ChildSummary = $ll.Trim().Substring(0,[Math]::Min(50,$ll.Trim().Length)) }
+                    }
+                } catch {}
+                $ChildrenLines += "    $($ChildId.PadRight(16)) $StatusEmoji $($ChildStatus.PadRight(12)) $ChildSummary"
+            }
+        }
+    }
+} catch {
+    # Fail-soft — topology errors never block session start
+}
+
 # ----- Print session start summary to stderr -----
 [Console]::Error.WriteLine('=======================================================')
 [Console]::Error.WriteLine('Maxim SESSION START')
@@ -202,6 +244,10 @@ if ((Test-Path $WatchScript) -and (Test-Path $WatchProfile)) {
 if ($WatchDrift -gt 0 -or $WatchErrors -gt 0) {
     [Console]::Error.WriteLine("  Drift     : $WatchDrift (run /mxm-watch for details)")
     if ($WatchErrors -gt 0) { [Console]::Error.WriteLine("  Watch errs: $WatchErrors") }
+}
+if ($ChildrenLines.Count -gt 0) {
+    [Console]::Error.WriteLine("  Children  :")
+    foreach ($cl in $ChildrenLines) { [Console]::Error.WriteLine($cl) }
 }
 [Console]::Error.WriteLine('=======================================================')
 

@@ -41,6 +41,16 @@
     "_staleness_comment": "Days without activity before sync_portfolio surfaces this project as needs_update."
   },
 
+  "topology": {
+    "_comment": "ADR-013 (2026-05-13). Declares this project's position in a parent/child session-memory inheritance hierarchy. standalone = no inheritance (default). parent = reads children handoffs at session-start. child = appends rollup to parent at session-end. Container directories (no manifest) are invisible — do not declare them.",
+    "kind": "standalone",
+    "_kind_options": ["standalone", "parent", "child"],
+    "children": [],
+    "_children_comment": "ONLY when kind=parent. Array of absolute paths to child project roots (each must have config/project-manifest.json). Example: [\"E:/Projects/nabeelkhan/VAZIR\", \"E:/Projects/nabeelkhan/other-project\"]",
+    "parent": null,
+    "_parent_comment": "ONLY when kind=child. Absolute path to parent project root. Example: \"E:/Projects/nabeelkhan\""
+  },
+
   "meta": {
     "_comment": "v1.0.0+ NK-universe taxonomy. Used by mxm-portfolio MCP for cross-project queries and by content-strategist/seo-specialist for market-aware copy.",
     "ownership_type": "startup",

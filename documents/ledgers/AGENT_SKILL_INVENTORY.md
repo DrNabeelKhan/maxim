@@ -130,8 +130,9 @@ All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Tem
 | 010 | Confidence Tag Technical Educator Rubric | accepted |
 | 011 | Stripe-primary payment processor | accepted |
 | 012 | Maxim Overlay Engine (MOE) — governance layer for every installed Claude Code plugin | accepted |
+| 013 | Multi-Project Memory Inheritance — parent/child topology + upward rollup | accepted |
 
-**Total ADRs: 12.**
+**Total ADRs: 13.**
 
 ---
 

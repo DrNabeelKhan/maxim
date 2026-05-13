@@ -193,3 +193,105 @@ If multiple projects are open simultaneously (multiple VS Code/Claude Code windo
 - Never cross-write between projects
 - Project identity is determined by the folder Claude Code was opened in
 - If ambiguous, ask: "Which project is this session for?"
+
+**One named exception (ADR-013):** a child project MAY append one line to
+`<parent>/.claude-sessions-memory/children-rollup.md` at session end. This is
+the only allowed cross-project write. All other cross-writes remain forbidden.
+
+---
+
+## Multi-Project Inheritance Protocol (ADR-013)
+
+> Ratified 2026-05-13. Governs parent/child topology declared in `config/project-manifest.json` → `topology`.
+
+### Topology kinds
+
+| `topology.kind` | Meaning | Session-start behavior | Session-end behavior |
+|---|---|---|---|
+| `standalone` (default) | No inheritance. Current behavior unchanged. | Normal | Normal |
+| `parent` | Declares child projects. Reads their states. | Aggregate children dashboard in SESSION START output | Normal |
+| `child` | Belongs to a parent. Reports up. | Normal | Append rollup line to parent's `children-rollup.md` |
+
+Container directories (no `config/project-manifest.json`) are invisible — not a topology kind, no configuration needed.
+
+### Session-start step 11.5 — Parent dashboard
+
+Runs ONLY when `topology.kind == "parent"`, after step 11 (load session memory), before printing the summary.
+
+```
+For each path in topology.children:
+  1. Read <child>/.mxm-skills/agents-handoff.md → extract status line
+  2. Read <child>/.claude-sessions-memory/children-rollup.md → extract last line
+  3. Build one display row: "<child-id>  <status-emoji>  <status>  <date>  <summary>"
+  4. Inject into SESSION START output under "Children:" section
+  5. Fail-soft: if child path missing, no manifest, or no memory files → show "⚪ NO DATA", continue
+  6. NEVER block session start on missing child data
+```
+
+Output format:
+```
+Maxim SESSION START
+  Project   : parent-project-id
+  Root      : E:\Projects\nabeelkhan
+  Handoff   : READY
+  Open gaps : 0
+  Children  :
+    vazir      🟢 READY      2026-05-13  voice pipeline + TTS
+    project-b  🟡 PARTIAL    2026-05-12  auth flow in progress
+    project-c  ⚪ NO DATA
+```
+
+### Session-end corollary — Child rollup
+
+Runs ONLY when `topology.kind == "child"` and `topology.parent` is a non-null path.
+
+```
+1. Resolve <parent>/.claude-sessions-memory/children-rollup.md
+2. Read .mxm-skills/agents-handoff.md → extract status (default: "READY")
+3. Read .claude-sessions-memory/handoff.md → extract last non-empty line as summary
+4. Append ONE line to parent's children-rollup.md:
+   [YYYY-MM-DDTHH:MM:SSZ] | <project-id> | <status> | <one-line-summary>
+5. Fail-soft: if parent path missing, or write fails → log warning to
+   .mxm-skills/agents-skill-gaps.log and exit normally
+6. NEVER block session end on rollup failure
+```
+
+### Cross-write rule (amendment to Multi-Project Safety Rule)
+
+| Write direction | Allowed |
+|---|---|
+| Child → `<parent>/.claude-sessions-memory/children-rollup.md` (append only) | ✅ ALLOWED — the only named exception per ADR-013 |
+| Parent → any child file | ❌ FORBIDDEN |
+| Sibling → sibling | ❌ FORBIDDEN |
+| `.mxm-global/` sync (existing) | ✅ ALLOWED — governed by separate data-flow rule |
+
+### Configuring a parent project
+
+In `config/project-manifest.json`:
+
+```json
+"topology": {
+  "kind": "parent",
+  "children": [
+    "E:/Projects/nabeelkhan/VAZIR",
+    "E:/Projects/nabeelkhan/other-project"
+  ],
+  "parent": null
+}
+```
+
+### Configuring a child project
+
+```json
+"topology": {
+  "kind": "child",
+  "children": [],
+  "parent": "E:/Projects/nabeelkhan"
+}
+```
+
+### What a container directory looks like
+
+`E:\Projects\ARIA\` has no `config/project-manifest.json` → it is invisible to
+Claude Code's project detection. Projects inside it (`aria-simplification`) are
+standalone. No topology configuration needed in container directories.

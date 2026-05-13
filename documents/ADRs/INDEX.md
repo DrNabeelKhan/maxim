@@ -20,8 +20,9 @@ Every public ADR declares a commitment Maxim makes to its users — a contract t
 | [ADR-010](ADR-010-confidence-tag-technical-educator-rubric.md) | Confidence Tag Technical Educator Rubric | accepted | 2026-04-21 |
 | [ADR-011](ADR-011-stripe-primary-payment-processor.md) | Stripe-primary payment processor | accepted | 2026-04-21 |
 | [ADR-012](ADR-012-overlay-engine-architecture.md) | Maxim Overlay Engine (MOE) — governance layer for every installed Claude Code plugin | accepted | 2026-04-23 |
+| [ADR-013](ADR-013-multi-project-memory-inheritance.md) | Multi-Project Memory Inheritance — parent/child topology + upward rollup | accepted | 2026-05-13 |
 
-**Published:** 8 · **Accepted:** 8 · **Superseded:** 0 · **Rejected:** 0
+**Published:** 9 · **Accepted:** 9 · **Superseded:** 0 · **Rejected:** 0
 
 ---
 

@@ -72,5 +72,29 @@ if [ ! -f "$HANDOFF_FILE" ]; then
 EOF
 fi
 
+# ----- Topology: child rollup to parent (ADR-013) -----
+if command -v node >/dev/null 2>&1 && [ -f "config/project-manifest.json" ]; then
+  TOPO_KIND_END="$(node -e "try{const m=require('./config/project-manifest.json');console.log(m.topology?.kind||'standalone')}catch(e){console.log('standalone')}" 2>/dev/null || echo 'standalone')"
+  if [ "$TOPO_KIND_END" = "child" ]; then
+    PARENT_PATH="$(node -e "try{const m=require('./config/project-manifest.json');console.log(m.topology?.parent||'')}catch(e){console.log('')}" 2>/dev/null || echo '')"
+    if [ -n "$PARENT_PATH" ] && [ -d "$PARENT_PATH" ]; then
+      PARENT_MEM_DIR="$PARENT_PATH/.claude-sessions-memory"
+      mkdir -p "$PARENT_MEM_DIR" 2>/dev/null || true
+      ROLLUP_FILE="$PARENT_MEM_DIR/children-rollup.md"
+      CHILD_ID="$(node -e "try{const m=require('./config/project-manifest.json');console.log(m.project?.id||'unknown')}catch(e){console.log('unknown')}" 2>/dev/null || echo 'unknown')"
+      CHILD_STATUS="READY"
+      if [ -f ".mxm-skills/agents-handoff.md" ]; then
+        CHILD_STATUS="$(grep -m1 -E '^Status:|^\*\*Status:' .mxm-skills/agents-handoff.md 2>/dev/null | sed 's/[*]//g; s/^Status:[[:space:]]*//' | head -c 20 || echo 'READY')"
+      fi
+      CHILD_SUMMARY=""
+      if [ -f ".claude-sessions-memory/handoff.md" ]; then
+        CHILD_SUMMARY="$(grep -v '^#' .claude-sessions-memory/handoff.md 2>/dev/null | grep -v '^[[:space:]]*$' | tail -1 | head -c 80 || echo '')"
+      fi
+      echo "[$NOW_ISO] | $CHILD_ID | $CHILD_STATUS | $CHILD_SUMMARY" >> "$ROLLUP_FILE" 2>/dev/null || \
+        echo "[$NOW_ISO] [topology-rollup-warn] child->parent rollup write failed" >> .mxm-skills/agents-skill-gaps.log 2>/dev/null || true
+    fi
+  fi
+fi
+
 echo "Maxim SessionEnd: ${TODAY} marker written" >&2
 exit 0

@@ -177,6 +177,33 @@ if [ -x "$WATCH_SCRIPT" ] && [ -f "config/watch-profile.yml" ]; then
   WATCH_ERRORS="$(echo "$WATCH_OUT" | grep -oE 'errors=[0-9]+' | tail -1 | cut -d= -f2 || echo 0)"
 fi
 
+# ----- Topology: parent dashboard (ADR-013, step 11.5) -----
+CHILDREN_OUTPUT=""
+if [ -f "config/project-manifest.json" ] && command -v node >/dev/null 2>&1; then
+  TOPO_KIND="$(node -e "try{const m=require('./config/project-manifest.json');console.log(m.topology?.kind||'standalone')}catch(e){console.log('standalone')}" 2>/dev/null || echo 'standalone')"
+  if [ "$TOPO_KIND" = "parent" ]; then
+    CHILDREN_OUTPUT="$(node -e "
+      try {
+        const fs=require('fs'),path=require('path');
+        const m=require('./config/project-manifest.json');
+        const children=m.topology?.children||[];
+        children.forEach(cp=>{
+          const mp=path.join(cp,'config','project-manifest.json');
+          if(!fs.existsSync(mp)){console.log('    '+path.basename(cp).padEnd(16)+' ⚪ NO DATA');return;}
+          let id=path.basename(cp);
+          try{const cm=JSON.parse(fs.readFileSync(mp,'utf8'));if(cm.project?.id)id=cm.project.id;}catch(e){}
+          let status='UNKNOWN';
+          try{const hp=path.join(cp,'.mxm-skills','agents-handoff.md');if(fs.existsSync(hp)){const l=fs.readFileSync(hp,'utf8').split('\n').find(x=>/^Status:|\*\*Status:/.test(x));if(l)status=l.replace(/\*/g,'').replace(/^Status:\s*/,'').trim().substring(0,16);}}catch(e){}
+          const emoji=status.startsWith('READY')?'🟢':status.startsWith('PARTIAL')?'🟡':status.startsWith('BLOCKED')||status.startsWith('FAILED')?'🔴':'⚪';
+          let summary='';
+          try{let rp=path.join(cp,'.claude-sessions-memory','children-rollup.md');if(!fs.existsSync(rp))rp=path.join(cp,'.claude-sessions-memory','handoff.md');if(fs.existsSync(rp)){const lines=fs.readFileSync(rp,'utf8').split('\n').filter(x=>x.trim());if(lines.length)summary=lines[lines.length-1].trim().substring(0,50);}}catch(e){}
+          console.log('    '+id.padEnd(16)+' '+emoji+' '+status.padEnd(12)+' '+summary);
+        });
+      } catch(e) {}
+    " 2>/dev/null || true)"
+  fi
+fi
+
 # ----- Print session start summary -----
 {
   echo "═══════════════════════════════════════════════════════"
@@ -189,6 +216,10 @@ fi
   if [ "$WATCH_DRIFT" -gt 0 ] || [ "$WATCH_ERRORS" -gt 0 ]; then
     echo "  Drift     : ${WATCH_DRIFT} (run /mxm-watch for details)"
     [ "$WATCH_ERRORS" -gt 0 ] && echo "  Watch errs: ${WATCH_ERRORS}"
+  fi
+  if [ -n "$CHILDREN_OUTPUT" ]; then
+    echo "  Children  :"
+    echo "$CHILDREN_OUTPUT"
   fi
   echo "═══════════════════════════════════════════════════════"
 } >&2
