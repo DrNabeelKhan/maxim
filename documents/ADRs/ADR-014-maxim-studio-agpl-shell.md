@@ -53,6 +53,40 @@ Fork `winfunc/opcode` into `github.com/DrNabeelKhan/maxim-studio`. Ship the fork
 **Maxim Studio** under AGPL-3.0. Add 11 Maxim-specific UI surfaces on top of the
 opcode chassis. Enforce three hard constraints throughout the fork:
 
+### Constraint 0 — Studio is the single install path; plugin install is bundled
+
+**Maxim Studio ships as a standalone installer. Users never need to separately
+install the Maxim plugin.** The Studio's first-run wizard orchestrates the full
+dependency chain:
+
+```
+User downloads Maxim Studio (.dmg / .msi / .AppImage)
+  ↓
+Studio first-launch wizard:
+  1. Detect Claude Code installation (check for `claude` in PATH)
+     → If absent: show download link + wait for user to install + re-check
+  2. Register Maxim marketplace:
+     run: claude plugin marketplace add DrNabeelKhan/maxim
+  3. Install base plugin:
+     run: claude plugin install maxim@maxim-packs
+  4. Pre-install MCP server node_modules (don't wait for Claude Code session):
+     For each mcp/mxm-*/ in plugin cache: npm install
+     (Studio shows live progress: "Installing MCP servers... 3/7")
+  5. Verify all 7 MCPs are ready (check node_modules presence)
+  6. Show "Maxim Studio is ready" screen with quick-start tips
+```
+
+The plugin code still lives at `~/.claude/plugins/cache/maxim-packs/maxim/<version>/`
+(the standard Claude Code plugin location). Studio triggers the install; Claude Code
+owns the plugin registry. Users who already have the plugin installed skip steps 2–4.
+
+This means:
+- **Download Maxim Studio = get everything** — Claude Code users need one download
+- **No manual plugin install** — no `/plugin marketplace add`, no `/plugin install`,
+  no "restart twice for MCPs" — Studio handles all of it with a progress UI
+- **MCP deps pre-installed** — first Claude Code session after Studio setup loads all
+  7 MCPs immediately (no 30-second first-run npm install on session open)
+
 ### Constraint 1 — No Maxim IP in the Studio binary
 
 The Studio binary contains:
@@ -61,6 +95,8 @@ The Studio binary contains:
 - ✅ SQLite session database — generic
 - ✅ opcode's existing features (session browser, MCP manager, CLAUDE.md editor) — from AGPL upstream
 - ✅ Maxim trademark (logo, name, color palette) — used by permission under fair use
+- ✅ Installer/wizard logic that runs `claude plugin install` — the plugin itself is
+  pulled from the public marketplace (GitHub), NOT bundled in the binary
 - ❌ NO agent DNA (.md files from `agents/MXM/`)
 - ❌ NO framework content (`composable-skills/frameworks/`)
 - ❌ NO SKILL.md files (from packs or base plugin)
@@ -69,8 +105,9 @@ The Studio binary contains:
 - ❌ NO Stripe keys or checkout secrets
 
 All Maxim IP lives in the BSL-1.1 plugin at
-`~/.claude/plugins/cache/maxim-packs/maxim/<version>/`. The Studio reads it from disk
-at runtime. The Studio is a viewer, not a container.
+`~/.claude/plugins/cache/maxim-packs/maxim/<version>/`. The Studio orchestrates its
+installation and then reads it from disk at runtime. The Studio is an installer +
+viewer, not a container of the plugin's source code.
 
 ### Constraint 2 — Packs are runtime-dynamic; Studio is pack-agnostic
 
@@ -140,23 +177,25 @@ These are the net-new surfaces added to the opcode chassis. Full detail in
 
 | Milestone | Effort | Target |
 |---|---|---|
-| Fork + clean local build | 1 day | Sprint start |
-| Rebrand chrome (logo, splash, color palette) | 1 day | Week 1 |
-| Executive Dispatch + Agent Roster sidebar | 3 days | Week 2 |
-| Pack Catalog + License Bar | 3 days | Week 3 |
-| Proactive Watch panel + MemPalace search | 2 days | Week 4 |
-| Voice Config tab + confidence tag overlay | 2 days | Week 5 |
-| MOAT Tracker + Framework Library | 2 days | Week 6 |
-| Studio (cinematic) tab | 1 day | Week 7 |
-| QA, release pipeline, v0.1.0 tag | 2 days | Week 8 |
+| Fork + clean local build + CODEOWNERS | 1 day | Sprint start |
+| **First-run installer wizard** (Claude Code detect → plugin install → MCP pre-install → progress UI → ready screen) | 3 days | Week 1 |
+| Rebrand chrome (logo, splash, color palette) | 1 day | Week 2 |
+| Executive Dispatch + Agent Roster sidebar | 3 days | Week 3 |
+| Pack Catalog + License Bar | 2 days | Week 4 |
+| Proactive Watch panel + MemPalace search | 2 days | Week 5 |
+| Voice Config tab + confidence tag overlay | 2 days | Week 6 |
+| MOAT Tracker + Framework Library + Studio (cinematic) tab | 2 days | Week 7 |
+| QA + release pipeline + distribution signing + v0.1.0 tag | 2 days | Week 8 |
 
-**Total: ~8 weeks, ~17 dev-days.** Independent of plugin versioning; can ship mid-cycle.
+**Total: ~8 weeks, ~18 dev-days.** Independent of plugin versioning; can ship mid-cycle.
 
 ---
 
 ## Consequences
 
 **Easier:**
+- **Single download = complete product.** Users who download Maxim Studio get Claude Code plugin + all 7 MCP servers + Studio GUI in one wizard. Zero manual plugin steps.
+- **Zero first-session MCP latency.** Studio pre-installs `node_modules` for all 7 MCP servers during setup. Users never see the "MCP servers installing, please restart" banner.
 - Desktop-native distribution (Tauri 2) targets Windows, macOS, Linux from one codebase
 - shadcn/ui stack matches landing-page's existing component system — design reuse is free
 - 21.8k-star upstream brings market-validated UX patterns without greenfield UX cost

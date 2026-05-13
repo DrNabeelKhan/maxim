@@ -13,6 +13,53 @@ License architecture: `documents/reference/LICENSE_SEPARATION.md`
 
 ---
 
+## Distribution model (corrected 2026-05-13)
+
+**Maxim Studio is the single install path.** Users download Studio; Studio
+installs everything else. No separate plugin install step.
+
+```
+User downloads Maxim Studio
+  ─────────────────────────────────────────────────────────────────────
+  First-run wizard (Tauri window, React UI):
+
+  Step 1  Detect Claude Code
+          ┌ claude binary found in PATH ─── ✅ continue
+          └ not found ─────────────────────── show link + poll until installed
+
+  Step 2  Register marketplace
+          run: claude plugin marketplace add DrNabeelKhan/maxim
+          ┌ already registered ──────────── ✅ skip
+          └ registered now ───────────────── ✅ continue
+
+  Step 3  Install base plugin
+          run: claude plugin install maxim@maxim-packs
+          ┌ already installed ───────────── ✅ skip
+          └ installing... (progress bar) ─── ✅ continue
+
+  Step 4  Pre-install MCP node_modules (7 servers)
+          For each ~/.claude/plugins/cache/maxim-packs/maxim/<v>/mcp/mxm-*/:
+            run: npm install
+          Shows: "Installing MCP servers... 3 / 7"
+          ┌ node_modules already present ── ✅ skip
+          └ installing... ──────────────── ✅ pre-warms (no restart needed)
+
+  Step 5  Verify all 7 MCPs ready
+          Check node_modules presence + package.json valid for each server
+          ┌ all 7 ready ──────────────────── ✅ show Ready screen
+          └ any failed ──────────────────── show error + retry button
+
+  Step 6  Ready screen
+          "Maxim Studio is ready."
+          [Open a project ▶]   [See what's installed ▶]
+  ─────────────────────────────────────────────────────────────────────
+
+  Subsequent launches: wizard is skipped; Studio opens directly to project view.
+  Plugin updates: Studio's "Check for updates" runs /mxm-self-update equivalent.
+```
+
+---
+
 ## System boundary diagram
 
 ```

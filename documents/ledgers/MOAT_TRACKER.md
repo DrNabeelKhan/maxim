@@ -120,6 +120,19 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 
 ---
 
+### MOAT-09 · Maxim Studio — AGPL-3.0 desktop GUI face · ADR-014 PLANNED v0.1.0
+
+| Field | Value |
+|---|---|
+| **Positioning claim** | Maxim is the only Claude Code plugin with a dedicated open-source desktop GUI (AGPL-3.0). Studio renders the 90-agent roster, 64-framework library, 11 Proactive Watch drift classes, and license tier in a visual chrome that non-developers can evaluate without reading documentation. Pack catalog updates dynamically when new packs ship — zero Studio code change required. |
+| **Mechanism** | Endowment Effect (Kahneman & Knetsch, 1991) — a visual face the user can see and touch increases perceived ownership before purchase. The Studio makes Maxim's moat tangible: operators who open the Executive Dispatch sidebar and see 90 agents mapped across 7 offices experience the product differently than those who read about it in a TUI banner. Tangible = higher willingness to upgrade. Supporting: Cialdini Social Proof (21.8k-star opcode upstream = credibility transfer). |
+| **Anti-pattern** | CLI-only plugins that assume all users are developers who read documentation. Maxim's moat is invisible to non-developers without a visual surface. Studio removes that barrier. |
+| **Pack(s)** | Studio is free (AGPL-3.0). Revenue flows through the BSL plugin + Cloudflare Worker. Studio is the acquisition gateway for all paid packs, not a revenue source itself. |
+| **Primary framework** | Endowment Effect (Kahneman & Knetsch, 1991). ADR-014 ratified 2026-05-13. |
+| **Proof** | PLANNED. ADR-014 at `documents/ADRs/ADR-014-maxim-studio-agpl-shell.md`. Architecture at `documents/reference/MAXIM_STUDIO_ARCHITECTURE.md`. Sprint bootstrap at `documents/sales/launch/maxim-studio-sprint-bootstrap.md`. Fork: `github.com/DrNabeelKhan/maxim-studio` (AGPL-3.0, target v0.1.0 ~8 weeks from sprint start). |
+
+---
+
 ## Decommissioned Claims
 
 _(None — this row appears when a moat claim is retired.)_

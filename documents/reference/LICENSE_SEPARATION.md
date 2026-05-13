@@ -26,6 +26,10 @@ renders it visually.
 **Contains:**
 - UI components, application shell, SQLite session database
 - Maxim branding (trademark used by permission; fair use for attribution)
+- **First-run installer wizard** that orchestrates: Claude Code detection → plugin
+  marketplace registration → plugin install (`claude plugin install maxim@maxim-packs`)
+  → MCP node_modules pre-installation → verification. The wizard runs `claude` CLI
+  commands as child processes; it does NOT bundle the plugin source code.
 - Logic to read `~/.claude/plugins/installed_plugins.json`
 - HTTP client calling the Cloudflare Worker `/validate` endpoint
 - `window.open()` calls to `maxim.isystematic.com/pricing` (browser handoff)

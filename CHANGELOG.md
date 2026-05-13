@@ -8,6 +8,52 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.1.2 — UPCOMING (Q3 2026) — Topology + scaffolding hardening + Studio planning
+
+Session 18 (2026-05-13) landed the following changes targeting v1.1.2.
+No production deploy yet — commits are on `main`, pending v1.1.2 release tag.
+
+### Fixed (scaffolding bugs)
+
+- **9 scaffolding bugs** in `bootstrap/link-local-project.ps1` + `bootstrap/new-project-setup.sh`:
+  manifest schema versions corrected (ARIA-era `mxm_version: "5.0.0/6.2.0"` → `MXM_version: "1.1.1"`),
+  missing `status` + `meta` blocks added to wizard-generated manifests, `.mxm` → `.mxm-skills`
+  directory name corrected in STEP 4 (4 runtime state files were written to wrong dir on every
+  new project setup), agent-registry.json copy removed from scaffolding (was creating stale copies
+  that triggered false "Top risk" warnings at every session start).
+- **VAZIR manifest** migrated from string schema (`"project": "VAZIR"`) to object schema
+  (`"project": { "id": "vazir" }`); session-start now correctly identifies the project.
+- **Class 11 drift cleared**: `config/agent-registry.json` counts corrected (commands 37→38,
+  hooks 10→14, ADRs 2→14 full list), `CLAUDE.d/office-catalog.md` updated to 90 agents (sre-analyst
+  + cost-analyst restored from aria-simplification migration), `AGENT_SKILL_INVENTORY.md` refreshed.
+
+### Added (ADR-013 — Multi-Project Memory Inheritance)
+
+- **`topology` block** in `config/project-manifest.json` schema: three kinds —
+  `standalone` (default, no change), `parent` (reads children at session-start),
+  `child` (writes rollup to parent at session-end).
+- **Session-start hook** (ps1 + sh): if `topology.kind == "parent"`, renders aggregated
+  Children: dashboard showing each child's handoff state and last summary. Fail-soft.
+- **Session-end hook** (ps1 + sh): if `topology.kind == "child"`, appends one-line rollup
+  to `<parent>/.claude-sessions-memory/children-rollup.md`. Only allowed cross-project write.
+- **Bootstrap wizard** gains topology question (Q10): kind / parent path / children paths.
+- **`config/project-manifest.TEMPLATE.json`**: `topology` block added.
+- **`CLAUDE.d/session-memory.md`**: Multi-Project Inheritance Protocol section added.
+
+### Added (ADR-014 — Maxim Studio planning documents)
+
+- **`documents/ADRs/ADR-014-maxim-studio-agpl-shell.md`** — binding decision: fork
+  `winfunc/opcode` (AGPL-3.0, 21.8k stars) as Maxim Studio desktop GUI. Three constraints:
+  no Maxim IP in binary, packs runtime-dynamic, revenue through BSL+Worker only.
+- **`documents/reference/MAXIM_STUDIO_ARCHITECTURE.md`** — full system spec: boundary
+  diagram, pack-loading mechanism, 11 UI surfaces, voice config tab, 8-week sprint plan.
+- **`documents/reference/LICENSE_SEPARATION.md`** — legal architecture: AGPL Studio +
+  BSL plugin + proprietary Worker as separable works. AGPL network-use analysis.
+- **`documents/sales/launch/maxim-studio-sprint-bootstrap.md`** — self-contained
+  bootstrap prompt for the Studio fork sprint (paste into a new Claude Code window).
+
+---
+
 ## v1.1.1 — 2026-04-28 — Self-update + public install docs
 
 Resolves a tester-onboarding pain point that became impossible to ignore over
