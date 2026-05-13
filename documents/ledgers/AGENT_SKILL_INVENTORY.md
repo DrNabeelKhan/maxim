@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.0.1 · **Last verified:** 2026-04-27
+**Version:** v1.1.1 · **Last verified:** 2026-05-13
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -129,8 +129,9 @@ All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Tem
 | 009 | Pack Architecture: 6 L1 + 4 L2 + 4 L3 | accepted |
 | 010 | Confidence Tag Technical Educator Rubric | accepted |
 | 011 | Stripe-primary payment processor | accepted |
+| 012 | Maxim Overlay Engine (MOE) — governance layer for every installed Claude Code plugin | accepted |
 
-**Total ADRs: 11.**
+**Total ADRs: 12.**
 
 ---
 

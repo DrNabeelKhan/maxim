@@ -3,7 +3,7 @@
 > Loaded by `CLAUDE.md` as a reference module. Full agent roster across the
 > 7 Maxim executive offices + cross-domain orchestrators.
 
-**Total: 87 agents** (82 office agents + 5 cross-office orchestrators) — verified v1.0.0.
+**Total: 90 agents** (84 office agents + 5 cross-office orchestrators + 1 executive-router) — verified v1.1.1.
 
 ---
 
@@ -102,7 +102,7 @@ Product strategy, UX, UI, market research, user feedback.
 - accessibility-auditor
 - onboarding-designer
 
-## COO Office (lead: `planner`) — 9 agents (planner is also cross-office orchestrator)
+## COO Office (lead: `planner`) — 10 agents (planner is also cross-office orchestrator)
 
 Operations, delivery, support, sprints, experiments.
 
@@ -115,14 +115,16 @@ Operations, delivery, support, sprints, experiments.
 - knowledge-base-curator
 - tool-evaluator
 - changelog-writer
+- sre-analyst
 
-## CINO Office (lead: `innovation-researcher`) — 3 agents
+## CINO Office (lead: `innovation-researcher`) — 4 agents
 
 Innovation, R&D, emerging tech, horizon scanning.
 
 - innovation-researcher
 - rd-coordinator
 - skill-synthesizer
+- cost-analyst
 
 ## Cross-Office Orchestrators — 5 agents
 

@@ -66,7 +66,8 @@ When Claude Code opens a folder or starts a new session:
 
 1. Detect project root (rule above)
 2. Verify memory junction (rule above)
-3. Read `config/project-manifest.json` → load project identity, compliance scope, lifecycle status, gated flag
+3. Read `config/project-manifest.json` → load project identity, compliance scope, lifecycle status, gated flag.
+   **Note:** `config/agent-registry.json` is plugin-level only — absent in user projects is **correct and expected**. Read it from `$CLAUDE_PLUGIN_ROOT/config/agent-registry.json` if needed. Do NOT surface a warning about its absence in non-plugin-repo projects.
 4. **Gate check** — if `status.lifecycle == "archived"` → refuse work and exit
 5. **Gate check** — if `status.gated == true` → require explicit user approval before any action
 6. Read `CLAUDE.project.md` if present → load project-specific rules

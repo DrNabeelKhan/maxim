@@ -414,7 +414,8 @@ When any threshold is exceeded, scheduled tasks sleep until `resets_at`. Usage i
 | `documents/ledgers/SESSION_CONTINUITY.md` | Session memory bridge |
 | `CLAUDE.project.md` | Project-specific overrides |
 | `config/project-manifest.json` | Project identity, compliance, lifecycle, tech stack |
-| `config/project-manifest.TEMPLATE.json` | Template for new project adoption (v1.0.0 schema) |
+| `config/project-manifest.TEMPLATE.json` | Template for new project adoption (v2.0.0 schema) |
+| `config/agent-registry.json` | **Plugin-level only.** Absent in user projects is correct and expected — Claude reads it from `$CLAUDE_PLUGIN_ROOT/config/`. Never warn about its absence in non-plugin-repo projects. |
 | `mcp/README.md` | 9 MCP servers (44 tools) |
 | `.mcp.json` | Root MCP server registry (auto-discovery) |
 | `.env.example` | Environment variable template |

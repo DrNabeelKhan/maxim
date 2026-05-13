@@ -235,11 +235,11 @@ validate() {
   # 4. Agent count
   if command -v jq &>/dev/null && [[ -f "config/agent-registry.json" ]]; then
     AGENT_COUNT=$(jq '.total_mxm_agents' config/agent-registry.json)
-    if [[ "$AGENT_COUNT" -ge 80 ]]; then
+    if [[ "$AGENT_COUNT" -ge 90 ]]; then
       success "Agent registry: $AGENT_COUNT agents registered"
       ((pass++))
     else
-      warn "Agent registry shows only $AGENT_COUNT agents — expected 87+"
+      warn "Agent registry shows only $AGENT_COUNT agents — expected 90+"
       ((warn_count++))
     fi
   else
@@ -248,7 +248,7 @@ validate() {
   fi
 
   # 5. .mxm-skills/ folder
-  if [[ -d ".mxm" ]]; then
+  if [[ -d ".mxm-skills" ]]; then
     success ".mxm-skills/ folder found"
     ((pass++))
   else
