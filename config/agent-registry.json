@@ -42,7 +42,7 @@
   "total_categories": 14,
   "frameworks_covered": 64,
   "_frameworks_added_v641": ["proactive-watch"],
-  "total_adrs": 13,
+  "total_adrs": 14,
   "_adrs_full_list": [
     "ADR-001-mxm-architecture-baseline",
     "ADR-002-documents-as-executable-contracts",
@@ -56,7 +56,8 @@
     "ADR-010-confidence-tag-technical-educator-rubric",
     "ADR-011-stripe-primary-payment-processor",
     "ADR-012-overlay-engine-architecture",
-    "ADR-013-multi-project-memory-inheritance"
+    "ADR-013-multi-project-memory-inheritance",
+    "ADR-014-maxim-studio-agpl-shell"
   ],
   "total_canonical_ledgers": 5,
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],

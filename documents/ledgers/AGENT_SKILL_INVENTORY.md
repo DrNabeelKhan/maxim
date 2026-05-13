@@ -131,8 +131,9 @@ All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Tem
 | 011 | Stripe-primary payment processor | accepted |
 | 012 | Maxim Overlay Engine (MOE) — governance layer for every installed Claude Code plugin | accepted |
 | 013 | Multi-Project Memory Inheritance — parent/child topology + upward rollup | accepted |
+| 014 | Maxim Studio — AGPL-3.0 GUI shell on top of BSL-1.1 plugin | accepted |
 
-**Total ADRs: 13.**
+**Total ADRs: 14.**
 
 ---
 

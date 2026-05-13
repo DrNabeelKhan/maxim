@@ -65,6 +65,7 @@ documents/architecture/
 !documents/ADRs/ADR-011-stripe-primary-payment-processor.md
 !documents/ADRs/ADR-012-overlay-engine-architecture.md
 !documents/ADRs/ADR-013-multi-project-memory-inheritance.md
+!documents/ADRs/ADR-014-maxim-studio-agpl-shell.md
 
 # ── Maxim ledger state (session-local, never committed) ──────────────────
 # documents/ledgers/ holds the canonical Executable Contract ledgers.
