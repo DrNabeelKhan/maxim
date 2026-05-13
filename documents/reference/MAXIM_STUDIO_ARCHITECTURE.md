@@ -13,6 +13,47 @@ License architecture: `documents/reference/LICENSE_SEPARATION.md`
 
 ---
 
+## Two modes: Studio + Mission Control
+
+Maxim Studio ships with two modes switchable from the top bar:
+
+```
+┌── Top Bar ──────────────────────────────────────────────────────────┐
+│  Maxim Studio  ·  [Studio ▶]  [Mission Control ▶]  ·  v1.1.2  🟢  │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Studio mode** (default): opcode-derived desktop UI — agent roster, pack catalog,
+license bar, Proactive Watch panel, MemPalace search, Executive Dispatch.
+
+**Mission Control mode**: cinematic JARVIS-style operations interface based on the
+VAZIR AI Agent HUD (`hud_app.jsx` + `tweaks-panel.jsx` + `AI Agent HUD.html`).
+Persona-driven voice conversation, live Proactive Watch alerts as priority queue,
+full-screen focus overlays for agent outputs.
+
+---
+
+## Dual-surface support: Claude Code CLI + Claude Desktop
+
+Both surfaces use identical MCP stdio protocol + `mcpServers` JSON key.
+Studio installer writes to both config files during setup.
+
+```
+~/.mxm-studio/maxim/<version>/mcp/   ← extracted MCP servers
+
+Writes:
+  ~/.mcp.json                                          ← Claude Code CLI
+  %APPDATA%\Claude\claude_desktop_config.json          ← Claude Desktop (Win)
+  ~/Library/Application Support/Claude/claude_desktop_config.json  ← Claude Desktop (Mac)
+
+MCP tools work in both. Slash commands work in Claude Code CLI only.
+```
+
+Confirmed on operator's machine: VAZIR MCP already in Claude Desktop config.
+Format: `{ "mcpServers": { "<name>": { "command": "...", "args": [...] } } }`
+
+---
+
 ## Distribution model (corrected 2026-05-13)
 
 **Maxim Studio is the single install path.** Users download Studio; Studio
@@ -121,6 +162,68 @@ User downloads Maxim Studio
                                     │ Webhooks → Worker    │
                                     └─────────────────────┘
 ```
+
+---
+
+## Mission Control mode — VAZIR HUD integration
+
+Source files (from VAZIR handoff, incorporated into Studio repo):
+
+| File | Role in Maxim Studio |
+|---|---|
+| `AI Agent HUD.html` | Cinematic HUD shell — dark theme, particle network, animated core, gauges, radar, scanlines |
+| `hud_app.jsx` | React 18 components: `Conversation`, `PendingTasks`, `FocusOverlay`, `TweaksApp` |
+| `tweaks-panel.jsx` | Global settings design system — promoted to Studio-wide (not HUD-only) |
+
+### What changes from VAZIR HUD → Maxim Mission Control
+
+```
+VAZIR HUD                         →  Maxim Mission Control
+─────────────────────────────────────────────────────────────
+window.claude.complete({messages}) →  mxm-catalog.route_task({ task, context })
+                                       executive router → returns agent + result
+                                       routes to right office (CEO/CTO/CMO/CSO/CPO/COO/CINO)
+
+PendingTasks (PENDING_SEED static) →  live data from:
+                                       mxm-context.watch_run() → Proactive Watch alerts
+                                       mxm-portfolio.get_tasks() → scheduled tasks
+                                       Priority: P1=FAIL class, P2=WARN, P3=INFO
+                                       Countdown: real ETA from scheduled task timestamps
+
+TTS: Web Speech API (already)      →  NO CHANGE — Web Speech API IS Windows native
+                                       SpeechSynthesis = WinRT speech engine (zero install)
+                                       SpeechRecognition = Windows Speech Recognition
+                                       Voice Config tab: swap for Kokoro/custom if desired
+
+"VAZIR" HUD persona                →  Maxim persona routing:
+                                       VAZIR  → bm_daniel (advisory/decision/risk)
+                                       ELARA  → bf_emma  (demo/client/marketing)
+                                       RIVA   → af_kore  (product/technical)
+                                       JARVIS → bm_george (formal briefing)
+                                       Persona auto-selected by task type from route_task() response
+
+Focus mode (doc/image/video/file) →  Maxim output focus:
+                                       'document' → full-screen agent markdown response
+                                       'file'     → full-screen compliance report / ADR
+                                       'image'    → full-screen MOAT_TRACKER visualization
+                                       [show: document | MOAT-09] in LLM response triggers it
+```
+
+### tweaks-panel.jsx — promoted to Studio-wide design system
+
+`tweaks-panel.jsx` is not just the HUD settings — it becomes Maxim Studio's
+reusable control library across all tabs:
+
+```
+Studio Voice Config tab    → TweakRadio (engine), TweakSlider (rate/pitch), TweakToggle (enabled)
+Proactive Watch settings   → TweakToggle (class enable/disable), TweakSlider (polling interval)
+Theme settings             → TweakColor (palette), TweakSlider (particle density, if HUD mode)
+Pack Catalog filters       → TweakRadio (tier filter: L1/L2/L3), TweakToggle (show locked)
+Studio Layout settings     → TweakToggle (show license bar), TweakRadio (default mode)
+```
+
+The `useTweaks(defaults)` hook persists settings to `~/.mxm-studio/preferences.json`
+(replaces `window.__edit_mode_set_keys` postMessage with Tauri `invoke('save_prefs', edits)`).
 
 ---
 
@@ -287,18 +390,18 @@ a task prompt and route it through Claude Code's IPC.
 
 ---
 
-## Sprint plan (8 weeks, ~17 dev-days)
+## Sprint plan (8 weeks, ~20 dev-days)
 
 | Week | Focus | Key output |
 |---|---|---|
-| 1 | Fork + clean build + AGPL compliance audit | Local build running, LICENSE.md clear |
-| 2 | Rebrand chrome | Maxim logo, splash, color palette, window title |
-| 3–4 | Executive Dispatch + Agent Roster sidebar | 7-office map, 90-agent list with DNA grades |
-| 5 | Pack Catalog + License Bar | Dynamic pack tiles, tier indicator, Upgrade CTA |
-| 6 | Proactive Watch + MemPalace search | 11-class tiles, memory search via MCP |
-| 7 | Voice Config + confidence tag overlay | Engine picker, persona routing, 🟢🟡🔴 badges |
-| 8 | MOAT Tracker + Framework Library + Studio tab | Positioning feed, 64-framework browser, cinematic |
-| 8 | QA + release pipeline + v0.1.0 tag | GitHub Release, update maxim.isystematic.com/studio |
+| 1 | Fork + CODEOWNERS + split-bundle installer (plugin extract, dual MCP config write, update checker) | Local build + full install flow working |
+| 2 | Rebrand chrome + Mission Control mode (port VAZIR HUD: swap `window.claude.complete` → MCP, wire PendingTasks → Proactive Watch, promote tweaks-panel.jsx) | Studio mode switcher live; HUD functional |
+| 3 | Executive Dispatch sidebar + Agent Roster (Studio mode) | 7-office map, 90-agent list |
+| 4 | Pack Catalog + License Bar | Dynamic pack tiles, tier + grant indicator |
+| 5 | Proactive Watch panel + MemPalace search + Voice Config (HUD TTS verify + Kokoro wiring) | 11-class tiles, memory search, engine picker |
+| 6 | MOAT Tracker + Framework Library + Focus mode repurpose (agent output full-screen) | Positioning feed, 64-framework browser |
+| 7 | Studio (cinematic) tab + confidence tag overlay | Higgsfield style picker, 🟢🟡🔴 badges |
+| 8 | Claude Desktop integration test + distribution code-signing + v0.1.0 tag | .dmg/.msi/.AppImage signed, GitHub Release |
 
 ---
 

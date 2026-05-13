@@ -53,7 +53,34 @@ Fork `winfunc/opcode` into `github.com/DrNabeelKhan/maxim-studio`. Ship the fork
 **Maxim Studio** under AGPL-3.0. Add 11 Maxim-specific UI surfaces on top of the
 opcode chassis. Enforce three hard constraints throughout the fork:
 
-### Constraint 0 — Studio is the single install path; plugin install is bundled
+### Constraint 0 — Studio is the single install path; plugin bundle is embedded + extracted
+
+**Distribution model: split bundle (corrected 2026-05-13).**
+
+The Studio binary is ~50 MB (pure AGPL shell). The Maxim plugin is distributed as
+a separately versioned compressed bundle (~8 MB), embedded in the binary for offline
+first-run OR downloaded as a lightweight delta on update checks. This decouples
+Studio release cadence (rare, ~50 MB) from plugin release cadence (frequent, ~8 MB).
+
+On first run and on startup update check:
+```
+1. Studio reads ~/.mxm-studio/current.json → current plugin version
+2. Studio checks GitHub releases API for latest plugin version
+   → same: skip  →  newer: prompt "v1.1.2 available — update?" [Now] [Later]
+3. Extract plugin bundle to ~/.mxm-studio/maxim/<version>/
+4. Pre-install node_modules for all 7 MCP servers
+5. Write to BOTH MCP registries:
+   ~/.mcp.json               ← Claude Code user-level MCP registry
+   %APPDATA%\Claude\claude_desktop_config.json  ← Claude Desktop MCP registry
+   (macOS: ~/Library/Application Support/Claude/claude_desktop_config.json)
+6. Update ~/.mxm-studio/current.json
+```
+
+Neither surface (Claude Code CLI nor Claude Desktop) requires `claude plugin install`.
+Studio manages the plugin lifecycle entirely. Users who have Claude Code or Claude
+Desktop installed get Maxim MCP tools in both surfaces automatically.
+
+### Constraint 0b — Dual-surface support: Claude Code CLI + Claude Desktop
 
 **Maxim Studio ships as a standalone installer. Users never need to separately
 install the Maxim plugin.** The Studio's first-run wizard orchestrates the full
@@ -86,6 +113,51 @@ This means:
   no "restart twice for MCPs" — Studio handles all of it with a progress UI
 - **MCP deps pre-installed** — first Claude Code session after Studio setup loads all
   7 MCPs immediately (no 30-second first-run npm install on session open)
+
+Both surfaces use the same MCP stdio protocol and the same `mcpServers` JSON key.
+Studio detects which surfaces are installed and registers the 7 MCP servers in each.
+
+| Surface | MCP config file | Commands + Agents |
+|---|---|---|
+| Claude Code CLI | `~/.mcp.json` (user-level) | ✅ `.claude/commands/` + `.claude/agents/` via extracted plugin |
+| Claude Desktop | `%APPDATA%\Claude\claude_desktop_config.json` (Windows) · `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) | MCP tools ✅ · Slash commands ❌ (Claude Desktop does not load `.claude/commands/`) |
+| Studio itself | Tauri IPC directly to extracted MCP servers | ✅ all surfaces |
+
+Claude Desktop users get all 7 Maxim MCP tools (behavioral audit, compliance checks,
+MemPalace search, portfolio sync, voice, catalog, context/watch). They do not get
+slash commands — those are Claude Code CLI only. The MCP tools are the primary
+value surface and work identically across both.
+
+### Constraint 0c — Mission Control mode: VAZIR HUD incorporated into Studio
+
+Maxim Studio ships with TWO modes switchable from the top bar:
+
+**Studio mode** (default): opcode-derived desktop UI — agent roster, pack catalog,
+license bar, Proactive Watch panel, MemPalace search, Executive Dispatch.
+
+**Mission Control mode**: the VAZIR AI Agent HUD ported to Tauri's WebView —
+cinematic JARVIS-style interface with live agent activity, voice conversation,
+Proactive Watch alerts as priority queue, and the Maxim persona system (VAZIR /
+ELARA / RIVA / JARVIS) as the HUD's "cognitive core".
+
+The VAZIR handoff files (`AI Agent HUD.html`, `hud_app.jsx`, `tweaks-panel.jsx`)
+are incorporated as the foundation:
+- `window.claude.complete()` → replaced with `mxm-catalog.route_task()` MCP call
+  (Maxim executive routing instead of raw LLM)
+- `PendingTasks` → replaced with live Proactive Watch alerts + `/mxm-tasks` queue
+  (P1 = FAIL, P2 = WARN, P3 = INFO, with real countdown from scheduled tasks)
+- TTS → the HUD already uses Web Speech API (= Windows native SpeechSynthesis +
+  SpeechRecognition) — this IS the platform-native voice path. Zero changes needed
+  for the default voice engine. Kokoro/custom voice wired via Voice Config tab.
+- `tweaks-panel.jsx` → promoted to Maxim Studio's global settings design system,
+  used by Voice Config, Theme, and Proactive Watch configuration tabs in Studio mode
+- Focus mode (document/image/video/file) → repurposed for full-screen Maxim outputs:
+  agent response, MOAT_TRACKER briefing, compliance report, MemPalace document
+
+The operator's personal VAZIR personas (bm_daniel / bf_emma / af_kore / bm_george)
+are pre-configured in Mission Control's persona routing. The HUD's "cognitive core"
+animation pulses to Maxim's TTS output — identical to the existing VAZIR production
+behavior.
 
 ### Constraint 1 — No Maxim IP in the Studio binary
 
@@ -178,16 +250,18 @@ These are the net-new surfaces added to the opcode chassis. Full detail in
 | Milestone | Effort | Target |
 |---|---|---|
 | Fork + clean local build + CODEOWNERS | 1 day | Sprint start |
-| **First-run installer wizard** (Claude Code detect → plugin install → MCP pre-install → progress UI → ready screen) | 3 days | Week 1 |
-| Rebrand chrome (logo, splash, color palette) | 1 day | Week 2 |
-| Executive Dispatch + Agent Roster sidebar | 3 days | Week 3 |
-| Pack Catalog + License Bar | 2 days | Week 4 |
-| Proactive Watch panel + MemPalace search | 2 days | Week 5 |
-| Voice Config tab + confidence tag overlay | 2 days | Week 6 |
-| MOAT Tracker + Framework Library + Studio (cinematic) tab | 2 days | Week 7 |
-| QA + release pipeline + distribution signing + v0.1.0 tag | 2 days | Week 8 |
+| **Split bundle installer**: extract plugin to `~/.mxm-studio/`, pre-install MCP deps, write to Claude Code + Claude Desktop MCP configs, startup update checker | 3 days | Week 1 |
+| Rebrand Studio chrome (logo, splash, color palette, top-bar mode switcher) | 1 day | Week 2 |
+| **Mission Control mode**: port VAZIR HUD (hud_app.jsx + tweaks-panel.jsx + AI Agent HUD.html) to Tauri WebView; swap `window.claude.complete()` → `mxm-catalog.route_task()` MCP; wire PendingTasks → live Proactive Watch; promote tweaks-panel.jsx to global settings system | 3 days | Week 2–3 |
+| Executive Dispatch + Agent Roster sidebar (Studio mode) | 2 days | Week 3–4 |
+| Pack Catalog + License Bar (Studio mode) | 2 days | Week 4 |
+| Proactive Watch panel + MemPalace search (Studio mode) | 2 days | Week 5 |
+| Voice Config tab + confidence tag overlay; VAZIR HUD TTS already uses Web Speech API → verify native path works; add Kokoro/custom wiring | 1 day | Week 5 |
+| MOAT Tracker + Framework Library + Studio (cinematic) tab | 2 days | Week 6 |
+| Focus mode repurposing: agent response / compliance report / MOAT briefing full-screen | 1 day | Week 6 |
+| QA + Claude Desktop integration test + distribution signing + v0.1.0 tag | 2 days | Week 7–8 |
 
-**Total: ~8 weeks, ~18 dev-days.** Independent of plugin versioning; can ship mid-cycle.
+**Total: ~8 weeks, ~20 dev-days.** The VAZIR HUD reduces Week 2–3 effort significantly — it's already built; it's a port not a build.
 
 ---
 
