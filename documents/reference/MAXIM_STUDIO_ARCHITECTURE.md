@@ -178,8 +178,31 @@ Source files (from VAZIR handoff, incorporated into Studio repo):
 
 ### What changes from VAZIR HUD → Maxim Mission Control
 
-**All VAZIR HUD functionality ships unchanged. Only the visual skin is replaced
-with Maxim brand. VAZIR OPS remains the operator's personal interface.**
+**Owner-key gate — two skins, one codebase:**
+
+```typescript
+// src/lib/owner.ts
+const ownerKey = path.join(os.homedir(), '.mxm-packs', 'owner.key')
+export const isOwner = fs.existsSync(ownerKey)
+
+// src/routes/mission-control/index.tsx
+const MissionControl = () => {
+  const { isOwner } = useOwnerMode()
+  return isOwner
+    ? <VazirOpsHUD />          // original VAZIR skin, zero modification
+    : <MaximMissionControl />  // Maxim brand skin, same functionality
+}
+```
+
+**Owner machine (`~/.mxm-packs/owner.key` present):**
+- Full VAZIR OPS skin: dark navy, cyan/amber, particle network, rotating core
+- "VAZIR · Cognitive Operations Interface" branding; "Operator" labels
+- VAZIR persona names (VAZIR / ELARA / RIVA / JARVIS)
+- VAZIR MCP auto-wired if present in Claude Desktop config
+- VAZIR voice loaded from personal path (VAZIR-voice-setup.md)
+
+**All other machines (no owner key):**
+All VAZIR HUD functionality preserved. Visual skin replaced with Maxim brand.
 
 #### Functional swaps (logic, not design)
 

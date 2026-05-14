@@ -147,8 +147,24 @@ are incorporated as the structural and functional foundation:
 - `tweaks-panel.jsx` → promoted to Maxim Studio's global settings design system
 - Focus mode → full-screen agent responses, compliance reports, MOAT briefings
 
-**Design language: Maxim brand, not VAZIR OPS.**
-All functionality from the VAZIR HUD is preserved. The visual skin is replaced:
+**Design language: owner-key-gated.**
+
+```
+~/.mxm-packs/owner.key exists?
+  YES → VAZIR OPS mode:  full VAZIR cinematic skin + VAZIR persona labels
+                          original AI Agent HUD.html skin, unchanged
+                          "VAZIR · Cognitive Operations Interface" branding
+                          VAZIR MCP server wired (if present in Claude Desktop config)
+                          VAZIR voice setup loaded from operator's personal path
+  NO  → Maxim brand mode: Maxim design language, public skin (table below)
+```
+
+On the operator's personal machine (owner key at `~/.mxm-packs/owner.key`,
+fingerprint `43c690c4...`), Studio activates VAZIR OPS automatically — the full
+original VAZIR HUD with no Maxim reskin. This is the owner's personal cognitive
+interface. No configuration required; detection is silent at startup.
+
+For all other users the visual skin is replaced as follows:
 
 | VAZIR OPS (personal) | Maxim Studio Mission Control (public) |
 |---|---|
