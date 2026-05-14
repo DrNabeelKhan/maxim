@@ -50,7 +50,7 @@ legally independent of the Studio shell's AGPL-3.0 license. See
 ## Decision
 
 Fork `winfunc/opcode` into `github.com/DrNabeelKhan/maxim-studio`. Ship the fork as
-**Maxim Studio** under AGPL-3.0. Add 11 Maxim-specific UI surfaces on top of the
+**Maxim Studio** under AGPL-3.0. Add 15 Maxim-specific UI surfaces on top of the
 opcode chassis. Enforce three hard constraints throughout the fork:
 
 ### Constraint 0 — Studio is the single install path; plugin bundle is embedded + extracted
@@ -240,10 +240,12 @@ User clicks "Upgrade"
 The Studio never handles payment tokens, card data, or webhook secrets. PCI-DSS scope
 for Maxim Studio = zero (no cardholder data environment in the AGPL binary).
 
-### The 11 Maxim-specific UI surfaces
+### The 15 Maxim-specific UI surfaces
 
 These are the net-new surfaces added to the opcode chassis. Full detail in
-`documents/reference/MAXIM_STUDIO_ARCHITECTURE.md`.
+`documents/reference/MAXIM_STUDIO_ARCHITECTURE.md`. Surfaces marked **[TIER 1]**
+were added 2026-05-14 after capability-coverage audit (see ADR-015 § Capability gap
+analysis for the rationale).
 
 | Surface | What it shows |
 |---|---|
@@ -251,13 +253,17 @@ These are the net-new surfaces added to the opcode chassis. Full detail in
 | **Agent Roster** | 90 agents grouped by office, searchable, DNA grade visible |
 | **Framework Library** | 64 frameworks, searchable, trigger phrases, confidence tags |
 | **Pack Catalog** | Dynamic: installed / unlocked / available; Upgrade CTA → browser |
-| **License Bar** | Tier · grants · days remaining · JWT health indicator |
+| **License Bar** | Tier · grants · days remaining · JWT health indicator (expand → Worker Diagnostic) |
 | **Proactive Watch** | 11 drift classes as live tiles; severity colors; click-to-fix |
 | **MOAT Tracker** | Competitive positioning ledger (read from MOAT_TRACKER.md) |
 | **MemPalace** | Cross-session memory search (via mxm-memory MCP) |
 | **Confidence Tags** | Per-output 🟢🟡🔴 badge overlay on all agent-generated content |
 | **Voice Config** | Engine picker: Native (default) / Whisper+Kokoro / Custom; per-persona routing |
 | **Studio** (cinematic) | AI media generation skill surfaced for cinematic style picker |
+| **Command Launcher** ⌘K **[TIER 1]** | Fuzzy search across all 38 slash commands with arg hints and recent-items list |
+| **Compliance Posture** **[TIER 1]** | 14 frameworks × current project: in-scope / near-scope / out-of-scope tiles + jurisdiction map |
+| **MCP Health Panel** **[TIER 1]** | 7 MCP servers as tiles: ✓ Connected / ✗ Failed / ⏳ Installing; per-server tool count + last invocation timestamp |
+| **Worker Connectivity Diagnostic** **[TIER 1]** | License Bar expand: last `/validate` heartbeat time, response time, cached grants indicator, retry button |
 
 ### Maxim Studio name + branding
 
@@ -274,16 +280,23 @@ These are the net-new surfaces added to the opcode chassis. Full detail in
 | Fork + clean local build + CODEOWNERS | 1 day | Sprint start |
 | **Split bundle installer**: extract plugin to `~/.mxm-studio/`, pre-install MCP deps, write to Claude Code + Claude Desktop MCP configs, startup update checker | 3 days | Week 1 |
 | Rebrand Studio chrome (logo, splash, color palette, top-bar mode switcher) | 1 day | Week 2 |
-| **Mission Control mode**: port VAZIR HUD (hud_app.jsx + tweaks-panel.jsx + AI Agent HUD.html) to Tauri WebView; swap `window.claude.complete()` → `mxm-catalog.route_task()` MCP; wire PendingTasks → live Proactive Watch; promote tweaks-panel.jsx to global settings system | 3 days | Week 2–3 |
-| Executive Dispatch + Agent Roster sidebar (Studio mode) | 2 days | Week 3–4 |
+| **Mission Control mode**: port VAZIR HUD to Tauri WebView; swap to MCP calls; wire PendingTasks → Proactive Watch; promote tweaks-panel.jsx to global settings | 3 days | Week 2–3 |
+| Executive Dispatch + Agent Roster sidebar (Studio mode) | 2 days | Week 3 |
+| **Command Launcher ⌘K [TIER 1]**: shadcn `<Command>` palette, fuzzy search 38 commands, arg hints, recent items, global keyboard shortcut handler | 1 day | Week 3 |
 | Pack Catalog + License Bar (Studio mode) | 2 days | Week 4 |
+| **Compliance Posture Dashboard [TIER 1]**: 14 framework tiles per project, jurisdiction map, `mxm-compliance.check_compliance` MCP integration, BLOCK/COMPLIANT/REMEDIATE state | 2 days | Week 4 |
 | Proactive Watch panel + MemPalace search (Studio mode) | 2 days | Week 5 |
-| Voice Config tab + confidence tag overlay; VAZIR HUD TTS already uses Web Speech API → verify native path works; add Kokoro/custom wiring | 1 day | Week 5 |
+| **MCP Health Panel [TIER 1]**: 7 server tiles, status check via process probe + MCP ping, tool count badge, last-invocation timestamp from log tail | 1 day | Week 5 |
+| **Worker Connectivity Diagnostic [TIER 1]**: License Bar expand panel — last `/validate` time, response time histogram, cached-grants indicator, retry button, offline mode badge | 0.5 days | Week 5 |
+| Voice Config tab + confidence tag overlay; VAZIR HUD TTS already uses Web Speech API → verify native; add Kokoro/custom wiring | 1 day | Week 5 |
 | MOAT Tracker + Framework Library + Studio (cinematic) tab | 2 days | Week 6 |
 | Focus mode repurposing: agent response / compliance report / MOAT briefing full-screen | 1 day | Week 6 |
 | QA + Claude Desktop integration test + distribution signing + v0.1.0 tag | 2 days | Week 7–8 |
 
-**Total: ~8 weeks, ~20 dev-days.** The VAZIR HUD reduces Week 2–3 effort significantly — it's already built; it's a port not a build.
+**Total: ~8 weeks, ~24.5 dev-days.** TIER 1 additions (+4.5 days):
+Command Launcher (1d Week 3), Compliance Posture (2d Week 4), MCP Health (1d Week 5),
+Worker Diagnostic (0.5d Week 5). All four are critical for daily-use coverage of
+Maxim's existing capability surface.
 
 ---
 

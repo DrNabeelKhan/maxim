@@ -270,6 +270,173 @@ The `useTweaks(defaults)` hook persists settings to `~/.mxm-studio/preferences.j
 
 ---
 
+## TIER 1 surfaces (added 2026-05-14 — capability coverage)
+
+These four surfaces close coverage gaps identified in the post-design audit.
+Each maps directly to an existing Maxim capability that was buried or invisible
+in the original 11-surface plan.
+
+### Command Launcher (⌘K palette)
+
+**Purpose:** Fuzzy-searchable access to all 38 slash commands without leaving Studio.
+**Data source:** `~/.mxm-studio/maxim/<v>/.claude/commands/*.md` (frontmatter parsed
+for `description` field + arg hints from body).
+**Component:** shadcn `<Command>` (cmdk under the hood).
+
+```
+┌── ⌘K Command Palette ──────────────────────────────────────┐
+│  🔍 Search commands...                                       │
+├──────────────────────────────────────────────────────────────┤
+│  ▾ Recent                                                    │
+│    /mxm-status                  · check session state        │
+│    /mxm-watch                   · drift detection            │
+│  ▾ Executive Routing                                         │
+│    /mxm-route   <task>          · auto-classify and route    │
+│    /mxm-ceo     <task>          · CEO office                 │
+│    /mxm-cto     <task>          · CTO office                 │
+│    /mxm-cmo     <task>          · CMO office                 │
+│    /mxm-cso     <task>          · CSO office (auto-loops)    │
+│    /mxm-cpo     <task>          · CPO office                 │
+│    /mxm-coo     <task>          · COO office                 │
+│    /mxm-cino    <task>          · CINO office                │
+│  ▾ Workflow                                                  │
+│    /mxm-plan    <feature>       · planning-with-files        │
+│    /mxm-implement <feature>     · TDD-first implementation   │
+│    /mxm-review  <pr|file>       · framework-cited review     │
+│    /mxm-test    <scope>         · test mode                  │
+│    /mxm-release                 · session-end + version bump │
+│  ▾ Memory + Recall                                           │
+│    /mxm-remember <note>         · write to MemPalace         │
+│    /mxm-recall   <query>        · semantic search            │
+│    /mxm-session-end             · 9-doc closure bundle       │
+│  ↑↓ navigate · ↵ run · Esc close · Tab autocomplete arg     │
+└──────────────────────────────────────────────────────────────┘
+```
+
+**Keyboard shortcut:** `⌘K` (macOS) / `Ctrl+K` (Windows/Linux); global, not per-tab.
+
+**Side effect on selection:** Tauri IPC sends the command + args to Claude Code's
+TUI process via spawn (or via a registered claude command), surfacing the slash
+command in the active Claude Code session.
+
+---
+
+### Compliance Posture Dashboard
+
+**Purpose:** At-a-glance view of which of the 14 compliance frameworks apply to
+the current project, and their compliance state.
+
+**Data source:**
+- Per-project scope: `config/project-manifest.json` → `compliance.frameworks`
+- Live state: `mxm-compliance.check_compliance({ framework, scope })` MCP call
+- Jurisdiction: `mxm-compliance.get_jurisdiction_requirements()` MCP call
+
+```
+┌── Compliance Posture · my-project ─────────────────────────────────────┐
+│                                                                          │
+│  Jurisdictions: 🍁 Canada · 🇪🇺 EU · 🇺🇸 US                              │
+│                                                                          │
+│  ▾ In scope (declared in project-manifest.json)                          │
+│    ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐               │
+│    │ 🟢 GDPR  │  │ 🟢 PIPEDA│  │ 🟢 SOC2  │  │ 🟡 PCI-DSS│  4 frameworks │
+│    │ COMPLIANT│  │ COMPLIANT│  │ COMPLIANT│  │ REMEDIATE │               │
+│    │ Art 13 ✓ │  │ § 4 ✓    │  │ CC6.1 ✓  │  │ Req 3 ⚠   │               │
+│    └──────────┘  └──────────┘  └──────────┘  └──────────┘               │
+│                                                                          │
+│  ▾ Near scope (jurisdiction match, not declared)                         │
+│    UAE-PDPL · CASL · CCPA                                                │
+│    [+ Add to scope]                                                      │
+│                                                                          │
+│  ▾ Out of scope (no jurisdiction signal)                                 │
+│    HIPAA · ISO 13485 · ISO 14971 · NIST CSF · ISO 27001 · WCAG · FINTRAC │
+│    EU AI Act                                                             │
+│                                                                          │
+│  [Run full compliance audit ▶]    [Generate ROPA entry ▶]                │
+└──────────────────────────────────────────────────────────────────────────┘
+```
+
+**State states:**
+- 🟢 COMPLIANT — all required articles satisfied
+- 🟡 REMEDIATE — gaps identified, link to remediation steps
+- 🔴 BLOCK — critical violation, blocks new feature ship
+- ⚪ ADVISORY — framework loaded but not enforced (Starter tier)
+
+---
+
+### MCP Health Panel
+
+**Purpose:** Visual diagnostic of all 7 MCP server states + 47 tool count breakdown.
+Lives at the top of the Proactive Watch panel; expand for full detail.
+
+**Data source:**
+- Process state: Tauri `invoke('check_mcp_status', { server })` — uses `claude mcp list` output OR direct process probe
+- Tool count: each server's `package.json` + tool registry
+- Last invocation: tail of `.mxm-skills/mcp-invocations.log` (new file written by license-gate.mjs)
+
+```
+┌── MCP Health · 7 servers · 47 tools ──────────────────────────────────┐
+│                                                                         │
+│  ┌────────────────┐ ┌────────────────┐ ┌────────────────┐              │
+│  │ mxm-portfolio  │ │ mxm-context    │ │ mxm-catalog    │              │
+│  │ ✓ Connected    │ │ ✓ Connected    │ │ ✓ Connected    │              │
+│  │ 9 tools        │ │ 15 tools       │ │ 3 tools        │              │
+│  │ last: 12s ago  │ │ last: 4m ago   │ │ last: 1h ago   │              │
+│  └────────────────┘ └────────────────┘ └────────────────┘              │
+│  ┌────────────────┐ ┌────────────────┐ ┌────────────────┐              │
+│  │ mxm-compliance │ │ mxm-behavioral │ │ mxm-memory     │              │
+│  │ ✓ Connected    │ │ ✓ Connected    │ │ 🟡 Slow        │              │
+│  │ 5 tools        │ │ 7 tools        │ │ 6 tools        │              │
+│  │ last: 2h ago   │ │ last: 30s ago  │ │ last: 8s · 3.2s│              │
+│  └────────────────┘ └────────────────┘ └────────────────┘              │
+│  ┌────────────────┐                                                     │
+│  │ mxm-voice      │                                                     │
+│  │ ✗ Failed       │  [Restart ▶]                                        │
+│  │ 2 tools        │                                                     │
+│  │ npm install... │                                                     │
+│  └────────────────┘                                                     │
+│                                                                         │
+│  [Restart all ▶]    [View invocation log ▶]                             │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Failure recovery:** clicking [Restart ▶] runs `npm install` in that server's
+folder + sends MCP reload signal to Claude Code. No full app restart needed.
+
+---
+
+### Worker Connectivity Diagnostic (License Bar expand)
+
+**Purpose:** Surface license-gate runtime state. When license bar is clicked,
+expand into a detail panel showing Worker health.
+
+**Data source:**
+- POST `https://maxim-license-api.isystematic.workers.dev/validate` (60s heartbeat)
+- Last response timing logged locally
+- Cached grants from last successful validate
+
+```
+┌── License Bar (clicked) ─────────────────────────────────────────────────┐
+│  Tier: Pro Trial · Grants: 24 · Expires: 2026-07-26 (72d) · 🟢          │
+│  ┌────────────────────────────────────────────────────────────────────┐ │
+│  │  Worker Connectivity                                                │ │
+│  │  Endpoint: maxim-license-api.isystematic.workers.dev                │ │
+│  │  Last validate: 14 seconds ago · 187 ms                             │ │
+│  │  Last 10 validates: ▮▮▮▮▮▮▮▮▮▮ all 150–250ms                       │ │
+│  │  Cached grants: 24 (will be used if Worker offline up to 24h)       │ │
+│  │  JWT ID: 8a4f...e2b1                                                │ │
+│  │  Machine fingerprint: 43c6...c4 (matches owner key — Owner mode)    │ │
+│  │  [Retry now ▶]   [Force refresh JWT ▶]   [View raw response ▶]      │ │
+│  └────────────────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────────────┘
+```
+
+**Offline behavior:**
+- If `/validate` fails: cached grants used; retry every 60s
+- After 24h offline: tier degrades to Starter automatically (license-gate logic)
+- Banner appears in license bar: `🟡 Offline since 14:23 · cached grants valid for 23h 46m`
+
+---
+
 ## Pack catalog — dynamic loading mechanism
 
 Pack state is a pure function of three data sources read at runtime. No compilation step.

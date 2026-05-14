@@ -22,8 +22,9 @@ Every public ADR declares a commitment Maxim makes to its users — a contract t
 | [ADR-012](ADR-012-overlay-engine-architecture.md) | Maxim Overlay Engine (MOE) — governance layer for every installed Claude Code plugin | accepted | 2026-04-23 |
 | [ADR-013](ADR-013-multi-project-memory-inheritance.md) | Multi-Project Memory Inheritance — parent/child topology + upward rollup | accepted | 2026-05-13 |
 | [ADR-014](ADR-014-maxim-studio-agpl-shell.md) | Maxim Studio — AGPL-3.0 GUI shell on top of BSL-1.1 plugin | accepted | 2026-05-13 |
+| [ADR-015](ADR-015-maxim-studio-v02-roadmap.md) | Maxim Studio v0.2+ surface roadmap — TIER 2/3/4 deferred to v0.2/0.3/0.4+ | accepted | 2026-05-14 |
 
-**Published:** 10 · **Accepted:** 10 · **Superseded:** 0 · **Rejected:** 0
+**Published:** 11 · **Accepted:** 11 · **Superseded:** 0 · **Rejected:** 0
 
 ---
 
