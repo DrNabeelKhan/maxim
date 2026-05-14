@@ -26,8 +26,9 @@ Maxim Studio ships with two modes switchable from the top bar:
 **Studio mode** (default): opcode-derived desktop UI — agent roster, pack catalog,
 license bar, Proactive Watch panel, MemPalace search, Executive Dispatch.
 
-**Mission Control mode**: cinematic JARVIS-style operations interface based on the
-VAZIR AI Agent HUD (`hud_app.jsx` + `tweaks-panel.jsx` + `AI Agent HUD.html`).
+**Mission Control mode**: real-time AI operations interface ported from the VAZIR
+AI Agent HUD (`hud_app.jsx` + `tweaks-panel.jsx` + `AI Agent HUD.html`). All VAZIR
+HUD functionality preserved; reskinned in Maxim design language (not VAZIR OPS skin).
 Persona-driven voice conversation, live Proactive Watch alerts as priority queue,
 full-screen focus overlays for agent outputs.
 
@@ -177,6 +178,11 @@ Source files (from VAZIR handoff, incorporated into Studio repo):
 
 ### What changes from VAZIR HUD → Maxim Mission Control
 
+**All VAZIR HUD functionality ships unchanged. Only the visual skin is replaced
+with Maxim brand. VAZIR OPS remains the operator's personal interface.**
+
+#### Functional swaps (logic, not design)
+
 ```
 VAZIR HUD                         →  Maxim Mission Control
 ─────────────────────────────────────────────────────────────
@@ -193,21 +199,35 @@ PendingTasks (PENDING_SEED static) →  live data from:
 TTS: Web Speech API (already)      →  NO CHANGE — Web Speech API IS Windows native
                                        SpeechSynthesis = WinRT speech engine (zero install)
                                        SpeechRecognition = Windows Speech Recognition
-                                       Voice Config tab: swap for Kokoro/custom if desired
 
 "VAZIR" HUD persona                →  Maxim persona routing:
                                        VAZIR  → bm_daniel (advisory/decision/risk)
                                        ELARA  → bf_emma  (demo/client/marketing)
                                        RIVA   → af_kore  (product/technical)
                                        JARVIS → bm_george (formal briefing)
-                                       Persona auto-selected by task type from route_task() response
+                                       Auto-selected from route_task() office response
 
 Focus mode (doc/image/video/file) →  Maxim output focus:
                                        'document' → full-screen agent markdown response
                                        'file'     → full-screen compliance report / ADR
                                        'image'    → full-screen MOAT_TRACKER visualization
-                                       [show: document | MOAT-09] in LLM response triggers it
 ```
+
+#### Design skin swap (visual only, all layout/UX preserved)
+
+| VAZIR OPS (personal) | Maxim Mission Control (public) |
+|---|---|
+| `#040a14` dark navy | Maxim dark `#0a0f1a` (landing-page token) |
+| `#6ee7ff` cyan / `#ffb464` amber | Maxim accent palette from `.brand-foundation/personal/` |
+| Particle network + rotating core sphere | Maxim orbital: 7-office rings around center node |
+| Scanlines + film grain CRT | Clean — purposeful motion only (no CRT effects) |
+| Major Mono Display + JetBrains Mono | Space Grotesk + JetBrains Mono (landing-page match) |
+| "VAZIR · Cognitive Operations Interface" | "Maxim · Mission Control" |
+| "Operator" / "VAZIR · Response" | "You" / "[Agent] · [Office]" |
+| Cyan glow alerts | 🟢🟡🔴 confidence tags as primary status language |
+
+3-panel layout, word-by-word TTS highlight, mic waveform, focus overlay,
+pending queue, and tweaks panel all unchanged structurally.
 
 ### tweaks-panel.jsx — promoted to Studio-wide design system
 

@@ -136,28 +136,34 @@ Maxim Studio ships with TWO modes switchable from the top bar:
 license bar, Proactive Watch panel, MemPalace search, Executive Dispatch.
 
 **Mission Control mode**: the VAZIR AI Agent HUD ported to Tauri's WebView —
-cinematic JARVIS-style interface with live agent activity, voice conversation,
-Proactive Watch alerts as priority queue, and the Maxim persona system (VAZIR /
-ELARA / RIVA / JARVIS) as the HUD's "cognitive core".
+real-time AI operations interface with live agent activity, voice conversation,
+Proactive Watch alerts as priority queue, and the Maxim persona system.
 
 The VAZIR handoff files (`AI Agent HUD.html`, `hud_app.jsx`, `tweaks-panel.jsx`)
-are incorporated as the foundation:
+are incorporated as the structural and functional foundation:
 - `window.claude.complete()` → replaced with `mxm-catalog.route_task()` MCP call
-  (Maxim executive routing instead of raw LLM)
-- `PendingTasks` → replaced with live Proactive Watch alerts + `/mxm-tasks` queue
-  (P1 = FAIL, P2 = WARN, P3 = INFO, with real countdown from scheduled tasks)
-- TTS → the HUD already uses Web Speech API (= Windows native SpeechSynthesis +
-  SpeechRecognition) — this IS the platform-native voice path. Zero changes needed
-  for the default voice engine. Kokoro/custom voice wired via Voice Config tab.
-- `tweaks-panel.jsx` → promoted to Maxim Studio's global settings design system,
-  used by Voice Config, Theme, and Proactive Watch configuration tabs in Studio mode
-- Focus mode (document/image/video/file) → repurposed for full-screen Maxim outputs:
-  agent response, MOAT_TRACKER briefing, compliance report, MemPalace document
+- `PendingTasks` → live Proactive Watch alerts + `/mxm-tasks` queue (P1/P2/P3)
+- TTS → Web Speech API already IS Windows native SpeechSynthesis — zero changes
+- `tweaks-panel.jsx` → promoted to Maxim Studio's global settings design system
+- Focus mode → full-screen agent responses, compliance reports, MOAT briefings
 
-The operator's personal VAZIR personas (bm_daniel / bf_emma / af_kore / bm_george)
-are pre-configured in Mission Control's persona routing. The HUD's "cognitive core"
-animation pulses to Maxim's TTS output — identical to the existing VAZIR production
-behavior.
+**Design language: Maxim brand, not VAZIR OPS.**
+All functionality from the VAZIR HUD is preserved. The visual skin is replaced:
+
+| VAZIR OPS (personal) | Maxim Studio Mission Control (public) |
+|---|---|
+| `#040a14` dark navy bg | Maxim dark brand (`#0a0f1a` or landing-page token) |
+| `#6ee7ff` cyan + `#ffb464` amber accents | Maxim accent palette from `.brand-foundation/personal/` |
+| Particle network + animated core sphere | Maxim orbital: 7-office rings rotating around center node |
+| Scanlines + film grain CRT effects | Clean, minimal — purposeful motion only |
+| Major Mono Display + JetBrains Mono | Space Grotesk (landing-page match) + JetBrains Mono (code) |
+| "VAZIR · Cognitive Operations Interface" | "Maxim · Mission Control" |
+| "Operator" / "VAZIR · Response" labels | "You" / "[Agent] · [Office]" labels |
+| Cyan glow + magenta alerts | 🟢🟡🔴 confidence tags as the primary status language |
+
+The 3-panel layout, conversation UX, word-by-word TTS highlight, mic waveform,
+focus overlay, pending tasks queue, and tweaks panel all ship unchanged — only
+colors, fonts, labels, and background animation are reskinned to Maxim brand.
 
 ### Constraint 1 — No Maxim IP in the Studio binary
 
