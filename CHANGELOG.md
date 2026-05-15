@@ -49,7 +49,7 @@ No production deploy yet — commits are on `main`, pending v1.1.2 release tag.
   diagram, pack-loading mechanism, 11 UI surfaces, voice config tab, 8-week sprint plan.
 - **`documents/reference/LICENSE_SEPARATION.md`** — legal architecture: AGPL Studio +
   BSL plugin + proprietary Worker as separable works. AGPL network-use analysis.
-- **`documents/sales/launch/maxim-studio-sprint-bootstrap.md`** — self-contained
+- **`documents/architecture/maxim-studio/sprint-bootstrap.md`** — self-contained
   bootstrap prompt for the Studio fork sprint (paste into a new Claude Code window).
 
 ---

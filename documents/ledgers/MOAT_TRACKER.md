@@ -129,7 +129,7 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Anti-pattern** | CLI-only plugins that assume all users are developers who read documentation. Maxim's moat is invisible to non-developers without a visual surface. Studio removes that barrier. |
 | **Pack(s)** | Studio is free (AGPL-3.0). Revenue flows through the BSL plugin + Cloudflare Worker. Studio is the acquisition gateway for all paid packs, not a revenue source itself. |
 | **Primary framework** | Endowment Effect (Kahneman & Knetsch, 1991). ADR-014 ratified 2026-05-13. |
-| **Proof** | PLANNED. ADR-014 at `documents/ADRs/ADR-014-maxim-studio-agpl-shell.md`. Architecture at `documents/reference/MAXIM_STUDIO_ARCHITECTURE.md`. Sprint bootstrap at `documents/sales/launch/maxim-studio-sprint-bootstrap.md`. Fork: `github.com/DrNabeelKhan/maxim-studio` (AGPL-3.0, target v0.1.0 ~8 weeks from sprint start). |
+| **Proof** | PLANNED. ADR-014 at `documents/ADRs/ADR-014-maxim-studio-agpl-shell.md`. Architecture at `documents/reference/MAXIM_STUDIO_ARCHITECTURE.md`. Sprint bootstrap at `documents/architecture/maxim-studio/sprint-bootstrap.md`. Fork: `github.com/DrNabeelKhan/maxim-studio` (AGPL-3.0, target v0.1.0 ~8 weeks from sprint start). |
 
 ---
 
