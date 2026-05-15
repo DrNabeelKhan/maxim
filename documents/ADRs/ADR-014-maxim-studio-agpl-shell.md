@@ -67,14 +67,34 @@ On first run and on startup update check:
 1. Studio reads ~/.mxm-studio/current.json → current plugin version
 2. Studio checks GitHub releases API for latest plugin version
    → same: skip  →  newer: prompt "v1.1.2 available — update?" [Now] [Later]
-3. Extract plugin bundle to ~/.mxm-studio/maxim/<version>/
-4. Pre-install node_modules for all 7 MCP servers
-5. Write to BOTH MCP registries:
+3. Verify system dependencies:
+   - Claude Code CLI present (which claude / where.exe claude)
+   - Node.js ≥ 18.0 (node --version)
+   - npm available (npm --version)
+   - Git available (git --version)
+   - Internet reachable (validate Worker handshake)
+   Any missing dep: show install link + block proceed
+4. Extract plugin bundle to ~/.mxm-studio/maxim/<version>/
+5. Pre-install MCP node_modules for all 7 servers (~91 pkgs each):
+   for each mcp/mxm-*/: npm install (parallel, file-locked)
+   Dependencies: @modelcontextprotocol/sdk ^1.29.0, zod ^3.24.0
+                 + yaml ^2.6.0 (mxm-voice only)
+6. Clone 7 required community packs from GitHub (~2 min total):
+   obra/superpowers, VoltAgent/awesome-claude-code-subagents,
+   OthmanAdi/planning-with-files, alirezarezvani/claude-skills,
+   nextlevelbuilder/ui-ux-pro-max-skill,
+   OSideMedia/higgsfield-ai-prompt-skill, VoltAgent/awesome-design-md
+   → ~/.mxm-studio/maxim/<version>/community-packs/
+   (Skipped if already present + sentinel newer than registry)
+7. Write to BOTH MCP registries:
    ~/.mcp.json               ← Claude Code user-level MCP registry
    %APPDATA%\Claude\claude_desktop_config.json  ← Claude Desktop MCP registry
    (macOS: ~/Library/Application Support/Claude/claude_desktop_config.json)
-6. Update ~/.mxm-studio/current.json
+8. Verify all 7 MCPs healthy (process probe + MCP ping)
+9. Update ~/.mxm-studio/current.json
 ```
+
+**Full system dependency manifest** — see `documents/reference/MAXIM_STUDIO_ARCHITECTURE.md` § Dependencies for the complete list including npm package versions, community pack git sources, and optional voice engine fallbacks.
 
 Neither surface (Claude Code CLI nor Claude Desktop) requires `claude plugin install`.
 Studio manages the plugin lifecycle entirely. Users who have Claude Code or Claude

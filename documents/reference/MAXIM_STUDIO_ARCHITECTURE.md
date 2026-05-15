@@ -55,6 +55,142 @@ Format: `{ "mcpServers": { "<name>": { "command": "...", "args": [...] } } }`
 
 ---
 
+## Dependencies — full installation manifest
+
+Maxim Studio's installer is responsible for the complete dependency chain.
+Users download one installer; Studio resolves everything else. The manifest
+below is the authoritative list of what the installer verifies, downloads,
+installs, or extracts. Source: audited against plugin-repo 2026-05-14.
+
+### Tier A — System prerequisites (must exist on machine; Studio verifies, does NOT install)
+
+| Dependency | Min version | Why required | Install link if missing |
+|---|---|---|---|
+| Claude Code CLI | 2.0+ | Hosts the plugin, loads MCP servers, runs slash commands | https://claude.ai/claude-code |
+| Node.js | 18.0+ | MCP server runtime; npm dependency installer | https://nodejs.org |
+| npm | bundled with Node | Installs MCP node_modules | (comes with Node) |
+| Git | any modern | Clones community packs; backs `claude plugin` mechanism | https://git-scm.com |
+| Internet (first run) | — | JWT issuance from Cloudflare Worker + community pack git clones | — |
+
+Tier A items are NOT bundled in the Studio binary. Studio's first-run wizard
+detects each, shows install links for missing items, and waits.
+
+### Tier B — Plugin bundle (embedded in Studio binary, extracted on first run)
+
+Source: split bundle distribution model. Plugin tree compressed (~8 MB) ships as
+an embedded asset in the Studio binary; Studio extracts to `~/.mxm-studio/maxim/<version>/`.
+
+| Component | Location after extract | Purpose |
+|---|---|---|
+| 90 agent .md files | `agents/MXM/{office}/*.md` | Specialist agent DNA |
+| 64 framework SKILL.md | `composable-skills/frameworks/*/` | Behavioral framework catalog |
+| 38 slash commands | `.claude/commands/mxm-*.md` | Claude Code TUI commands |
+| 34 skill domains | `.claude/skills/*/` | Domain dispatchers |
+| 14 hook scripts | `.claude/hooks/{session-start,session-end,pre-commit,...}.{sh,ps1}` | Lifecycle automation |
+| 7 MCP server stubs | `mcp/mxm-{portfolio,context,catalog,compliance,behavioral,memory,voice}/` | MCP server.js + package.json + license-gate.mjs |
+| 16 pack folders | `packs/pack-l{1,2,3}-*/` | Pack SKILL.md content |
+| 19 bootstrap scripts | `bootstrap/*.{sh,ps1}` | Project setup helpers |
+| 12+ documents (ADRs, INSTALL.md, reference, etc.) | `documents/*` | Plugin reference docs |
+| Brand foundation | `.brand-foundation/personal/` | 3-layer voice system (base only) |
+| Templates | `templates/` | Sprint plan, sprint report, etc. |
+| IDE adapters | `ide-adapters/` | 16 IDE hook patches |
+| Config templates | `config/*.TEMPLATE.json` | Project-manifest, watch-profile templates |
+| Marketplace manifest | `.claude-plugin/marketplace.json` | Lists 14 commercial packs |
+| MCP registry | `.mcp.json` | 7-server declaration with spawn-with-deps wrapper |
+
+### Tier C — npm packages (installed per MCP server during Step 5)
+
+7 servers × ~91 transitive packages = ~637 npm packages total. Direct deps per server:
+
+| MCP server | Direct deps | Tool count |
+|---|---|---|
+| `mxm-portfolio` | `@modelcontextprotocol/sdk@^1.29.0` · `zod@^3.24.0` | 9 |
+| `mxm-context` | `@modelcontextprotocol/sdk@^1.29.0` · `zod@^3.24.0` | 15 |
+| `mxm-catalog` | `@modelcontextprotocol/sdk@^1.29.0` · `zod@^3.24.0` | 3 |
+| `mxm-compliance` | `@modelcontextprotocol/sdk@^1.29.0` · `zod@^3.24.0` | 5 |
+| `mxm-behavioral` | `@modelcontextprotocol/sdk@^1.29.0` · `zod@^3.24.0` | 7 |
+| `mxm-memory` | `@modelcontextprotocol/sdk@^1.29.0` · `zod@^3.24.0` | 6 |
+| `mxm-voice` | `@modelcontextprotocol/sdk@^1.29.0` · `zod@^3.24.0` · `yaml@^2.6.0` | 2 |
+| **Shared** | `license-gate.mjs` + `license-pubkey.pem` + `spawn-with-deps.mjs` (mcp/_shared/) | — |
+| **TOTAL** | 47 tools across 7 servers, ~91 npm pkgs each, ~637 total | 47 |
+
+Studio's installer runs `npm install` in each server's directory in parallel,
+file-locked to prevent race conditions. Sentinel files mark completion so
+subsequent launches skip re-installation.
+
+### Tier D — Community packs (cloned from GitHub during Step 6)
+
+Source: `config/community-pack-registry.json` (7 required packs, all MIT-licensed).
+Studio runs `bootstrap/mxm-community-packs.{sh,ps1}` which performs `git clone --depth 1`
+for each. Total install size ~50 MB on disk, ~2 minutes wall-clock on first run.
+
+| Pack | GitHub source | Domain | Install size |
+|---|---|---|---|
+| Superpowers Workflow Patterns | `obra/superpowers` | workflow | ~5 MB |
+| VoltAgent Subagent Catalog | `VoltAgent/awesome-claude-code-subagents` | agent-catalog (150 specialists) | ~15 MB |
+| Planning With Files | `OthmanAdi/planning-with-files` | planning | ~2 MB |
+| Claude Skills Library | `alirezarezvani/claude-skills` | general (536 SKILL.md) | ~12 MB |
+| UI/UX Pro Max | `nextlevelbuilder/ui-ux-pro-max-skill` | ui-ux (7 skills) | ~3 MB |
+| Higgsfield AI Prompts | `OSideMedia/higgsfield-ai-prompt-skill` | ai-media-generation (40 styles; 15 absorbed as Maxim IP) | ~5 MB |
+| Awesome Design Templates | `VoltAgent/awesome-design-md` | brand-design (59 templates) | ~8 MB |
+
+Sentinel: `~/.mxm-studio/maxim/<version>/.mxm-skills/.community-packs-installed`
+created on success. Subsequent launches skip the clone unless registry mtime > sentinel mtime.
+
+### Tier E — Voice engine (engine-specific, see Voice Config tab)
+
+| Engine | Install | Platform |
+|---|---|---|
+| **Platform native (default)** | Zero install — uses Web Speech API (WinRT SpeechSynthesis + SpeechRecognition on Windows; AVFoundation on macOS) | Windows, macOS |
+| Whisper + Kokoro (power user) | `mbailey/voicemode` MCP — operator installs via Claude Code's plugin system; Studio does NOT auto-install | All platforms |
+| Custom (VAZIR personal) | Operator-managed config at `E:\Projects\nabeelkhan\documents\architecture\VAZIR\VAZIR-voice-setup.md`; Studio auto-detects if file exists on owner machine | Operator only |
+
+Voice engine selection persists in `~/.mxm-studio/preferences.json` → `voice.engine`.
+The `mxm-voice` MCP reads this at tool-call time and dispatches to the correct backend.
+
+### Tier F — Optional integrations (operator-driven, not in Studio installer)
+
+| Integration | When | Setup path |
+|---|---|---|
+| Owner key | iSystematic contributor or operator personal machine | `bootstrap/mxm-owner-keygen-bootstrap.{sh,ps1}` writes RSA-4096 keypair to `~/.mxm-packs/{owner.key, owner-*.pub, owner-*.meta.json}`. Studio detects presence at startup → activates VAZIR OPS skin in Mission Control + 🔵 Owner mode in License Bar. |
+| claude-mem | Cross-session memory (thedotmack pattern) | Separate `/plugin install claude-mem@thedotmack` if operator wants the upstream package. Maxim's own MemPalace integration via `mxm-memory` MCP is independent. |
+| VAZIR MCP | Operator-personal VAZIR project MCP server | If `E:\Projects\nabeelkhan\VAZIR\mcp_server\run_server.py` exists, Studio surfaces it as a detected MCP in the Mission Control sidebar. |
+
+### Tier G — Cloudflare Worker (live in production; not a local dependency)
+
+| Endpoint | URL | Purpose |
+|---|---|---|
+| `/issue` | `https://maxim-license-api.isystematic.workers.dev/issue` | Issue anonymous Starter or 90-day Pro Trial JWT |
+| `/validate` | `https://maxim-license-api.isystematic.workers.dev/validate` | Validate JWT; return tier + grants; 60s heartbeat |
+| `/webhook/stripe` | (same domain) | Stripe webhook receives `checkout.session.completed` → issues paid-tier JWT |
+
+Studio talks to these endpoints over HTTPS. No local install required. Failure of `/validate`
+triggers cached-grants fallback (up to 24 hours) per the license-gate logic.
+
+### Filesystem locations Studio touches
+
+```
+~/.mxm-studio/                              ← NEW (Studio-managed)
+  ├── current.json                          ← installed plugin version pointer
+  ├── preferences.json                      ← Studio settings (voice, theme, layout)
+  └── maxim/<version>/                      ← extracted plugin tree
+      ├── agents/  .claude/  composable-skills/  mcp/  packs/ ...
+      ├── community-packs/                  ← cloned community packs
+      └── .mxm-skills/.community-packs-installed  ← sentinel
+
+~/.mxm-packs/                               ← Operator-managed (optional)
+  └── owner.key                             ← RSA private key (if owner)
+
+~/.claude/                                  ← Claude Code-managed
+  ├── plugins/installed_plugins.json        ← updated by Studio (registered as user-scope)
+  └── mcp.json (~/.mcp.json)                ← updated by Studio (7 mxm-* server entries)
+
+%APPDATA%\Claude\ (Win) | ~/Library/Application Support/Claude/ (macOS)
+  └── claude_desktop_config.json            ← updated by Studio (same 7 entries)
+```
+
+---
+
 ## Distribution model (corrected 2026-05-13)
 
 **Maxim Studio is the single install path.** Users download Studio; Studio
