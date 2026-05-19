@@ -10,7 +10,7 @@
 /plugin install maxim@anthropic-official
 ```
 
-That installs the full behavioral intelligence layer in a single command. 91+ agents across 7 executive offices, 35+ skill domains, 37+ slash commands, 3 governance hooks, 4 free drift monitors, the `mxm-mode` output style, and the `mxm-pack-engine` binary. Free tier is fully functional out of the box.
+That installs the full behavioral intelligence layer in a single command. 101+ agents across 7 executive offices, 35+ skill domains, 37+ slash commands, 3 governance hooks, 4 free drift monitors, the `mxm-mode` output style, and the `mxm-pack-engine` binary. Free tier is fully functional out of the box.
 
 **Add commercial packs:**
 

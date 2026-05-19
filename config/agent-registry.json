@@ -4,7 +4,7 @@
   "description": "Single source of truth for Maxim agents and skills catalog. v1.0.0 achieves 100% Grade A DNA coverage across all 88 agents (full Triggers + Collaboration Matrix sections). VoltAgent, external subtrees, and domain dispatch tracked in config/dependency-registry.json.",
   "last_updated": "2026-05-19",
   "agent_dna_coverage": {
-    "grade_a": 91,
+    "grade_a": 101,
     "grade_b": 0,
     "grade_c": 0,
     "coverage_pct": 100,
@@ -12,8 +12,9 @@
   },
   "maintainer": "DrNabeelKhan",
   "scope": "Maxim agents + skills catalog only",
-  "total_mxm_agents": 91,
-  "_total_mxm_agents_breakdown": "CEO 9 + CTO 25 + CMO 16 + CSO 9 + CPO 12 + COO 10 + CINO 4 + Orchestrators 5 (planner/implementer/reviewer/tester/release-manager) + 1 executive-router = 91",
+  "total_mxm_agents": 101,
+  "_total_mxm_agents_breakdown": "CEO 9 + CTO 25 + CMO 16 + CSO 19 + CPO 12 + COO 10 + CINO 4 + Orchestrators 5 (planner/implementer/reviewer/tester/release-manager) + 1 executive-router = 101",
+  "_ws5_minimum_viable_note": "v1.2.0-rc.1 ships CSO 9->19 expansion only (10 net-new specialist files: appsec-engineer, owasp-specialist, secure-code-reviewer, soc2-auditor, iso27001-lead-auditor, gdpr-counsel, hipaa-counsel, llm-security-specialist, sbom-analyst, dpia-specialist). CTO -7, CMO -3 net, CPO -4, COO -2, CINO +4, Orchestrators +5 consolidation/restructuring deferred to v1.2.1 per Session 20 minimum-viable scope decision.",
   "total_skill_domains_active": 35,
   "total_skill_domains_added_in_v640": 7,
   "total_skill_domains_added_in_v641": 1,
@@ -48,8 +49,10 @@
   "_executable_hooks_added_v641": ["git-hygiene-preamble.sh", "git-hygiene-preamble.ps1", "git-hygiene-postamble.sh", "git-hygiene-postamble.ps1"],
   "_executable_hooks_note": "14 = 7 hooks × 2 platforms (bash + ps1): session-start, session-end, pre-commit, behavioral-moat-drift, git-hygiene-preamble, git-hygiene-postamble, mxm-guard",
   "total_categories": 14,
-  "frameworks_covered": 64,
+  "frameworks_covered": 68,
   "_frameworks_added_v641": ["proactive-watch"],
+  "_frameworks_added_v120_ws6a": ["transtheoretical-model", "self-determination-theory", "dual-process-theory", "prospect-theory"],
+  "_frameworks_deferred_v121_ws6b": ["scarf", "theory-of-planned-behavior", "social-learning-theory", "operant-conditioning", "diffusion-of-innovations", "emotional-design"],
   "total_adrs": 16,
   "_adrs_full_list": [
     "ADR-001-mxm-architecture-baseline",
@@ -72,6 +75,19 @@
   "total_canonical_ledgers": 5,
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
   "changelog": [
+    {
+      "version": "1.2.0-rc.1",
+      "date": "2026-05-19",
+      "changes": [
+        "feat(WS5 minimum-viable): CSO 9 -> 19 (+10 specialist agents). NEW agents: appsec-engineer (Application Security), owasp-specialist (triple-OWASP differentiator: Top 10 + LLM Top 10 + API Top 10), secure-code-reviewer (security overlay on standard reviewer), soc2-auditor (Trust Services Criteria + ISO 27001 cross-walk), iso27001-lead-auditor (ISMS + 93 Annex A controls 2022 reorganized structure), gdpr-counsel (Article-grounded EU compliance: DPIA, ROPA, DSAR, DPA, SCCs, breach), hipaa-counsel (PHI + Security Rule + Breach Notification + 18 identifiers + de-identification), llm-security-specialist (OWASP LLM Top 10 + MITRE ATLAS + Constitutional AI safety patterns), sbom-analyst (SPDX 3.0 + CycloneDX + AIBOM for EU AI Act Art. 53 - Maxim moat differentiator), dpia-specialist (GDPR Art. 35 + LINDDUN privacy threat modeling).",
+        "deferred(WS5 to v1.2.1): CTO -7 consolidation, CMO -3 net, CPO -4, COO -2, CINO +4 expansion, Orchestrators +5 expansion. Defers ~17 consolidations + ~9 net-new specialists pending operator review of per-agent reassignments. Total roster lands at proposal target 91 at v1.2.1 ship.",
+        "feat(WS6a): 4 HIGH-priority behavioral frameworks shipped at full ADR-007 7-section depth. NEW: composable-skills/frameworks/transtheoretical-model (Prochaska & DiClemente - Stages of Change, complements Fogg/COM-B with temporal sequencing), self-determination-theory (Deci & Ryan - intrinsic motivation via Autonomy/Competence/Relatedness needs, fills the long-term sustainability gap that Fogg ignores), dual-process-theory (Kahneman System 1/2 - cognitive system matching for UX, replaces partial coverage with full skill), prospect-theory (Kahneman & Tversky - loss aversion 2.25x asymmetry + reference dependence + probability weighting; pricing and framing master framework). Total frameworks 64 -> 68.",
+        "deferred(WS6b to v1.2.1, after v1.1.2 MOE ships): 6 MED-priority frameworks - SCARF, Theory of Planned Behavior, Social Learning Theory, Operant Conditioning, Diffusion of Innovations, Emotional Design. Total frameworks 68 -> 74 at v1.2.1 ship.",
+        "release: v1.2.0-rc.1 (release candidate). Promotes alpha.4 to rc.1 because the v1.2.0 GA UX surface (WS1+WS2+WS3+WS4) plus moat-central WS5 CSO expansion + WS6a HIGH frameworks is feature-complete for v1.2.0. Final v1.2.0 GA tag pending operator live-install verification per /mxm-release 8-bucket audit gate.",
+        "net deltas v1.1.1 -> v1.2.0-rc.1: agents 90 -> 101 (CMO +1 from WS1, CSO +10 from WS5). Skill domains 34 -> 35 (voice-routing in WS1). Slash commands 39 -> 48 (4 new in WS2, 5 new in WS3, mxm-self-update inventory drift fix in cleanup). Frameworks 64 -> 68 (4 new in WS6a). Drift classes 11 -> 12 (Class 12 ratified in cleanup). ADRs unchanged at 16.",
+        "context: WS5 (minimum-viable) + WS6a executed in Session 20 (2026-05-19) as the final two workstreams of v1.2.0. Operator directive 'Do WS5 and WS6 and commit and release.' Pragmatic scope per Session 20 audit: ship moat-central deliverables; defer consolidations needing operator review."
+      ]
+    },
     {
       "version": "1.2.0-alpha.4",
       "date": "2026-05-19",

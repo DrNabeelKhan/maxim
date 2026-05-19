@@ -4,7 +4,7 @@
 **License:** BSL 1.1 (4-year Apache 2.0 conversion per ADR-005)
 **Namespace:** `maxim`
 
-Maxim packaged as a Claude Code plugin. Installs the full behavioral intelligence layer: 91+ agents across 7 executive offices, 64 peer-reviewed frameworks, governance hooks, proactive drift detection, and the three-voice .brand-foundation load.
+Maxim packaged as a Claude Code plugin. Installs the full behavioral intelligence layer: 101+ agents across 7 executive offices, 64 peer-reviewed frameworks, governance hooks, proactive drift detection, and the three-voice .brand-foundation load.
 
 ## Installation
 

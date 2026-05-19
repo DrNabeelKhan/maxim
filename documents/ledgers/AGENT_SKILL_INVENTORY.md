@@ -2,27 +2,27 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.2.0-alpha.4 · **Last verified:** 2026-05-19
+**Version:** v1.2.0-rc.1 · **Last verified:** 2026-05-19
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
 ---
 
-## Section 1 — Specialist Agents (91)
+## Section 1 — Specialist Agents (101)
 
 | Office | Lead | Count | Path |
 |---|---|---:|---|
 | CEO — strategy, finance, partnerships | `enterprise-architect` | 9 | `agents/MXM/ceo/` |
 | CTO — engineering, infrastructure, AI | `implementer` | 25 | `agents/MXM/cto/` |
 | CMO — marketing, brand, SEO, content | `content-strategist` | 16 | `agents/MXM/cmo/` |
-| CSO — security, compliance, ethics | `security-analyst` | 9 | `agents/MXM/cso/` |
+| CSO — security, compliance, ethics | `security-analyst` | 19 | `agents/MXM/cso/` |
 | CPO — product, UX, research | `product-strategist` | 12 | `agents/MXM/cpo/` |
 | COO — delivery, sprints, operations | `planner` | 10 | `agents/MXM/coo/` |
 | CINO — R&D, horizon scanning | `innovation-researcher` | 4 | `agents/MXM/cino/` |
 | Orchestrators (planner, implementer, reviewer, tester, release-manager) | `executive-router` | 5 | `agents/MXM/orchestrators/` |
 | Executive Router | `executive-router` | 1 | `agents/MXM/executive-router.md` |
 
-**Total agents: 91.** Registry: `config/agent-registry.json`. Net delta from v1.1.1 (90 → 91): `nk-writer` added 2026-05-19 to CMO office per ADR-016 (WS1 of v1.2.0 sprint). The `_template-brand-writer.md` template ships in the same commit but is non-instantiable (filename prefix `_` excludes it from the agent registry; per-startup instances are operator-created on demand).
+**Total agents: 101.** Registry: `config/agent-registry.json`. Net delta from v1.1.1 (90 → 101): `nk-writer` added in WS1 (CMO 15 → 16); 10 net-new CSO specialists added in WS5 minimum-viable (CSO 9 → 19) — `appsec-engineer`, `owasp-specialist`, `secure-code-reviewer`, `soc2-auditor`, `iso27001-lead-auditor`, `gdpr-counsel`, `hipaa-counsel`, `llm-security-specialist`, `sbom-analyst`, `dpia-specialist`. The remaining WS5 restructuring (CTO −7, CMO −3 net, CPO −4, COO −2, CINO +4, Orchestrators +5) is deferred to v1.2.1 pending operator review of per-agent consolidation decisions. At v1.2.1 ship the total lands at the proposal target 91.
 
 ---
 
@@ -86,11 +86,11 @@ Under `.claude/hooks/`:
 
 ---
 
-## Section 6 — Behavioral Frameworks (64)
+## Section 6 — Behavioral Frameworks (68)
 
-Cataloged in `documents/reference/FRAMEWORKS_MASTER.md`. Core families include Fogg Behavior Model, COM-B, EAST, SCARF, Cialdini Persuasion, Prospect Theory, Cognitive Load Theory, Self-Determination Theory, Transtheoretical Model, Behavioral Moat Framing Doctrine (ADR-007), Technical Educator Rubric (ADR-010), and the 64th addition Proactive Watch (ADR-002).
+Cataloged in `documents/reference/FRAMEWORKS_MASTER.md`. Core families include Fogg Behavior Model, COM-B, EAST, SCARF, Cialdini Persuasion, Cognitive Load Theory, Behavioral Moat Framing Doctrine (ADR-007), Technical Educator Rubric (ADR-010), and the meta-framework Proactive Watch (ADR-002). v1.2.0 WS6a added 4 HIGH-priority frameworks at full ADR-007 7-section depth: `transtheoretical-model` (Prochaska & DiClemente — Stages of Change), `self-determination-theory` (Deci & Ryan — intrinsic motivation via Autonomy/Competence/Relatedness), `dual-process-theory` (Kahneman System 1 / System 2), `prospect-theory` (Kahneman & Tversky — loss aversion + reference dependence + probability weighting). v1.2.1 WS6b will add the remaining 6 MED-priority frameworks (SCARF · TPB · Social Learning · Operant Conditioning · Diffusion · Emotional Design) for 74 total.
 
-**Total frameworks: 64.**
+**Total frameworks: 68.** Net delta from v1.1.1 (64 → 68): +4 in WS6a v1.2.0-rc.1.
 
 ---
 

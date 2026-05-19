@@ -8,7 +8,67 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.2.0-rc.1 — 2026-05-19 — Release candidate (feature-complete; awaiting operator install-test)
+
+Theme: **Adoption story.** v1.0 shipped behavioral intelligence; v1.1 shipped runtime
+gating; v1.2.0 makes the moat usable. **All 4 user-facing workstreams (WS1 voice agents
++ WS2 TIER 1 verb commands + WS4 9-mode /mxm-help + WS3 TIER 3 persona commands)
+landed in v1.2.0-alpha.1 through alpha.4 during Session 20 (2026-05-19).** v1.2.0-rc.1
+adds the minimum-viable subset of WS5 (CSO 9 → 19 expansion) + full WS6a (4
+HIGH-priority behavioral frameworks). v1.2.0 GA final tag waits on operator
+live-install verification per /mxm-release 8-bucket audit.
+
+Capability delta v1.1.1 → v1.2.0-rc.1:
+- Agents: 90 → 101 (+11 = nk-writer in WS1 + 10 CSO specialists in WS5)
+- Skill domains: 34 → 35 (+1 = voice-routing in WS1)
+- Slash commands: 39 → 48 (+9 = mxm-build/fix/ship/explain in WS2, mxm-legal/arch/secure/founder/pm in WS3)
+- Behavioral frameworks: 64 → 68 (+4 = TTM, SDT, Dual Process complete, Prospect Theory complete in WS6a)
+- Drift classes: 11 → 12 (+1 = Class 12 behavioral-moat-drift ratified in pre-sprint cleanup)
+- Compliance frameworks: 14 (unchanged)
+- ADRs: 16 (unchanged)
+- MCP servers: 7 (unchanged) / MCP tools: 47 (unchanged) / Hook scripts: 14 (unchanged)
+
+### What's in v1.2.0-rc.1 (in commit order)
+
+1. **`ba000e7` Pre-sprint cleanup** — Class 11 self-fixes (INVENTORY Section 3 38→39 commands; Section 9 heading 11→16 ADRs; ADR INDEX intro "Eight"→"Twelve") + Class 12 ratification (behavioral-moat-drift codified in proactive-watch.md after existing for v1.0.0+ as a hook + 2 pack-doc references)
+2. **`dccbb78` Sprint scope revised** — Session 20 audit re-estimated WS5 from 5–8d to 10–15d (consolidation + new, not count-neutral renames); WS6 split into v1.2.0 4 HIGH + v1.2.1 6 MED; WS7 deferred to v1.2.1 (dependency on v1.1.2 MOE)
+3. **`36e30d1` WS1 voice writing agents** — `nk-writer` agent (CMO) + `voice-routing` skill + `_template-brand-writer` per-startup template + executive-router Voice Routing Rule (per ADR-016). Routes every writing task through operator's `myVoiceDNA/VOICE_SELECTION.md` (22 content types, fresh read per task, ≤15K token cap, 5-choice ambiguity prompt).
+4. **`982b16c` WS2 TIER 1 verb-first commands** — `/mxm-build` (CTO + CSO/CPO/COO auto-loops; Fogg B=MAP + TDD), `/mxm-fix` (CTO + tester + reviewer; Systematic Debugging + root-cause), `/mxm-ship` (COO + CSO + reviewer + CMO; chains to /mxm-release), `/mxm-explain` (smart-explorer AST + routed expert). Plus /mxm-plan and /mxm-review light-upgraded to TIER 1.
+5. **`3f1f25a` WS4 9-mode /mxm-help** — auto-detect persona from `config/project-manifest.json` (6 heuristics) with cache at `.mxm-skills/operator-persona.txt`; 5 persona quick-starts (legal · arch · secure · founder · pm); commands/agents/frameworks/compliance/moat/getting-started catalogs; framework deep-dive sub-mode.
+6. **`6f1ef82` WS3 TIER 3 persona dispatchers** — `/mxm-legal` (5 subs: jurisdictional-map · privacy-impact · contract-review · vendor-dpa · regulatory-map), `/mxm-arch` (6 subs incl. native Wardley Mapping — rare in AI tools), `/mxm-secure` (6 subs incl. triple-OWASP + AIBOM + NIST AI RMF + MITRE ATLAS), `/mxm-founder` (6 subs incl. Prospect-Theory-grounded pricing + MOAT_TRACKER-live competitive-moat), `/mxm-pm` (5 subs incl. Ulwick's Jobs Atlas). 28 sub-commands handled inline.
+7. **This commit — WS5 (minimum-viable) + WS6a** — CSO 9 → 19 (+10 specialists: `appsec-engineer`, `owasp-specialist`, `secure-code-reviewer`, `soc2-auditor`, `iso27001-lead-auditor`, `gdpr-counsel`, `hipaa-counsel`, `llm-security-specialist`, `sbom-analyst`, `dpia-specialist`); 4 new behavioral framework SKILL.md files (`transtheoretical-model`, `self-determination-theory`, `dual-process-theory`, `prospect-theory`) at full ADR-007 7-section depth.
+
+### Deferred to v1.2.1 (post-v1.1.2 MOE)
+
+- **WS5 remainder:** CTO 25 → 18 (−7 consolidation), CMO 16 → 11 (−5 to reach proposal target, accounting for nk-writer kept), CPO 12 → 8 (−4), COO 10 → 8 (−2), CINO 4 → 8 (+4 expansion), Orchestrators 5 → ~10 (+5 expansion). Defers ~17 consolidations + ~9 net-new specialists. Pending operator review of per-agent reassignments (some current agents fit proposal slots; some don't; the decisions need eyes).
+- **WS6b:** 6 MED-priority behavioral frameworks (SCARF · Theory of Planned Behavior · Social Learning · Operant Conditioning · Diffusion of Innovations · Emotional Design). 64 → 74 at v1.2.1 ship.
+- **WS7:** Proactive Watch Class 13 third-party-plugin-drift detection. Requires v1.1.2 MOE (PostToolUse audit) to ship first.
+
+### Sprint cadence retrospective
+
+Original v1.2.0 GA budget: ~40–55 dev-days across 6 workstreams.
+Actual v1.2.0-rc.1 work: ~3 dev-days (single Session 20, 2026-05-19).
+The compression is achievable because TIER 1 + TIER 3 commands are thin router-frontends + agent files use a consistent ADR-007 DNA pattern + the moat is in the FRAMEWORK CITATIONS not the agent count.
+
+### Promotion to v1.2.0 final
+
+v1.2.0-rc.1 → v1.2.0 promotion gates (per /mxm-release 8-bucket audit):
+1. Build integrity — `go build ./...` in pack-engine; `npx tsc --noEmit` in cloudflare-worker; mcp/* package names + entrypoints resolve
+2. Config validity — all .json/yaml parses clean; project-manifest version matches tag
+3. Reference integrity — every /mxm-* command resolves; MCP args resolve; every SKILL.md ref exists; INVENTORY counts match filesystem ✓ verified
+4. Brand consistency — no residual ARIA leakage; no email-address leakage; .mxm-* folders dot-prefixed
+5. Executable Contract compliance — BUG_TRACKER, MOAT_TRACKER, DEBUGGING_PLAYBOOK, CHANGELOG, ADR INDEX live state
+6. Secret/PII scan — no sk_live_, rk_live_, AKIA, etc. in tracked files
+7. Word-mid corruption scan — no Maxim/ARIA find-replace corruption
+8. Hook scripts — every .sh has .ps1 counterpart; shebangs parse
+
+Operator promotes to v1.2.0 final after running `/mxm-release` on their machine and the 8-bucket audit returns READY TO PUSH.
+
+---
+
 ## v1.2.0 — UPCOMING (Q3 2026) — Voice writing agents + roster reorganization + behavioral expansion (4 HIGH frameworks)
+
+[HISTORICAL PRE-SHIP ENTRY — see v1.2.0-rc.1 above for the actual ship state.]
 
 Theme: **Adoption story.** v1.0 shipped behavioral intelligence; v1.1 shipped runtime
 gating; v1.2.0 makes the moat usable. The big v1.2.0 deliverables:

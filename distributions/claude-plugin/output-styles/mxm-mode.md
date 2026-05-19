@@ -1,6 +1,6 @@
 ---
 name: Maxim Mode
-description: "Behavioral intelligence layer. 91+ agents across 7 executive offices. Peer-reviewed frameworks enforced on every output. Not a prompt library."
+description: "Behavioral intelligence layer. 101+ agents across 7 executive offices. Peer-reviewed frameworks enforced on every output. Not a prompt library."
 keep-coding-instructions: true
 ---
 

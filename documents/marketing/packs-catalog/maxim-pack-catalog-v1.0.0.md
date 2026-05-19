@@ -10,7 +10,7 @@
 
 ## 0. TL;DR — The 30-Second Pitch
 
-Maxim is a **behavioral intelligence layer** for AI agents. Instead of generic prompts, every output is driven by peer-reviewed behavioral science (64 frameworks) and routed through 91 specialist agents across 7 executive offices (CEO/CTO/CMO/CSO/CPO/COO/CINO).
+Maxim is a **behavioral intelligence layer** for AI agents. Instead of generic prompts, every output is driven by peer-reviewed behavioral science (64 frameworks) and routed through 101 specialist agents across 7 executive offices (CEO/CTO/CMO/CSO/CPO/COO/CINO).
 
 **Free core** = open-source (BSL 1.1) — use it forever, fork it, audit it.
 **Premium packs** = the moat — 14 products across 3 layers:
@@ -245,7 +245,7 @@ These are the building blocks. Everyone starts here.
 #### 🟢 L1.6 — Behavioral Intelligence — **$79.99/mo** ⭐ FLAGSHIP MOAT
 **LemonSqueezy variant:** `1551379`
 
-**One-liner:** *"64 peer-reviewed behavioral frameworks applied to every output. This is the moat."*
+**One-liner:** *"68 peer-reviewed behavioral frameworks applied to every output. This is the moat."*
 
 **What it solves:**
 - Your AI outputs are grammatically correct but don't persuade
@@ -581,7 +581,7 @@ One-time $199.99 each. Stack on top of any L1 or L2 subscription (requires minim
 | Feature | Free | L1.1 AI Gov | L1.6 Beh Intel | Founder OS | Growth Stack | Pro OS | Agency All-In |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | Price | $0 | $19.99 | $79.99 | $99.99 | $99.99 | $159.99 | $599.99 |
-| 91 Maxim agents | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 101 Maxim agents | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | CEO automation | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Executive routing | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 10 framework stubs | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -648,7 +648,7 @@ Per [ADR-004](../../../adr/ADR-004-free-tier-spec-executable-contract.md), these
 - 10 framework stubs (names + descriptions; full frameworks gated to L1.6)
 - CEO Automation skill (full)
 - Executive office routing (all 7 offices)
-- 91 Maxim agents
+- 101 Maxim agents
 - 59 brand templates (MIT-locked — cannot be revoked)
 - 4 Proactive Watch checker classes (inventory/session/version/changelog)
 - Confidence tagging 🟢🟡🔴
@@ -658,7 +658,7 @@ Per [ADR-004](../../../adr/ADR-004-free-tier-spec-executable-contract.md), these
 - MemPalace (local only, without KG — 4 MCP tools of 19)
 
 **Never going behind a paywall:**
-- The 91 Maxim agents
+- The 101 Maxim agents
 - CEO Automation
 - 59 MIT templates
 - 4 free Proactive Watch classes

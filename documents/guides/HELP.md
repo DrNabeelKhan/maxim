@@ -1,6 +1,6 @@
 # Maxim: User Guide
 
-**Maxim v1.0.0** | 91+ agents (100% Grade A DNA) · 34 skill domains · 37 commands · 79 frameworks · 7 MCP servers (55 tools) · 14 executable hooks · 10 ADRs ratified
+**Maxim v1.0.0** | 101+ agents (100% Grade A DNA) · 34 skill domains · 37 commands · 79 frameworks · 7 MCP servers (55 tools) · 14 executable hooks · 10 ADRs ratified
 
 ---
 
