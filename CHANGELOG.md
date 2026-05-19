@@ -8,6 +8,52 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.2.0.2 — 2026-05-19 — Cross-platform Desktop config helper + customer-facing docs
+
+Theme: **Make v1.2.0.1's Desktop MCP setup one-command for Mac testers** (and Windows · Linux · WSL). v1.2.0.1 shipped the `mxm-commands` MCP + manual config snippet but required testers to hand-edit `claude_desktop_config.json`. v1.2.0.2 ships a cross-platform helper script that does the work.
+
+### NEW: `bootstrap/mxm-desktop-config.{sh,ps1}`
+
+One-command Desktop MCP setup. Auto-detects OS + locates `claude_desktop_config.json` + backs up the existing config + merges 8 Maxim MCP entries (preserving any existing entries like `vazir`) + validates JSON.
+
+```bash
+# macOS / Linux / WSL / Git Bash
+bash bootstrap/mxm-desktop-config.sh
+
+# Windows PowerShell (or PowerShell 7+ on Mac/Linux)
+pwsh -File bootstrap/mxm-desktop-config.ps1
+```
+
+Both scripts:
+- Auto-detect plugin install cache version (works regardless of upgrade path)
+- Idempotent (safe to re-run; updates paths if cache version changed)
+- Backup `.bak-pre-maxim-<timestamp>` for rollback
+- Color-coded output with next-step instructions
+
+### Customer-facing docs refreshed
+
+- **`documents/INSTALL.md`** — new "Section 2: (Optional) Enable Maxim in Claude Desktop" with auto-config command + manual config snippet showing OS-specific paths (Mac · Linux · Windows) + Web Projects setup + surface-fidelity matrix
+- **`documents/cross-surface/maxim-surface-guide.md`** — fidelity matrix updated (Desktop 60% → ~95%, Web 60% → ~85%) reflecting v1.2.0.1 mxm-commands MCP + project instructions w/ aliases
+- **`README.md`** — brief mention of multi-surface support (Code + Desktop + Web + Cowork)
+
+### Capability delta v1.2.0.1 → v1.2.0.2
+
+- No new MCPs / agents / commands / frameworks
+- 2 new helper scripts (`bootstrap/mxm-desktop-config.{sh,ps1}`) — pure DX improvement
+- Customer-facing docs caught up to v1.2.0.1 reality
+
+### Mac tester quick-start (5 lines)
+
+```
+1. /plugin marketplace add DrNabeelKhan/maxim   in Claude Code
+2. /plugin install maxim@maxim-packs            (restart Claude Code once)
+3. bash bootstrap/mxm-desktop-config.sh         (configures Claude Desktop's 8 MCPs)
+4. Quit + reopen Claude Desktop                 (one-time ~10 sec npm install for mxm-commands)
+5. /mxm-help in Claude Code → auto-detects persona · ask Desktop "use mxm-commands.mxm_command for build hello-world"
+```
+
+---
+
 ## v1.2.0.1 — 2026-05-19 — Cross-surface command parity (Options B + E + F)
 
 Theme: **Operator can use Maxim commands on every Claude surface.** v1.2.0 shipped 48 slash commands but they only worked natively in Claude Code. v1.2.0.1 closes the command-parity gap on Claude Desktop, Claude.ai Web, and Cowork via three coordinated mechanisms.

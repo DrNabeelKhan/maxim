@@ -1,0 +1,145 @@
+#!/usr/bin/env pwsh
+# Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
+#
+# mxm-desktop-config.ps1 — Auto-configure Claude Desktop with all 8 Maxim MCPs.
+#
+# Cross-platform PowerShell: works on Windows PowerShell 5.1+, PowerShell 7+
+# (which also runs on macOS / Linux). Companion to mxm-desktop-config.sh.
+#
+# Usage:
+#   pwsh -File bootstrap/mxm-desktop-config.ps1
+#
+# What it does:
+#   1. Detects OS, locates claude_desktop_config.json
+#   2. Backs up existing config to .bak-pre-maxim-<timestamp>
+#   3. Locates Maxim plugin install cache (auto-detects version)
+#   4. Merges 8 Maxim MCP server entries into mcpServers (preserves existing
+#      entries like vazir + your preferences block)
+#   5. Validates JSON
+#   6. Reports next steps (restart Claude Desktop)
+#
+# Idempotent: safe to re-run.
+
+$ErrorActionPreference = "Stop"
+
+function Write-Info($msg)  { Write-Host "-> $msg" -ForegroundColor Cyan }
+function Write-Ok($msg)    { Write-Host "OK  $msg" -ForegroundColor Green }
+function Write-Warn($msg)  { Write-Host "WARN $msg" -ForegroundColor Yellow }
+function Write-Fail($msg)  { Write-Host "FAIL $msg" -ForegroundColor Red; exit 1 }
+
+# ─── Detect OS + config path ──────────────────────────────────────────────────
+if ($IsMacOS) {
+    $ConfigDir = Join-Path $HOME "Library/Application Support/Claude"
+    $Platform  = "macOS"
+} elseif ($IsLinux) {
+    $ConfigDir = Join-Path $HOME ".config/Claude"
+    $Platform  = "Linux"
+} else {
+    $ConfigDir = Join-Path $env:APPDATA "Claude"
+    $Platform  = "Windows"
+}
+
+$ConfigFile = Join-Path $ConfigDir "claude_desktop_config.json"
+
+Write-Info "Platform: $Platform"
+Write-Info "Config dir: $ConfigDir"
+
+if (-not (Test-Path $ConfigDir)) {
+    Write-Warn "Claude Desktop config dir not found at: $ConfigDir"
+    Write-Warn "Is Claude Desktop installed? Download: https://claude.ai/download"
+    Write-Fail "Aborting — install Claude Desktop first, then re-run this script."
+}
+
+# ─── Locate plugin install cache ──────────────────────────────────────────────
+$PluginCache = Join-Path $HOME ".claude/plugins/cache/maxim-packs/maxim"
+
+if (-not (Test-Path $PluginCache)) {
+    Write-Fail "Maxim plugin not installed. Run '/plugin install maxim@maxim-packs' in Claude Code first."
+}
+
+# Auto-detect plugin version (most recently modified dir)
+$PluginVersion = (Get-ChildItem $PluginCache -Directory | Sort-Object LastWriteTime -Descending | Select-Object -First 1).Name
+$PluginRoot    = Join-Path $PluginCache $PluginVersion
+$Wrapper       = Join-Path $PluginRoot "mcp/_shared/spawn-with-deps.mjs"
+
+if (-not (Test-Path $Wrapper)) {
+    Write-Fail "spawn-with-deps.mjs not found at: $Wrapper. Plugin install incomplete?"
+}
+
+# Normalize paths to forward slashes for JSON
+$Wrapper    = $Wrapper.Replace('\', '/')
+$PluginRoot = $PluginRoot.Replace('\', '/')
+
+Write-Info "Plugin version: $PluginVersion"
+Write-Info "Plugin root: $PluginRoot"
+
+# ─── Backup existing config ───────────────────────────────────────────────────
+$Timestamp  = Get-Date -Format "yyyyMMdd-HHmmss"
+$BackupFile = "$ConfigFile.bak-pre-maxim-$Timestamp"
+
+if (Test-Path $ConfigFile) {
+    Copy-Item $ConfigFile $BackupFile
+    Write-Ok "Backup created: $(Split-Path $BackupFile -Leaf)"
+    $Config = Get-Content $ConfigFile -Raw | ConvertFrom-Json -AsHashtable
+} else {
+    Write-Info "No existing config — creating fresh."
+    $Config = @{}
+}
+
+if (-not $Config.mcpServers) {
+    $Config.mcpServers = @{}
+}
+
+# ─── Build + merge 8 MCP entries ──────────────────────────────────────────────
+$MaximServers = @(
+    'mxm-portfolio', 'mxm-context', 'mxm-catalog', 'mxm-compliance',
+    'mxm-behavioral', 'mxm-memory', 'mxm-voice', 'mxm-commands'
+)
+
+Write-Info "Merging 8 Maxim MCP entries into mcpServers (preserving existing entries)..."
+
+foreach ($name in $MaximServers) {
+    $Config.mcpServers[$name] = @{
+        command = 'node'
+        args    = @($Wrapper, "$PluginRoot/mcp/$name/server.js")
+        env     = @{}
+    }
+}
+
+# ─── Write + validate ─────────────────────────────────────────────────────────
+$Json = $Config | ConvertTo-Json -Depth 10
+$Json | Out-File -FilePath $ConfigFile -Encoding utf8
+
+try {
+    $null = Get-Content $ConfigFile -Raw | ConvertFrom-Json
+    Write-Ok "JSON validated."
+} catch {
+    Write-Warn "Config JSON failed validation — restoring backup."
+    Copy-Item $BackupFile $ConfigFile -Force
+    Write-Fail "Validation failed. Original config restored. Open an issue with the .bak file attached."
+}
+
+# ─── Report final state ───────────────────────────────────────────────────────
+$TotalServers = $Config.mcpServers.Count
+$PreservedCount = $TotalServers - 8
+
+Write-Host ""
+Write-Host "=========================================================" -ForegroundColor Green
+Write-Host "  Maxim Desktop MCP setup complete" -ForegroundColor Green
+Write-Host "=========================================================" -ForegroundColor Green
+Write-Host ""
+Write-Host "  Config:  $ConfigFile"
+Write-Host "  Backup:  $(Split-Path $BackupFile -Leaf)"
+Write-Host "  Plugin:  $PluginVersion"
+Write-Host "  Servers: $TotalServers total ($PreservedCount preserved + 8 Maxim MCPs = 49 tools)"
+Write-Host ""
+Write-Host "Next steps:" -ForegroundColor Cyan
+Write-Host "  1. Quit Claude Desktop completely (Cmd-Q on Mac, fully exit on Windows)"
+Write-Host "  2. Reopen Claude Desktop"
+Write-Host "  3. First spawn of mxm-commands MCP will run 'npm install' (~10 sec one-time)"
+Write-Host "  4. All 8 Maxim MCPs (49 tools) will be available in conversations"
+Write-Host ""
+Write-Host "Optional - activate behavioral layer in Desktop Projects:" -ForegroundColor Cyan
+Write-Host "  Paste contents of documents/cross-surface/maxim-project-instructions.md"
+Write-Host "  into any Desktop Project's Instructions field for ~85% fidelity."
+Write-Host ""

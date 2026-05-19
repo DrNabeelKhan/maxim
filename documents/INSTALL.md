@@ -70,7 +70,84 @@ Pro Trial unlocks:
 
 ---
 
-## 2. Install community packs (optional)
+## 2. (Optional) Enable Maxim in Claude Desktop
+
+Claude Code installs Maxim automatically. **For Claude Desktop, MCPs need a one-time config step** because Desktop doesn't have Claude Code's plugin system.
+
+### Auto-config (recommended) — one command
+
+```bash
+# macOS / Linux / WSL / Git Bash
+bash bootstrap/mxm-desktop-config.sh
+
+# Windows PowerShell
+pwsh -File bootstrap/mxm-desktop-config.ps1
+```
+
+This script:
+1. Auto-detects your OS and locates `claude_desktop_config.json`
+2. Backs up your existing config (timestamped `.bak`)
+3. Adds all 8 Maxim MCP entries (`mxm-portfolio`, `mxm-context`, `mxm-catalog`, `mxm-compliance`, `mxm-behavioral`, `mxm-memory`, `mxm-voice`, `mxm-commands`)
+4. Preserves any existing MCP entries (e.g., other tools you have configured)
+5. Validates the JSON
+
+Then **quit Claude Desktop completely** (Cmd-Q on Mac, fully exit from system tray on Windows/Linux) and reopen. All 8 Maxim MCPs spawn — the new `mxm-commands` MCP runs a one-time `npm install` (~10 sec) on first launch.
+
+### Manual config (if the script can't run)
+
+Locate your `claude_desktop_config.json`:
+
+| OS | Path |
+|---|---|
+| **macOS** | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| **Linux** | `~/.config/Claude/claude_desktop_config.json` |
+| **Windows** | `%APPDATA%\Claude\claude_desktop_config.json` |
+
+Add these 8 entries to the `mcpServers` object (replace `<HOME>` with your actual home path — `/Users/you` on Mac, `C:/Users/you` on Windows):
+
+```json
+{
+  "mcpServers": {
+    "mxm-portfolio":  { "command": "node", "args": ["<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/_shared/spawn-with-deps.mjs", "<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/mxm-portfolio/server.js"],  "env": {} },
+    "mxm-context":    { "command": "node", "args": ["<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/_shared/spawn-with-deps.mjs", "<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/mxm-context/server.js"],    "env": {} },
+    "mxm-catalog":    { "command": "node", "args": ["<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/_shared/spawn-with-deps.mjs", "<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/mxm-catalog/server.js"],    "env": {} },
+    "mxm-compliance": { "command": "node", "args": ["<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/_shared/spawn-with-deps.mjs", "<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/mxm-compliance/server.js"], "env": {} },
+    "mxm-behavioral": { "command": "node", "args": ["<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/_shared/spawn-with-deps.mjs", "<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/mxm-behavioral/server.js"], "env": {} },
+    "mxm-memory":     { "command": "node", "args": ["<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/_shared/spawn-with-deps.mjs", "<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/mxm-memory/server.js"],     "env": {} },
+    "mxm-voice":      { "command": "node", "args": ["<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/_shared/spawn-with-deps.mjs", "<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/mxm-voice/server.js"],      "env": {} },
+    "mxm-commands":   { "command": "node", "args": ["<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/_shared/spawn-with-deps.mjs", "<HOME>/.claude/plugins/cache/maxim-packs/maxim/1.1.0/mcp/mxm-commands/server.js"],   "env": {} }
+  }
+}
+```
+
+The `mxm-commands` MCP (added v1.2.0.1) is what gives Desktop **command parity** — it exposes all 48 `/mxm-*` slash commands as MCP tools, since Desktop doesn't have a native slash-command processor. After restart you can ask Claude Desktop *"use mxm-commands.mxm_command for build hello-world"* and it routes the same way Claude Code's `/mxm-build hello-world` does.
+
+### Activate behavioral layer in Claude Desktop Projects (optional, recommended)
+
+For each Claude Desktop Project where you want Maxim's behavioral overlay (framework citation, confidence tagging, CSO auto-loop) active:
+
+1. Open the Project → Settings → **Custom Instructions** (or "Project Instructions")
+2. Paste the contents of [`documents/cross-surface/maxim-project-instructions.md`](cross-surface/maxim-project-instructions.md)
+3. Save
+
+This activates ~85% of Maxim's Claude Code fidelity in that Desktop Project — including the slash-command alias section so typing `/mxm-build` in chat works as a routing directive.
+
+### Claude.ai Web (Projects feature)
+
+Same as Desktop's Project Instructions step — paste `documents/cross-surface/maxim-project-instructions.md` into Project Instructions. **No MCPs available in pure Web** (Anthropic doesn't expose MCP to Web Projects yet), so fidelity caps at ~85% (slash-command aliasing + behavioral layer, no MCP tool calls).
+
+### Surface fidelity reference
+
+| Surface | Slash commands | MCPs | Behavioral layer | Fidelity |
+|---|---|---|---|---|
+| Claude Code (CLI / IDE) | ✅ all 48 native | ✅ 8 (49 tools) | ✅ auto (CLAUDE.md) | **100%** |
+| Claude Desktop | ❌ (use mxm-commands MCP or project instructions) | ✅ 8 (49 tools) | 🟡 paste project instructions | **~95%** |
+| Claude.ai Web (Projects) | ❌ (use project instructions) | ❌ no MCP in Web | 🟡 paste project instructions | **~85%** |
+| Claude.ai Cowork | ✅ (via plugin) | ✅ 8 | bundled in plugin | **~85%** |
+
+---
+
+## 3. Install community packs (optional)
 
 The base plugin is everything most users need. Packs add **extra specialist depth** for specific moats.
 

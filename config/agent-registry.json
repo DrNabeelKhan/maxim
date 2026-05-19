@@ -80,6 +80,20 @@
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
   "changelog": [
     {
+      "version": "1.2.0.2",
+      "date": "2026-05-19",
+      "changes": [
+        "feat(DX): cross-platform Desktop MCP setup helper - bootstrap/mxm-desktop-config.sh (Mac/Linux/WSL/Git Bash) and bootstrap/mxm-desktop-config.ps1 (Windows PowerShell + PowerShell 7+ cross-platform).",
+        "feat(DX): one-command Claude Desktop setup. Auto-detects OS, locates claude_desktop_config.json (macOS ~/Library/Application Support/Claude/, Linux ~/.config/Claude/, Windows %APPDATA%\\Claude\\), backs up existing config to .bak-pre-maxim-<timestamp>, locates plugin install cache (auto-detects version), merges 8 Maxim MCP entries preserving existing entries, validates JSON, reports next steps.",
+        "feat(DX): scripts are idempotent (safe to re-run) and survive plugin upgrades (auto-detects newest cache version).",
+        "docs(customer-facing): documents/INSTALL.md gains Section 2 'Enable Maxim in Claude Desktop' with auto-config command, manual config snippet showing OS-specific paths (Mac/Linux/Windows), Web Projects setup, and surface-fidelity matrix.",
+        "docs(customer-facing): documents/cross-surface/maxim-surface-guide.md updated with v1.2.0.2 fidelity matrix (Desktop 60%->95%, Web 60%->85%) + version reference table reflects current state.",
+        "docs(customer-facing): README.md gets 'Multi-surface (v1.2.0+)' line with helper script invocation for Mac/Linux/Windows.",
+        "docs(customer-facing): CHANGELOG.md v1.2.0.2 entry includes 'Mac tester quick-start (5 lines)' block.",
+        "no capability count delta - DX-only release. Servers/tools/agents/skills/commands/frameworks/drift classes unchanged from v1.2.0.1."
+      ]
+    },
+    {
       "version": "1.2.0.1",
       "date": "2026-05-19",
       "changes": [

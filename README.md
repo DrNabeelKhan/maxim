@@ -26,6 +26,8 @@ Those two commands install the full behavioral intelligence layer into Claude Co
 
 **Starter tier is free forever.** No credit card. 90-day Pro Trial auto-activates on install. Nothing to commit to.
 
+**Multi-surface (v1.2.0+):** Maxim runs on Claude Code (100% fidelity), **Claude Desktop (~95% with one-command setup)**, Claude.ai Web Projects (~85%), and Claude.ai Cowork (~85%). For Desktop setup: `bash bootstrap/mxm-desktop-config.sh` (Mac/Linux) or `pwsh -File bootstrap/mxm-desktop-config.ps1` (Windows). See [INSTALL.md](documents/INSTALL.md) for full cross-surface deployment.
+
 > Maxim's submission to the Anthropic community marketplace ([clau.de/plugin-directory-submission](https://clau.de/plugin-directory-submission)) is in flight. Once approved, `/plugin install maxim@claude-community` will also work. The commands above are the direct path and work today.
 
 **Prerequisites** (verify before installing):
