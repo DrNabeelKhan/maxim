@@ -2,14 +2,15 @@
 
 > **Start at $19.99 with Solo. The behavioral intelligence specialist for Claude.**
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Agents](https://img.shields.io/badge/agents-90+-green)
-![Frameworks](https://img.shields.io/badge/frameworks-78-orange)
-![Skills](https://img.shields.io/badge/skill_domains-34-purple)
-![Commands](https://img.shields.io/badge/commands-37-yellow)
+![Version](https://img.shields.io/badge/version-1.2.0-blue)
+![Agents](https://img.shields.io/badge/agents-91-green)
+![Frameworks](https://img.shields.io/badge/frameworks-74-orange)
+![Skills](https://img.shields.io/badge/skill_domains-35-purple)
+![Commands](https://img.shields.io/badge/commands-48-yellow)
 ![MCP](https://img.shields.io/badge/MCP_servers-7-teal)
 ![Tools](https://img.shields.io/badge/MCP_tools-47-teal)
-![Hooks](https://img.shields.io/badge/hooks-10-gray)
+![Hooks](https://img.shields.io/badge/hooks-14-gray)
+![Drift_Classes](https://img.shields.io/badge/drift_classes-13-red)
 ![License](https://img.shields.io/badge/license-BSL_1.1-lightgrey)
 
 ---
@@ -21,7 +22,7 @@
 /plugin install maxim@maxim-packs
 ```
 
-Those two commands install the full behavioral intelligence layer into Claude Code. 91+ agents across 7 executive offices. 35+ skill domains. 37+ slash commands. Three governance hooks that fire automatically. Four drift monitors running at 30-second cadence. One output style that enforces framework citation on every external-facing output.
+Those two commands install the full behavioral intelligence layer into Claude Code. **91 specialist agents** across 7 executive offices. **35 skill domains**. **48 slash commands** spanning three tiers (TIER 1 verb-first like `/mxm-build`/`/mxm-fix`/`/mxm-ship`, TIER 2 office shortcuts, TIER 3 persona commands like `/mxm-legal`/`/mxm-arch`/`/mxm-secure`/`/mxm-founder`/`/mxm-pm`). **74 peer-reviewed behavioral frameworks** wired through ADR-007 framework-citation enforcement. **13 Proactive Watch drift classes** scanning every session start. **14 compliance frameworks** with jurisdictional logic. **16 ADRs** governing the system as Executable Contracts (ADR-002). Three governance hooks that fire automatically. One output style that enforces framework citation on every external-facing output.
 
 **Starter tier is free forever.** No credit card. 90-day Pro Trial auto-activates on install. Nothing to commit to.
 
