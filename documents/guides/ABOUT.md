@@ -214,7 +214,7 @@ Maxim gives you all of them. governed, tireless, and improving with every sessio
 /plugin install maxim@anthropic-official
 ```
 
-One command installs the full framework. 90+ agents, 34 skill domains, 37 slash commands, 7 MCP servers, 55 tools, 14 executable hooks, 79 behavioral frameworks. Free tier fully functional on install.
+One command installs the full framework. 91+ agents, 34 skill domains, 37 slash commands, 7 MCP servers, 55 tools, 14 executable hooks, 79 behavioral frameworks. Free tier fully functional on install.
 
 ```
 /plugin marketplace add https://github.com/DrNabeelKhan/maxim
@@ -230,7 +230,7 @@ For source-level integration or non-Claude-Code IDE work, see [documents/guides/
 
 **Maxim v1.0.0:** 
 
-90+ agents (100% Grade A DNA). 34 skill domains. 37 commands. 7 MCP servers (55 tools). 79 frameworks. 14 executable hooks. 10 ADRs ratified. 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
+91+ agents (100% Grade A DNA). 34 skill domains. 37 commands. 7 MCP servers (55 tools). 79 frameworks. 14 executable hooks. 10 ADRs ratified. 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
 
 **License:** BSL 1.1 core with 4-year Apache 2.0 conversion per ADR-005. Commercial packs licensed separately via LemonSqueezy.
 

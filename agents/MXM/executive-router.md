@@ -59,6 +59,62 @@ Single entry point for all Maxim task routing. Receives any incoming task, class
 | Operational efficiency | COO | CTO |
 | Emerging technology | CINO | CTO + CPO + CEO |
 
+## Voice / Writing Routing Rule (per ADR-016, added v1.2.0)
+
+Writing tasks have a dedicated routing rule that **fires BEFORE the CSO auto-loop** so the right voice authority is loaded before any compliance overlay runs. Per ADR-016, voice loading is a property of agent invocation — not a doctrinal checklist Claude has to remember — and this rule is the structural enforcement.
+
+### Trigger
+
+Any incoming task containing a writing verb (or a writing-verb synonym):
+
+```
+write · draft · compose · email · slack · blog · post · article · deck · paper ·
+memo · status · report · tutorial · doc · README · proposal · summary
+```
+
+Indirect signals also fire the rule: "give me a paragraph about X", "send X to Y",
+"publish X", "share X on LinkedIn", "ship a newsletter about X".
+
+### Routing logic
+
+```
+IF task verb ∈ {writing verbs above}:
+   READ config/project-manifest.json → brand.active_startup
+   DETECT audience signal in task (customer-facing | internal-facing)
+
+   IF active_startup IS SET  AND  audience IS customer-facing:
+      → route to {active_startup}-brand-writer
+      IF that instance does NOT exist on disk:
+         → fall back to nk-writer with 🟡 MEDIUM tag + warning
+            "instance missing — operator should run brand-writer instantiation"
+   ELSE:
+      → route to nk-writer
+
+   THEN (after voice routing locks):
+      → CSO auto-loop fires if security / compliance / PII signal present
+      → cross-office collaborators loop in per task scope
+```
+
+### Why before CSO auto-loop
+
+Voice routing is content STRUCTURE (which playbook applies, which voice files load). Compliance is content CLAIMS (what facts are asserted, what claims need substantiation). Structure must lock first so compliance has a stable substrate to evaluate against. Reversing the order would force CSO to evaluate compliance against undefined voice context — a category error.
+
+CSO still has final say on regulated content. If CSO's compliance check fails, the writer agent halts and emits `COMPLIANCE_HALT` regardless of voice configuration. Voice routing does not bypass compliance — it precedes it.
+
+### Per-startup brand-writer instances (operator-instantiated)
+
+Brand-writer instances are NOT pre-shipped. The template ships at
+`agents/MXM/cmo/_template-brand-writer.md`. Operator instantiates per startup using
+the instructions in that template. Common candidate startups (any active in
+`config/project-manifest.json` becomes a candidate): aria · vazir · gulflaw ·
+fixit · drivingtutors · isimplification · sentinelflow.
+
+### Confidence
+
+- 🟢 HIGH when active_startup matches an instantiated brand-writer (or is empty + nk-writer routing)
+- 🟡 MEDIUM when active_startup is set but instance does NOT exist (fallback to nk-writer with warning)
+- 🔴 LOW when audience signal cannot be classified as customer-facing vs internal-facing → ask operator
+
 ## Maxim Behavioral Framing
 
 **Behavioral Science Layer:**

@@ -50,7 +50,7 @@ github.com/DrNabeelKhan/maxim
 ### About section (gear icon → Edit repository details)
 
 **Description** (350 char max):
-> The Claude-native operating system. 90 governed agents across 7 executive offices. 64 behavioral frameworks. 14 compliance frameworks. Continuous drift detection. Documents as Executable Contracts. One `git pull` updates every project.
+> The Claude-native operating system. 91 governed agents across 7 executive offices. 64 behavioral frameworks. 14 compliance frameworks. Continuous drift detection. Documents as Executable Contracts. One `git pull` updates every project.
 
 **Website:** `https://maxim.isystematic.com`
 
@@ -132,7 +132,7 @@ The README is the GitHub-native document. It must render clean in GitHub's markd
 
 <p align="center">
   <b>The Claude-native operating system for AI-assisted work.</b><br>
-  90 governed agents · 64 behavioral frameworks · 14 compliance frameworks<br>
+  91 governed agents · 64 behavioral frameworks · 14 compliance frameworks<br>
   Continuous drift detection · Documents as Executable Contracts · One <code>git pull</code>
 </p>
 
@@ -212,7 +212,7 @@ Pull from `documents/ledgers/AGENT_SKILL_INVENTORY.md`. Stable numbers.
 
 Each capability = `### Heading` + 2-sentence summary + small screenshot + link-out.
 
-1. **Executive Offices Architecture** → 7 offices with 90 governed agents
+1. **Executive Offices Architecture** → 7 offices with 91 governed agents
 2. **CSO Auto-Loop** → non-bypassable compliance gate
 3. **Proactive Watch** → continuous drift detection at SessionStart
 4. **Documents as Executable Contracts** → ADR-002 meta-principle
@@ -265,7 +265,7 @@ Maxim dispatches every task through a deterministic 5-layer sequence:
 Layer 1: .claude/skills/          ← Maxim domain skills (supreme authority)
 Layer 2: community-packs/claude-skills-library/  ← vendored deep knowledge (MIT, read-only)
 Layer 3: composable-skills/       ← workflow engine (TDD, debugging, planning)
-Layer 4: agents/MXM/{office}/    ← 90 specialist agents across 7 offices
+Layer 4: agents/MXM/{office}/    ← 91 specialist agents across 7 offices
 Layer 5: behavioral + compliance  ← CLAUDE.md universal + 64 frameworks + 14 regulations
 ```
 

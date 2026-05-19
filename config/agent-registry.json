@@ -2,9 +2,9 @@
   "version": "1.0.0",
   "project": "Maxim Agent Platform — iSimplification.io",
   "description": "Single source of truth for Maxim agents and skills catalog. v1.0.0 achieves 100% Grade A DNA coverage across all 88 agents (full Triggers + Collaboration Matrix sections). VoltAgent, external subtrees, and domain dispatch tracked in config/dependency-registry.json.",
-  "last_updated": "2026-05-13",
+  "last_updated": "2026-05-19",
   "agent_dna_coverage": {
-    "grade_a": 90,
+    "grade_a": 91,
     "grade_b": 0,
     "grade_c": 0,
     "coverage_pct": 100,
@@ -12,9 +12,9 @@
   },
   "maintainer": "DrNabeelKhan",
   "scope": "Maxim agents + skills catalog only",
-  "total_mxm_agents": 90,
-  "_total_mxm_agents_breakdown": "CEO 9 + CTO 25 + CMO 15 + CSO 9 + CPO 12 + COO 10 + CINO 4 + Orchestrators 5 (planner/implementer/reviewer/tester/release-manager) + 1 executive-router = 90",
-  "total_skill_domains_active": 34,
+  "total_mxm_agents": 91,
+  "_total_mxm_agents_breakdown": "CEO 9 + CTO 25 + CMO 16 + CSO 9 + CPO 12 + COO 10 + CINO 4 + Orchestrators 5 (planner/implementer/reviewer/tester/release-manager) + 1 executive-router = 91",
+  "total_skill_domains_active": 35,
   "total_skill_domains_added_in_v640": 7,
   "total_skill_domains_added_in_v641": 1,
   "_skill_domains_added_v640_list": [
@@ -28,6 +28,9 @@
   ],
   "_skill_domains_added_v641_list": [
     "proactive-watch"
+  ],
+  "_skill_domains_added_v120_list": [
+    "voice-routing"
   ],
   "total_slash_commands": 38,
   "_slash_commands_added_v641": ["mxm-watch", "mxm-session-end"],
@@ -64,6 +67,18 @@
   "total_canonical_ledgers": 5,
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
   "changelog": [
+    {
+      "version": "1.2.0-alpha.1",
+      "date": "2026-05-19",
+      "changes": [
+        "feat(WS1): nk-writer agent (CMO office) — operator-voice writer per ADR-016. Routes every writing task through myVoiceDNA/VOICE_SELECTION.md (the operator's 22-content-type routing authority). Reads the routing table fresh per task — no caching. 18 writing-verb triggers. Token discipline hard cap 15K. 5-choice ambiguity prompt when classifier confidence below threshold. Validates against core/quality-standards.md before emission. Collaborates with behavioral-designer, brand-guardian, reviewer, decision-architect, seo-specialist.",
+        "feat(WS1): voice-routing skill (.claude/skills/voice-routing/SKILL.md) — mechanical lookup wrapper around VOICE_SELECTION.md. Callable by any agent. Returns content_type + variant + load_list + crossover_budget + phrasebook_section. Never caches the routing table. Anti-pattern: loading > 15K tokens of voice files for a single-voice task is a routing error.",
+        "feat(WS1): _template-brand-writer.md (CMO office) — template for per-startup writer instances. Operator instantiates on demand. Three-layer voice composition: Layer 1 (Maxim base) + Layer 2 (operator structure from myVoiceDNA core) + Layer 3 (startup voice from .brand-foundation/startups/{id}/). Layer 3 compliance overrides operator for regulated content. Combined token cap 20K.",
+        "feat(WS1): executive-router gains Voice Routing Rule section. Writing-verb tasks route to {active_startup}-brand-writer (if instance exists) for customer-facing OR nk-writer otherwise. Fires BEFORE CSO auto-loop so voice context locks before compliance overlay evaluates.",
+        "net: total agents 90 → 91 (CMO 15 → 16). Total skill domains 34 → 35 (added voice-routing). Total commands unchanged at 39.",
+        "context: WS1 of the v1.2.0 GA sprint, executed in Session 20 (2026-05-19). Sprint scope locked per Session 20 pre-sprint audit — see CHANGELOG v1.2.0 UPCOMING entry and documents/architecture/v1.2-sprint-bootstrap.md (local-only)."
+      ]
+    },
     {
       "version": "1.0.1",
       "date": "2026-04-27",

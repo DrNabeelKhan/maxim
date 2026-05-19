@@ -2,19 +2,19 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.1.1 · **Last verified:** 2026-05-19
+**Version:** v1.2.0-alpha.1 · **Last verified:** 2026-05-19
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
 ---
 
-## Section 1 — Specialist Agents (90)
+## Section 1 — Specialist Agents (91)
 
 | Office | Lead | Count | Path |
 |---|---|---:|---|
 | CEO — strategy, finance, partnerships | `enterprise-architect` | 9 | `agents/MXM/ceo/` |
 | CTO — engineering, infrastructure, AI | `implementer` | 25 | `agents/MXM/cto/` |
-| CMO — marketing, brand, SEO, content | `content-strategist` | 15 | `agents/MXM/cmo/` |
+| CMO — marketing, brand, SEO, content | `content-strategist` | 16 | `agents/MXM/cmo/` |
 | CSO — security, compliance, ethics | `security-analyst` | 9 | `agents/MXM/cso/` |
 | CPO — product, UX, research | `product-strategist` | 12 | `agents/MXM/cpo/` |
 | COO — delivery, sprints, operations | `planner` | 10 | `agents/MXM/coo/` |
@@ -22,17 +22,17 @@ Single source of truth for Maxim's capability counts. On every commit that touch
 | Orchestrators (planner, implementer, reviewer, tester, release-manager) | `executive-router` | 5 | `agents/MXM/orchestrators/` |
 | Executive Router | `executive-router` | 1 | `agents/MXM/executive-router.md` |
 
-**Total agents: 90.** Registry: `config/agent-registry.json`. Net delta from v1.0.0 (88 → 90): cost-analyst (CINO) + sre-analyst (COO) added 2026-04-27 from aria-simplification migration; skill-synthesizer (CINO) registry drift fix.
+**Total agents: 91.** Registry: `config/agent-registry.json`. Net delta from v1.1.1 (90 → 91): `nk-writer` added 2026-05-19 to CMO office per ADR-016 (WS1 of v1.2.0 sprint). The `_template-brand-writer.md` template ships in the same commit but is non-instantiable (filename prefix `_` excludes it from the agent registry; per-startup instances are operator-created on demand).
 
 ---
 
-## Section 2 — Domain Skills (34)
+## Section 2 — Domain Skills (35)
 
 Skills live under `.claude/skills/<domain>/SKILL.md`. Domain list authoritative in `documents/reference/SKILLS_MAP.md` and `CLAUDE.d/dispatch.md`.
 
-Categories: AI media, banner design, behavioral science, brand, CEO automation, compliance, content, design (dispatcher + sub-domains), design resources, design system, engineering, enterprise architecture, junction guard, marketing, memory-palace, operator profile, proactive watch, product, product development research, project management, search visibility, security, session memory, slides, studio operations, testing, UI styling, UI/UX Pro Max, usage-aware scheduler, voice, wiki (ingest/query/lint/explore).
+Categories: AI media, banner design, behavioral science, brand, CEO automation, compliance, content, design (dispatcher + sub-domains), design resources, design system, engineering, enterprise architecture, junction guard, marketing, memory-palace, operator profile, proactive watch, product, product development research, project management, search visibility, security, session memory, slides, studio operations, testing, UI styling, UI/UX Pro Max, usage-aware scheduler, voice, **voice-routing**, wiki (ingest/query/lint/explore).
 
-**Total domain skills: 34.**
+**Total domain skills: 35.** Net delta from v1.1.1 (34 → 35): `voice-routing` added 2026-05-19 per ADR-016 — callable lookup wrapper around `myVoiceDNA/VOICE_SELECTION.md`; consumed by `nk-writer` agent and per-startup brand-writer instances.
 
 ---
 

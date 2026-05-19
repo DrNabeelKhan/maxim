@@ -21,7 +21,7 @@
 /plugin install maxim@maxim-packs
 ```
 
-Those two commands install the full behavioral intelligence layer into Claude Code. 90+ agents across 7 executive offices. 34+ skill domains. 37+ slash commands. Three governance hooks that fire automatically. Four drift monitors running at 30-second cadence. One output style that enforces framework citation on every external-facing output.
+Those two commands install the full behavioral intelligence layer into Claude Code. 91+ agents across 7 executive offices. 35+ skill domains. 37+ slash commands. Three governance hooks that fire automatically. Four drift monitors running at 30-second cadence. One output style that enforces framework citation on every external-facing output.
 
 **Starter tier is free forever.** No credit card. 90-day Pro Trial auto-activates on install. Nothing to commit to.
 
@@ -135,7 +135,7 @@ LAYER 3 — composable-skills/       Workflow Engine
            superpowers/ · planning-with-files/ · frameworks/ (63)
 
 LAYER 4 — agents/                  Agent Catalog
-           90 Maxim agents · 150 VoltAgent specialists across 10 categories
+           91 Maxim agents · 150 VoltAgent specialists across 10 categories
 
 LAYER 5 — mcp/                     MCP Servers (cross-surface intelligence)
            9 servers · 44 tools — auto-discovered via root .mcp.json

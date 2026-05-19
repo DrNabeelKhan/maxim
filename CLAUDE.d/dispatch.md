@@ -33,6 +33,7 @@
 | AI video / image generation | `.claude/skills/ai-media-generation/` | `community-packs/higgsfield-ai-prompts/` (19 skills) + `community-packs/higgsfield-ai-prompts/` (21 skills) | ✅ Full |
 | Knowledge wiki / brand voice (v1.0.0) | `.claude/skills/wiki-ingest/` + `wiki-query/` + `wiki-lint/` + `wiki-explore/` + `.brand-foundation/` | MemPalace-backed | 🆕 Active in v1.0.0 |
 | Voice interaction (v1.0.0) | `.claude/skills/voice/` (via `mxm-voice` MCP) | mbailey/voicemode (Whisper + Kokoro) | 🆕 Active in v1.0.0 |
+| Voice routing — writing-task content-type classification (v1.2.0) | `.claude/skills/voice-routing/` | Operator-owned `myVoiceDNA/VOICE_SELECTION.md` (v1.0, 22 content types) | 🆕 Active in v1.2.0 (ADR-016) |
 
 **🟡 Partial** = Maxim skill active, external tools absorbed for ops/tooling layer; full native coverage pending.
 **🟡 Stub** = Maxim wrapper active, behavioral framing applied, full authoring sprint pending.
@@ -67,6 +68,7 @@
 | Brand + design + marketing alignment | `brand/` + `design/` + `marketing/` skills in parallel |
 | Knowledge ingestion / cross-project query | `wiki-ingest` / `wiki-query` skills (v1.0.0+) |
 | Voice utterance | `mxm-voice` MCP server (v1.0.0+) |
+| Writing-verb task (write/draft/compose/email/post/article/deck/memo/report/etc.) | `nk-writer` agent — or `{active_startup}-brand-writer` if customer-facing under active startup; fires BEFORE CSO auto-loop per ADR-016 |
 | Explicit `/mxm-ceo` command | `enterprise-architect` |
 | Explicit `/mxm-cto` command | `implementer` |
 | Explicit `/mxm-cmo` command | `content-strategist` |

@@ -51,9 +51,9 @@ Engineering, infrastructure, data, AI, APIs, DevOps, cloud.
 - technology-architect
 - test-data-generator
 
-## CMO Office (lead: `content-strategist`) — 15 agents
+## CMO Office (lead: `content-strategist`) — 16 agents
 
-Marketing, brand, content, SEO, conversion, behavioral design.
+Marketing, brand, content, SEO, conversion, behavioral design, voice-routed writing.
 
 - content-strategist
 - seo-specialist
@@ -70,6 +70,9 @@ Marketing, brand, content, SEO, conversion, behavioral design.
 - growth-hacker
 - gtm-strategist
 - landing-page-optimizer
+- **nk-writer** (v1.2.0+, per ADR-016) — operator-voice writer routing every writing task through `myVoiceDNA/VOICE_SELECTION.md`
+
+> **Template (non-instantiable, not counted):** `_template-brand-writer.md` ships under CMO as the per-startup brand-writer template. Operator instantiates instances on demand (e.g., `aria-brand-writer.md`, `vazir-brand-writer.md`). Per-startup instances count toward CMO when created; the template does not.
 
 ## CSO Office (lead: `security-analyst`) — 9 agents
 

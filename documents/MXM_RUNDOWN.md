@@ -6,7 +6,7 @@
 
 ## What Is Maxim?
 
-A behavioral intelligence layer that runs on top of Claude (and other AI models). It adds 90 specialist agents, 34 skill domains, 64 behavioral science frameworks, and 7 MCP servers to every Claude session — across Code, Desktop, CLI, Cowork, and Dispatch.
+A behavioral intelligence layer that runs on top of Claude (and other AI models). It adds 91 specialist agents, 34 skill domains, 64 behavioral science frameworks, and 7 MCP servers to every Claude session — across Code, Desktop, CLI, Cowork, and Dispatch.
 
 ---
 

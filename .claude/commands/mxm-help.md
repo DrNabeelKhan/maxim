@@ -75,7 +75,7 @@ USAGE ACROSS PLATFORMS
   Claude.ai:      run /mxm-context to generate paste-ready context
   Claude Dispatch: /dispatch then reference .mxm-executive-summary/ files
 
-Maxim v1.1.0 · 90 specialist agents · 34 skill domains · 38 commands · 64 frameworks
+Maxim v1.1.0 · 91 specialist agents · 34 skill domains · 38 commands · 64 frameworks
 14 compliance frameworks · 7 MCP servers (47 tools) · 11 ADRs · BSL-1.1 licensed
 
 Coming in v1.2 (Q4 2026): verb-first commands (/mxm-build, /mxm-fix, /mxm-ship)
