@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.2.0-alpha.3 · **Last verified:** 2026-05-19
+**Version:** v1.2.0-alpha.4 · **Last verified:** 2026-05-19
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -36,17 +36,19 @@ Categories: AI media, banner design, behavioral science, brand, CEO automation, 
 
 ---
 
-## Section 3 — Slash Commands (43)
+## Section 3 — Slash Commands (48)
 
 All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/reference/MXM_COMMAND_MAP.md`.
 
-**TIER 1 verb-first commands (7, added in v1.2.0-alpha.2 — WS2):** `/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-plan`, `/mxm-review`, `/mxm-explain`, `/mxm-help`. Plain-English entry points routing invisibly to office leads + specialists. Power users can still use office commands (TIER 2) directly.
+**TIER 1 verb-first commands (7, WS2 + WS4 in v1.2.0):** `/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-plan`, `/mxm-review`, `/mxm-explain`, `/mxm-help`. Plain-English entry points routing invisibly to office leads + specialists.
+
+**TIER 3 persona dispatchers (5, WS3 in v1.2.0-alpha.4):** `/mxm-legal`, `/mxm-arch`, `/mxm-secure`, `/mxm-founder`, `/mxm-pm`. Profession-aware dispatchers with 28 sub-commands total handled inline (not separate command files per AGENT_ROSTER_v1.2_PROPOSAL.md scope decision Q5).
 
 **TIER 2 — Executive office shortcuts (10):** `/mxm-ceo`, `/mxm-cto`, `/mxm-cmo`, `/mxm-cso`, `/mxm-cpo`, `/mxm-coo`, `/mxm-cino`, `/mxm-ceo-morning`, `/mxm-ceo-overnight`, `/mxm-ceo-setup`.
 
 **Domain and workflow (26):** `/mxm-behavior`, `/mxm-brand-voice`, `/mxm-compliance`, `/mxm-context`, `/mxm-design`, `/mxm-health`, `/mxm-implement`, `/mxm-new-project`, `/mxm-organize`, `/mxm-portfolio`, `/mxm-recall`, `/mxm-release`, `/mxm-remember`, `/mxm-route`, `/mxm-security`, `/mxm-self-update`, `/mxm-seo`, `/mxm-session-end`, `/mxm-status`, `/mxm-superpowers`, `/mxm-tasks`, `/mxm-test`, `/mxm-update`, `/mxm-voice`, `/mxm-watch`, `/mxm-wiki`.
 
-**Total commands: 43.** Net delta from v1.1.1 (39 → 43): 4 NEW in WS2 v1.2.0-alpha.2 — `/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-explain`. Plus 3 existing commands upgraded for TIER 1 surface alignment: `/mxm-plan` (added Fogg B=MAP + Coverage Matrix in WS2), `/mxm-review` (added conditional CSO/tester/brand-guardian/compliance auto-loops in WS2), and `/mxm-help` (rebuilt as 9-mode dispatcher in WS4 v1.2.0-alpha.3 — no-arg persona auto-detect from project-manifest, persona cache at `.mxm-skills/operator-persona.txt`, 5 persona quick-starts + commands/agents/frameworks/compliance/moat/getting-started catalogs + framework deep-dive sub-mode).
+**Total commands: 48.** Net delta from v1.1.1 (39 → 48): 4 NEW in WS2 v1.2.0-alpha.2 (`/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-explain`) + 5 NEW in WS3 v1.2.0-alpha.4 TIER 3 persona dispatchers (`/mxm-legal`, `/mxm-arch`, `/mxm-secure`, `/mxm-founder`, `/mxm-pm`) = 9 new. Plus 3 existing commands upgraded for surface alignment: `/mxm-plan` and `/mxm-review` (WS2 — Fogg B=MAP, Coverage Matrix, conditional auto-loops, ADR-007 enforcement) and `/mxm-help` (WS4 — 9-mode dispatcher with persona auto-detect from project-manifest, cache at `.mxm-skills/operator-persona.txt`).
 
 ---
 

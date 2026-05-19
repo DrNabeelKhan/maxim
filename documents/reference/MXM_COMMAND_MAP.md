@@ -24,6 +24,26 @@ The user-facing entry points. Plain-English verbs that route invisibly to the ri
 
 ---
 
+## TIER 3 — Persona Commands (v1.2.0+)
+
+Profession-aware dispatchers. Each persona command speaks the persona's vocabulary, surfaces moat moments specific to that profession, and routes to the right specialist agents invisibly. The 5 personas that ship in v1.2.0 cover the highest-volume Maxim user surfaces — legal, architecture, security, founder, product. 4 additional personas (research / devops / data / designer) sketched in `AGENT_ROSTER_v1.2_PROPOSAL.md` ship as v1.2.x patches.
+
+| Persona | Sub-commands | Primary office | Defining frameworks |
+|---|---|---|---|
+| `/mxm-legal <sub>` | `jurisdictional-map` · `privacy-impact` · `contract-review` · `vendor-dpa` · `regulatory-map` | CSO + `compliance` skill | 14 compliance frameworks (GDPR · PIPEDA · UAE-PDPL · HIPAA · PCI-DSS · SOC2 · ISO 27001/13485/14971 · NIST CSF · EU AI Act · CASL · FINTRAC · WCAG 2.1) |
+| `/mxm-arch <sub>` | `capability-map` · `wardley-map` · `tech-radar` · `c4-diagram` · `adr` · `vendor-eval` | CEO `enterprise-architect` | TOGAF · Wardley Mapping · C4 Model · ThoughtWorks Tech Radar · ADR-001 template |
+| `/mxm-secure <sub>` | `threat-model` · `owasp` · `sbom` · `incident` · `compliance-posture` · `ai-risk` | CSO `security-analyst` | STRIDE · PASTA · LINDDUN · triple-OWASP · NIST CSF · NIST AI RMF · MITRE ATLAS · AIBOM |
+| `/mxm-founder <sub>` | `pitch-deck` · `gtm-plan` · `runway-model` · `pricing` · `business-model-canvas` · `competitive-moat` | CEO + CMO + CPO | Duarte Sparkline · Minto Pyramid · AARRR · Prospect Theory · Van Westendorp · Strategyzer (BMC + VPC) · 7 Powers (Helmer) |
+| `/mxm-pm <sub>` | `prd` · `user-story` · `okr` · `prioritize` · `jtbd` | CPO `product-strategist` | INVEST · OKR (lead+lag) · RICE/ICE · Kano · Jobs Atlas (Ulwick) |
+
+**Why TIER 3 matters:**
+
+- Legal pros don't think "CSO compliance skill" — they think "DPIA." Architects don't think "CEO enterprise-architect office" — they think "Wardley map" or "C4 diagram." TIER 3 speaks the persona's vocabulary.
+- Sub-commands route to TIER 2 office leads today; after WS5 ships the specialist roster expansion (CSO 9→19, CINO 4→8, etc.), each sub-command auto-routes to the specialist (e.g., `/mxm-legal vendor-dpa` will route to `gdpr-counsel` once that agent ships).
+- 4 deferred personas with full sub-command sketches preserved in `AGENT_ROSTER_v1.2_PROPOSAL.md`: `/mxm-research` · `/mxm-devops` · `/mxm-data` · `/mxm-designer`. Ship in v1.2.x patches as demand surfaces.
+
+---
+
 ## Executive Offices
 
 Type the command to activate the right team for your task.

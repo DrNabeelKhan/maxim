@@ -32,11 +32,13 @@
   "_skill_domains_added_v120_list": [
     "voice-routing"
   ],
-  "total_slash_commands": 43,
+  "total_slash_commands": 48,
   "_slash_commands_added_v641": ["mxm-watch", "mxm-session-end"],
   "_slash_commands_added_v111": ["mxm-self-update"],
   "_slash_commands_added_v120_ws2": ["mxm-build", "mxm-fix", "mxm-ship", "mxm-explain"],
   "_slash_commands_upgraded_v120_ws2": ["mxm-plan", "mxm-review"],
+  "_slash_commands_upgraded_v120_ws4": ["mxm-help"],
+  "_slash_commands_added_v120_ws3": ["mxm-legal", "mxm-arch", "mxm-secure", "mxm-founder", "mxm-pm"],
   "total_mcp_servers": 7,
   "_mcp_servers_consolidated_v641": "dispatch + skills → catalog; design → absorbed into context",
   "total_mcp_tools": 47,
@@ -70,6 +72,21 @@
   "total_canonical_ledgers": 5,
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
   "changelog": [
+    {
+      "version": "1.2.0-alpha.4",
+      "date": "2026-05-19",
+      "changes": [
+        "feat(WS3): 5 TIER 3 persona dispatchers — /mxm-legal · /mxm-arch · /mxm-secure · /mxm-founder · /mxm-pm. Each speaks the persona's vocabulary (DPIA · Wardley map · threat model · pitch deck · PRD) and routes invisibly to the right office + framework. 28 sub-commands total across the 5 dispatchers — sub-commands handled inline within each dispatcher .md file (not separate command files) per AGENT_ROSTER_v1.2_PROPOSAL.md.",
+        "feat(WS3): /mxm-legal — jurisdictional-map · privacy-impact (full DPIA template) · contract-review · vendor-dpa · regulatory-map. Routes through CSO security-analyst + compliance skill; cites 14 compliance frameworks with article numbers.",
+        "feat(WS3): /mxm-arch — capability-map (TOGAF) · wardley-map (Wardley Mapping — first-class native, rare in AI tools) · tech-radar (ThoughtWorks) · c4-diagram · adr (uses Maxim ADR template) · vendor-eval (Wardley + cost-analyst overlay).",
+        "feat(WS3): /mxm-secure — threat-model (STRIDE/PASTA/LINDDUN) · owasp (triple coverage: Top 10 + LLM Top 10 + API Top 10 — Maxim differentiator) · sbom (SPDX 3.0 + CycloneDX + AIBOM for EU AI Act Art. 53 compliance) · incident (NIST CSF + MITRE ATT&CK) · compliance-posture · ai-risk (NIST AI RMF + MITRE ATLAS).",
+        "feat(WS3): /mxm-founder — pitch-deck (Duarte Sparkline + Minto Pyramid + McKinsey + Dual Coding) · gtm-plan (AARRR + first-100 playbook + JTBD) · runway-model (cohort LTV + dilution scenarios) · pricing (Prospect Theory + Van Westendorp PSM + Cialdini anchoring) · business-model-canvas (Strategyzer BMC + VPC) · competitive-moat (reads MOAT_TRACKER.md live + 7 Powers framework).",
+        "feat(WS3): /mxm-pm — prd (PRD with leading+lagging metrics · ADR cross-links) · user-story (INVEST + Gherkin acceptance criteria) · okr (forces both leading AND lagging KRs) · prioritize (RICE + ICE + Kano + WSJF) · jtbd (Tony Ulwick's Jobs Atlas + 8-step job map + outcome statements).",
+        "feat(WS3): documents/reference/MXM_COMMAND_MAP.md gains TIER 3 Persona Commands section above Executive Offices documenting the 5 dispatchers + 28 sub-commands + specialist routing roadmap (sub-commands route to office leads today, auto-route to WS5 specialists after roster expansion).",
+        "net: total slash commands 43 → 48. WS3 adds 5 net-new dispatcher commands; the 28 sub-commands are handled inline within each dispatcher (per AGENT_ROSTER_v1.2_PROPOSAL.md scope decision Q5 — sub-commands are not separate command files).",
+        "context: WS3 of the v1.2.0 GA sprint, executed in Session 20 (2026-05-19) directly after WS4. WS3 was originally sequenced before WS4 in the bootstrap; flipped to WS1 → WS2 → WS4 → WS3 so /mxm-help could land first as the discoverable entry point for the new TIER 1 + TIER 3 surfaces."
+      ]
+    },
     {
       "version": "1.2.0-alpha.3",
       "date": "2026-05-19",
