@@ -4,7 +4,7 @@
   "description": "Single source of truth for Maxim agents and skills catalog. v1.0.0 achieves 100% Grade A DNA coverage across all 88 agents (full Triggers + Collaboration Matrix sections). VoltAgent, external subtrees, and domain dispatch tracked in config/dependency-registry.json.",
   "last_updated": "2026-05-19",
   "agent_dna_coverage": {
-    "grade_a": 101,
+    "grade_a": 91,
     "grade_b": 0,
     "grade_c": 0,
     "coverage_pct": 100,
@@ -12,9 +12,9 @@
   },
   "maintainer": "DrNabeelKhan",
   "scope": "Maxim agents + skills catalog only",
-  "total_mxm_agents": 101,
-  "_total_mxm_agents_breakdown": "CEO 9 + CTO 25 + CMO 16 + CSO 19 + CPO 12 + COO 10 + CINO 4 + Orchestrators 5 (planner/implementer/reviewer/tester/release-manager) + 1 executive-router = 101",
-  "_ws5_minimum_viable_note": "v1.2.0-rc.1 ships CSO 9->19 expansion only (10 net-new specialist files: appsec-engineer, owasp-specialist, secure-code-reviewer, soc2-auditor, iso27001-lead-auditor, gdpr-counsel, hipaa-counsel, llm-security-specialist, sbom-analyst, dpia-specialist). CTO -7, CMO -3 net, CPO -4, COO -2, CINO +4, Orchestrators +5 consolidation/restructuring deferred to v1.2.1 per Session 20 minimum-viable scope decision.",
+  "total_mxm_agents": 91,
+  "_total_mxm_agents_breakdown": "CEO 9 + CTO 17 + CMO 11 (excl. _template-brand-writer) + CSO 19 + CPO 8 + COO 8 + CINO 8 + Orchestrators 10 (planner/implementer/reviewer/tester/release-manager + ethics-orchestrator/behavioral-overlay-orchestrator/confidence-tagger/compliance-orchestrator/handoff-coordinator) + 1 executive-router = 91",
+  "_ws5_full_scope_note": "v1.2.0 ships full WS5 scope: CSO 9->19 (+10 specialists), CINO 4->8 (+4: tech-radar-author/competitive-intel-analyst/patent-researcher/horizon-scanner), Orchestrators 5->10 (+5: ethics-orchestrator/behavioral-overlay-orchestrator/confidence-tagger/compliance-orchestrator/handoff-coordinator). Plus consolidations: CTO 25->17 (-8 to deprecated/), CMO 16->11 (-5 to deprecated/), CPO 12->8 (-4 to deprecated/), COO 10->8 (-2 to deprecated/). Net delta +1 (nk-writer) but per-office churn substantial: 19 agents moved to deprecated/, 9 net-new agents authored.",
   "total_skill_domains_active": 35,
   "total_skill_domains_added_in_v640": 7,
   "total_skill_domains_added_in_v641": 1,
@@ -49,10 +49,12 @@
   "_executable_hooks_added_v641": ["git-hygiene-preamble.sh", "git-hygiene-preamble.ps1", "git-hygiene-postamble.sh", "git-hygiene-postamble.ps1"],
   "_executable_hooks_note": "14 = 7 hooks × 2 platforms (bash + ps1): session-start, session-end, pre-commit, behavioral-moat-drift, git-hygiene-preamble, git-hygiene-postamble, mxm-guard",
   "total_categories": 14,
-  "frameworks_covered": 68,
+  "frameworks_covered": 74,
   "_frameworks_added_v641": ["proactive-watch"],
   "_frameworks_added_v120_ws6a": ["transtheoretical-model", "self-determination-theory", "dual-process-theory", "prospect-theory"],
-  "_frameworks_deferred_v121_ws6b": ["scarf", "theory-of-planned-behavior", "social-learning-theory", "operant-conditioning", "diffusion-of-innovations", "emotional-design"],
+  "_frameworks_added_v120_ws6b": ["scarf", "theory-of-planned-behavior", "social-learning-theory", "operant-conditioning", "diffusion-of-innovations", "emotional-design"],
+  "_drift_classes": 13,
+  "_drift_classes_v120_additions": ["behavioral-moat-drift (Class 12 - ratified in cleanup)", "third-party-plugin-drift (Class 13 - per ADR-012 MOE; activates when v1.1.2 MOE ships)"],
   "total_adrs": 16,
   "_adrs_full_list": [
     "ADR-001-mxm-architecture-baseline",
@@ -75,6 +77,19 @@
   "total_canonical_ledgers": 5,
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
   "changelog": [
+    {
+      "version": "1.2.0",
+      "date": "2026-05-19",
+      "changes": [
+        "release: v1.2.0 GA final. Promoted from v1.2.0-rc.1 after WS5 remainder + WS6b + WS7 landed inline per operator directive 'No restructuring deferred to v1.2, include everything which was deferred and release 1.2.0' (Session 20 close).",
+        "feat(WS5 full scope - roster reorganization complete): 19 agents moved to deprecated/ (CTO 8: analytics-reporter/api-tester/cloud-cost-optimizer/load-tester/rapid-prototyper/solution-architect/support-agent-builder/test-data-generator. CMO 5: decision-architect/habit-formation-coach/landing-page-optimizer/localization-specialist/nudge-architect. CPO 4: competitive-analyst/market-analyst/trend-researcher/ui-designer. COO 2: knowledge-base-curator/tool-evaluator). 9 net-new agents authored (CINO 4: tech-radar-author/competitive-intel-analyst/patent-researcher/horizon-scanner. Orchestrators 5: ethics-orchestrator/behavioral-overlay-orchestrator/confidence-tagger/compliance-orchestrator/handoff-coordinator). Roster lands at proposal target 91 (was 101 in rc.1; consolidations bring net total to proposal).",
+        "feat(WS6b - 6 MED-priority behavioral frameworks at ADR-007 7-section depth): scarf (David Rock SCARF model - Status/Certainty/Autonomy/Relatedness/Fairness), theory-of-planned-behavior (Ajzen TPB - 3-component intention model), social-learning-theory (Bandura - 4 mediating processes + self-efficacy), operant-conditioning (Skinner - 4 consequence types + 5 reinforcement schedules; explicit ethics gating on variable-ratio + addiction-proximal contexts), diffusion-of-innovations (Rogers - 5 adopter categories + 5 innovation attributes + Moore's chasm), emotional-design (Norman - visceral/behavioral/reflective three-level processing). Frameworks 68 -> 74.",
+        "feat(WS7 - Proactive Watch Class 13 third-party-plugin-drift codified): Adds Class 13 to proactive-watch.md table + new sub-section. Class 13 watches third-party Claude Code plugin outputs for missing framework citations / confidence tags / compliance routing per ADR-012 MOE PostToolUse audit log. Locked triage CSO (governance integrity). Tier-gated to Professional/Team per ADR-012 MOE spec. Dependency: MOE ships in v1.1.2; until then Class 13 has zero data to score (checker defined; runtime activation follows MOE deployment). Drift classes 12 -> 13.",
+        "net deltas v1.1.1 -> v1.2.0: agents 90 -> 91 (+1 net; 19 moves to deprecated/ + 9 net-new + nk-writer from WS1). Skills 34 -> 35 (+1 voice-routing). Commands 39 -> 48 (+9). Frameworks 64 -> 74 (+10). Drift classes 11 -> 13 (+2: Class 12 ratified in cleanup, Class 13 codified in WS7). Compliance frameworks 14 (unchanged). MCP 7 servers / 47 tools (unchanged). Hooks 14 (unchanged). ADRs 16 (unchanged).",
+        "version field bumped 1.0.0 -> 1.2.0. The version field was stale at 1.0.0 across v1.0.0 -> v1.2.0-rc.1; corrected as part of v1.2.0 final ship.",
+        "agent_dna_coverage updated: grade_a 91 (was 101 in rc.1 - reflected the inflated transient count; now reflects proposal-target count after consolidations)."
+      ]
+    },
     {
       "version": "1.2.0-rc.1",
       "date": "2026-05-19",

@@ -1,6 +1,6 @@
 # Installing Maxim
 
-> **Maxim** is the behavioral intelligence layer for Claude Code — 101 specialist agents across 7 executive offices, 64 behavioral frameworks, 14 compliance frameworks, and drift detection on every session.
+> **Maxim** is the behavioral intelligence layer for Claude Code — 91 specialist agents across 7 executive offices, 64 behavioral frameworks, 14 compliance frameworks, and drift detection on every session.
 >
 > This guide covers: install, choose packs, verify, upgrade, uninstall, troubleshoot.
 
@@ -39,7 +39,7 @@ The first registers the marketplace; the second installs the base plugin.
 Confirm the install dialog shows:
 - **Version:** v1.1.0 or later
 - **By:** Dr. Nabeel Khan
-- 101 specialist agents · 64 frameworks · 14 compliance frameworks
+- 91 specialist agents · 64 frameworks · 14 compliance frameworks
 
 Choose **"Install for you (user scope)"** when prompted.
 

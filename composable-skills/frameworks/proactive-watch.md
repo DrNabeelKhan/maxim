@@ -53,7 +53,7 @@ Every AI-coded project accumulates drift in these 12 classes. The framework ship
 
 1. Read `documents/ledgers/AGENT_SKILL_INVENTORY.md` and extract canonical numbers for each tracked counter (Section 1: Agents; Section 2: Skill Domains; Section 3: Slash Commands; Section 4: MCP Servers + Tools; Section 5: Hook Scripts; Section 6: Frameworks; Section 7: Compliance).
 2. For each counter, scan **declared surface paths** (configurable in `watch-profile.yml`) for hard-coded number literals adjacent to keyword anchors (`agents`, `frameworks`, `commands`, `MCP servers`, `compliance frameworks`, `hooks`, `skill domains`).
-3. Pattern: `\b(\d{1,4})\+?\s+(?:specialist\s+|governed\s+|peer-reviewed\s+)?{anchor}\b` (case-insensitive; allows `+`-suffix for "101+ agents").
+3. Pattern: `\b(\d{1,4})\+?\s+(?:specialist\s+|governed\s+|peer-reviewed\s+)?{anchor}\b` (case-insensitive; allows `+`-suffix for "91+ agents").
 4. Each numeric mismatch with INVENTORY emits a drift event of severity 3 (warn-only in LIGHT; FULL phase auto-routes to COO review queue).
 
 **False-positive guards.** Pattern requires the keyword anchor adjacent. Currency (`$X.88`), SVG coordinates (`y: 88`), and percentages (`88%`) are excluded by construction since none has the keyword adjacent. Versioned historical docs (`maxim-pack-catalog-v1.0.0.md`) are excluded by glob (`**/v[0-9]*-*.md`). CHANGELOG.md and ADR INDEX.md are excluded — they preserve point-in-time accurate version entries.

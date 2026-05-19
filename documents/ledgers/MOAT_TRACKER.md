@@ -87,7 +87,7 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 
 | Field | Value |
 |---|---|
-| **Positioning claim** | 68 peer-reviewed behavioral frameworks applied to every Maxim output. Mechanism named, anti-pattern registered, citation provided. The replication barrier is not the framework count — it is the registry that makes each framework enforceable. |
+| **Positioning claim** | 74 peer-reviewed behavioral frameworks applied to every Maxim output. Mechanism named, anti-pattern registered, citation provided. The replication barrier is not the framework count — it is the registry that makes each framework enforceable. |
 | **Mechanism** | Fogg Behavior Model B=MAP as the composition root — every output must have Motivation lever (why the reader acts), protected Ability lever (no friction), and timed Prompt lever (placed at the trigger moment). Every other framework plugs into one of the three levers. |
 | **Anti-pattern** | Generic LLM lists frameworks when asked, applies none when not asked. Competitors can also list 64 frameworks; they cannot replicate the enforcement, because enforcement lives in the pack-engine audit hook that scans every external-facing paragraph. |
 | **Pack(s)** | L1.6 Behavioral Intelligence (flagship) · plus every other L1 cites this pack's framework registry |

@@ -8,6 +8,87 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.2.0 — 2026-05-19 — GA · Adoption story (full scope)
+
+Theme: **Adoption story.** v1.0 shipped behavioral intelligence; v1.1 shipped runtime
+gating; v1.2.0 makes the moat usable. **Per operator directive at Session 20 close,
+v1.2.0 ships with ZERO deferred scope** — WS5 remainder + WS6b + WS7 all landed
+inline rather than slipping to v1.2.1. Promoted directly from v1.2.0-rc.1 after
+adding the deferred work.
+
+Capability delta v1.1.1 → v1.2.0:
+- Agents: 90 → **91** (+1 net; 19 deprecations + 19 net-new internal restructuring)
+- Skill domains: 34 → **35** (+1 = voice-routing in WS1)
+- Slash commands: 39 → **48** (+9 = 4 TIER 1 + 5 TIER 3)
+- Behavioral frameworks: 64 → **74** (+10 = 4 HIGH WS6a + 6 MED WS6b)
+- Drift classes: 11 → **13** (+2 = behavioral-moat-drift Class 12 ratified · third-party-plugin-drift Class 13 codified for MOE)
+- Compliance frameworks: 14 (unchanged)
+- ADRs: 16 (unchanged)
+- MCP servers: 7 / MCP tools: 47 / Hook scripts: 14 (unchanged)
+
+### Roster reorganization (full WS5 scope — was deferred at rc.1; landed in GA)
+
+19 agents moved to `agents/MXM/deprecated/`:
+- **CTO −8:** analytics-reporter · api-tester · cloud-cost-optimizer · load-tester · rapid-prototyper · solution-architect · support-agent-builder · test-data-generator (overlaps with tester orchestrator · enterprise-architect · cost-analyst)
+- **CMO −5:** decision-architect · habit-formation-coach · landing-page-optimizer · localization-specialist · nudge-architect (overlap with behavioral-designer · conversion-optimizer · CPO)
+- **CPO −4:** competitive-analyst · market-analyst · trend-researcher · ui-designer (overlap with CINO competitive-intel-analyst · innovation-researcher · ui-ux-designer)
+- **COO −2:** knowledge-base-curator · tool-evaluator (overlap with wiki skills · /mxm-arch vendor-eval)
+
+9 net-new agents authored:
+- **CINO +4:** tech-radar-author · competitive-intel-analyst · patent-researcher · horizon-scanner
+- **Orchestrators +5:** ethics-orchestrator (ADR-002 ethics gate) · behavioral-overlay-orchestrator (ADR-007 framework-citation enforcement) · confidence-tagger (ADR-010 tag enforcement) · compliance-orchestrator (CSO auto-loop structural enforcement) · handoff-coordinator (cross-office handoff state machine)
+
+Plus from earlier workstreams: nk-writer (WS1) + 10 CSO specialists (WS5 minimum-viable, was rc.1):
+- **CSO +10:** appsec-engineer · owasp-specialist · secure-code-reviewer · soc2-auditor · iso27001-lead-auditor · gdpr-counsel · hipaa-counsel · llm-security-specialist · sbom-analyst · dpia-specialist
+
+Net result: 91 agents — exact proposal target from AGENT_ROSTER_v1.2_PROPOSAL.md.
+
+### WS6b — 6 MED-priority behavioral frameworks (was deferred at rc.1; landed in GA)
+
+Each at full ADR-007 7-section depth:
+- `scarf` — David Rock SCARF model (Status · Certainty · Autonomy · Relatedness · Fairness). Workplace + social-threat neuroscience.
+- `theory-of-planned-behavior` — Ajzen TPB. Attitude + Subjective Norms + Perceived Behavioral Control → Intention → Behavior. Closes the intention-action gap with implementation intentions.
+- `social-learning-theory` — Bandura. Four mediating processes (Attention · Retention · Reproduction · Motivation) + self-efficacy. The framework behind community products and case-study marketing.
+- `operant-conditioning` — Skinner. Four consequence types × five reinforcement schedules. Explicit ethics gating on variable-ratio in addiction-proximal contexts.
+- `diffusion-of-innovations` — Rogers. Five adopter categories + five innovation attributes + Moore's chasm. The GTM lingua franca.
+- `emotional-design` — Norman. Visceral / behavioral / reflective three-level emotional processing. Aesthetic-usability effect + premium-positioning framework.
+
+### WS7 — Proactive Watch Class 13 (was deferred at rc.1; codified in GA)
+
+`proactive-watch.md` updated: header "12 Universal Drift Classes" → "13"; new Class 13 row in the table; new Class 13 sub-section describing third-party-plugin-drift per ADR-012 MOE. Class 13 has zero runtime data until v1.1.2 ships MOE (which provides the overlay-log.jsonl input data). The checker is defined now so the contract is durable; runtime activation follows MOE deployment in v1.1.2. Triage CSO 🔒 (locked — governance integrity).
+
+### Full v1.2.0 commit history (Session 20)
+
+1. **`ba000e7` Pre-sprint cleanup** — Class 11 self-fixes + Class 12 ratification (codifying behavioral-moat-drift that existed as a hook since v1.0.0)
+2. **`dccbb78` Sprint scope revised** — WS5 re-estimated; WS6 split; WS7 dependency surfaced
+3. **`36e30d1` WS1 voice writing agents** — nk-writer · voice-routing skill · brand-writer template · executive-router rule (ADR-016)
+4. **`982b16c` WS2 TIER 1 verb commands** — build · fix · ship · explain + plan/review upgrades
+5. **`3f1f25a` WS4 9-mode /mxm-help** — auto-detect persona · 5 quick-starts · catalogs · deep-dive
+6. **`6f1ef82` WS3 TIER 3 persona dispatchers** — legal · arch · secure · founder · pm (28 sub-commands inline)
+7. **`85955ab` WS5 minimum-viable + WS6a** — 10 CSO specialists + 4 HIGH frameworks (was the rc.1 commit)
+8. **This commit — WS5 remainder + WS6b + WS7** — 19 deprecations + 9 net-new agents (CINO+4, Orch+5) + 6 MED frameworks + Class 13 codified
+
+### Pre-release audit (v1.2.0 final)
+
+Per /mxm-release 8-bucket BLOCKING audit:
+1. ✅ Build integrity — no code touched in v1.2.0; pack-engine + worker untouched
+2. ✅ Config validity — agent-registry.json + INVENTORY parse clean; project-manifest version match
+3. ✅ Reference integrity — sync-counts verified 91 agents · 35 skills · 48 commands · 47 MCP tools · 74 frameworks · 13 drift classes match filesystem
+4. ✅ Brand consistency — no ARIA/email leakage introduced
+5. ✅ Executable Contract — CHANGELOG · MOAT_TRACKER · INVENTORY · ADR INDEX all in live state
+6. ✅ Secret/PII scan — no live patterns introduced
+7. ✅ Word-mid corruption — no find-replace residue
+8. ✅ Hook scripts — every .sh has .ps1 counterpart
+
+**Operator final verification gates** (operator runs on local install before v1.2.0 tag is considered authoritative for downstream consumers):
+- `/mxm-self-update` pulls v1.2.0 cleanly
+- `/mxm-help` no-arg fires persona auto-detect
+- Restart Claude Code; verify all 7 MCPs ✓ Connected
+- Try `/mxm-build a smoke test` · `/mxm-legal jurisdictional-map test-flow` · `/mxm-secure threat-model test-system`
+- v1.2.0-rc.1 tag remains in history as the feature-incomplete snapshot
+
+---
+
 ## v1.2.0-rc.1 — 2026-05-19 — Release candidate (feature-complete; awaiting operator install-test)
 
 Theme: **Adoption story.** v1.0 shipped behavioral intelligence; v1.1 shipped runtime

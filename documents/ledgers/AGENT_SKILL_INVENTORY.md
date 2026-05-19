@@ -2,27 +2,27 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.2.0-rc.1 · **Last verified:** 2026-05-19
+**Version:** v1.2.0 · **Last verified:** 2026-05-19
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
 ---
 
-## Section 1 — Specialist Agents (101)
+## Section 1 — Specialist Agents (91)
 
 | Office | Lead | Count | Path |
 |---|---|---:|---|
 | CEO — strategy, finance, partnerships | `enterprise-architect` | 9 | `agents/MXM/ceo/` |
-| CTO — engineering, infrastructure, AI | `implementer` | 25 | `agents/MXM/cto/` |
-| CMO — marketing, brand, SEO, content | `content-strategist` | 16 | `agents/MXM/cmo/` |
+| CTO — engineering, infrastructure, AI | `implementer` | 17 | `agents/MXM/cto/` |
+| CMO — marketing, brand, SEO, content | `content-strategist` | 11 | `agents/MXM/cmo/` (excl. `_template-brand-writer.md`) |
 | CSO — security, compliance, ethics | `security-analyst` | 19 | `agents/MXM/cso/` |
-| CPO — product, UX, research | `product-strategist` | 12 | `agents/MXM/cpo/` |
-| COO — delivery, sprints, operations | `planner` | 10 | `agents/MXM/coo/` |
-| CINO — R&D, horizon scanning | `innovation-researcher` | 4 | `agents/MXM/cino/` |
-| Orchestrators (planner, implementer, reviewer, tester, release-manager) | `executive-router` | 5 | `agents/MXM/orchestrators/` |
+| CPO — product, UX, research | `product-strategist` | 8 | `agents/MXM/cpo/` |
+| COO — delivery, sprints, operations | `planner` | 8 | `agents/MXM/coo/` |
+| CINO — R&D, horizon scanning | `innovation-researcher` | 8 | `agents/MXM/cino/` |
+| Orchestrators (planner, implementer, reviewer, tester, release-manager + ethics/behavioral-overlay/confidence-tagger/compliance/handoff) | `executive-router` | 10 | `agents/MXM/orchestrators/` |
 | Executive Router | `executive-router` | 1 | `agents/MXM/executive-router.md` |
 
-**Total agents: 101.** Registry: `config/agent-registry.json`. Net delta from v1.1.1 (90 → 101): `nk-writer` added in WS1 (CMO 15 → 16); 10 net-new CSO specialists added in WS5 minimum-viable (CSO 9 → 19) — `appsec-engineer`, `owasp-specialist`, `secure-code-reviewer`, `soc2-auditor`, `iso27001-lead-auditor`, `gdpr-counsel`, `hipaa-counsel`, `llm-security-specialist`, `sbom-analyst`, `dpia-specialist`. The remaining WS5 restructuring (CTO −7, CMO −3 net, CPO −4, COO −2, CINO +4, Orchestrators +5) is deferred to v1.2.1 pending operator review of per-agent consolidation decisions. At v1.2.1 ship the total lands at the proposal target 91.
+**Total agents: 91.** Registry: `config/agent-registry.json`. Net delta from v1.1.1 (90 → 91): full WS5 roster reorganization executed in Session 20 close per operator directive "No restructuring deferred to v1.2." 19 agents moved to `agents/MXM/deprecated/` (CTO −8, CMO −5, CPO −4, COO −2). 9 net-new agents authored (CINO +4: tech-radar-author · competitive-intel-analyst · patent-researcher · horizon-scanner. Orchestrators +5: ethics-orchestrator · behavioral-overlay-orchestrator · confidence-tagger · compliance-orchestrator · handoff-coordinator). Plus `nk-writer` from WS1 + 10 CSO specialists from WS5. Total per-office churn: 19 deprecations + 19 net-new (10 CSO + 4 CINO + 5 Orch) = 38 file moves/creates. Net +1 by count; substantial restructure by substance.
 
 ---
 
@@ -86,11 +86,19 @@ Under `.claude/hooks/`:
 
 ---
 
-## Section 6 — Behavioral Frameworks (68)
+## Section 6 — Behavioral Frameworks (74)
 
-Cataloged in `documents/reference/FRAMEWORKS_MASTER.md`. Core families include Fogg Behavior Model, COM-B, EAST, SCARF, Cialdini Persuasion, Cognitive Load Theory, Behavioral Moat Framing Doctrine (ADR-007), Technical Educator Rubric (ADR-010), and the meta-framework Proactive Watch (ADR-002). v1.2.0 WS6a added 4 HIGH-priority frameworks at full ADR-007 7-section depth: `transtheoretical-model` (Prochaska & DiClemente — Stages of Change), `self-determination-theory` (Deci & Ryan — intrinsic motivation via Autonomy/Competence/Relatedness), `dual-process-theory` (Kahneman System 1 / System 2), `prospect-theory` (Kahneman & Tversky — loss aversion + reference dependence + probability weighting). v1.2.1 WS6b will add the remaining 6 MED-priority frameworks (SCARF · TPB · Social Learning · Operant Conditioning · Diffusion · Emotional Design) for 74 total.
+Cataloged in `documents/reference/FRAMEWORKS_MASTER.md`. Core families include Fogg Behavior Model, COM-B, EAST, Cialdini Persuasion, Cognitive Load Theory, Behavioral Moat Framing Doctrine (ADR-007), Technical Educator Rubric (ADR-010), and the meta-framework Proactive Watch (ADR-002). v1.2.0 added 10 frameworks across WS6a+WS6b at full ADR-007 7-section depth:
 
-**Total frameworks: 68.** Net delta from v1.1.1 (64 → 68): +4 in WS6a v1.2.0-rc.1.
+**WS6a (4 HIGH-priority):** `transtheoretical-model` (Prochaska & DiClemente — Stages of Change), `self-determination-theory` (Deci & Ryan — intrinsic motivation via Autonomy/Competence/Relatedness), `dual-process-theory` (Kahneman System 1 / System 2), `prospect-theory` (Kahneman & Tversky — loss aversion + reference dependence + probability weighting).
+
+**WS6b (6 MED-priority):** `scarf` (David Rock — Status/Certainty/Autonomy/Relatedness/Fairness), `theory-of-planned-behavior` (Ajzen — Attitudes + Subjective Norms + Perceived Behavioral Control), `social-learning-theory` (Bandura — modeling + self-efficacy), `operant-conditioning` (Skinner — reinforcement schedules with ethics gating on variable-ratio), `diffusion-of-innovations` (Rogers — 5 adopter categories + Moore's chasm), `emotional-design` (Norman — visceral/behavioral/reflective).
+
+**Total frameworks: 74.** Net delta from v1.1.1 (64 → 74): +4 WS6a + +6 WS6b in v1.2.0.
+
+### Proactive Watch drift classes (13)
+
+The Proactive Watch meta-framework now covers 13 universal drift classes (1–11 from v1.0.0+, Class 12 behavioral-moat-drift ratified in v1.2.0 pre-sprint cleanup, Class 13 third-party-plugin-drift codified in v1.2.0 WS7 per ADR-012 MOE). Class 13 has zero runtime data until v1.1.2 ships MOE; the checker is defined now so the contract is durable. Triage for both new classes is locked: Class 12 → CMO, Class 13 → CSO 🔒.
 
 ---
 
