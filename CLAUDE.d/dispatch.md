@@ -69,6 +69,10 @@
 | Knowledge ingestion / cross-project query | `wiki-ingest` / `wiki-query` skills (v1.0.0+) |
 | Voice utterance | `mxm-voice` MCP server (v1.0.0+) |
 | Writing-verb task (write/draft/compose/email/post/article/deck/memo/report/etc.) | `nk-writer` agent — or `{active_startup}-brand-writer` if customer-facing under active startup; fires BEFORE CSO auto-loop per ADR-016 |
+| TIER 1 `/mxm-build` (v1.2.0+) | CTO `implementer` + CSO on regulated + CPO on frontend; Fogg B=MAP scope check + TDD |
+| TIER 1 `/mxm-fix` (v1.2.0+) | CTO `implementer` + `tester` + `reviewer`; Systematic Debugging + root-cause discipline |
+| TIER 1 `/mxm-ship` (v1.2.0+) | COO `planner` coordinator → `release-manager`; CSO SBOM + reviewer + CMO CHANGELOG; chains to `/mxm-release` |
+| TIER 1 `/mxm-explain` (v1.2.0+) | `smart-explorer` (tree-sitter AST) + routed office expert; plain-language confidence tag per ADR-010 |
 | Explicit `/mxm-ceo` command | `enterprise-architect` |
 | Explicit `/mxm-cto` command | `implementer` |
 | Explicit `/mxm-cmo` command | `content-strategist` |

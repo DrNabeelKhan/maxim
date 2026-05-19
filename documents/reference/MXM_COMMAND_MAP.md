@@ -3,6 +3,27 @@
 
 ---
 
+## TIER 1 — Verb-First Commands (v1.2.0+)
+
+The user-facing entry points. Plain-English verbs that route invisibly to the right office + specialist combination. **Start here** if you don't yet know which office owns your task. Power users can still type office commands directly (TIER 2 below) — the verb-first surface is the welcoming front door, not a replacement.
+
+| Command | What you say | What happens |
+|---|---|---|
+| `/mxm-build <X>` | "build a feature" / "implement X" / "code this" | CTO `implementer` leads → routes to specialist (backend/frontend/API/data/ML) · CSO auto-loops on regulated data · CPO auto-loops on frontend · TDD discipline · Fogg B=MAP scope check |
+| `/mxm-fix <X>` | "fix this bug" / "failing test" / "broken" | CTO `implementer` + `tester` + `reviewer` in coordinated parallel · Systematic Debugging framework · root-cause discipline · BUG_TRACKER + DEBUGGING_PLAYBOOK auto-update |
+| `/mxm-ship <X>` | "ship this" / "cut a release" / "deploy" | COO `planner` coordinator → `release-manager` · CSO SBOM + compliance · `reviewer` final pass · CMO CHANGELOG · session-end 9-doc bundle |
+| `/mxm-plan <X>` | "plan this" / "before we start" / "multi-session" | COO `planner` + CPO `product-strategist` · Planning-with-Files · Coverage Matrix · Fogg B=MAP scope check |
+| `/mxm-review <X>` | "review this" / "check my code" / "code review" | `reviewer` + conditional auto-loops: CSO on security-adjacent · `tester` on test code · `brand-guardian` on SKILL/agent/doc · `compliance` on regulated |
+| `/mxm-explain <X>` | "explain" / "help me understand" / "tldr" | `smart-explorer` (tree-sitter AST) + the routed office expert · plain-language confidence tag per ADR-010 · sources cited |
+| `/mxm-help` | "what can I do here?" | Help system — 9 modes: persona auto-detect / commands / agents / frameworks / compliance / moat / getting-started (full system shipping in v1.2.0 per WS4) |
+
+**Behavioral overlays in TIER 1:**
+- Every command tags its output 🟢 HIGH / 🟡 MEDIUM / 🔴 LOW per ADR-010 Confidence Tag Technical Educator Rubric
+- Every command cites the framework justifying its action per ADR-007 Behavioral Moat Framing Doctrine
+- Auto-loops fire BEFORE work starts so coordination is locked, not negotiated mid-task
+
+---
+
 ## Executive Offices
 
 Type the command to activate the right team for your task.

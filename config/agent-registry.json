@@ -32,8 +32,11 @@
   "_skill_domains_added_v120_list": [
     "voice-routing"
   ],
-  "total_slash_commands": 38,
+  "total_slash_commands": 43,
   "_slash_commands_added_v641": ["mxm-watch", "mxm-session-end"],
+  "_slash_commands_added_v111": ["mxm-self-update"],
+  "_slash_commands_added_v120_ws2": ["mxm-build", "mxm-fix", "mxm-ship", "mxm-explain"],
+  "_slash_commands_upgraded_v120_ws2": ["mxm-plan", "mxm-review"],
   "total_mcp_servers": 7,
   "_mcp_servers_consolidated_v641": "dispatch + skills → catalog; design → absorbed into context",
   "total_mcp_tools": 47,
@@ -67,6 +70,18 @@
   "total_canonical_ledgers": 5,
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
   "changelog": [
+    {
+      "version": "1.2.0-alpha.2",
+      "date": "2026-05-19",
+      "changes": [
+        "feat(WS2): TIER 1 verb-first commands — 4 NEW + 2 light-upgraded. NEW: /mxm-build (CTO implementer + CSO auto-loop on regulated + CPO on frontend; Fogg B=MAP scope check + TDD discipline). NEW: /mxm-fix (CTO + tester + reviewer; Systematic Debugging + root-cause discipline; BUG_TRACKER + DEBUGGING_PLAYBOOK auto-update). NEW: /mxm-ship (COO planner coordinator → release-manager; CSO SBOM + compliance; reviewer final pass; CMO CHANGELOG; session-end 9-doc bundle; chains to /mxm-release for actual mechanics). NEW: /mxm-explain (smart-explorer tree-sitter + routed office expert; plain-language confidence tag per ADR-010; sources cited).",
+        "feat(WS2): /mxm-plan upgraded to TIER 1 — added Fogg B=MAP scope check, Coverage Matrix appendix for sprint plans, CPO product-strategist auto-loop on feature planning, behavioral framework selector.",
+        "feat(WS2): /mxm-review upgraded to TIER 1 — added conditional auto-loops (CSO on security-adjacent · tester on test code · brand-guardian on SKILL/agent/doc · compliance on regulated scope), ADR-007 framework citation requirement enforced.",
+        "feat(WS2): documents/reference/MXM_COMMAND_MAP.md gains new top-level TIER 1 Verb-First Commands section above Executive Offices. Behavioral overlay note documents ADR-007 + ADR-010 enforcement.",
+        "net: total slash commands 39 → 43. Note: pre-WS2 baseline was 39 (not 38 as in the original bootstrap math) — the +1 came from /mxm-self-update which shipped in v1.1.1 but was never added to the inventory until commit ba000e7. WS2 adds 4 net-new commands (/mxm-build, /mxm-fix, /mxm-ship, /mxm-explain).",
+        "context: WS2 of the v1.2.0 GA sprint, executed in Session 20 (2026-05-19) directly after WS1. /mxm-help is intentionally NOT upgraded here — it gets the full 9-mode rebuild in WS4."
+      ]
+    },
     {
       "version": "1.2.0-alpha.1",
       "date": "2026-05-19",
