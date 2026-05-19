@@ -71,6 +71,17 @@
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
   "changelog": [
     {
+      "version": "1.2.0-alpha.3",
+      "date": "2026-05-19",
+      "changes": [
+        "feat(WS4): /mxm-help rebuilt as 9-mode dispatcher per AGENT_ROSTER_v1.2_PROPOSAL.md § Comprehensive /mxm-help system. Mode 1 — no-arg auto-detects operator persona from config/project-manifest.json (compliance frameworks → mixed/legal · architecture layers ≥6 or ADRs/ exists → arch · threat_model_path or regulated_projects → secure · project.stage MVP/seed/Series A → founder · saas/marketplace/platform + product block → pm); ambiguous → 6-option wizard; cache result to .mxm-skills/operator-persona.txt for future sessions. Mode 2 — persona quick-starts (legal · arch · secure · founder · pm; each 5–10 line intro + 3 hero commands). Mode 3 — 3-tier commands catalog (43 commands) with keyword-search sub-mode. Mode 4 — 91-agent roster with per-office drill-down sub-mode (/mxm-help agents <office> reads agent files directly). Mode 5 — 64-framework catalog with v1.2.0/v1.2.1 upcoming markers. Mode 6 — framework deep-dive sub-mode (reads composable-skills/frameworks/<id>/SKILL.md). Mode 7 — compliance map for THIS project (reads project-manifest.compliance.frameworks). Mode 8 — opinionated moat pitch (reads MOAT_TRACKER.md). Mode 9 — 5-minute getting-started onboarding.",
+        "feat(WS4): persona cache at .mxm-skills/operator-persona.txt — gitignored, per-machine, cache-invalidates if project-manifest last_updated is > 30 days newer than cache mtime. /mxm-help reset-persona deletes the cache.",
+        "feat(WS4): /mxm-help becomes the killer first-run moment — every other Maxim command becomes discoverable through one entry point that adapts to the operator's persona, not a static reference card.",
+        "no count delta: commands stay at 43 (mxm-help upgraded, not new). Capability counts unchanged from v1.2.0-alpha.2.",
+        "context: WS4 of the v1.2.0 GA sprint, executed in Session 20 (2026-05-19) directly after WS2. WS3 (TIER 3 persona commands) is the next workstream — quick-starts in /mxm-help reference the persona commands which ship in WS3."
+      ]
+    },
+    {
       "version": "1.2.0-alpha.2",
       "date": "2026-05-19",
       "changes": [

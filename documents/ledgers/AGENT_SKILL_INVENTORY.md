@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.2.0-alpha.2 · **Last verified:** 2026-05-19
+**Version:** v1.2.0-alpha.3 · **Last verified:** 2026-05-19
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -46,7 +46,7 @@ All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/ref
 
 **Domain and workflow (26):** `/mxm-behavior`, `/mxm-brand-voice`, `/mxm-compliance`, `/mxm-context`, `/mxm-design`, `/mxm-health`, `/mxm-implement`, `/mxm-new-project`, `/mxm-organize`, `/mxm-portfolio`, `/mxm-recall`, `/mxm-release`, `/mxm-remember`, `/mxm-route`, `/mxm-security`, `/mxm-self-update`, `/mxm-seo`, `/mxm-session-end`, `/mxm-status`, `/mxm-superpowers`, `/mxm-tasks`, `/mxm-test`, `/mxm-update`, `/mxm-voice`, `/mxm-watch`, `/mxm-wiki`.
 
-**Total commands: 43.** Net delta from v1.1.1 (39 → 43): 4 NEW in WS2 v1.2.0-alpha.2 — `/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-explain`. Plus 2 existing commands light-upgraded to TIER 1 surface alignment: `/mxm-plan` (added Fogg B=MAP + Coverage Matrix) and `/mxm-review` (added conditional CSO/tester/brand-guardian/compliance auto-loops). `/mxm-help` is intentionally NOT counted as a WS2 deliverable — it gets the full 9-mode rebuild in WS4.
+**Total commands: 43.** Net delta from v1.1.1 (39 → 43): 4 NEW in WS2 v1.2.0-alpha.2 — `/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-explain`. Plus 3 existing commands upgraded for TIER 1 surface alignment: `/mxm-plan` (added Fogg B=MAP + Coverage Matrix in WS2), `/mxm-review` (added conditional CSO/tester/brand-guardian/compliance auto-loops in WS2), and `/mxm-help` (rebuilt as 9-mode dispatcher in WS4 v1.2.0-alpha.3 — no-arg persona auto-detect from project-manifest, persona cache at `.mxm-skills/operator-persona.txt`, 5 persona quick-starts + commands/agents/frameworks/compliance/moat/getting-started catalogs + framework deep-dive sub-mode).
 
 ---
 

@@ -12,6 +12,7 @@
 .mxm-skills/watch-report.jsonl
 .mxm-skills/watch-errors.jsonl
 .mxm-skills/compliance-audit.jsonl
+.mxm-skills/operator-persona.txt
 
 # ── Claude Code harness settings (user-specific) ────────────────────────
 .claude/settings.json
