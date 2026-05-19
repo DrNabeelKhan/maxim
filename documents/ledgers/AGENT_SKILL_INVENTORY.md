@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.2.0 · **Last verified:** 2026-05-19
+**Version:** v1.2.0.1 · **Last verified:** 2026-05-19
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -52,7 +52,7 @@ All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/ref
 
 ---
 
-## Section 4 — MCP Servers (7 servers, 47 tools)
+## Section 4 — MCP Servers (8 servers, 49 tools)
 
 | Server | Path | Tools |
 |---|---|---:|
@@ -63,8 +63,9 @@ All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/ref
 | `mxm-portfolio` | `mcp/mxm-portfolio/` | 9 |
 | `mxm-catalog` | `mcp/mxm-catalog/` | 3 |
 | `mxm-voice` | `mcp/mxm-voice/` | 2 |
+| `mxm-commands` | `mcp/mxm-commands/` | 2 |
 
-**Total MCP servers: 7.** **Total MCP tools: 47.** Registry: `.mcp.json`.
+**Total MCP servers: 8.** **Total MCP tools: 49.** Registry: `.mcp.json`. Net delta from v1.2.0 (7 → 8): `mxm-commands` added v1.2.0.1 — slash-command dispatcher MCP that exposes all 48 /mxm-* commands as the `mxm_command` tool + `list_commands` catalog tool. Closes command-parity gap for Claude Desktop / Web / Cowork surfaces that lack native slash-command processors.
 
 ---
 

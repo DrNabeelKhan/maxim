@@ -2,8 +2,8 @@
   "$schema": "https://claude.ai/schemas/cowork-plugin.schema.json",
   "name": "maxim",
   "display_name": "Maxim",
-  "version": "1.0.0",
-  "description": "Behavioral intelligence layer for Claude.ai Cowork. Multi-agent framework with 7 executive offices, 64 behavioral frameworks, 14 compliance frameworks, 34 skills, 37 commands, 7 MCP connectors. Ships 85% fidelity of the full Claude Code deployment.",
+  "version": "1.2.0",
+  "description": "Behavioral intelligence layer for Claude.ai Cowork. Multi-agent framework with 7 executive offices + 91 specialist agents, 74 behavioral frameworks, 14 compliance frameworks, 35 skill domains, 48 slash commands (TIER 1 verb-first + TIER 2 office + TIER 3 persona + domain/workflow), 8 MCP connectors (49 tools total incl. new mxm-commands dispatcher), 13 Proactive Watch drift classes. Ships ~85% fidelity of the full Claude Code deployment.",
   "author": {
     "name": "Maxim",
     "url": "https://github.com/yourorg/maxim"
@@ -25,11 +25,16 @@
     "cowork"
   ],
   "capabilities": {
-    "skills": 20,
-    "commands": 14,
-    "mcp_connectors": 7,
-    "frameworks_bundled": 64,
-    "compliance_frameworks": 14
+    "skills": 35,
+    "commands": 48,
+    "mcp_connectors": 8,
+    "mcp_tools": 49,
+    "frameworks_bundled": 74,
+    "compliance_frameworks": 14,
+    "drift_classes": 13,
+    "agents": 91,
+    "tier_1_verb_first_commands": ["mxm-build", "mxm-fix", "mxm-ship", "mxm-plan", "mxm-review", "mxm-explain", "mxm-help"],
+    "tier_3_persona_commands": ["mxm-legal", "mxm-arch", "mxm-secure", "mxm-founder", "mxm-pm"]
   },
   "fidelity": {
     "tier": "high",
@@ -86,6 +91,12 @@
       "name": "mxm-voice",
       "tools": 4,
       "note": "No-op unless voicemode binary is available in the Cowork runtime"
+    },
+    {
+      "name": "mxm-commands",
+      "tools": 2,
+      "added_in": "v1.2.0.1",
+      "note": "Slash-command dispatcher — exposes all 48 /mxm-* commands as MCP tools. Provides command parity for surfaces lacking native slash-command processors (Desktop, Web, Cowork)."
     }
   ],
   "non_negotiable": {
@@ -104,7 +115,15 @@
   },
   "versioning": {
     "strategy": "locked_to_repo_tag",
-    "repo_tag": "v1.0.0",
-    "upgrade_path": "Reinstall plugin from new release"
+    "repo_tag": "v1.2.0",
+    "upgrade_path": "Reinstall plugin from new release",
+    "previous_tags": ["v1.0.0"],
+    "v1.2.0_highlights": [
+      "TIER 1 + TIER 3 commands added (12 new commands)",
+      "Roster restructured to 91 (proposal target) — 19 deprecations + 19 net-new",
+      "10 new behavioral frameworks (4 HIGH WS6a + 6 MED WS6b)",
+      "Class 12 + Class 13 drift detection ratified",
+      "8th MCP mxm-commands dispatcher added"
+    ]
   }
 }

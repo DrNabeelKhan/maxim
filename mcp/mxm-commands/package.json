@@ -1,0 +1,20 @@
+{
+  "name": "mxm-commands",
+  "version": "1.2.0",
+  "description": "Maxim Framework — Slash-command dispatcher MCP server (v1.2.0). Exposes the 48 /mxm-* slash commands as a callable MCP tool surface, providing command parity in Claude Desktop / Claude.ai Web where native slash commands aren't available.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.24.0"
+  },
+  "maxim": {
+    "introduced_in": "v1.2.0.1",
+    "tool_count": 2,
+    "tools": ["mxm_command", "list_commands"],
+    "tier_gating": "all tiers (informational dispatcher; routing only, no gated execution)"
+  }
+}

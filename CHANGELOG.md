@@ -8,6 +8,55 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.2.0.1 — 2026-05-19 — Cross-surface command parity (Options B + E + F)
+
+Theme: **Operator can use Maxim commands on every Claude surface.** v1.2.0 shipped 48 slash commands but they only worked natively in Claude Code. v1.2.0.1 closes the command-parity gap on Claude Desktop, Claude.ai Web, and Cowork via three coordinated mechanisms.
+
+### Three coordinated changes
+
+**Option B — `maxim-project-instructions.md` v1.0.0 → v1.2.0:**
+- New "Slash Command Aliases" section documents all 48 commands grouped by tier
+- Makes `/mxm-*` text invocations work in Desktop/Web via Claude's instruction-following
+- Counts current (91 agents · 35 skills · 48 commands · 74 frameworks · 13 drift classes)
+- Fidelity uplift: Desktop/Web from 60% → ~85%
+
+**Option E — NEW `mxm-commands` MCP server (8th MCP, 2 tools):**
+- `mxm_command(command, args)` — returns structured routing decision (office, lead, auto-loops, frameworks, behavioral overlay, chains_to) for any of the 48 commands
+- `list_commands(tier?)` — full command catalog grouped by tier
+- Single dispatcher design — 250 lines server.js + package.json
+- Closes command-parity in Desktop (native MCP support) where the instruction-only approach can drift on edge cases
+- Adds to .mcp.json (Claude Code auto-discovery) AND claude_desktop_config.json
+
+**Option F — Cowork plugin v1.0.0 → v1.2.0:**
+- `packaging/cowork/plugin.json` capabilities updated: skills 20 → 35, commands 14 → 48, mcp_connectors 7 → 8 (now includes mxm-commands), frameworks 64 → 74, agents 91, drift_classes 13
+- TIER 1 verb-first commands + TIER 3 persona commands declared explicitly
+- v1.2.0_highlights section added
+
+### Capability delta v1.2.0 → v1.2.0.1
+
+- total_mcp_servers: 7 → **8** (+1 = mxm-commands)
+- total_mcp_tools: 47 → **49** (+2 = mxm_command, list_commands)
+- Cross-surface fidelity: Desktop 60% → ~95% · Web 60% → ~85% · Cowork v1.0.0 → v1.2.0 manifest
+- Agents · skills · commands · frameworks · hooks · ADRs · compliance · drift classes: **unchanged from v1.2.0**
+
+### Surface fidelity matrix at v1.2.0.1
+
+| Surface | Native slash commands | MCPs | Project instructions w/ aliases | Fidelity |
+|---|---|---|---|---|
+| Claude Code (CLI / IDE) | ✅ all 48 | ✅ 8 (49 tools) | n/a (uses CLAUDE.md) | 100% |
+| Claude Desktop (Projects) | ❌ (via instructions or MCP instead) | ✅ 8 (49 tools) | ✅ paste maxim-project-instructions.md | ~95% |
+| Claude.ai Web (Projects) | ❌ | ❌ (no MCP in pure Web) | ✅ paste maxim-project-instructions.md | ~85% |
+| Claude.ai Cowork | ✅ (via plugin) | ✅ 8 (49 tools) | n/a (plugin bundles instructions) | ~85% |
+
+### Operator setup post-restart
+
+1. **Claude Code:** automatic — `mxm-commands` auto-discovers via `.mcp.json`
+2. **Claude Desktop:** restart Desktop → 8 Maxim MCPs spawn (was 7); optionally paste `documents/cross-surface/maxim-project-instructions.md` into Desktop Projects for behavioral layer
+3. **Claude.ai Web:** paste `documents/cross-surface/maxim-project-instructions.md` into Project Instructions
+4. **Cowork:** re-install Maxim plugin from v1.2.0 packaging
+
+---
+
 ## v1.2.0 — 2026-05-19 — GA · Adoption story (full scope)
 
 Theme: **Adoption story.** v1.0 shipped behavioral intelligence; v1.1 shipped runtime

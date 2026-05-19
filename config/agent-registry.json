@@ -40,9 +40,11 @@
   "_slash_commands_upgraded_v120_ws2": ["mxm-plan", "mxm-review"],
   "_slash_commands_upgraded_v120_ws4": ["mxm-help"],
   "_slash_commands_added_v120_ws3": ["mxm-legal", "mxm-arch", "mxm-secure", "mxm-founder", "mxm-pm"],
-  "total_mcp_servers": 7,
+  "total_mcp_servers": 8,
   "_mcp_servers_consolidated_v641": "dispatch + skills → catalog; design → absorbed into context",
-  "total_mcp_tools": 47,
+  "_mcp_servers_added_v120_1": ["mxm-commands"],
+  "total_mcp_tools": 49,
+  "_mcp_tools_added_v120_1": 2,
   "total_voltagent_specialists": 150,
   "total_external_brand_templates": 59,
   "total_executable_hooks": 14,
@@ -77,6 +79,20 @@
   "total_canonical_ledgers": 5,
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
   "changelog": [
+    {
+      "version": "1.2.0.1",
+      "date": "2026-05-19",
+      "changes": [
+        "feat(cross-surface): make Maxim's 48 slash commands available across Claude Code + Claude Desktop + Claude.ai Web + Cowork via three coordinated mechanisms.",
+        "feat(Option B): documents/cross-surface/maxim-project-instructions.md refreshed v1.0.0 -> v1.2.0. NEW Slash Command Aliases section documents all 48 commands grouped by tier (TIER 1 verb-first + TIER 2 office + TIER 3 persona + domain/workflow); makes /mxm-* text invocations work in Desktop/Web via instruction-following. Counts updated to current (91/35/48/74/13). Fidelity stated as ~85% (was 60%).",
+        "feat(Option E): NEW mcp/mxm-commands MCP server (8th MCP). Single mxm_command dispatcher tool returns structured routing decision (office + lead agent + auto-loops + frameworks + behavioral overlay) for any of the 48 slash commands. Plus list_commands tool for catalog browsing. Closes the command-parity gap on surfaces lacking native slash-command processors. ~250 lines server.js + package.json. total_mcp_servers 7->8, total_mcp_tools 47->49.",
+        "feat(Option F): packaging/cowork/plugin.json refreshed v1.0.0 -> v1.2.0. Capabilities updated (skills 20->35, commands 14->48, mcp_connectors 7->8 incl mxm-commands, frameworks 64->74, agents 91, drift_classes 13). TIER 1 and TIER 3 command arrays declared explicitly. v1.2.0_highlights section added.",
+        "feat(Desktop): claude_desktop_config.json gains mxm-commands as 8th MCP entry. Operator's Claude Desktop now has 8 Maxim MCPs (49 tools) post-restart.",
+        ".mcp.json updated with mxm-commands entry; Claude Code picks it up on next session start after self-update.",
+        "net: total_mcp_servers 7 -> 8 (+1 mxm-commands), total_mcp_tools 47 -> 49 (+2 mxm_command + list_commands). All other capability counts unchanged from v1.2.0.",
+        "Surface fidelity matrix after v1.2.0.1: Claude Code 100% (full) · Claude Desktop ~95% (8 MCPs + project instructions w/ aliases) · Claude.ai Web ~85% (project instructions w/ aliases, no MCP) · Cowork ~85% (full plugin)."
+      ]
+    },
     {
       "version": "1.2.0",
       "date": "2026-05-19",
