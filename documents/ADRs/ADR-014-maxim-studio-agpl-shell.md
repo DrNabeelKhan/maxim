@@ -143,7 +143,7 @@ Studio detects which surfaces are installed and registers the 7 MCP servers in e
 | Claude Desktop | `%APPDATA%\Claude\claude_desktop_config.json` (Windows) · `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) | MCP tools ✅ · Slash commands ❌ (Claude Desktop does not load `.claude/commands/`) |
 | Studio itself | Tauri IPC directly to extracted MCP servers | ✅ all surfaces |
 
-Claude Desktop users get all 7 Maxim MCP tools (behavioral audit, compliance checks,
+Claude Desktop users get all 47 Maxim MCP tools (behavioral audit, compliance checks,
 MemPalace search, portfolio sync, voice, catalog, context/watch). They do not get
 slash commands — those are Claude Code CLI only. The MCP tools are the primary
 value surface and work identically across both.

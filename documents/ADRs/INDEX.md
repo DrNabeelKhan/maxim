@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-Eight Architecture Decision Records are published as public governance narrative — pricing contracts, moat doctrine, confidence rubric, community-pack policy, payment-processor choice, and the overlay-engine architecture that makes Maxim a governance layer for every Claude Code plugin, not only its own. Four additional ADRs covering internal system architecture (dispatch baseline, Worker license issuance, IP-protection layering, external-content boundary) remain confidential and are maintained in the operator's private ledger.
+Twelve Architecture Decision Records are published as public governance narrative — pricing contracts, moat doctrine, confidence rubric, community-pack policy, payment-processor choice, the overlay-engine architecture that makes Maxim a governance layer for every Claude Code plugin, multi-project memory inheritance, the Maxim Studio AGPL shell, the Studio v0.2+ surface roadmap, and the voice writing agent architecture. Four additional ADRs covering internal system architecture (dispatch baseline, Worker license issuance, IP-protection layering, external-content boundary) remain confidential and are maintained in the operator's private ledger.
 
 Every public ADR declares a commitment Maxim makes to its users — a contract that the pre-commit hook and the session-end bundle read as live state, not as history.
 

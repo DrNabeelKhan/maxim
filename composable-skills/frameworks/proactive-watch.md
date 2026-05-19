@@ -24,9 +24,9 @@ The **meta-principle** backing this framework: *every document is an executable 
 
 ---
 
-## The 11 Universal Drift Classes
+## The 12 Universal Drift Classes
 
-Every AI-coded project accumulates drift in these 11 classes. The framework ships a checker for each; projects enable/disable per `watch-profile.yml`.
+Every AI-coded project accumulates drift in these 12 classes. The framework ships a checker for each; projects enable/disable per `watch-profile.yml`.
 
 | # | Class | Typical Example | Default Triage |
 |---|---|---|---|
@@ -41,6 +41,7 @@ Every AI-coded project accumulates drift in these 11 classes. The framework ship
 | 9 | **stale-handoff** | `.claude-sessions-memory/handoff.md` older than N days | COO |
 | 10 | **compliance-drift** | Secret committed, PII leaked, license mismatch | CSO 🔒 |
 | 11 | **surface-claims-drift** | Marketing/docs/landing-page hard-codes a count that doesn't match `AGENT_SKILL_INVENTORY.md` | COO |
+| 12 | **behavioral-moat-drift** | SKILL.md file stops citing the framework that justifies its existence (per ADR-007) | CMO |
 
 **🔒 Locked triage:** compliance-drift and contract-drift cannot be re-routed by adopting projects. They preserve Maxim governance integrity.
 
@@ -60,6 +61,26 @@ Every AI-coded project accumulates drift in these 11 classes. The framework ship
 **Cross-repo scan.** The `landing-page/` repo is a sibling project that consumes Maxim's identity. Class 11 resolves it via `cross_repo_targets` in `watch-profile.yml` and `MAXIM_LANDING_PAGE` env var. If the env var is unset, landing-page is silently skipped (not flagged as drift) — operator explicitly opts in.
 
 **Companion tooling.** When drift is flagged, `bootstrap/sync-counts.{sh,ps1}` propagates inventory counts mechanically to all declared surfaces. The tool is idempotent — running on a clean tree is a no-op. See [`bootstrap/sync-counts.sh`](../../bootstrap/sync-counts.sh) for the canonical implementation.
+
+### Class 12 — behavioral-moat-drift (ratified v1.2.0, 2026-05-19)
+
+**Why this class exists.** ADR-007 (Behavioral Moat Framing Doctrine) requires every Maxim SKILL.md to cite the behavioral framework that justifies its existence — Fogg B=MAP, COM-B, EAST, Cialdini, Prospect Theory, etc. Without continuous enforcement, AI-authored SKILL.md files drift toward generic prompt-library output: the framework citation disappears, the moat row turns into a generic capability claim, and Maxim loses the differentiator it ships on. Class 12 is the structural counterpart to Class 11: Class 11 watches *quantitative* claims (counts), Class 12 watches *qualitative* claims (framework citations).
+
+**Algorithm (LIGHT phase):**
+
+1. Enumerate every `SKILL.md` under `.claude/skills/**` and `packs/**`.
+2. For each file, require the presence of all 7 sections mandated by ADR-007: Purpose · Framework & Standards table · Prompt Template · Core Principles · Applications · Reference Materials · Usage Guidelines.
+3. The Framework & Standards table must cite at least one named framework that appears in `documents/reference/FRAMEWORKS_MASTER.md`. Anonymous references ("behavioral science principles") fail the check.
+4. The Reference Materials block must cite at least one published source (author + year, or URL). Generic appeals to "the literature" fail.
+5. Each missing or anonymous citation emits a drift event of severity 4 (material) in LIGHT; CRITICAL phase blocks commits.
+
+**False-positive guards.** Pattern requires structural section headers (`## Framework & Standards`) and a named-framework token list. Skill files explicitly tagged `composable: true` (community-pack-only mechanical wrappers, no behavioral layer) are excluded by frontmatter flag, not by glob.
+
+**Companion tooling.** The `behavioral-moat-drift.{sh,ps1}` hook (shipped v1.0.0 with the 7-section structure) enforces Class 12 at commit time. The hook is configured per `.claude/hooks/hooks.json` and routes failures to the CMO office's `content-strategist` lead for review.
+
+**Cross-pack scan.** L1 packs (`packs/pack-l1-*/SKILL.md`) and L2 bundle entries are scanned alongside the core skill library. L3 vertical overlays are scanned in CRITICAL phase only (LIGHT skips them to keep session-start fast).
+
+**Codification note.** This class existed as an enforcement hook from v1.0.0 onward (`behavioral-moat-drift.{sh,ps1}` in `.claude/hooks/`) and as a referenced drift class in `packs/pack-l1-3-proactive-watch/SKILL.md` + `packs/pack-l1-6-behavioral-intelligence/SKILL.md` ("drift class 12"), but was never added to the canonical 12-class table here. v1.2.0 ratifies the existing reality.
 
 ---
 
@@ -162,6 +183,22 @@ checkers:
     enabled: true
     # locked — cannot override triage routing
 
+  behavioral-moat-drift:
+    enabled: true
+    skill_paths:
+      - .claude/skills/**/SKILL.md
+      - packs/**/SKILL.md
+    require_sections:
+      - Purpose
+      - Framework & Standards
+      - Prompt Template
+      - Core Principles
+      - Applications
+      - Reference Materials
+      - Usage Guidelines
+    frameworks_master: documents/reference/FRAMEWORKS_MASTER.md
+    exclude_composable: true   # skip files with frontmatter `composable: true`
+
 triage:
   inventory-drift: coo
   version-drift: coo
@@ -173,6 +210,8 @@ triage:
   junction-drift: cto
   stale-handoff: coo
   compliance-drift: cso       # 🔒 locked
+  surface-claims-drift: coo
+  behavioral-moat-drift: cmo
 
 thresholds:
   max_drift_severity: 5       # not enforced in LIGHT; reserved for CRITICAL

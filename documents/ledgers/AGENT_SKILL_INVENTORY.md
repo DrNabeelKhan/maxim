@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.1.1 · **Last verified:** 2026-05-13
+**Version:** v1.1.1 · **Last verified:** 2026-05-19
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -36,15 +36,15 @@ Categories: AI media, banner design, behavioral science, brand, CEO automation, 
 
 ---
 
-## Section 3 — Slash Commands (38)
+## Section 3 — Slash Commands (39)
 
 All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/reference/MXM_COMMAND_MAP.md`.
 
 Executive office shortcuts (10): `/mxm-ceo`, `/mxm-cto`, `/mxm-cmo`, `/mxm-cso`, `/mxm-cpo`, `/mxm-coo`, `/mxm-cino`, `/mxm-ceo-morning`, `/mxm-ceo-overnight`, `/mxm-ceo-setup`.
 
-Domain and workflow (27): `/mxm-behavior`, `/mxm-brand-voice`, `/mxm-compliance`, `/mxm-context`, `/mxm-design`, `/mxm-health`, `/mxm-help`, `/mxm-implement`, `/mxm-new-project`, `/mxm-organize`, `/mxm-plan`, `/mxm-portfolio`, `/mxm-recall`, `/mxm-release`, `/mxm-remember`, `/mxm-review`, `/mxm-route`, `/mxm-security`, `/mxm-seo`, `/mxm-session-end`, `/mxm-status`, `/mxm-superpowers`, `/mxm-tasks`, `/mxm-test`, `/mxm-update`, `/mxm-voice`, `/mxm-watch`, `/mxm-wiki`.
+Domain and workflow (29): `/mxm-behavior`, `/mxm-brand-voice`, `/mxm-compliance`, `/mxm-context`, `/mxm-design`, `/mxm-health`, `/mxm-help`, `/mxm-implement`, `/mxm-new-project`, `/mxm-organize`, `/mxm-plan`, `/mxm-portfolio`, `/mxm-recall`, `/mxm-release`, `/mxm-remember`, `/mxm-review`, `/mxm-route`, `/mxm-security`, `/mxm-self-update`, `/mxm-seo`, `/mxm-session-end`, `/mxm-status`, `/mxm-superpowers`, `/mxm-tasks`, `/mxm-test`, `/mxm-update`, `/mxm-voice`, `/mxm-watch`, `/mxm-wiki`.
 
-**Total commands: 38.**
+**Total commands: 39.** Net delta from v1.0.0 (38 → 39): `mxm-self-update` added 2026-04-28 with v1.1.1.
 
 ---
 
@@ -112,7 +112,7 @@ Voice management: `.brand-foundation/VOICE-MANAGEMENT.md`. Command: `/mxm-brand-
 
 ---
 
-## Section 9 — Architecture Decision Records (11)
+## Section 9 — Architecture Decision Records (16)
 
 All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Template: `documents/ADRs/TEMPLATE.md`.
 
