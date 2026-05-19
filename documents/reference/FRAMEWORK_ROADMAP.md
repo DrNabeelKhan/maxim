@@ -165,9 +165,14 @@ Four interception points implemented via Claude Code's existing hook API. No coo
 
 ## 🧠 v1.2 — Behavioral Expansion + UX Accessibility Overhaul (target: Q4 2026)
 
-**Theme:** Double the behavioral-science surface AND fix the moat-accessibility gap. v1.0's office-prefixed commands and generic agent names bury the moat behind internal abstractions. v1.2 ships the behavioral expansion (10 frameworks) PLUS the three coordinated UX changes that make Maxim's value visible to non-power-users.
+**Theme:** Double the behavioral-science surface AND fix the moat-accessibility gap. v1.0's office-prefixed commands and generic agent names bury the moat behind internal abstractions. v1.2 ships the behavioral expansion PLUS the three coordinated UX changes that make Maxim's value visible to non-power-users.
 
 **Locked design (Session 14, 2026-04-27):** Full proposal in [`AGENT_ROSTER_v1.2_PROPOSAL.md`](./AGENT_ROSTER_v1.2_PROPOSAL.md).
+
+**Scope split (locked Session 20, 2026-05-19):** Original v1.2 plan bundled 10 behavioral frameworks (30–40 dev-days, ~50% of total budget) + Class 13 drift detection into a single 55–78-day release. Pre-sprint audit re-estimated WS5 roster reorganization at 10–15 days (consolidation + new, not count-neutral renames) and surfaced WS7's hard dependency on v1.1.2 MOE shipping first. To bring v1.2.0 GA into a defensible 6–9 week cadence, the work is split:
+
+- **v1.2.0 GA** (~30–43 dev-days): WS1–WS5 + WS6a (4 HIGH-priority behavioral frameworks)
+- **v1.2.1 follow-up** (~21–29 dev-days, after v1.1.2 MOE ships): WS6b (6 MED-priority behavioral frameworks) + WS7 (Class 13 drift)
 
 **Bundling decision:** v1.1.5 (originally proposed as standalone TIER 1 verb-first surface) is DISSOLVED into v1.2. No public-stability concern — only 2 testing users; both will update plugin before next session. Coherent narrative: v1.1 = enterprise-readiness; v1.2 = adoption story.
 
@@ -192,52 +197,82 @@ Effort: ~5–8 dev-days.
 
 **Deferred to v1.2.x patches** (full sketches preserved in proposal): `/mxm-research`, `/mxm-devops`, `/mxm-data`, `/mxm-designer`.
 
-### v1.2.C — Agent roster expansion (NEW)
+### v1.2.C — Agent roster expansion (NEW; re-estimated 2026-05-19)
 
-Improve 7 current office leads (deeper DNA, better triggers, smarter routing) + ADD ~25 named specialists per moat. Office leads become routers; specialists deliver depth. Two-tier dispatch within each office.
+Improve 7 current office leads (deeper DNA, better triggers, smarter routing) + restructure into named specialist slots. Office leads become routers; specialists deliver depth. Two-tier dispatch within each office.
 
-Per-office target counts: CEO 9 / CTO 18 / CMO 10 / CSO 19 / CPO 8 / COO 8 / CINO 8 + ~10 orchestrators = ~90 total. Current count is 90 (cost-analyst + sre-analyst aria-simplification merge landed 2026-04-27); net delta from here to v1.2 target is 0 by count, all delta is renames + DNA improvements rather than net-new files.
+**Per-office target vs current (Session 20 audit):**
 
-Effort: ~5–8 dev-days (mostly content authoring).
+| Office | Filesystem now | v1.2 target | Delta |
+|---|---:|---:|---:|
+| CEO | 9 | 9 | 0 |
+| CTO | 25 | 18 | −7 (consolidate to named slots; deprecated/) |
+| CMO | 15 | 11 | −3 net (incl. +1 nk-writer from WS1) |
+| CSO | 9 | 19 | **+10** (largest net-new authoring) |
+| CPO | 12 | 8 | −4 |
+| COO | 10 | 8 | −2 |
+| CINO | 4 | 8 | +4 |
+| Orchestrators | 5 | ~10 | +5 |
+
+Net total delta is +1 (nk-writer); per-office churn is material. **Effort re-estimated 10–15 dev-days** (was 5–8d, which assumed pure renames). CSO's +10 new specialists dominate.
 
 ### v1.2.D — Comprehensive `/mxm-help` system (NEW)
 
 9 modes: no-arg (auto-detect persona) / `<persona>` quick-start / commands / agents / frameworks / compliance / moat / getting-started / `frameworks <id>` deep-dive. Auto-detect from `project-manifest.json`; persona cache at `.mxm-skills/operator-persona.txt`. Effort: ~2–3 days.
 
-### v1.2.E — 10 Behavioral Science frameworks (originally scheduled)
+### v1.2.E — Behavioral Science frameworks (split per Session 20)
 
-Doubles the behavioral-science surface. Strengthens the core moat claim ("behavioral intelligence") with 10 additional dispatchable frameworks spanning motivation, decision-making, social psychology, and emotional design.
+Strengthens the core moat claim ("behavioral intelligence"). Split into 4 HIGH-priority frameworks shipping in v1.2.0 GA and 6 MED-priority frameworks shipping in v1.2.1.
+
+**v1.2.0 scope — 4 HIGH-priority frameworks (~12–16 dev-days):**
 
 | § in MASTER | Framework | Category | Reference | Priority |
 |---|---|---|---|---|
 | §59 | Transtheoretical Model (TTM / Stages of Change) | Behavior Science — Motivation | [uri.edu/cprc/transtheoretical-model](https://web.uri.edu/cprc/transtheoretical-model/) | 🔴 HIGH — complements Fogg/COM-B |
 | §60 | Self-Determination Theory (SDT) | Behavior Science — Motivation | [selfdeterminationtheory.org](https://selfdeterminationtheory.org/) | 🔴 HIGH — intrinsic motivation gap |
 | §61 | Dual Process Theory (System 1 & 2) | Behavior Science — Decision-making | [nobelprize.org — Kahneman](https://www.nobelprize.org/prizes/economic-sciences/2002/kahneman/facts/) | 🔴 HIGH |
+| §66 | Prospect Theory | Behavior Science — Loss aversion / risk | Kahneman & Tversky 1979 | 🔴 HIGH — pricing & nudge design |
+
+Total frameworks 64 → 68 at v1.2.0 GA.
+
+**v1.2.1 scope — 6 MED-priority frameworks (~18–24 dev-days):**
+
+| § in MASTER | Framework | Category | Reference | Priority |
+|---|---|---|---|---|
 | §62 | SCARF Model | Behavior Science — Workplace psychology | [neuroleadership.com](https://neuroleadership.com/) | 🟠 MED |
 | §63 | Theory of Planned Behavior (TPB) | Behavior Science — Intention/action | [people.umass.edu/aizen/tpb.html](https://people.umass.edu/aizen/tpb.html) | 🟠 MED |
 | §64 | Social Learning Theory (Bandura) | Behavior Science — Observation/modeling | [albertbandura.com](https://www.albertbandura.com/) | 🟠 MED |
 | §65 | Operant Conditioning / Reinforcement Theory | Behavior Science — Habit formation | Skinner — public domain | 🟠 MED |
-| §66 | Prospect Theory | Behavior Science — Loss aversion / risk | Kahneman & Tversky 1979 | 🔴 HIGH — pricing & nudge design |
 | §67 | Diffusion of Innovations | Behavior Science — Adoption curves | [diffusionofinnovations.com](https://www.diffusionofinnovations.com/) | 🟠 MED |
 | §68 | Emotional Design Model | UX / Behavior Science — Don Norman | [nngroup.com/books/emotional-design](https://www.nngroup.com/books/emotional-design/) | 🟠 MED |
 
-**10 behavioral frameworks.** Expected effort: 3–4 days per framework × 10 = ~30–40 dev-days.
+Total frameworks 68 → 74 at v1.2.1 ship.
 
-### v1.2.F — Proactive Watch class 13 drift (originally scheduled)
+### v1.2.F — Proactive Watch Class 13 drift (DEFERRED to v1.2.1)
 
-Detects framework non-adherence, tone drift, compliance-boundary violations in third-party plugin outputs. Extends MOE PostToolUse audit. Effort: ~3–5 days.
+Detects framework non-adherence, tone drift, compliance-boundary violations in third-party plugin outputs. Extends MOE PostToolUse audit. **Hard dependency on v1.1.2 MOE shipping first** — cannot ship in v1.2.0 GA. Effort: ~3–5 days.
 
-### v1.2 total effort
+Note: Class 12 = `behavioral-moat-drift` was ratified in commit `ba000e7` (2026-05-19) as part of pre-sprint cleanup. WS7's third-party-plugin drift is now unambiguously Class 13.
+
+### v1.2.0 GA effort (locked Session 20)
 
 | Workstream | Effort |
 |---|---|
 | 1.2.A — TIER 1 verb-first | ~5–8 days |
 | 1.2.B — TIER 3 personas (5) | ~8–10 days |
-| 1.2.C — Agent roster expansion | ~5–8 days |
+| 1.2.C — Agent roster expansion | **~10–15 days** (re-estimated) |
 | 1.2.D — `/mxm-help` system | ~2–3 days |
-| 1.2.E — 10 behavioral frameworks | ~30–40 days |
-| 1.2.F — Class 13 drift | ~3–5 days |
-| **Total** | **~52–75 dev-days** |
+| 1.2.E (v1.2.0 portion) — 4 HIGH frameworks | ~12–16 days |
+| WS1 voice agents (nk-writer + voice-routing) | ~3 days |
+| **v1.2.0 Total** | **~40–55 dev-days** |
+
+### v1.2.1 follow-up effort
+
+| Workstream | Effort |
+|---|---|
+| 1.2.E (v1.2.1 portion) — 6 MED frameworks | ~18–24 days |
+| 1.2.F — Class 13 drift (post-MOE) | ~3–5 days |
+| **v1.2.1 Total** | **~21–29 dev-days** |
 
 ---
 

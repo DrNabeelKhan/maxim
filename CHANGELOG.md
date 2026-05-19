@@ -8,10 +8,21 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
-## v1.2.0 — UPCOMING (Q3 2026) — Voice writing agents + roster reorganization + behavioral expansion
+## v1.2.0 — UPCOMING (Q3 2026) — Voice writing agents + roster reorganization + behavioral expansion (4 HIGH frameworks)
 
 Theme: **Adoption story.** v1.0 shipped behavioral intelligence; v1.1 shipped runtime
-gating; v1.2 makes the moat usable. The big v1.2 deliverables:
+gating; v1.2.0 makes the moat usable. The big v1.2.0 deliverables:
+
+### Scope split (locked Session 20, 2026-05-19)
+
+**v1.2.0 GA scope** (~30–43 dev-days): WS1 voice agents · WS2 TIER 1 verb commands · WS3
+TIER 3 persona commands · WS4 /mxm-help · WS5 roster reorganization · **WS6a — 4
+HIGH-priority behavioral frameworks** (TTM, SDT, Dual Process, Prospect Theory).
+
+**v1.2.1 follow-up scope** (~21–29 dev-days, depends on v1.1.2 MOE shipping first):
+**WS6b — 6 MED-priority behavioral frameworks** (SCARF, TPB, Social Learning, Operant
+Conditioning, Diffusion, Emotional Design) · **WS7 — Class 13 drift detection** (extends
+MOE PostToolUse audit; cannot ship without MOE).
 
 ### Added (voice writing agent layer — ADR-016)
 
@@ -35,25 +46,42 @@ gating; v1.2 makes the moat usable. The big v1.2 deliverables:
   `/mxm-founder`, `/mxm-pm` — each with sub-commands per the persona's vocabulary
 - **Comprehensive `/mxm-help` system** — 9 modes (persona auto-detect, commands, agents,
   frameworks, compliance, moat, getting-started, etc.)
-- **Roster reorganization** — 90 agents renamed into specific specialist slots; office
-  leads get DNA upgrades; net agent delta +1 (nk-writer); skill domain delta +1 (voice-routing)
-- **10 behavioral frameworks**: TTM, SDT, Dual Process, SCARF, TPB, Social Learning,
-  Operant Conditioning, Prospect Theory (already core), Diffusion, Emotional Design
-- **Proactive Watch Class 13 drift detection** — extends MOE PostToolUse audit for
-  framework non-adherence, tone drift, compliance violations in third-party plugin outputs
+- **Roster reorganization** — 90 agents restructured into named specialist slots (CTO −7,
+  CMO −3 net, CSO +10, CPO −4, COO −2, CINO +4, Orchestrators +5); office leads get DNA
+  upgrades; net agent delta +1 (nk-writer); skill domain delta +1 (voice-routing). Per
+  Session 20 audit, WS5 is consolidation + restructuring (not "count-neutral renames").
+- **4 HIGH-priority behavioral frameworks**: TTM, SDT, Dual Process, Prospect Theory.
+  Total frameworks 64 → 68 at v1.2.0 GA.
 
-### Deferred to v1.2.x or v1.3
+### Pre-sprint cleanup landed (commit `ba000e7`, 2026-05-19)
 
-- **Maxim Studio (ADR-014/015)** — desktop GUI shell + v0.2+ surface roadmap. Architecture
-  is ratified; implementation paused until v1.2 plugin ships and is in operator use.
-  Studio depends on the v1.2 voice agents and behavioral framework expansion landing first.
+- **Class 12 ratified** in `proactive-watch.md` — `behavioral-moat-drift` was an
+  enforcement hook (`.claude/hooks/behavioral-moat-drift.{sh,ps1}`) since v1.0.0 and
+  cited as "Class 12" in 2 pack SKILL.md files, but never formally added to the
+  canonical drift-class table. Now codified with default triage CMO.
+- **AGENT_SKILL_INVENTORY.md** Section 3 (38 → 39 commands; added `mxm-self-update`
+  from v1.1.1) and Section 9 heading (11 → 16 ADRs).
+- **ADRs/INDEX.md** intro prose corrected ("Eight" → "Twelve" published ADRs).
+- **ADR-014** had a stale "7 Maxim MCP tools" claim; sync-counts repaired to "47".
+
+### Deferred to v1.2.1 or later
+
+- **6 MED-priority behavioral frameworks** (WS6b) — SCARF, TPB, Social Learning, Operant
+  Conditioning, Diffusion, Emotional Design. Ship in v1.2.1.
+- **Proactive Watch Class 13 drift detection** (WS7) — extends MOE PostToolUse audit
+  for framework non-adherence, tone drift, compliance violations in third-party plugin
+  outputs. Depends on v1.1.2 MOE shipping first. Ships in v1.2.1.
+- **Maxim Studio (ADR-014/015)** — desktop GUI shell + v0.2+ surface roadmap.
+  Architecture is ratified; implementation paused until v1.2.0 plugin ships and is in
+  operator use. Studio does NOT require v1.2.1; v1.2.0 GA is the unblock event.
 
 ### Sprint plan
 
-Per `documents/architecture/v1.2-sprint-bootstrap.md`. Estimated ~55–78 dev-days total
-across 7 workstreams: voice agents (3d) · TIER 1 verb commands (5–8d) · TIER 3 persona
-commands (8–10d) · roster reorganization (5–8d) · /mxm-help system (2–3d) · 10 behavioral
-frameworks (30–40d) · Class 13 drift (3–5d).
+Per `documents/architecture/v1.2-sprint-bootstrap.md`. Estimated ~30–43 dev-days for
+v1.2.0 GA across 6 workstreams: voice agents (3d) · TIER 1 verb commands (5–8d) · TIER
+3 persona commands (8–10d) · /mxm-help system (2–3d) · roster reorganization (10–15d,
+re-estimated per Session 20 audit) · 4 HIGH frameworks (12–16d). Then v1.2.1 ships the
+remaining ~21–29 dev-days of work post v1.1.2 MOE.
 
 ---
 
