@@ -16,7 +16,7 @@
     "gated": false,
     "gated_approval_required_from": null,
     "archived_reason": null,
-    "last_activity": "2026-05-13",
+    "last_activity": "2026-05-15",
     "staleness_warning_days": 30,
     "last_sprint": "v1.1.0-license-middleware",
     "launch_status": "v1.0.0 launched 2026-04-21; v1.0.1 + v1.1.0 shipped 2026-04-27 (Session 15)"
@@ -325,5 +325,5 @@
     },
     "note": "Maxim governance gates suppressed for this identity. Claude's own values layer remains active and is not configurable."
   },
-  "last_activity": "2026-05-13"
+  "last_activity": "2026-05-15"
 }

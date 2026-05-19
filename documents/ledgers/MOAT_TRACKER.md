@@ -120,6 +120,19 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 
 ---
 
+### MOAT-10 · Voice-faithful writing agents — operator + per-startup · ADR-016 PLANNED v1.2.0
+
+| Field | Value |
+|---|---|
+| **Positioning claim** | Maxim is the only Claude Code plugin that ships dedicated writing agents that route every writing task through a content-type-aware voice routing authority (`myVoiceDNA/VOICE_SELECTION.md` for operators; `.brand-foundation/startups/{name}/` for customer-facing brand). The agent classifies one of 22 content types, picks the right variant, loads the correct files (≤15K tokens), applies the right crossover budget, and validates against a quality checklist before emission. Other AI tools produce content in the model's default voice; Maxim produces content in the operator's voice by structural enforcement, not by prompting hope. |
+| **Mechanism** | Operant Conditioning (Skinner, 1938) — reinforcement schedule for voice consistency. Every Maxim output reads native to the operator because the routing authority is consulted at task receipt, not after the output is drafted. The operator's voice becomes the default behavior, not a thing they ask for. Once enabled, voice drift is structurally impossible (the agent reads VOICE_SELECTION.md fresh per task; if the file changes, behavior changes immediately). Supporting: Self-Determination Theory — operators experience competence (their writing sounds like them) and autonomy (they own the voice files). |
+| **Anti-pattern** | AI tools that produce content "in your voice" by prompt-engineering ("write like X") — fragile, drifts within a single conversation, requires re-priming each session. Or systems that hardcode a voice spec into the model — locks voice to model weights, can't update without retraining. Maxim's pattern: voice files are operator-owned, agent reads them at task time, routing table is the canonical authority. |
+| **Pack(s)** | Voice agents ship in the base plugin v1.2.0. Per-startup brand writers (template-instantiated) are part of the L1.6 Behavioral Intelligence pack value (operator-customized writers powered by behavioral framework stack). |
+| **Primary framework** | Operant Conditioning (Skinner, 1938) + Self-Determination Theory (Deci & Ryan, 1985). ADR-016 ratified 2026-05-15. |
+| **Proof** | PLANNED v1.2.0. ADR-016 at `documents/ADRs/ADR-016-voice-writing-agent-architecture.md`. Source-of-truth file: `E:/Projects/nabeelkhan/myVoiceDNA/VOICE_SELECTION.md` (v1.0, 22 content types, last_updated 2026-05-19). Components: `nk-writer` agent (CMO), `voice-routing` skill, `_template-brand-writer.md` template. Sprint estimate: ~3 dev-days within the v1.2 sprint. |
+
+---
+
 ### MOAT-09 · Maxim Studio — AGPL-3.0 desktop GUI face · ADR-014 PLANNED v0.1.0
 
 | Field | Value |

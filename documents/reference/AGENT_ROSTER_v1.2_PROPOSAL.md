@@ -308,10 +308,20 @@ CMO Office
 ├── video-script-writer
 ├── podcast-producer
 ├── newsletter-curator
-└── moat-row-author (Maxim-specific — authors MOAT_TRACKER entries)
+├── moat-row-author (Maxim-specific — authors MOAT_TRACKER entries)
+└── nk-writer (NEW per ADR-016 — operator-voice writer routing through VOICE_SELECTION.md)
+   └── + _template-brand-writer.md (template for per-startup writers; instances per-operator)
 ```
 
-10 agents.
+11 agents (was 10; added `nk-writer` per ADR-016 voice-writing-agent architecture).
+Per-startup brand writer instances (e.g., `aria-brand-writer`, `vazir-brand-writer`) are
+instantiated on demand from `_template-brand-writer.md` and don't count toward the base
+roster — they're operator-instantiated specializations.
+
+**Companion skill:** `.claude/skills/voice-routing/SKILL.md` (NEW per ADR-016) — wraps
+`myVoiceDNA/VOICE_SELECTION.md` as a callable lookup. Any agent can invoke it to get
+routing decisions (content type + variant + load list + crossover budget). Brings skill
+domain count from 34 → 35.
 
 #### CSO Office shown above (19 agents)
 
@@ -386,15 +396,17 @@ CINO Office
 |---|---|---|---|
 | CEO | 1 | 8 | 9 |
 | CTO | 1 | 17 | 18 |
-| CMO | 1 | 9 | 10 |
+| CMO | 1 | 10 | 11 |
 | CSO | 1 | 18 | 19 |
 | CPO | 1 | 7 | 8 |
 | COO | 1 | 7 | 8 |
 | CINO | 1 | 7 | 8 |
 | Orchestrators (executive-router etc.) | — | — | ~10 |
-| **Total** | 7 | 73 | **~90** |
+| **Total** | 7 | 74 | **~91** |
 
-Today's count is 90 (after the cost-analyst + sre-analyst aria-simplification merge landed 2026-04-27). Net delta from here to v1.2 target is **0** — the v1.2 ~90 target is already met by count alone. v1.2 work is **renaming current generic agents into specific specialist slots + improving the leads' DNA**, not net-new agent files.
+Today's count is 90 (after the cost-analyst + sre-analyst aria-simplification merge landed 2026-04-27). v1.2 net delta is **+1 agent** (`nk-writer` in CMO office per ADR-016) plus a roster reorganization (renames + DNA upgrades, count-neutral). The voice-writing agent is the only net-new agent slot v1.2 adds beyond the rename pass. Per-startup brand-writer instances are operator-instantiated from a template and don't count toward the base roster.
+
+**Skill domain delta:** 34 → 35 (adds `voice-routing` skill per ADR-016).
 
 ---
 

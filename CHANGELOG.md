@@ -8,6 +8,55 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.2.0 — UPCOMING (Q3 2026) — Voice writing agents + roster reorganization + behavioral expansion
+
+Theme: **Adoption story.** v1.0 shipped behavioral intelligence; v1.1 shipped runtime
+gating; v1.2 makes the moat usable. The big v1.2 deliverables:
+
+### Added (voice writing agent layer — ADR-016)
+
+- **`nk-writer` agent** (CMO office) — operator-voice writer that routes every writing
+  task through `myVoiceDNA/VOICE_SELECTION.md`. Honors the 22-content-type routing table,
+  variant selectors (LinkedIn A/B, Email A/B/C, Pitch Deck A/B/C, Status Report Daily/Weekly/
+  Biweekly/Monthly), crossover budgets, and token discipline (max 15K voice tokens per task).
+- **`voice-routing` skill** (`.claude/skills/voice-routing/SKILL.md`) — wraps VOICE_SELECTION.md
+  as a callable lookup. Any agent can invoke it to get routing decisions.
+- **`_template-brand-writer.md`** — template for per-startup brand writers, instantiated
+  on demand. Per-startup instances (aria-brand-writer, vazir-brand-writer, etc.) are
+  operator-set-up, not pre-shipped.
+- **`executive-router` rule update** — writing verbs route to nk-writer by default; active
+  startup + customer-facing signal routes to `{startup}-brand-writer` instance.
+
+### Added (per AGENT_ROSTER_v1.2_PROPOSAL.md)
+
+- **TIER 1 verb-first commands**: `/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-plan`,
+  `/mxm-review`, `/mxm-explain` — plain-English commands that route invisibly to right specialists
+- **TIER 3 persona commands** (5 personas): `/mxm-legal`, `/mxm-arch`, `/mxm-secure`,
+  `/mxm-founder`, `/mxm-pm` — each with sub-commands per the persona's vocabulary
+- **Comprehensive `/mxm-help` system** — 9 modes (persona auto-detect, commands, agents,
+  frameworks, compliance, moat, getting-started, etc.)
+- **Roster reorganization** — 90 agents renamed into specific specialist slots; office
+  leads get DNA upgrades; net agent delta +1 (nk-writer); skill domain delta +1 (voice-routing)
+- **10 behavioral frameworks**: TTM, SDT, Dual Process, SCARF, TPB, Social Learning,
+  Operant Conditioning, Prospect Theory (already core), Diffusion, Emotional Design
+- **Proactive Watch Class 13 drift detection** — extends MOE PostToolUse audit for
+  framework non-adherence, tone drift, compliance violations in third-party plugin outputs
+
+### Deferred to v1.2.x or v1.3
+
+- **Maxim Studio (ADR-014/015)** — desktop GUI shell + v0.2+ surface roadmap. Architecture
+  is ratified; implementation paused until v1.2 plugin ships and is in operator use.
+  Studio depends on the v1.2 voice agents and behavioral framework expansion landing first.
+
+### Sprint plan
+
+Per `documents/architecture/v1.2-sprint-bootstrap.md`. Estimated ~55–78 dev-days total
+across 7 workstreams: voice agents (3d) · TIER 1 verb commands (5–8d) · TIER 3 persona
+commands (8–10d) · roster reorganization (5–8d) · /mxm-help system (2–3d) · 10 behavioral
+frameworks (30–40d) · Class 13 drift (3–5d).
+
+---
+
 ## v1.1.2 — UPCOMING (Q3 2026) — Topology + scaffolding hardening + Studio planning
 
 Session 18 (2026-05-13) landed the following changes targeting v1.1.2.

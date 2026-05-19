@@ -133,8 +133,9 @@ All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Tem
 | 013 | Multi-Project Memory Inheritance — parent/child topology + upward rollup | accepted |
 | 014 | Maxim Studio — AGPL-3.0 GUI shell on top of BSL-1.1 plugin | accepted |
 | 015 | Maxim Studio v0.2+ surface roadmap — TIER 2/3/4 deferred to v0.2/0.3/0.4+ | accepted |
+| 016 | Voice Writing Agent Architecture — nk-writer + voice-routing skill + per-startup template | accepted |
 
-**Total ADRs: 15.**
+**Total ADRs: 16.**
 
 ---
 

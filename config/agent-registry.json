@@ -42,7 +42,7 @@
   "total_categories": 14,
   "frameworks_covered": 64,
   "_frameworks_added_v641": ["proactive-watch"],
-  "total_adrs": 15,
+  "total_adrs": 16,
   "_adrs_full_list": [
     "ADR-001-mxm-architecture-baseline",
     "ADR-002-documents-as-executable-contracts",
@@ -58,7 +58,8 @@
     "ADR-012-overlay-engine-architecture",
     "ADR-013-multi-project-memory-inheritance",
     "ADR-014-maxim-studio-agpl-shell",
-    "ADR-015-maxim-studio-v02-roadmap"
+    "ADR-015-maxim-studio-v02-roadmap",
+    "ADR-016-voice-writing-agent-architecture"
   ],
   "total_canonical_ledgers": 5,
   "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
