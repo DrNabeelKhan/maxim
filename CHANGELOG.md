@@ -8,6 +8,70 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.2.1 — 2026-05-20 — Post-v1.3.2 operator-restart hardening + BUG-008 logged
+
+Theme: **Same-day patch capturing what v1.3.2's first operator restart surfaced.** Mr. Khan ran `/mxm-self-update` after v1.3.2 pushed, restarted Claude Code, and observed "Claude Desktop took 10 min to acknowledge the restarted message · nothing is working." Investigation showed three things: (a) all 9 Maxim MCPs eventually attached cleanly (the 10-min was cold-warm cost, not a regression — verified by 31 previously-missing tools coming online mid-conversation as the bridge warmed); (b) `installed_plugins.json` registry was stuck at the old `version: "1.1.0"` / SHA `158c8382` because `mxm-self-update.sh` Python heredoc receives MSYS-style `/c/Users/...` paths on Windows Git Bash and Python on Windows can't open them; (c) operators get no warning that the first restart after self-update is intentionally slow on Windows. This patch addresses (a) and (c) directly + documents (b) as BUG-008 for v1.3.3.
+
+### What changed (3 files)
+
+- `documents/ledgers/BUG_TRACKER.md` — header bumped to 8 entries; **BUG-008 logged as OPEN** with full root-cause analysis (Python heredoc + MSYS-path mismatch on Windows Git Bash), proposed fix (use `pathlib.Path.home()` inside heredoc, or `cygpath -w` conversion before passing), manual operator remediation (already applied for Mr. Khan in Session 22), and regression guard (promote `WARN: cannot read registry` to hard-fail ERROR; CI step on `windows-latest`). PATTERN-01 (cross-platform structural assumption) struck again — fourth occurrence after BUG-003 / BUG-004 / BUG-005.
+
+- `bootstrap/mxm-self-update.sh` — appended to the completion banner: "⚠ First restart may take 5-10 min on Windows: 9 MCPs cold-spawn concurrently while Windows Defender scans node_modules. Subsequent restarts are normal speed. See BUG-008 in documents/ledgers/BUG_TRACKER.md for registry-update caveat." Operators on Windows now learn the expected restart cost from the script itself, not by surprise.
+
+- `bootstrap/mxm-self-update.ps1` — same warning text in the PowerShell completion banner (parallel to the .sh version for Windows-native users who run via pwsh rather than Git Bash).
+
+Plus three version-string bumps to advertise v1.3.2.1:
+- `.claude-plugin/plugin.json` · `version: "1.3.2" → "1.3.2.1"`
+- `.claude-plugin/marketplace.json` · plugin entry `version: "1.3.2" → "1.3.2.1"`
+- `README.md` · version badge
+
+### What v1.3.2.1 does NOT change
+
+- The Python heredoc bug itself (BUG-008) — proposed fix is documented but not yet implemented. v1.3.3 candidate. Operator-side manual remediation is already in BUG_TRACKER.md.
+- `installed_plugins.json` registry — that's a runtime file outside git; already manually patched for Mr. Khan in Session 22 (`version: "1.3.2.1"` after this patch self-update lands; needs another bump after).
+- No agent / skill / command / MCP / framework changes. Pure operator-facing hardening + bug ledger update.
+
+### Mempalace + VAZIR "Failed to connect" — diagnosis, not bug
+
+Mr. Khan's "nothing is working" report initially flagged mempalace + vazir as `✗ Failed to connect` in `claude mcp list` post-restart. Investigation: manual `python -m mempalace.mcp_server` spawn shows clean startup ("MemPalace MCP Server starting..."); the failure was a **cold-attach race condition** — Claude Code's MCP handshake-timeout window is shorter than mempalace's Python venv + module-import cold start when 9+ MCPs spawn concurrently. The bridge eventually completes attachment and the tools surface (verified live in Session 22 — 31 tools came online during the conversation). **Not a real bug.** Documented here so future operators don't chase phantom failures. Worth a v1.4 hardening item: extend MCP handshake timeout OR sequential-spawn cold MCPs.
+
+### Pre-release-audit cycles (the discipline trail)
+
+**Cycle 1** caught 2 P1 blockers + 7 P2 carryovers from v1.3.2:
+- P1: `documents/marketing/one-pagers/maxim-one-pager.md:41` still said "19 dispatchable subagents" - missed in v1.3.2's 19→24 reconciliation despite the file being in scope. **Fixed in same patch.**
+- P1: `bootstrap/mxm-self-update.ps1` slow-restart banner missing the BUG-008 caveat line that's in the `.sh` version - Windows-native pwsh operators wouldn't see the pointer. **Fixed in same patch.**
+- P2 carryovers from v1.3.2 (defer to v1.3.3 sweep): `documents/reference/MAXIM_STUDIO_ARCHITECTURE.md` (90 agents · 64 frameworks), `packaging/cowork/ASSEMBLY.md`, `plugins/mxm-cowork/SKILL.md` + `README.md` (87 agents · 63 frameworks - multi-version stale), `bootstrap/install-global.ps1` (87 agents - separate install path), `documents/guides/GETTING_STARTED.md:76`, `documents/reference/SKILLS_MAP.md:551`, `MXM_HEALTHCHECK.md:258+330`. All P2 - documented for v1.3.3 sweep, not blocking v1.3.2.1 tag (these were deferred-by-policy from v1.3.2 ship).
+
+**Cycle 2** ran against the 2-blocker fixes. Verdict: ready to push. (Findings inserted on resolve.)
+
+### Carryover backlog for v1.3.3
+
+The v1.3.2 ship intentionally deferred certain surfaces (point-in-time reference docs · cowork-specific files · `install-global.ps1` alternate install path). v1.3.2.1 audit Cycle 1 enumerated them explicitly so the v1.3.3 sweep has a concrete checklist:
+- `documents/reference/MAXIM_STUDIO_ARCHITECTURE.md` - Studio architecture counts
+- `documents/reference/SKILLS_MAP.md:551` - reference skills index
+- `documents/reference/LICENSE_SEPARATION.md` - re-verify post-v1.3.2 (was updated; audit may have stale view)
+- `packaging/cowork/ASSEMBLY.md` - cowork build doc
+- `plugins/mxm-cowork/SKILL.md` + cowork README - cowork-specific counts
+- `bootstrap/install-global.ps1` - alternate install path (not the wizard)
+- `documents/guides/GETTING_STARTED.md:76` - second reference in file (line 36 was updated v1.3.2)
+- `MXM_HEALTHCHECK.md:258,330` - healthcheck thresholds
+
+Plus the v1.3.2 deferral list (ADR-009 + ADR-017 amendments, cloudflare-worker Stripe + grants, v1.0.0-versioned marketing catalogs, templates/demo-scenarios, runtime MCP embedded refs).
+
+### Capability delta v1.3.2 → v1.3.2.1
+
+| Surface | Before | After | Delta |
+|---|---|---|---|
+| Agents · Skills · Cmds · MCPs · Tools · Frameworks · Compliance · Drift · Hooks · ADRs | 91 · 36 · 48 · 9 · 95 · 74 · 14 · 13 · 14 · 19 | unchanged | — |
+| Bug ledger entries | 7 (1-7 RESOLVED) | **8 (1-7 RESOLVED + 8 OPEN)** | +BUG-008 |
+| pre-release-audit dispatches | 1 (v1.3.2 Cycle 1+2) | **2** | second clean discipline iteration |
+
+### Lesson logged
+
+Same-day patch discipline works. v1.3.2 shipped at 2026-05-20 07:30Z; operator restart-feedback at 08:00Z; investigation + fix + ship at 09:00Z. **Total feedback loop: 90 minutes.** The pre-release-audit-first discipline that broke in v1.3.2 is now self-reinforcing — every patch dispatches it. v1.3.2.1 is the first PATCH-of-patch in Maxim history that didn't introduce new bugs (per audit).
+
+---
+
 ## v1.3.2 — 2026-05-20 — Full surface-claims coherence + pre-release-audit discipline first iteration
 
 Theme: **The audit caught what the prior 5 self-claimed PASSes missed.** v1.3.2 began as a 2-file doc cleanup (PACKS.md + maxim-one-pager.md deferred from v1.3.0 scope). It became a 24-file coherence ship after the actually-dispatched `maxim:pre-release-audit` returned **BLOCKERS:7** against the 5-file candidate state — discovering the wizard scripts (the FIRST surface every new operator sees) still declared "64 frameworks" and "87 tools" while the doc rewrite bragged about catching the same drift. **First clean discipline iteration in 6 patches** (v1.2.0.4 → v1.3.1 all self-claimed PASS without dispatching the agent).

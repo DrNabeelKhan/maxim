@@ -109,6 +109,11 @@ try {
 [Console]::Error.WriteLine("OK Maxim plugin synced to commit $($NewSha.Substring(0,8))")
 [Console]::Error.WriteLine('   RESTART Claude Code to load the new content.')
 [Console]::Error.WriteLine('   node_modules preserved - no MCP re-install needed.')
+[Console]::Error.WriteLine('')
+[Console]::Error.WriteLine('   ! First restart may take 5-10 min on Windows: 9 MCPs cold-spawn')
+[Console]::Error.WriteLine('     concurrently while Windows Defender scans node_modules.')
+[Console]::Error.WriteLine('     Subsequent restarts are normal speed. See BUG-008 in')
+[Console]::Error.WriteLine('     documents/ledgers/BUG_TRACKER.md for registry-update caveat.')
 [Console]::Error.WriteLine('============================================================')
 
 exit 0

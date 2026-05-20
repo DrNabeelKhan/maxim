@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Status:** 6 entries logged + RESOLVED — v1.0.0 launch install bug-bash (BUG-001..005, 2026-04-21..2026-04-27) + Session 15 plugin MCP path fix (BUG-006, 2026-04-27). All previous P0/P1 bugs were structural assumptions; BUG-006 was a path-resolution oversight that surfaced when verifying MCP connectivity. See DEBUGGING_PLAYBOOK.md §1 for the cross-platform-assumptions meta-pattern.
+**Status:** 8 entries logged — BUG-001..005 RESOLVED v1.0.0 launch install bug-bash (2026-04-21..2026-04-27) · BUG-006 RESOLVED Session 15 plugin MCP path fix (2026-04-27) · BUG-007 RESOLVED v1.1.0.2/.3 plugin-upgrade node_modules absence + spawn-with-deps wrapper · **BUG-008 OPEN v1.3.2 (2026-05-20) mxm-self-update.sh Python heredoc receives MSYS-style path on Windows Git Bash, fails to update installed_plugins.json registry SHA**. PATTERN-01 (cross-platform structural assumptions) struck again. See DEBUGGING_PLAYBOOK.md §1.
 
 ---
 
@@ -37,7 +37,17 @@ Three of the v1.0.0 launch bugs (BUG-003 exec bit, BUG-004 PATH, BUG-005 sparse-
 
 ## Open Bugs
 
-_(None.)_
+### BUG-008 · `mxm-self-update.sh` Python heredoc fails on Windows Git Bash (registry SHA never updates)
+
+| Field | Value |
+|---|---|
+| **Reported** | 2026-05-20 (Session 22, post-v1.3.2 ship — pre-release-audit caught `installed_plugins.json` registry stuck at `version: "1.1.0"` / `gitCommitSha: "158c8382..."` while disk + plugin.json had `1.3.2` / `29c544b4`. Self-update script had emitted `WARN: cannot read registry ([Errno 2] No such file or directory: '/c/Users/SDO/.claude/plugins/installed_plugins.json')` on every successful run since v1.1.1 shipped). |
+| **Severity** | P2 — registry mismatch is silent + cosmetic (Claude Code reads `plugin.json` from install-cache directly, not registry SHA); but it confuses future `mxm-self-update` runs which then can't detect "already up to date" reliably, AND it defeats the audit trail purpose of the registry. Hit every Windows operator since v1.1.1; never noticed because the warning was buried in stderr. |
+| **Status** | OPEN — diagnosed Session 22; fix candidate for v1.3.3 (scope-deferred from v1.3.2 doc-cleanup ship). |
+| **Root cause** | `bootstrap/mxm-self-update.sh` line 37: `HOME_CLAUDE="${HOME}/.claude"`. On Windows Git Bash, `$HOME` resolves to MSYS-style `/c/Users/SDO` (POSIX-emulation path). Line 39 builds `INSTALLED_REGISTRY="${HOME_CLAUDE}/plugins/installed_plugins.json"` = `/c/Users/SDO/.claude/plugins/installed_plugins.json`. This path is interpolated into a Python heredoc at line 113-144 via `path = r"$INSTALLED_REGISTRY"`. Python on Windows uses native filesystem APIs and **cannot resolve MSYS-style `/c/...` paths** — Python sees a path that doesn't exist on the Windows filesystem and raises `FileNotFoundError`. The script's `try/except` swallows the error, emits a stderr warning, and exits 0 ("succeeds" silently). Marketplace pull + install-cache sync work; only the registry-update step fails. PATTERN-01 recurrence: Windows-Git → Mac/Linux assumption gap, but inverted (script written for Linux path semantics, breaks on Windows Git Bash). |
+| **Proposed fix (v1.3.3 candidate)** | Replace path passing with Python-resolved path via `pathlib.Path.home()`. Inside the heredoc: `from pathlib import Path; path = str(Path.home() / ".claude" / "plugins" / "installed_plugins.json")`. Cross-platform by construction — uses Python's own native path resolution. Alternative: convert via `cygpath -w` before passing (`if command -v cygpath >/dev/null 2>&1; then INSTALLED_REGISTRY=$(cygpath -w "$INSTALLED_REGISTRY"); fi`). Either fix lands in v1.3.3. Manual remediation for operators on v1.3.2: open `~/.claude/plugins/installed_plugins.json`, find `maxim@maxim-packs[0]`, set `version` = current plugin.json version + `gitCommitSha` = `git -C ~/.claude/plugins/marketplaces/maxim-packs rev-parse HEAD` (already applied for Mr. Khan in Session 22). |
+| **Verification (planned)** | After v1.3.3 fix lands: run `/mxm-self-update` on Windows Git Bash, then `cat ~/.claude/plugins/installed_plugins.json | jq '.plugins."maxim@maxim-packs"[0].gitCommitSha'` — must equal `git -C ~/.claude/plugins/marketplaces/maxim-packs rev-parse HEAD`. Add to the v1.3.3 pre-release-audit checklist explicitly. |
+| **Regression guard** | Add a self-test inside `mxm-self-update.{sh,ps1}` itself: after the Python registry-write block, re-read the registry and assert the entry's `gitCommitSha` equals `$NEW_SHA`. If mismatch, emit a clear ERROR (not WARN) and exit 1. Buried warnings are the issue here — promote registry-write to a hard-fail check. Plus a CI step on `windows-latest`: run `/mxm-self-update` + verify registry SHA matches. |
 
 ---
 

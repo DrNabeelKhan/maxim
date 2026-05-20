@@ -16,7 +16,7 @@
         "url": "https://github.com/DrNabeelKhan/maxim.git"
       },
       "description": "The behavioral intelligence layer for Claude Code. 91 specialist agents across 7 executive offices, 36 skill domains, 48 slash commands, 74 behavioral frameworks, 14 compliance frameworks, 9 MCPs (95 tools) including NotebookLM research synthesis, license-gated MCP middleware. 90-day Trial of all 14 packs default at install. Core tier is $0 forever; paid packs install from this same marketplace after purchase. BSL 1.1 (Apache 2.0 on 2030-04-21).",
-      "version": "1.3.2",
+      "version": "1.3.2.1",
       "author": {
         "name": "Dr. Nabeel Khan",
         "email": "nabeel@nabeelkhan.com"

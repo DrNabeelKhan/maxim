@@ -149,6 +149,11 @@ echo "════════════════════════�
 echo "✓ Maxim plugin synced to commit ${NEW_SHA:0:8}" >&2
 echo "  RESTART Claude Code to load the new content." >&2
 echo "  node_modules preserved — no MCP re-install needed." >&2
+echo "" >&2
+echo "  ⚠ First restart may take 5-10 min on Windows: 9 MCPs cold-spawn" >&2
+echo "    concurrently while Windows Defender scans node_modules." >&2
+echo "    Subsequent restarts are normal speed. See BUG-008 in" >&2
+echo "    documents/ledgers/BUG_TRACKER.md for registry-update caveat." >&2
 echo "════════════════════════════════════════════════════════════" >&2
 
 exit 0

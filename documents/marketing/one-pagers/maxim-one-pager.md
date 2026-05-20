@@ -38,11 +38,11 @@ v1.3.2 · BSL 1.1 (core) + Proprietary packs · Built in Canada · Apache 2.0 in
 
 **Voice routing as agent invocation property (ADR-016 + ADR-019).** Your voice loads when a writing agent dispatches, not when you remember to invoke `/mxm-brand-voice` first. Per-operator template pattern means every operator gets locked voice across surfaces.
 
-**Two-layer dispatch with cross-surface parity (ADR-017).** 19 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP. Same routing surface on Claude Code, Desktop, Web, Cowork. The "91 agents" claim is structurally true, not aspirational.
+**Two-layer dispatch with cross-surface parity (ADR-017).** 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP. Same routing surface on Claude Code, Desktop, Web, Cowork. The "91 agents" claim is structurally true, not aspirational.
 
 ---
 
-## By the numbers (v1.3.1 inventory · audited 2026-05-20)
+## By the numbers (v1.3.2.1 inventory · audited 2026-05-20)
 
 |  |  |
 |---|---|
