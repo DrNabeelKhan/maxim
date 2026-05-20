@@ -221,15 +221,17 @@ All tasks route through the executive-router unless an explicit office is named.
 
 ### Command Shortcuts
 
-| Shortcut | Routes To | Lead Agent | Use When |
+Per ADR-017 (v1.2.0.4+), `/mxm-{office}` routes to the office-agent — a thin dispatcher that owns internal specialist routing via `mxm-catalog` MCP. The "Default specialist" column is the office's lead, used when no specific signal classifies otherwise.
+
+| Shortcut | Office Agent | Default specialist embodied | Use When |
 |---|---|---|---|
-| `/mxm-ceo` | CEO Office | `enterprise-architect` | Strategy, vision, finance, partnerships, enterprise architecture |
-| `/mxm-cto` | CTO Office | `implementer` | Engineering, infrastructure, data, AI, APIs, DevOps, cloud |
-| `/mxm-cmo` | CMO Office | `content-strategist` | Marketing, brand, content, SEO, conversion, behavioral design |
-| `/mxm-cso` | CSO Office | `security-analyst` | Security, compliance, privacy, ethics, risk, incidents |
-| `/mxm-cpo` | CPO Office | `product-strategist` | Product strategy, UX, UI, market research, user feedback |
-| `/mxm-coo` | COO Office | `planner` | Operations, delivery, support, sprints, experiments |
-| `/mxm-cino` | CINO Office | `innovation-researcher` | Innovation, R&D, emerging tech, horizon scanning |
+| `/mxm-ceo` | `ceo-office` | `enterprise-architect` | Strategy, vision, finance, partnerships, enterprise architecture |
+| `/mxm-cto` | `cto-office` | `implementer` | Engineering, infrastructure, data, AI, APIs, DevOps, cloud |
+| `/mxm-cmo` | `cmo-office` | `content-strategist` (or `nk-writer` for voice work) | Marketing, brand, content, SEO, voice-routed writing, conversion |
+| `/mxm-cso` | `cso-office` | `security-analyst` | Security, compliance, privacy, ethics, risk, incidents |
+| `/mxm-cpo` | `cpo-office` | `product-strategist` | Product strategy, UX, UI, market research, user feedback |
+| `/mxm-coo` | `coo-office` | `planner` | Operations, delivery, support, sprints, experiments |
+| `/mxm-cino` | `cino-office` | `innovation-researcher` | Innovation, R&D, emerging tech, horizon scanning |
 | `/mxm-route` | Executive Router | `executive-router` | Unknown intent — classify and route automatically |
 | `/mxm-wiki` | Wiki skills (v1.0.0+) | `wiki-ingest`/`query`/`lint`/`explore` | Knowledge ingestion + cross-project query on MemPalace |
 | `/mxm-voice` | Voice skill (v1.0.0+) | `mxm-voice` MCP | Voice-driven office routing (requires mbailey/voicemode) |
@@ -245,7 +247,9 @@ These rules apply regardless of which office is active:
 3. **CSO arbitration** — compliance conflicts → security-analyst resolves
 4. **Unroutable tasks** → executive-router logs to `.mxm-skills/agents-skill-gaps.log` and requests clarification
 
-**Full agent roster (90 agents across 7 offices + orchestrators):** [`CLAUDE.d/office-catalog.md`](CLAUDE.d/office-catalog.md).
+**Two-layer dispatch (ADR-017):** **19 dispatchable subagents** (7 office agents + 5 governance orchestrators + 4 quality-chain + 3 utility) form the routing tier. The **91-agent catalog** (full roster at `agents/MXM/{office}/`) is reached via `mxm-catalog` MCP from inside each office agent — `mxm-catalog.route_task()` + `get_agent_dna()` + `get_handoff_chain()`. All 91 reachable; only 19 dispatchable.
+
+**Full agent roster:** [`CLAUDE.d/office-catalog.md`](CLAUDE.d/office-catalog.md).
 
 ---
 

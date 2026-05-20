@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0.3",
+  "version": "1.2.0.4",
   "project": "Maxim Agent Platform — iSimplification.io",
   "description": "Single source of truth for Maxim agents and skills catalog. v1.2.0 achieves 100% Grade A DNA coverage across all 91 agents (full Triggers + Collaboration Matrix sections) after the v1.2.0 GA roster reorganization. VoltAgent, external subtrees, and domain dispatch tracked in config/dependency-registry.json.",
   "last_updated": "2026-05-19",
@@ -34,29 +34,74 @@
     "voice-routing"
   ],
   "total_slash_commands": 48,
-  "_slash_commands_added_v641": ["mxm-watch", "mxm-session-end"],
-  "_slash_commands_added_v111": ["mxm-self-update"],
-  "_slash_commands_added_v120_ws2": ["mxm-build", "mxm-fix", "mxm-ship", "mxm-explain"],
-  "_slash_commands_upgraded_v120_ws2": ["mxm-plan", "mxm-review"],
-  "_slash_commands_upgraded_v120_ws4": ["mxm-help"],
-  "_slash_commands_added_v120_ws3": ["mxm-legal", "mxm-arch", "mxm-secure", "mxm-founder", "mxm-pm"],
+  "_slash_commands_added_v641": [
+    "mxm-watch",
+    "mxm-session-end"
+  ],
+  "_slash_commands_added_v111": [
+    "mxm-self-update"
+  ],
+  "_slash_commands_added_v120_ws2": [
+    "mxm-build",
+    "mxm-fix",
+    "mxm-ship",
+    "mxm-explain"
+  ],
+  "_slash_commands_upgraded_v120_ws2": [
+    "mxm-plan",
+    "mxm-review"
+  ],
+  "_slash_commands_upgraded_v120_ws4": [
+    "mxm-help"
+  ],
+  "_slash_commands_added_v120_ws3": [
+    "mxm-legal",
+    "mxm-arch",
+    "mxm-secure",
+    "mxm-founder",
+    "mxm-pm"
+  ],
   "total_mcp_servers": 8,
   "_mcp_servers_consolidated_v641": "dispatch + skills → catalog; design → absorbed into context",
-  "_mcp_servers_added_v120_1": ["mxm-commands"],
+  "_mcp_servers_added_v120_1": [
+    "mxm-commands"
+  ],
   "total_mcp_tools": 49,
   "_mcp_tools_added_v120_1": 2,
   "total_voltagent_specialists": 150,
   "total_external_brand_templates": 59,
   "total_executable_hooks": 14,
-  "_executable_hooks_added_v641": ["git-hygiene-preamble.sh", "git-hygiene-preamble.ps1", "git-hygiene-postamble.sh", "git-hygiene-postamble.ps1"],
+  "_executable_hooks_added_v641": [
+    "git-hygiene-preamble.sh",
+    "git-hygiene-preamble.ps1",
+    "git-hygiene-postamble.sh",
+    "git-hygiene-postamble.ps1"
+  ],
   "_executable_hooks_note": "14 = 7 hooks × 2 platforms (bash + ps1): session-start, session-end, pre-commit, behavioral-moat-drift, git-hygiene-preamble, git-hygiene-postamble, mxm-guard",
   "total_categories": 14,
   "frameworks_covered": 74,
-  "_frameworks_added_v641": ["proactive-watch"],
-  "_frameworks_added_v120_ws6a": ["transtheoretical-model", "self-determination-theory", "dual-process-theory", "prospect-theory"],
-  "_frameworks_added_v120_ws6b": ["scarf", "theory-of-planned-behavior", "social-learning-theory", "operant-conditioning", "diffusion-of-innovations", "emotional-design"],
+  "_frameworks_added_v641": [
+    "proactive-watch"
+  ],
+  "_frameworks_added_v120_ws6a": [
+    "transtheoretical-model",
+    "self-determination-theory",
+    "dual-process-theory",
+    "prospect-theory"
+  ],
+  "_frameworks_added_v120_ws6b": [
+    "scarf",
+    "theory-of-planned-behavior",
+    "social-learning-theory",
+    "operant-conditioning",
+    "diffusion-of-innovations",
+    "emotional-design"
+  ],
   "_drift_classes": 13,
-  "_drift_classes_v120_additions": ["behavioral-moat-drift (Class 12 - ratified in cleanup)", "third-party-plugin-drift (Class 13 - per ADR-012 MOE; activates when v1.1.2 MOE ships)"],
+  "_drift_classes_v120_additions": [
+    "behavioral-moat-drift (Class 12 - ratified in cleanup)",
+    "third-party-plugin-drift (Class 13 - per ADR-012 MOE; activates when v1.1.2 MOE ships)"
+  ],
   "total_adrs": 16,
   "_adrs_full_list": [
     "ADR-001-mxm-architecture-baseline",
@@ -77,7 +122,13 @@
     "ADR-016-voice-writing-agent-architecture"
   ],
   "total_canonical_ledgers": 5,
-  "_ledgers_v641_list": ["documents/ledgers/AGENT_SKILL_INVENTORY.md", "CHANGELOG.md", "documents/ledgers/MOAT_TRACKER.md", "BUG_TRACKER.md", "documents/ledgers/DEBUGGING_PLAYBOOK.md"],
+  "_ledgers_v641_list": [
+    "documents/ledgers/AGENT_SKILL_INVENTORY.md",
+    "CHANGELOG.md",
+    "documents/ledgers/MOAT_TRACKER.md",
+    "BUG_TRACKER.md",
+    "documents/ledgers/DEBUGGING_PLAYBOOK.md"
+  ],
   "changelog": [
     {
       "version": "1.2.0.2",

@@ -69,6 +69,7 @@ documents/architecture/
 !documents/ADRs/ADR-014-maxim-studio-agpl-shell.md
 !documents/ADRs/ADR-015-maxim-studio-v02-roadmap.md
 !documents/ADRs/ADR-016-voice-writing-agent-architecture.md
+!documents/ADRs/ADR-017-office-as-dispatch-boundary.md
 
 # ── Maxim ledger state (session-local, never committed) ──────────────────
 # documents/ledgers/ holds the canonical Executable Contract ledgers.
