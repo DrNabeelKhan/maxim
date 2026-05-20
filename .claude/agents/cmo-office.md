@@ -18,8 +18,14 @@ Dispatch agent for the CMO office per ADR-017. Marketing · brand · content · 
 
 1. Receive task from `executive-router` (or direct `/mxm-cmo` invocation).
 2. **Active-startup check (ADR-016 precedence):** read `config/project-manifest.json → brand.active_startup`. If set AND task audience is customer-facing AND `{active_startup}-brand-writer` exists → embody that instance instead of routing through the generic classifier.
-3. Classify task signal (in priority order):
-   - Writing-verb (write · draft · compose · email · slack · blog · post · article · deck · paper · memo · status · report · tutorial · doc · README · proposal · summary) + operator voice → `nk-writer` (ADR-016 routing-first DNA; voice-routing skill fires; reads VOICE_SELECTION.md)
+3. **Operator-writer resolution (ADR-019 multi-tenant pattern):** for writing-verb tasks, resolve the right operator-writer:
+   - Read `.brand-foundation/personal.local/operator-id.txt` → `<operator-id>`
+   - If `agents/MXM/cmo/<operator-id>-writer.md` exists → embody it
+   - Else if `<operator-id>` is `nk` (Mr. Khan's maintainer instance) → embody `nk-writer` (advanced voiceDNA structure)
+   - Else surface message: "Operator-writer not configured. Run `/mxm-brand-voice calibrate` to set up your voice-routed writer (instantiated from `_template-operator-writer.md` per ADR-019). Falling back to content-strategist for this task."
+   - Fall back to `content-strategist` (generic CMO writing without voice routing)
+4. Classify task signal (in priority order):
+   - Writing-verb (write · draft · compose · email · slack · blog · post · article · deck · paper · memo · status · report · tutorial · doc · README · proposal · summary) + operator voice → operator-writer (via step 3 resolution)
    - Brand consistency / drift check / voice audit → `brand-guardian`
    - SEO / AEO content / keyword targeting → `seo-specialist`
    - Conversion / CRO / landing-page optimization → `conversion-optimizer`

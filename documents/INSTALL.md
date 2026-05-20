@@ -1,8 +1,26 @@
-# Installing Maxim
+# Installing Maxim (v1.3.0)
 
-> **Maxim** is the behavioral intelligence layer for Claude Code — 91 specialist agents across 7 executive offices, 74 behavioral frameworks, 14 compliance frameworks, and drift detection on every session.
+> **Maxim** is the behavioral intelligence layer for Claude Code — 91 specialist agents across 7 executive offices, 74 behavioral frameworks, 14 compliance frameworks, drift detection on every session, and a 14-day Trial of all 14 packs that activates by default.
 >
-> This guide covers: install, choose packs, verify, upgrade, uninstall, troubleshoot.
+> This guide covers: Core install → tier wizard (Trial default) → multi-surface deployment → verify → troubleshoot.
+
+---
+
+## TL;DR · install in 30 seconds, see the moat work in 14 days
+
+```bash
+# Step 1 — install Core (everything free-tier ships with)
+/plugin marketplace add DrNabeelKhan/maxim
+/plugin install maxim@maxim-packs
+
+# Step 2 — activate your tier (Trial pre-selected · no card required)
+bash bootstrap/install-tier-packs.sh        # Mac · Linux · WSL · Git Bash
+pwsh -File bootstrap/install-tier-packs.ps1 # Windows · or PS7 cross-platform
+```
+
+The wizard pre-selects **14-day Trial of all 14 packs** because a moat is hard to evaluate when you can't see it. Run your real work through Maxim for two weeks. Then decide what's worth keeping.
+
+For Desktop / Web cross-surface setup, see [Cross-surface section](#multi-surface-deployment) below.
 
 ---
 

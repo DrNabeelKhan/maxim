@@ -1,218 +1,245 @@
 # Maxim — the behavioral intelligence layer for Claude
 
-> **Start at $19.99 with Solo. The behavioral intelligence specialist for Claude.**
+> The structural moat behind every Claude output. 91 specialist agents · 74 peer-reviewed behavioral frameworks · 14 compliance frameworks · 9 MCPs · 87 tools. Framework citation enforced on every output. Drift detected before you ship. Voice locked across every surface.
 
-![Version](https://img.shields.io/badge/version-1.2.1.0-blue)
+![Version](https://img.shields.io/badge/version-1.3.0-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-74-orange)
-![Skills](https://img.shields.io/badge/skill_domains-35-purple)
+![Skills](https://img.shields.io/badge/skill_domains-36-purple)
 ![Commands](https://img.shields.io/badge/commands-48-yellow)
-![MCP](https://img.shields.io/badge/MCP_servers-7-teal)
-![Tools](https://img.shields.io/badge/MCP_tools-47-teal)
+![MCP](https://img.shields.io/badge/MCP_servers-9-teal)
+![Tools](https://img.shields.io/badge/MCP_tools-87-teal)
 ![Hooks](https://img.shields.io/badge/hooks-14-gray)
 ![Drift_Classes](https://img.shields.io/badge/drift_classes-13-red)
 ![License](https://img.shields.io/badge/license-BSL_1.1-lightgrey)
 
 ---
 
-## Install in 30 seconds
+## Install · then see the moat work in 30 seconds
 
-```
+```bash
 /plugin marketplace add DrNabeelKhan/maxim
 /plugin install maxim@maxim-packs
 ```
 
-Those two commands install the full behavioral intelligence layer into Claude Code. **91 specialist agents** across 7 executive offices. **36 skill domains**. **48 slash commands** spanning three tiers (TIER 1 verb-first like `/mxm-build`/`/mxm-fix`/`/mxm-ship`, TIER 2 office shortcuts, TIER 3 persona commands like `/mxm-legal`/`/mxm-arch`/`/mxm-secure`/`/mxm-founder`/`/mxm-pm`). **74 peer-reviewed behavioral frameworks** wired through ADR-007 framework-citation enforcement. **13 Proactive Watch drift classes** scanning every session start. **14 compliance frameworks** with jurisdictional logic. **16 ADRs** governing the system as Executable Contracts (ADR-002). Three governance hooks that fire automatically. One output style that enforces framework citation on every external-facing output.
-
-**Starter tier is free forever.** No credit card. 90-day Pro Trial auto-activates on install. Nothing to commit to.
-
-**Multi-surface (v1.2.0+):** Maxim runs on Claude Code (100% fidelity), **Claude Desktop (~95% with one-command setup)**, Claude.ai Web Projects (~85%), and Claude.ai Cowork (~85%). For Desktop setup: `bash bootstrap/mxm-desktop-config.sh` (Mac/Linux) or `pwsh -File bootstrap/mxm-desktop-config.ps1` (Windows). See [INSTALL.md](documents/INSTALL.md) for full cross-surface deployment.
-
-> Maxim's submission to the Anthropic community marketplace ([clau.de/plugin-directory-submission](https://clau.de/plugin-directory-submission)) is in flight. Once approved, `/plugin install maxim@claude-community` will also work. The commands above are the direct path and work today.
-
-**Prerequisites** (verify before installing):
-- **`git`** on PATH — used to clone community packs at first session
-- **`node` + `npm`** on PATH (Node.js LTS 20.x or higher) — required for the 7 bundled MCP servers and their dependencies
+Then activate your tier (default: **14-day Trial of all 14 packs · no card · cancel anytime**):
 
 ```bash
-# Verify both are available:
-git --version    # any 2.x is fine
-node --version   # v20.x or higher
-npm --version    # 10.x or higher
+bash bootstrap/install-tier-packs.sh        # Mac · Linux · WSL · Git Bash
+pwsh -File bootstrap/install-tier-packs.ps1 # Windows · or PS7 cross-platform
 ```
 
-If `npm` is missing, install Node.js — `brew install node` on macOS, the LTS installer from https://nodejs.org elsewhere, or nvm if you manage multiple versions. Without Node.js, the MCP servers will fail to spawn and Claude Code will report `MCP server failed: timeout`.
+The wizard pre-selects Trial because **a moat is hard to evaluate when you can't see it**. Run your real work through Maxim for two weeks. Then decide what's worth keeping.
 
-**First session auto-installs:**
-1. **7 community packs** (150 VoltAgent specialists · Superpowers workflow patterns · Planning With Files · Claude Skills Library · UI/UX Pro Max · Higgsfield AI prompts · 59 brand design templates) — via `bootstrap/mxm-community-packs.{sh,ps1}`
-2. **MCP server dependencies** for the 7 bundled MCP servers (`@modelcontextprotocol/sdk`, `zod`) — via `bootstrap/mxm-mcp-install.{sh,ps1}`
-
-Both run automatically through the `SessionStart` hook on first session (~1–2 min for community packs, ~30–60 sec for MCP deps). Runs on macOS, Linux, and Windows with no configuration.
-
-> **If you hit `MCP server failed: timeout` during the very first session**, the SessionStart hook may not have finished installing MCP dependencies before Claude Code tried to spawn them. Run the installer manually, then restart the session:
->
-> ```bash
-> # macOS / Linux
-> bash bootstrap/mxm-mcp-install.sh
->
-> # Windows
-> pwsh -File bootstrap\mxm-mcp-install.ps1
-> ```
-
-To trigger a manual refresh (e.g. after a pack update):
-
-```bash
-# macOS / Linux
-bash bootstrap/mxm-community-packs.sh
-bash bootstrap/mxm-mcp-install.sh
-
-# Windows
-pwsh -File bootstrap\mxm-community-packs.ps1
-pwsh -File bootstrap\mxm-mcp-install.ps1
-```
+> Per ADR-019 (Multi-Tenant Readiness): every operator starts with the same first-run experience. Pre-existing operators (like Maxim's maintainer running `nk-writer`) keep their advanced configurations untouched.
 
 ---
 
-## 🎁 Early Adopter Program — 300 free 12-month licenses
+## What Maxim actually IS
 
-Maxim is allocating **300 free 12-month licenses** across 13 cohorts — program-level value **$540,000**, per-license value **$239.88 to $7,199.88** depending on tier.
+Most "AI plugins" give you templates. Some give you a chat wrapper. Maxim gives you a **governed multi-agent operating system** with structural enforcement of:
 
-Cohorts include open-source maintainers, AI safety researchers, technical journalists, startup founders, growth marketers, copywriters, product designers, privacy and security advocates, brand designers and creators, researchers and power users, and AI ethics practitioners.
+1. **Framework citation on every output** — every Maxim emission names the behavioral science framework that justifies it (Fogg · Cialdini · Prospect Theory · OWASP · NIST · 70 more). Outputs without citation get rejected pre-emit by `behavioral-overlay-orchestrator` (ADR-007). The "looks good" generic LLM output is structurally impossible to ship through Maxim.
+2. **Confidence tag on every output** — every emission carries 🟢 HIGH / 🟡 MEDIUM / 🔴 LOW per ADR-010's Technical Educator rubric. You see grounding depth, not just an answer.
+3. **Compliance overlay that cannot be bypassed silently** — 14 jurisdictional frameworks (GDPR · PIPEDA · UAE-PDPL · HIPAA · PCI-DSS · SOC2 · ISO 27001/13485/14971 · NIST CSF · EU AI Act · CASL · FINTRAC · WCAG 2.1) fire automatically on every regulated-data signal. CSO auto-loop is structural — even super-user mode doesn't disable it for compliance work.
+4. **Voice routing as a property of agent invocation** — your voice loads when a writing agent dispatches, not when you remember to invoke `/mxm-brand-voice` first. Per ADR-016. Per operator via the v1.3.0 template pattern (ADR-019).
+5. **Proactive Watch drift detection** — 13 universal drift classes scan every session start. Stale docs · broken refs · secret leaks · surface-claims drift · behavioral-moat drift. AI-coded projects rot fast; Watch is the rot detector.
+6. **Documents as Executable Contracts (ADR-002)** — CHANGELOG · MOAT_TRACKER · BUG_TRACKER · AGENT_SKILL_INVENTORY are read by the pre-commit hook as live state. Drift between claim and reality blocks the commit.
 
-**Application:** https://maxim.isystematic.com/giveaway
-**Review SLA:** 7 days from application · **Rolling review** through week 8 or until 300 licenses are issued.
-
-Every license carries the same legal terms as a commercial license, is machine-bound per ADR-005, and is non-transferable.
+**None of the external sources** (alirezarezvani · ui-ux-pro-max · superpowers · VoltAgent · planning-with-files) do any of this structurally. Maxim is the only layer that does. The community-pack system (ADR-008) composes Maxim's behavioral layer on top of their craft.
 
 ---
 
-## Commercial tiers
+## See the moat work · 6 concrete use cases
 
-After the Early Adopter Program closes, commercial packs install from the same marketplace — your license JWT unlocks them:
+### Use Case 1 · Founder evaluating regulatory exposure
 
 ```
-/plugin install mxm-pack-l1-6-behavioral-intelligence@maxim-packs
+You: "We're adding stablecoin payments to our pricing flow. What jurisdictions
+      need DPAs and what's the controller/processor split?"
 ```
 
-Full catalog and pricing at https://maxim.isystematic.com/pricing.
+**What fires:** `executive-router` → `cso-office` → `compliance-orchestrator` + `gdpr-counsel` + `hipaa-counsel` + `dpia-specialist`. MCPs invoked: `mxm-compliance.check_compliance` scans 14 frameworks · `mxm-compliance.generate_ropa_entry` stubs the ROPA · `mxm-compliance.get_jurisdiction_requirements` per region.
+
+**What you get:** jurisdictional map, cited per region, with DPA requirements, controller/processor split, and a flagged ROPA entry. 🟢 HIGH tag attached only if every jurisdiction in your `compliance.frameworks` returned PASS.
+
+**Without Maxim:** 2-3 days research, $5K+ in consultant fees, no audit trail.
 
 ---
 
-## What Maxim Is
-
-Maxim is a **behavioral intelligence layer** that runs on top of any AI model. It is not a prompt library. It is not a chatbot wrapper. It is a governed, multi-agent operating system with 90+ specialists, 36 skill domains, executive office routing, inter-agent handoff protocol, voice-driven invocation, RAG-backed knowledge graph, usage-aware scheduling, Proactive Watch drift detection, and behavioral science embedded at every layer.
-
-The moat is not the tools. It is **Fogg Behavior Model, COM-B, EAST, Hook Model, and 64 peer-reviewed frameworks** baked into every skill, applied automatically rather than on request. Every output is confidence-tagged. Every security or compliance signal triggers the CSO auto-loop. Every release passes through a governed chain. Every document is treated as an Executable Contract with drift detection running on every session start.
-
-Maxim works with Claude, GPT-4, Gemini, Mistral, or any local model. Swap `default_model_provider` in one config file.
-
----
-
-## Why Enterprise
-
-| Governance Feature | What It Does |
-|---|---|
-| **Ethics gates** | 7 agents require `ethics_required: true` pre-check before execution |
-| **CSO auto-loop** | Security, compliance, PII signals automatically notify `security-analyst` — no request needed |
-| **Compliance pre-enforcement** | `project-manifest.json` declares frameworks per project; agents enforce without being told |
-| **Super User mode** | Maxim governance gates suppressed for declared identity — Claude's values layer unaffected |
-| **Confidence tagging** | Every output tagged 🟢 HIGH · 🟡 MEDIUM · 🔴 LOW based on skill match and context quality |
-| **Inter-agent handoff** | Structured `.mxm-skills/agents-handoff.md` protocol — agents pass state, not assumptions |
-| **Session memory** | `.claude-sessions-memory/` stores handoff state, decisions, and skill gaps across sessions |
-
----
-
-## Architecture
+### Use Case 2 · Engineer building a RAG pipeline with TDD discipline
 
 ```
-LAYER 1 — .claude/skills/          Maxim Domain Skills (Supreme Authority)
-           33 domains · 63 frameworks · behavioral science on every output
-           v1.0.0 added: wiki-ingest, wiki-query, wiki-lint, wiki-explore,
-                         voice, junction-guard, usage-aware-scheduler
-
-LAYER 2 — community-packs/                External Knowledge Base (read-only, vendored)
-           claude-skills (536) · ui-ux-pro-max-skill (7) · higgsfield-* (40)
-           awesome-design-md (59 brand templates)
-
-LAYER 3 — composable-skills/       Workflow Engine
-           superpowers/ · planning-with-files/ · frameworks/ (63)
-
-LAYER 4 — agents/                  Agent Catalog
-           91 Maxim agents · 150 VoltAgent specialists across 10 categories
-
-LAYER 5 — mcp/                     MCP Servers (cross-surface intelligence)
-           9 servers · 44 tools — auto-discovered via root .mcp.json
+You: "/mxm-build a RAG pipeline for our customer support docs"
 ```
+
+**What fires:** `cto-office` → `implementer` (lead) + `rag-specialist` (embodied via mxm-catalog) + `tester` + `reviewer`. MCPs invoked: `mxm-context.get_architecture_docs` surfaces existing ADRs · `mxm-behavioral.recommend_frameworks` applies TDD + BDD + C4 + arc42 · `mxm-behavioral.apply_framework Fogg-B-MAP` scope-checks before code touches.
+
+**What you get:** architecture with ADR-rated decisions, TDD scaffolding (tests first per Coverage Matrix), framework citations on every design choice. PII detected in the doc corpus auto-loops `cso-office.compliance-orchestrator`.
+
+**Without Maxim:** no framework citation, no scope check, security review post-PR (or never).
 
 ---
 
-## Executive Offices
+### Use Case 3 · PM writing a PRD with Fogg B=MAP + JTBD
 
-| Command | Office | Lead Agent | Activates For |
-|---|---|---|---|
-| `/mxm-ceo` | CEO | `enterprise-architect` | Strategy, vision, finance, enterprise architecture |
-| `/mxm-cto` | CTO | `implementer` | Engineering, APIs, DevOps, AI, infrastructure |
-| `/mxm-cmo` | CMO | `content-strategist` | Marketing, brand, SEO, content, GTM |
-| `/mxm-cso` | CSO | `security-analyst` | Security, compliance, privacy, risk |
-| `/mxm-cpo` | CPO | `product-strategist` | Product strategy, UX, UI, research |
-| `/mxm-coo` | COO | `planner` | Operations, delivery, sprints |
-| `/mxm-cino` | CINO | `innovation-researcher` | R&D, emerging tech, horizon scanning |
-| `/mxm-route` | All | `executive-router` | Unknown intent — classify and route |
-| `/mxm-wiki` | All | `wiki-*` skills | Knowledge ingestion + cross-project query (RAG on MemPalace, v1.0.0+) |
-| `/mxm-voice` | All | `mxm-voice` MCP | Voice-driven office routing (Whisper STT + Kokoro TTS, v1.0.0+) |
-| `/mxm-tasks` | All | scheduler | Usage-aware autonomous task scheduling (v1.0.0+) |
+```
+You: "/mxm-pm prd new operator onboarding flow"
+```
+
+**What fires:** `cpo-office` → `product-manager` + `onboarding-designer`. MCPs invoked: `mxm-behavioral.apply_framework Fogg-B-MAP` returns motivation/ability/prompt analysis · `mxm-behavioral.apply_framework JTBD` returns job statements via Ulwick's Jobs Atlas · `mxm-catalog.get_handoff_chain` returns cross-office collaboration map for the rollout.
+
+**What you get:** PRD with Fogg B=MAP scope check, JTBD job statements (functional + emotional + social), RICE prioritization, and explicit collaboration handoffs to CMO (announcement) + CTO (implementation) + CSO (data-handling).
+
+**Without Maxim:** PRD template with no framework grounding, scope creeps mid-sprint, RICE done by gut.
 
 ---
 
-## Quick Start
+### Use Case 4 · Marketer creating a research-backed launch podcast in operator voice
 
-**Windows (recommended) — Global install once, then per project:**
-
-```powershell
-# 1. Clone Maxim once
-git clone https://github.com/DrNabeelKhan/maxim.git
-cd maxim
-
-# 2. Global install (run as Administrator — once only)
-.\bootstrap\install-global.ps1
-
-# 3. Bootstrap each new project (as Administrator)
-.\bootstrap\link-local-project.ps1 -ProjectPath "E:\Projects\YourProject" -ProjectName "Your Project"
-
-# OR — from Claude Code / CLI (no PowerShell needed):
-/mxm-new-project
-
-# 4. Verify
-/mxm-status
+```
+You: "Create a podcast about our v1.3 launch using these customer interviews
+      and product docs" + [drop URLs/PDFs]
 ```
 
-**Linux / CI — Subtree install:**
+**What fires:** `executive-router` → `cmo-office` → `notebooklm-content-production` (ADR-018 routing) → `{your-operator-id}-writer` for the intro/outro. MCPs invoked: `mxm-notebooklm.notebook_create` → `source_add_url` × N → `source_wait` → `generate_audio_overview format=deep-dive` → `artifact_wait` → `artifact_download`. Operator voice loaded via `.brand-foundation/personal.local/` (ADR-019 template pattern).
 
-```bash
-git subtree add --prefix=.mxm-skills \
-  https://github.com/DrNabeelKhan/maxim.git main --squash
-bash .mxm-skills/bootstrap/new-project-setup.sh
-/route [describe your task]
-```
+**What you get:** 20-min podcast in YOUR voice, with intro/outro in operator-voice (the same voice as your blog posts), citations from your source material, audit trail showing every framework that fired (Diátaxis explanation mode · Diffusion of Innovations multi-format generation).
 
-See [`documents/guides/GETTING_STARTED.md`](documents/guides/GETTING_STARTED.md) for full setup. See [`documents/reference/MXM_INSTALL.md`](documents/reference/MXM_INSTALL.md) for adopter reference.
+**Without Maxim:** hand-write script, generic TTS, voice drift across artifacts.
 
 ---
 
-## Documentation
+### Use Case 5 · Session-end ritual you forgot you need
 
-| Document | Purpose |
-|---|---|
-| [`documents/guides/GETTING_STARTED.md`](documents/guides/GETTING_STARTED.md) | Full install guide — global + subtree paths |
-| [`documents/reference/MXM_INSTALL.md`](documents/reference/MXM_INSTALL.md) | One-page adopter reference — architecture, troubleshooting |
-| [`documents/reference/MXM_COMMAND_MAP.md`](documents/reference/MXM_COMMAND_MAP.md) | All slash commands with examples |
-| [`documents/reference/SKILLS_MAP.md`](documents/reference/SKILLS_MAP.md) | 36 skill domains with capability map |
-| [`documents/reference/FRAMEWORKS_MASTER.md`](documents/reference/FRAMEWORKS_MASTER.md) | 74 behavioral frameworks |
-| [`config/agent-registry.json`](config/agent-registry.json) | Full agent catalog (90 agents) |
-| [`documents/ledgers/AGENT_SKILL_INVENTORY.md`](documents/ledgers/AGENT_SKILL_INVENTORY.md) | Authoritative inventory: every agent, skill, command, MCP tool, hook — updated on every count change |
-| [`mcp/README.md`](mcp/README.md) | 9 MCP servers · 44 tools (auto-discovery via `.mcp.json`) |
-| [`documents/reference/AGENTS.md`](documents/reference/AGENTS.md) | Downstream agent instructions (wiki + brand foundation usage, v1.0.0+) |
-| [`documents/ledgers/MOAT_TRACKER.md`](documents/ledgers/MOAT_TRACKER.md) | Defensibility tracking + feature timeline |
-| [`documents/governance/ETHICAL_GUIDELINES.md`](documents/governance/ETHICAL_GUIDELINES.md) | Governance layer |
-| [`CLAUDE.md`](CLAUDE.md) | Universal Maxim operating standard |
-| [`documents/templates/CLAUDE.project.TEMPLATE.md`](documents/templates/CLAUDE.project.TEMPLATE.md) | Blank per-project config template |
+```
+You: "/mxm-session-end"
+```
+
+**What fires:** `coo-office` → `planner` orchestrates the 9-document closure bundle. MCPs invoked: `mxm-portfolio.sync_portfolio` syncs project metrics · `mxm-memory.archive_session_memory` persists session to MemPalace · `mxm-context.watch_run` runs LIGHT drift scan across 13 classes.
+
+**What you get:** SESSION_CONTINUITY.md updated · session-YYYY-MM-DD.md appended · CHANGELOG entry if user-facing change · MOAT_TRACKER row if positioning changed · AGENT_SKILL_INVENTORY refreshed if capabilities touched · project-manifest `last_activity` bumped · skill-gaps log appended. Per CLAUDE.md "Session without memory writes = session wasted."
+
+**Without Maxim:** session memory lost, next session starts cold, drift accumulates.
+
+---
+
+### Use Case 6 · Auto-loop you didn't ask for (and saved you from a breach)
+
+```
+You: "Add user authentication to our app"
+```
+
+**What fires:** `cto-office` → `backend-architect` (primary) **automatically loops** → `cso-office` → `appsec-engineer` + `secure-code-reviewer` + `owasp-specialist`. MCPs invoked: `mxm-compliance.check_compliance` fires on the regulated-data signal (auth = PII) · `ethics-orchestrator` validates · OWASP Top 10 + LLM Top 10 frameworks cited inline.
+
+**What you get:** auth implementation AND a parallel security review in the same conversation. Framework citations (OWASP Top 10 § A07:2021 Identification and Authentication Failures · NIST CSF PR.AC). 🔴 LOW tag and BLOCK if a known anti-pattern detected (plain-text password storage, missing rate-limiting, JWT without expiry).
+
+**Without Maxim:** security review happens at PR time (best case) or never (typical case).
+
+---
+
+## The 9 MCPs at a glance · 87 tools you can call directly
+
+| MCP | Tools | What it does |
+|---|---:|---|
+| **mxm-portfolio** | 7 | Project state, sync across 21+ projects, portfolio metrics |
+| **mxm-context** | 13 | Architecture docs · design refs · 13-class drift detection |
+| **mxm-catalog** | 9 | Agent + office + skill + command catalog, L2 specialist descent (route_task) |
+| **mxm-compliance** | 5 | 14 jurisdictional frameworks · ROPA entries · per-jurisdiction requirements |
+| **mxm-behavioral** | 5 | 74 behavioral frameworks · recommend · apply · score moat coverage |
+| **mxm-memory** | 4 | Session history · decision log · cross-project memory |
+| **mxm-voice** | 4 | Voice-driven office routing (wraps mbailey/voicemode for STT+TTS) |
+| **mxm-commands** | 2 | All 48 slash commands as MCP tools (cross-surface command parity) |
+| **mxm-notebooklm** ⭐ NEW | 38 | NotebookLM research synthesis (wraps teng-lin/notebooklm-py MIT · v1.2.1.0+) |
+
+**Cross-surface:** all 9 MCPs work on Claude Code · Desktop · Cowork. Claude.ai Web reaches them via MCP-over-API.
+
+---
+
+## The trial · why we default to it
+
+You can't evaluate a moat you can't see. The 14-day trial unlocks all 6 L1 packs (the structural moats) plus L2 vertical bundles plus L3 industry packs. Run your real work through Maxim for two weeks:
+
+- **Day 1-3:** install runs, you trigger your first auto-loops
+- **Day 4-7:** drift detection catches something you didn't know was broken (Class 11 surface-claims-drift is the typical first surprise)
+- **Day 8-14:** you have data — which packs you actually used, which fired auto-loops on your real work, which framework citations changed your decisions
+
+By day 14 you know exactly which tier matches your work. Convert or downgrade without guessing.
+
+---
+
+## Tier roadmap
+
+| Tier | Includes | Best for |
+|---|---|---|
+| **Solo** | Core (free forever) | Solo operators starting out · evaluating Maxim |
+| **Pro** | Core + 6 L1 packs | Serious operators on 1-2 projects |
+| **Team** | Core + L1 + 4 L2 verticals | Teams across founder · growth · pro · agency |
+| **Enterprise** | All 14 packs (incl. L3 healthcare · legal · fintech · govtech) | Regulated industries · multi-team orgs |
+| **Trial** | All 14 packs · 14 days · no card | Anyone evaluating |
+
+Pricing at [maxim.isystematic.com/pricing](https://maxim.isystematic.com/pricing) — you decide after the trial, not before.
+
+---
+
+## For specific roles · use the persona dispatchers
+
+Maxim ships 5 TIER 3 persona dispatchers that speak your vocabulary:
+
+```
+/mxm-legal     jurisdictional-map · privacy-impact · contract-review · vendor-dpa · regulatory-map
+/mxm-arch      capability-map · wardley-map · tech-radar · c4-diagram · adr · vendor-eval
+/mxm-secure    threat-model · owasp · sbom · incident · compliance-posture · ai-risk
+/mxm-founder   pitch-deck · gtm-plan · runway-model · pricing · business-model-canvas · competitive-moat
+/mxm-pm        prd · user-story · okr · prioritize · jtbd
+```
+
+Each persona routes to the right specialist within Maxim's 91-agent roster automatically. Legal pros think "DPIA," not "CSO compliance skill." Architects think "Wardley map," not "CEO enterprise-architect office." TIER 3 commands speak the persona's language and route invisibly.
+
+---
+
+## Multi-surface deployment
+
+Maxim runs everywhere Claude does:
+
+| Surface | Fidelity | What works |
+|---|---|---|
+| **Claude Code** | 100% | All 48 commands · 9 MCPs (87 tools) · 24 dispatchable subagents · all behavioral overlays |
+| **Claude Desktop** | ~95% | 9 MCPs (87 tools) · paste `maxim-project-instructions.md` for behavioral layer |
+| **Claude.ai Web** | ~85% | Project instructions · MCP-over-API when available |
+| **Claude.ai Cowork** | ~85% | Plugin bundles MCPs natively |
+
+Desktop one-command setup: `bash bootstrap/mxm-desktop-config.sh` or `pwsh -File bootstrap/mxm-desktop-config.ps1`.
+
+---
+
+## Architecture decisions · the 18 public ADRs
+
+Maxim ratifies every architectural choice via ADRs. The 14 public ones describe Maxim's commitments to operators:
+
+- [ADR-002](documents/ADRs/ADR-002-documents-as-executable-contracts.md) Documents as Executable Contracts (the structural rule)
+- [ADR-004](documents/ADRs/ADR-004-free-tier-executable-contract.md) Free tier specification
+- [ADR-007](documents/ADRs/ADR-007-behavioral-moat-framing-doctrine.md) Behavioral Moat Framing Doctrine
+- [ADR-008](documents/ADRs/ADR-008-community-pack-system.md) Community Pack System
+- [ADR-009](documents/ADRs/ADR-009-pack-architecture-l1-l2-l3.md) Pack Architecture (6 L1 + 4 L2 + 4 L3)
+- [ADR-010](documents/ADRs/ADR-010-confidence-tag-technical-educator-rubric.md) Confidence Tag rubric
+- [ADR-016](documents/ADRs/ADR-016-voice-writing-agent-architecture.md) Voice Writing Agent Architecture
+- [ADR-017](documents/ADRs/ADR-017-office-as-dispatch-boundary.md) Office-as-Dispatch-Boundary
+- [ADR-018](documents/ADRs/ADR-018-external-tool-integration-pattern.md) External Tool Integration Pattern
+- [ADR-019](documents/ADRs/ADR-019-multi-tenant-readiness.md) **Multi-Tenant Readiness (v1.3.0)**
+- plus ADR-011 · ADR-012 · ADR-013 · ADR-014 · ADR-015 (see [INDEX.md](documents/ADRs/INDEX.md))
+
+Four additional ADRs cover internal architecture (dispatch baseline · IP protection · Worker license issuance · external content boundary) and remain in the operator's private ledger.
+
+---
+
+## License · community · support
+
+**License:** BSL-1.1 — converts to Apache 2.0 after 4 years per ADR-005. Permissive enough to build on, structured enough to fund development.
+
+**Issues:** [github.com/DrNabeelKhan/maxim/issues](https://github.com/DrNabeelKhan/maxim/issues)
+**Pricing:** [maxim.isystematic.com/pricing](https://maxim.isystematic.com/pricing) (decide after the trial)
+**Docs:** [HELP.md](documents/guides/HELP.md) for the full command catalog · [GETTING_STARTED.md](documents/guides/GETTING_STARTED.md) for onboarding · [INSTALL.md](documents/INSTALL.md) for multi-surface deployment
+
+---
+_Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc. Licensed under Business Source License 1.1._

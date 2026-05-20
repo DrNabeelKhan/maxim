@@ -71,6 +71,7 @@ documents/architecture/
 !documents/ADRs/ADR-016-voice-writing-agent-architecture.md
 !documents/ADRs/ADR-017-office-as-dispatch-boundary.md
 !documents/ADRs/ADR-018-external-tool-integration-pattern.md
+!documents/ADRs/ADR-019-multi-tenant-readiness.md
 
 # ── Maxim ledger state (session-local, never committed) ──────────────────
 # documents/ledgers/ holds the canonical Executable Contract ledgers.

@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-Fourteen Architecture Decision Records are published as public governance narrative — pricing contracts, moat doctrine, confidence rubric, community-pack policy, payment-processor choice, the overlay-engine architecture that makes Maxim a governance layer for every Claude Code plugin, multi-project memory inheritance, the Maxim Studio AGPL shell, the Studio v0.2+ surface roadmap, the voice writing agent architecture, the office-as-dispatch-boundary architecture, and the external tool integration pattern. Four additional ADRs covering internal system architecture (dispatch baseline, Worker license issuance, IP-protection layering, external-content boundary) remain confidential and are maintained in the operator's private ledger.
+Fifteen Architecture Decision Records are published as public governance narrative — pricing contracts, moat doctrine, confidence rubric, community-pack policy, payment-processor choice, the overlay-engine architecture that makes Maxim a governance layer for every Claude Code plugin, multi-project memory inheritance, the Maxim Studio AGPL shell, the Studio v0.2+ surface roadmap, the voice writing agent architecture, the office-as-dispatch-boundary architecture, and the external tool integration pattern. Four additional ADRs covering internal system architecture (dispatch baseline, Worker license issuance, IP-protection layering, external-content boundary) remain confidential and are maintained in the operator's private ledger.
 
 Every public ADR declares a commitment Maxim makes to its users — a contract that the pre-commit hook and the session-end bundle read as live state, not as history.
 
@@ -26,8 +26,9 @@ Every public ADR declares a commitment Maxim makes to its users — a contract t
 | [ADR-016](ADR-016-voice-writing-agent-architecture.md) | Voice Writing Agent Architecture — nk-writer + voice-routing skill + per-startup template | accepted | 2026-05-15 |
 | [ADR-017](ADR-017-office-as-dispatch-boundary.md) | Office-as-Dispatch-Boundary + MCP-Catalog Specialist Surface | accepted | 2026-05-19 |
 | [ADR-018](ADR-018-external-tool-integration-pattern.md) | External Tool Integration Pattern — three-layer (community-pack + Maxim skill + MCP wrapper) | accepted | 2026-05-20 |
+| [ADR-019](ADR-019-multi-tenant-readiness.md) | Multi-Tenant Readiness — tier wizard + operator-writer template + persuasion-framed public docs | accepted | 2026-05-20 |
 
-**Published:** 14 · **Accepted:** 14 · **Superseded:** 0 · **Rejected:** 0
+**Published:** 15 · **Accepted:** 15 · **Superseded:** 0 · **Rejected:** 0
 
 ---
 

@@ -172,6 +172,19 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 
 ---
 
+### MOAT-13 · Multi-tenant readiness with behavioral-persuasion install wizard · ADR-019 SHIPPED v1.3.0
+
+| Field | Value |
+|---|---|
+| **Positioning claim** | Maxim is the only Claude plugin that ships a **tier-aware install wizard with behavioral persuasion framings** (loss aversion + default effect + endowment effect) AND a **per-operator voice-writer template pattern** so every operator's voice locks across every output. 14-day Trial of all 14 packs defaults at install — operators see the moat work on their real work before deciding which tier to keep. |
+| **Mechanism** | Two coordinated changes per ADR-019: (a) `bootstrap/install-tier-packs.{sh,ps1}` reduces 14 install commands to 1 decision · Trial pre-selected per Default Effect (Thaler) · Endowment Effect setup over 14-day trial period · No prices in wizard (Anchoring works against capability framing if cost surfaces first). (b) `_template-operator-writer.md` instantiated per-operator via `/mxm-brand-voice calibrate` · `cmo-office.md` operator-id lookup routing · nk-writer preserved as canonical example of advanced voiceDNA. |
+| **Anti-pattern** | A competing plugin ships 14 install commands operators run sequentially (or doesn't ship paid packs at all). Voice routing hardcoded to maintainer's machine path. Public docs read like API reference with no behavioral framing or use cases. Operators have to figure out "what does this DO for me" from a capability list. |
+| **Pack(s)** | Free tier (the wizard + template ship in Core). The wizard enables tier selection that activates paid packs L1.1 through L3.4 via JWT. |
+| **Primary framework** | Prospect Theory (Kahneman & Tversky 1979) — loss aversion ~2× over gain. Default Effect (Thaler & Sunstein 2008) — defaults frame as recommended path. Endowment Effect (Kahneman & Knetsch 1991) — possession increases valuation. ADR-019 ratified 2026-05-20. |
+| **Proof** | [ADR-019](../ADRs/ADR-019-multi-tenant-readiness.md). v1.3.0 commits. `bootstrap/install-tier-packs.{sh,ps1}` (358 lines). `agents/MXM/cmo/_template-operator-writer.md` (template, 170 lines). `cmo-office.md` operator-id lookup logic. Public docs rewrites in README · MXM_RUNDOWN · ABOUT · INSTALL · GETTING_STARTED. |
+
+---
+
 ## Decommissioned Claims
 
 _(None — this row appears when a moat claim is retired.)_

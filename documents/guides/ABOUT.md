@@ -1,7 +1,6 @@
 # Maxim: The Operating System for AI-Assisted Work
 
-> 90+ governed agents. 36 skill domains. 9 MCP servers (55 tools). 79 behavioral science frameworks. 14 executable hooks. 10 ADRs ratified. Documents as Executable Contracts.
-> One `/plugin install maxim@anthropic-official` powers every project you build.
+> **v1.3.0 · multi-tenant readiness.** 91 governed agents · 36 skill domains · 9 MCPs (87 tools) · 74 peer-reviewed behavioral frameworks · 14 compliance frameworks · 14 executable hooks · 18 ADRs ratified · Documents as Executable Contracts. **14-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
 
 ---
 

@@ -1,12 +1,20 @@
 # How to Use Maxim in Your Environment
 
-> **Version:** 6.3.0 | **Audience:** Anyone who installed Maxim
+> **Version:** v1.3.0 · **Audience:** Anyone who installed Maxim
 
 ---
 
-## What Is Maxim?
+## What Is Maxim? (SCQA framing)
 
-A behavioral intelligence layer that runs on top of Claude (and other AI models). It adds 91 specialist agents, 36 skill domains, 64 behavioral science frameworks, and 9 MCP servers to every Claude session — across Code, Desktop, CLI, Cowork, and Dispatch.
+**Situation:** You use Claude to ship work. Code · docs · pitches · compliance posture · marketing copy · research synthesis · everything.
+
+**Complication:** Out of the box, Claude gives you ungrounded outputs. No framework citation. No drift detection. No structural compliance enforcement. No audit trail. No voice consistency. Generic-LLM "looks good" answers that don't survive operator review.
+
+**Question:** How do you keep Claude's productivity without losing the rigor your work requires?
+
+**Answer:** Maxim is a behavioral intelligence layer that runs on top of Claude. It adds **91 specialist agents** routed through 7 executive offices · **36 skill domains** · **74 peer-reviewed behavioral frameworks** dispatched per task · **14 compliance frameworks** enforced at the MCP layer · **9 MCPs (87 tools)** including NotebookLM research synthesis · **13 drift classes** scanning every session start · **structural framework citation** on every output (ADR-007) · **confidence tag** on every output (ADR-010). Every emission Maxim ships is grounded, audited, and traceable.
+
+**v1.3.0 multi-tenant readiness:** the install wizard defaults to **14-day Trial** of all 14 packs (no card required). See the moat work on your real work before deciding which tier to keep.
 
 ---
 

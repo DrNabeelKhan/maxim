@@ -1,16 +1,39 @@
-# Getting Started with Maxim
+# Getting Started with Maxim (v1.3.0)
 
-> Add 90+ governed AI agents to your project in under 1 minute.
+> Add 91 governed AI agents to your project in under 1 minute. Then run a 14-day Trial of all 14 packs (default · no card required) to see the moat work on your real work before deciding which tier to keep.
 
 ---
+
+## 5-minute onboarding (Fogg B=MAP framed · the right path is the easy path)
+
+```bash
+# Step 1 (30s) — install Core (free forever)
+/plugin marketplace add DrNabeelKhan/maxim
+/plugin install maxim@maxim-packs
+
+# Step 2 (1min) — tier wizard (Trial is the default · pre-selected)
+bash bootstrap/install-tier-packs.sh        # Mac · Linux · WSL · Git Bash
+pwsh -File bootstrap/install-tier-packs.ps1 # Windows · or PS7 cross-platform
+
+# Step 3 (2min) — calibrate your voice (so every writing task ships in YOUR voice)
+/mxm-brand-voice calibrate
+# Wizard captures: operator handle · voice characteristics · banned phrases
+# Instantiates: agents/MXM/cmo/{your-id}-writer.md from _template-operator-writer.md
+# Per ADR-019 multi-tenant template pattern.
+
+# Step 4 (90s) — run your first real Maxim command
+/mxm-help                # auto-detects your persona, gives you 5 hero commands
+/mxm-status              # what's installed, what's drifting, what needs attention
+/mxm-watch               # 13 drift classes scan your repo right now
+```
 
 ## Fastest Path — Claude Code Plugin (recommended)
 
 ```
-/plugin install maxim@anthropic-official
+/plugin install maxim@maxim-packs
 ```
 
-That installs the full behavioral intelligence layer in a single command. 91+ agents across 7 executive offices, 36+ skill domains, 37+ slash commands, 3 governance hooks, 4 free drift monitors, the `mxm-mode` output style, and the `mxm-pack-engine` binary. Free tier is fully functional out of the box.
+That installs the full behavioral intelligence layer in a single command. 91 agents across 7 executive offices, 36 skill domains, 48 slash commands, 14 governance hooks, 9 MCPs (87 tools), the `mxm-mode` output style, and the `mxm-pack-engine` binary. Free tier is fully functional out of the box.
 
 **Add commercial packs:**
 
@@ -273,5 +296,5 @@ After updating, run `/mxm-status` in each project to verify.
 ---
 
 **Built by:** Dr. Nabeel Khan · iSimplification.io
-**Version:** Maxim v1.2.1.0 · 91 agents · 36 skill domains
+**Version:** Maxim v1.3.0 · 91 agents · 36 skill domains
 **Repo:** https://github.com/DrNabeelKhan/maxim
