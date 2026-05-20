@@ -8,6 +8,92 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.2.2 — 2026-05-20 — Hotfix: BUG-008 RESOLVED + BUG-009 partial-fix (mxm-notebooklm CLI-shape drift)
+
+Theme: **Two same-day bug clearances.** v1.3.2.1 logged BUG-008 (Windows Git Bash heredoc path) as OPEN with a proposed pathlib fix. v1.3.2.2 ships that fix plus a partial fix for BUG-009 — a multi-bug pattern discovered when the operator ran the live mxm-notebooklm end-to-end workflow tonight. Same-day discovery-to-ship cadence (BUG-009 surfaced via live operator test ~30 min before this ship; fix authored + audited + tagged within the same session). Pre-release-audit dispatch maintained per Session 22 discipline.
+
+### BUG-008 — RESOLVED
+
+**The problem:** `bootstrap/mxm-self-update.sh` interpolated `$INSTALLED_REGISTRY` from bash ($HOME-derived MSYS path on Windows Git Bash, e.g. `/c/Users/SDO/.claude/...`) into a Python heredoc. Python on Windows cannot resolve MSYS-style paths via native filesystem APIs; raised `FileNotFoundError`; script's `try/except` emitted a stderr WARN and exited 0. Registry never updated. Hit every Windows operator since v1.1.1; nobody noticed because the warning was buried.
+
+**The fix:** Inside the heredoc now uses `pathlib.Path.home() / ".claude" / "plugins" / "installed_plugins.json"` — Python's native path resolution. Cross-platform by construction.
+
+**The discipline upgrade:** Three regression guards added in the same edit:
+1. `FileNotFoundError` and generic `Exception` on registry read now ERROR + exit 1 (was buried WARN + exit 0).
+2. After write, the script re-reads the registry and asserts `gitCommitSha` matches `$NEW_SHA`. Mismatch ERRORs + exits 1.
+3. Self-test round-trip verification is now structural — the "silent stderr warning" failure mode is impossible.
+
+PATTERN-01 (cross-platform structural assumptions) recurrence #4 closed. Candidate ADR-022 for v1.3.3+ to codify the discipline: any script that crosses bash → Python (or any inter-language boundary) for user-home paths MUST use the inner language's native path resolution, NOT bash interpolation.
+
+### BUG-009 — OPEN, partial fix shipped
+
+**The problem:** The `mxm-notebooklm` MCP wrapper at `mcp/mxm-notebooklm/server.js` was authored against an older `notebooklm-py` CLI version (likely pre-0.4.x). Upstream renamed subcommands and refactored flag shapes between releases. Result: 12+ confirmed CLI-shape mismatches across the 9 `generate_*` tools, plus likely more in the 29 unaudited tools (source_*, chat_*, research_*, artifact_*, auth_*, profile_*, notebook_*).
+
+**How it surfaced:** Mr. Khan ran the live end-to-end test tonight (screenshot → NotebookLM ingestion → infographic + mind-map → bundle assembly → LinkedIn post via nk-writer). Mind-map generation failed when invoked with `--wait` because `generate mind-map --wait` doesn't exist on the current CLI. Investigation revealed:
+- `mindmap` subcommand → CLI uses `mind-map` (hyphen)
+- `datatable` subcommand → CLI uses `data-table` (hyphen)
+- `slides` subcommand → CLI uses `slide-deck`
+- `--topic` flag (used by `generate_slides` + `generate_infographic`) → CLI takes DESCRIPTION as positional
+- `--num-questions` (quiz) and `--num-cards` (flashcards) → CLI uses `--quantity` categorical (`fewer|standard|more`)
+- `--template` (report) → CLI uses `--format` (`briefing-doc|study-guide|blog-post|custom`)
+- `--query` (data_table) → DESCRIPTION positional, REQUIRED not optional
+- audio length enum `medium` → CLI accepts `default` (not `medium`)
+- video format + style enums almost entirely different between wrapper and CLI
+
+**Why it shipped:** v1.2.1.0 self-claimed "operator-tested probes at design time" but the actual mxm-notebooklm tools were never end-to-end tested through the MCP. Direct-CLI testing during authorship would have caught these. Self-claimed PASS recurrence — same anti-pattern that Session 22 broke for pre-release-audit. ADR-018 fragility-disclosure realized: undocumented upstream APIs AND upstream CLI shape can evolve between releases, silently breaking wrappers.
+
+**The partial fix (v1.3.2.2):** 6 confidence-tier fixes in `mcp/mxm-notebooklm/server.js`:
+- subcommand: `slides` → `slide-deck`
+- subcommand: `datatable` → `data-table`
+- subcommand: `mindmap` → `mind-map`
+- `generate_infographic`: `--topic FLAG` → positional DESCRIPTION
+- `generate_slides`: `--topic FLAG` → positional DESCRIPTION
+- `generate_data_table`: `--query FLAG` → REQUIRED positional DESCRIPTION (now required in the tool's input schema)
+- `generate_audio_overview` length enum: `medium` → `default`
+
+Each fix carries an inline comment `// BUG-009 fix (v1.3.2.2): ...` citing the cause.
+
+**Remaining bugs (v1.3.3 candidate):** quiz `--num-questions` → `--quantity`; flashcards `--num-cards` → `--quantity`; report `--template` → `--format`; video format + style enums; full audit of 29 unaudited tools.
+
+**The new pattern logged:** PATTERN-02 candidate (cataloged in BUG_TRACKER): **external-tool wrapper drift against upstream CLI shape.** Will recur with future ADR-018 integrations (Notion, Linear, Slack, Figma, etc.). Mitigation: version-pin upstream in `mcp/*/package.json` `peerDependencies`, AND ship a CI step that runs `<upstream> <each-subcommand> --help` against a snapshot to detect shape changes before they reach operators.
+
+**Operator-side workaround until v1.3.3:** Use the direct CLI (`notebooklm ...`) instead of the MCP for the affected tools. Direct CLI is fully functional; only the MCP wrapper has drift. ADR-018 fragility-disclosure-on-every-output pattern means this risk was already disclosed.
+
+### Files changed (5)
+
+- `bootstrap/mxm-self-update.sh` — BUG-008 fix + 3 regression-guard hardenings
+- `mcp/mxm-notebooklm/server.js` — BUG-009 6 confidence-tier fixes with inline citation comments
+- `documents/ledgers/BUG_TRACKER.md` — header bumped 8 → 9 entries; BUG-008 moved Open → Resolved with full fix details; BUG-009 added as Open with 12-mismatch catalog + partial-fix-shipped + v1.3.3 candidate full-audit scope
+- `CHANGELOG.md` — this entry
+- `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` (both outer `metadata.version` and plugin entry `version`) + `README.md` badge → 1.3.2.2
+
+### Pre-release-audit dispatch (Cycle 1 + 2)
+
+**Cycle 1** (agent dispatched against 7-file candidate state): VERDICT BLOCKERS:0 · 1 P2 · 2 P3 NITs.
+
+- **P2 caught:** `distributions/claude-plugin/MARKETPLACE_SUBMISSION.md` still at v1.3.2.1 throughout. The audit's amended Bucket 1 (the version-consistency expansion Mr. Khan triggered after catching catalog `metadata.version` drift in v1.3.2.1) explicitly named this surface. **Fixed in same commit** before tag — 10 targeted edits bumping current-state references to 1.3.2.2 while preserving historical narrative references to v1.3.2.1 (the prior ship). SHA reference decoupled from doc-body and pointed to git tag annotation, removing the need for amend-after-tag.
+- **P3 NIT 1 (documented, deferred):** `documents/ledgers/AGENT_SKILL_INVENTORY.md` still says `Version: v1.3.1` in header. Per ADR-002 discipline this file tracks capability counts + last-verified date, not plugin version per se. Capability counts unchanged across v1.3.2 → v1.3.2.2, so the header lag is structurally fine. Worth a NIT bump on a future capability-touching ship.
+- **P3 NIT 2 (documented, deferred):** CHANGELOG "Files changed (5)" header undercounts vs actual 7 files when version-bumping files (plugin.json + marketplace.json + README) are counted separately. Cosmetic; the file list immediately below the count is accurate.
+
+**Cycle 2** (grep-based verification post-P2-fix): all version-bearing surfaces (`.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` outer metadata AND plugin entry, `README.md` badge, `CHANGELOG.md` top entry header, `MARKETPLACE_SUBMISSION.md`) now read `1.3.2.2`. Clean.
+
+Anti-pattern remains broken on this 3rd consecutive disciplined ship.
+
+### Capability delta v1.3.2.1 → v1.3.2.2
+
+| Surface | Before | After | Delta |
+|---|---|---|---|
+| Agents · Skills · Cmds · MCPs · Tools · Frameworks · Compliance · Drift · Hooks · ADRs | 91 · 36 · 48 · 9 · 95 · 74 · 14 · 13 · 14 · 19 | unchanged | — |
+| Bug ledger entries | 8 (1-7 RESOLVED + 8 OPEN) | **9 (1-8 RESOLVED + 9 OPEN)** | +1 net new bug + 1 resolved |
+| Recurring patterns | 1 (PATTERN-01 cross-platform) | **1 + 1 candidate (PATTERN-02 wrapper-vs-CLI drift)** | +1 named pattern |
+| pre-release-audit dispatches | 2 (v1.3.2 + v1.3.2.1) | **3 (this ship)** | third clean discipline iteration |
+
+### Lesson logged
+
+Two same-day patches in a row now demonstrate the discipline holding. The bigger lesson tonight: **operator-tested at design time** is a real discipline, not a CHANGELOG claim. v1.2.1.0 said it was operator-tested. It wasn't. BUG-009 is the receipt. The discipline upgrade going forward: end-to-end live operator workflow before any ADR-018 integration ships. Not via direct CLI by the author; via the MCP wrapper by an operator who hasn't seen the code. That's the only test that catches CLI-shape drift.
+
+---
+
 ## v1.3.2.1 — 2026-05-20 — Post-v1.3.2 operator-restart hardening + BUG-008 logged
 
 Theme: **Same-day patch capturing what v1.3.2's first operator restart surfaced.** Mr. Khan ran `/mxm-self-update` after v1.3.2 pushed, restarted Claude Code, and observed "Claude Desktop took 10 min to acknowledge the restarted message · nothing is working." Investigation showed three things: (a) all 9 Maxim MCPs eventually attached cleanly (the 10-min was cold-warm cost, not a regression — verified by 31 previously-missing tools coming online mid-conversation as the bridge warmed); (b) `installed_plugins.json` registry was stuck at the old `version: "1.1.0"` / SHA `158c8382` because `mxm-self-update.sh` Python heredoc receives MSYS-style `/c/Users/...` paths on Windows Git Bash and Python on Windows can't open them; (c) operators get no warning that the first restart after self-update is intentionally slow on Windows. This patch addresses (a) and (c) directly + documents (b) as BUG-008 for v1.3.3.

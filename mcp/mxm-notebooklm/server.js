@@ -474,7 +474,7 @@ server.tool(
   {
     notebook_id: z.string().describe("Notebook ID"),
     format: z.enum(["deep-dive", "brief", "critique", "debate"]).optional().describe("Audio format (default deep-dive)"),
-    length: z.enum(["short", "medium", "long"]).optional().describe("Length preset (default medium)"),
+    length: z.enum(["short", "default", "long"]).optional().describe("Length preset (default 'default')"),
     language: z.string().optional().describe("ISO language code (e.g., en, es, fr, hi, ar). 50+ supported. Default: en"),
   },
   async ({ notebook_id, format, length, language }) => {
@@ -509,12 +509,14 @@ server.tool(
   "Generate a slide deck from the notebook's sources. Returns task_id.",
   {
     notebook_id: z.string().describe("Notebook ID"),
-    topic: z.string().optional().describe("Optional topic focus (default: synthesizes all sources)"),
+    description: z.string().optional().describe("Optional description focus (default: synthesizes all sources). CLI takes this as positional DESCRIPTION arg."),
   },
-  async ({ notebook_id, topic }) => {
+  async ({ notebook_id, description }) => {
     const auth = await preflightAuth(); if (auth) return auth;
-    const args = ["generate", "slides", "-n", notebook_id];
-    if (topic) args.push("--topic", topic);
+    // BUG-009 fix (v1.3.2.2): CLI subcommand is `slide-deck`, not `slides`.
+    // BUG-009 fix (v1.3.2.2): description is positional DESCRIPTION arg, not --topic flag.
+    const args = ["generate", "slide-deck", "-n", notebook_id];
+    if (description) args.push(description);
     return asMcp(await invokeCli(args));
   },
 );
@@ -524,12 +526,13 @@ server.tool(
   "Generate an infographic from the notebook's sources.",
   {
     notebook_id: z.string().describe("Notebook ID"),
-    topic: z.string().optional().describe("Optional topic focus"),
+    description: z.string().optional().describe("Optional description focus. CLI takes this as positional DESCRIPTION arg."),
   },
-  async ({ notebook_id, topic }) => {
+  async ({ notebook_id, description }) => {
     const auth = await preflightAuth(); if (auth) return auth;
+    // BUG-009 fix (v1.3.2.2): description is positional DESCRIPTION arg, not --topic flag.
     const args = ["generate", "infographic", "-n", notebook_id];
-    if (topic) args.push("--topic", topic);
+    if (description) args.push(description);
     return asMcp(await invokeCli(args));
   },
 );
@@ -584,12 +587,13 @@ server.tool(
   "Generate a structured data table extracted from the notebook's sources. Useful for comparison matrices.",
   {
     notebook_id: z.string().describe("Notebook ID"),
-    query: z.string().optional().describe("Optional query specifying the data shape (e.g., 'compare features across products')"),
+    description: z.string().describe("Required description specifying the data shape (e.g., 'compare features across products'). CLI takes this as REQUIRED positional DESCRIPTION arg."),
   },
-  async ({ notebook_id, query }) => {
+  async ({ notebook_id, description }) => {
     const auth = await preflightAuth(); if (auth) return auth;
-    const args = ["generate", "datatable", "-n", notebook_id];
-    if (query) args.push("--query", query);
+    // BUG-009 fix (v1.3.2.2): CLI subcommand is `data-table`, not `datatable`.
+    // BUG-009 fix (v1.3.2.2): description is REQUIRED positional, not --query flag.
+    const args = ["generate", "data-table", "-n", notebook_id, description];
     return asMcp(await invokeCli(args));
   },
 );
@@ -602,7 +606,8 @@ server.tool(
   },
   async ({ notebook_id }) => {
     const auth = await preflightAuth(); if (auth) return auth;
-    return asMcp(await invokeCli(["generate", "mindmap", "-n", notebook_id]));
+    // BUG-009 fix (v1.3.2.2): CLI subcommand is `mind-map`, not `mindmap`.
+    return asMcp(await invokeCli(["generate", "mind-map", "-n", notebook_id]));
   },
 );
 

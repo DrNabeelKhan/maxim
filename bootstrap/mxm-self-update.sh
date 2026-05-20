@@ -109,21 +109,32 @@ else
 fi
 
 # ─── Step 4: Update installed_plugins.json gitCommitSha + lastUpdated ─
+# BUG-008 fix (v1.3.2.2): use Python-native pathlib.Path.home() inside the
+# heredoc instead of interpolating $INSTALLED_REGISTRY from bash. On Windows
+# Git Bash, $HOME resolves to MSYS-style /c/Users/... which Python on Windows
+# cannot open. pathlib.Path.home() uses native filesystem APIs cross-platform.
+# Bash-side $INSTALLED_REGISTRY var retained for logging only.
 log "Updating installed_plugins.json registry…"
 python - <<PYEOF
 import json, sys
 from datetime import datetime, timezone
+from pathlib import Path
 
-path = r"$INSTALLED_REGISTRY"
+# Python-native path resolution (BUG-008 fix per v1.3.2.2).
+# Works on Mac, Linux, WSL, Git Bash on Windows, and native Windows Python.
+path = str(Path.home() / ".claude" / "plugins" / "installed_plugins.json")
 key = "$PLUGIN_NAME@$MARKETPLACE_NAME"
 new_sha = "$NEW_SHA"
 
 try:
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
+except FileNotFoundError:
+    print(f"  ERROR: registry not found at {path} - did you install this plugin via /plugin install?", file=sys.stderr)
+    sys.exit(1)  # BUG-008: promote buried WARN to hard-fail ERROR per BUG_TRACKER regression guard
 except Exception as e:
-    print(f"  WARN: cannot read registry ({e}); registry SHA NOT updated", file=sys.stderr)
-    sys.exit(0)
+    print(f"  ERROR: cannot read registry ({e})", file=sys.stderr)
+    sys.exit(1)
 
 if key not in data.get("plugins", {}):
     print(f"  WARN: {key} not in registry; registry NOT updated", file=sys.stderr)
@@ -138,9 +149,17 @@ try:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
         f.write("\n")
-    print(f"  registry SHA → {new_sha[:8]}", file=sys.stderr)
+    # Self-test: re-read and verify SHA round-tripped correctly (per BUG-008 regression guard)
+    with open(path, encoding="utf-8") as f:
+        verify = json.load(f)
+    written_sha = verify["plugins"][key][0]["gitCommitSha"]
+    if written_sha != new_sha:
+        print(f"  ERROR: registry write verification failed - expected {new_sha[:8]}, got {written_sha[:8]}", file=sys.stderr)
+        sys.exit(1)
+    print(f"  registry SHA -> {new_sha[:8]} (verified round-trip)", file=sys.stderr)
 except Exception as e:
-    print(f"  WARN: registry write failed ({e})", file=sys.stderr)
+    print(f"  ERROR: registry write failed ({e})", file=sys.stderr)
+    sys.exit(1)
 PYEOF
 
 # ─── Done ────────────────────────────────────────────────────────────
