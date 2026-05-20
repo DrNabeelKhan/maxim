@@ -59,7 +59,7 @@ CLAUDE.md was split in v1.0.0 from ~900 lines into a slim main + modular referen
 | [`CLAUDE.d/session-memory.md`](CLAUDE.d/session-memory.md) | Storage map, project detection, junction auto-heal, full Session Start/End protocols, data flow, junction read-only enforcement, auto-inventory, staleness prevention, version sync, multi-project safety |
 | [`CLAUDE.d/protocols.md`](CLAUDE.d/protocols.md) | **Documents as Executable Contracts (v1.0.0+)**, Commit Protocol, New Skill Domain Checklist, Build Target Protocol, File Deduplication Policy, Project Scaffold Standard, ADR Lifecycle Protocol |
 | [`CLAUDE.d/dispatch.md`](CLAUDE.d/dispatch.md) | Domain Dispatch Table (24 domains incl. v1.0.0 wiki + voice), Conflict Resolution, Cross-Agent Collaboration, Confidence Tagging legend, Workflow Patterns |
-| [`CLAUDE.d/office-catalog.md`](CLAUDE.d/office-catalog.md) | Full agent roster across 7 offices + orchestrators (90 agents) |
+| [`CLAUDE.d/office-catalog.md`](CLAUDE.d/office-catalog.md) | Full agent roster across 7 offices + orchestrators (91 agents) |
 | [`documents/ADRs/`](documents/ADRs/) | **Architecture Decision Records (v1.0.0+)** — canonical ledger: INDEX.md, TEMPLATE.md, README.md, individual ADRs |
 | [`CLAUDE.d/repo-map.md`](CLAUDE.d/repo-map.md) | Authoritative repo structure map + per-project structure |
 
@@ -247,7 +247,7 @@ These rules apply regardless of which office is active:
 3. **CSO arbitration** — compliance conflicts → security-analyst resolves
 4. **Unroutable tasks** → executive-router logs to `.mxm-skills/agents-skill-gaps.log` and requests clarification
 
-**Two-layer dispatch (ADR-017):** **19 dispatchable subagents** (7 office agents + 5 governance orchestrators + 4 quality-chain + 3 utility) form the routing tier. The **91-agent catalog** (full roster at `agents/MXM/{office}/`) is reached via `mxm-catalog` MCP from inside each office agent — `mxm-catalog.route_task()` + `get_agent_dna()` + `get_handoff_chain()`. All 91 reachable; only 19 dispatchable.
+**Two-layer dispatch (ADR-017):** **24 dispatchable subagents** (7 office agents + 10 governance/quality orchestrators + 7 utility/lead-compat) form the routing tier. The **91-agent catalog** (full roster at `agents/MXM/{office}/`) is reached via `mxm-catalog` MCP from inside each office agent — `mxm-catalog.route_task()` + `get_agent_dna()` + `get_handoff_chain()`. All 91 reachable; 24 dispatchable. (v1.3.2 correction: prior count of 19 was stale; authoritative count is `.claude-plugin/plugin.json` agents[] array length.)
 
 **Full agent roster:** [`CLAUDE.d/office-catalog.md`](CLAUDE.d/office-catalog.md).
 
@@ -407,7 +407,7 @@ When any threshold is exceeded, scheduled tasks sleep until `resets_at`. Usage i
 | `CLAUDE.d/session-memory.md` | Full session/memory protocols (split from CLAUDE.md in v1.0.0) |
 | `CLAUDE.d/protocols.md` | Executable Contracts + Commit/Build/Dedup/Skill Domain protocols + ADR Lifecycle + Session-End Bundle + CHANGELOG Discipline |
 | `CLAUDE.d/dispatch.md` | Domain Dispatch Table + Conflict Resolution + Workflows |
-| `CLAUDE.d/office-catalog.md` | 90 agents across 7 offices |
+| `CLAUDE.d/office-catalog.md` | 91 agents across 7 offices |
 | `CLAUDE.d/repo-map.md` | Authoritative repo structure |
 | `documents/ADRs/` | Architecture Decision Records — canonical ledger (v1.0.0+) |
 | `documents/ADRs/README.md` | ADR rules: numbering, lifecycle, when to write |

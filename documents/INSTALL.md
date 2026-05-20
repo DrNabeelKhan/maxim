@@ -57,7 +57,7 @@ The first registers the marketplace; the second installs the base plugin.
 Confirm the install dialog shows:
 - **Version:** v1.1.0 or later
 - **By:** Dr. Nabeel Khan
-- 91 specialist agents · 64 frameworks · 14 compliance frameworks
+- 91 specialist agents · 74 behavioral frameworks · 14 compliance frameworks · 9 MCPs (95 tools)
 
 Choose **"Install for you (user scope)"** when prompted.
 
@@ -65,14 +65,15 @@ Choose **"Install for you (user scope)"** when prompted.
 
 The first session after install will auto-install the 9 MCP servers' Node dependencies (~30 seconds, runs once). After the restart you'll see all 7 MCPs `✓ Connected`.
 
-### What you get free (Starter tier, forever)
+### What you get free (Core tier, forever)
 
-- All 90 agents
+- All 91 agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP)
 - All 48 slash commands
-- All 64 frameworks (advisory mode)
+- All 74 frameworks (advisory mode)
 - Full executive routing
 - Local MemPalace memory
-- 4 Proactive Watch drift classes
+- 13 Proactive Watch drift classes (4 free severity, 9 gated severity-block at Pro+)
+- 9 MCPs · 95 tools
 
 ### What auto-activates on first call (Pro Trial, 90 days)
 

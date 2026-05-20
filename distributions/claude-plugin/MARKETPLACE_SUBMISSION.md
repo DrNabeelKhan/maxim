@@ -106,7 +106,7 @@ Maxim differentiates from generic agent libraries on five axes. This section sur
 
 ### 1. Framework citation and enforcement
 
-Every agent, skill, and pack SKILL.md cites a peer-reviewed behavioral framework with the mechanism stated. See `documents/reference/FRAMEWORKS_MASTER.md` (64 frameworks) and the 6 L1 pack SKILL.md files in `mxm-packs-source/packs/pack-l1-{1..6}-*/SKILL.md` (one distinct primary framework per pack: Prospect Theory, Cognitive Load Theory, Signal Detection Theory, COM-B, Dual Process Theory, Fogg B=MAP).
+Every agent, skill, and pack SKILL.md cites a peer-reviewed behavioral framework with the mechanism stated. See `documents/reference/FRAMEWORKS_MASTER.md` (74 frameworks) and the 6 L1 pack SKILL.md files in `mxm-packs-source/packs/pack-l1-{1..6}-*/SKILL.md` (one distinct primary framework per pack: Prospect Theory, Cognitive Load Theory, Signal Detection Theory, COM-B, Dual Process Theory, Fogg B=MAP).
 
 ### 2. Governance as enforcement, not documentation
 

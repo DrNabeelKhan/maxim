@@ -27,15 +27,17 @@ cd mcp && for dir in maxim-*/; do (cd "$dir" && npm install); done
 
 | # | Server | Priority | Tools | Purpose |
 |---|---|---|---|---|
-| 1 | [`mxm-portfolio`](mxm-portfolio/README.md) | P1 | 7 | Cross-project portfolio context + sync_portfolio |
-| 2 | [`mxm-context`](mxm-context/README.md) | P1 | **13** | Per-project intelligence + design refs (absorbed) + drift detection (new) |
-| 3 | [`mxm-catalog`](mxm-catalog/README.md) | P2 | **9** | Agent routing + skill / command catalog (merged dispatch + skills) |
+| 1 | [`mxm-portfolio`](mxm-portfolio/README.md) | P1 | **9** | Cross-project portfolio context + sync_portfolio |
+| 2 | [`mxm-context`](mxm-context/README.md) | P1 | **15** | Per-project intelligence + design refs + drift detection (13 classes) |
+| 3 | [`mxm-catalog`](mxm-catalog/README.md) | P2 | **9** | Agent routing + L2 specialist descent + skill/command catalog |
 | 4 | [`mxm-compliance`](mxm-compliance/README.md) | P2 | 5 | Compliance checking (14 frameworks) |
-| 5 | [`mxm-behavioral`](mxm-behavioral/README.md) | P2 | 5 | Behavioral science engine (64 frameworks — added Proactive Watch) |
-| 6 | [`mxm-memory`](mxm-memory/README.md) | P3 | 4 | Unified memory search across session files |
+| 5 | [`mxm-behavioral`](mxm-behavioral/README.md) | P2 | **7** | Behavioral science engine (74 frameworks + Proactive Watch) |
+| 6 | [`mxm-memory`](mxm-memory/README.md) | P3 | **6** | Unified memory search across session files |
 | 7 | [`mxm-voice`](mxm-voice/README.md) | P3 | 4 | Voice-driven office routing (wraps mbailey/voicemode) |
+| 8 | `mxm-commands` | P3 | 2 | Slash-command dispatcher (cross-surface parity, v1.2.0.1+) |
+| 9 | `mxm-notebooklm` | P3 | **38** | NotebookLM research synthesis (wraps teng-lin/notebooklm-py MIT per ADR-018, v1.2.1.0+) |
 
-**Total tools: 47.**
+**Total tools: 95** (verified via `server.tool()` grep, v1.3.2 surface-claims-drift correction).
 
 ## Migration from v1.0.0 (Breaking Changes)
 

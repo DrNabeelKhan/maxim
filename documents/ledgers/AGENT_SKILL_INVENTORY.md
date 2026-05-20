@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.0 · **Last verified:** 2026-05-20
+**Version:** v1.3.1 · **Last verified:** 2026-05-20 (v1.3.2 doc-cleanup ship)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -32,7 +32,7 @@ Skills live under `.claude/skills/<domain>/SKILL.md`. Domain list authoritative 
 
 Categories: AI media, banner design, behavioral science, brand, CEO automation, compliance, content, design (dispatcher + sub-domains), design resources, design system, engineering, enterprise architecture, junction guard, marketing, memory-palace, operator profile, proactive watch, product, product development research, project management, search visibility, security, session memory, slides, studio operations, testing, UI styling, UI/UX Pro Max, usage-aware scheduler, voice, **voice-routing**, wiki (ingest/query/lint/explore).
 
-**Total domain skills: 35.** Net delta from v1.1.1 (34 → 35): `voice-routing` added 2026-05-19 per ADR-016 — callable lookup wrapper around `myVoiceDNA/VOICE_SELECTION.md`; consumed by `nk-writer` agent and per-startup brand-writer instances.
+**Total domain skills: 36.** Net delta from v1.1.1 (34 → 36): `voice-routing` added 2026-05-19 per ADR-016 — callable lookup wrapper around `myVoiceDNA/VOICE_SELECTION.md`; consumed by `nk-writer` agent and per-startup brand-writer instances. `notebooklm-py` added 2026-05-20 per ADR-018 — Maxim-flavored skill wrapping the upstream `teng-lin/notebooklm-py` MIT skill; layered with ADR-007 framework citations (Diátaxis · Diffusion of Innovations · Dual Coding Theory) and CSO compliance-orchestrator auto-loop on source uploads.
 
 ---
 
@@ -52,20 +52,21 @@ All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/ref
 
 ---
 
-## Section 4 — MCP Servers (9 servers, 87 tools)
+## Section 4 — MCP Servers (9 servers, 95 tools)
 
 | Server | Path | Tools |
 |---|---|---:|
 | `mxm-behavioral` | `mcp/mxm-behavioral/` | 7 |
+| `mxm-catalog` | `mcp/mxm-catalog/` | 9 |
+| `mxm-commands` | `mcp/mxm-commands/` | 2 |
 | `mxm-compliance` | `mcp/mxm-compliance/` | 5 |
 | `mxm-context` | `mcp/mxm-context/` | 15 |
 | `mxm-memory` | `mcp/mxm-memory/` | 6 |
+| `mxm-notebooklm` | `mcp/mxm-notebooklm/` | 38 |
 | `mxm-portfolio` | `mcp/mxm-portfolio/` | 9 |
-| `mxm-catalog` | `mcp/mxm-catalog/` | 3 |
-| `mxm-voice` | `mcp/mxm-voice/` | 2 |
-| `mxm-commands` | `mcp/mxm-commands/` | 2 |
+| `mxm-voice` | `mcp/mxm-voice/` | 4 |
 
-**Total MCP servers: 8.** **Total MCP tools: 49.** Registry: `.mcp.json`. Net delta from v1.2.0 (7 → 8): `mxm-commands` added v1.2.0.1 — slash-command dispatcher MCP that exposes all 48 /mxm-* commands as the `mxm_command` tool + `list_commands` catalog tool. Closes command-parity gap for Claude Desktop / Web / Cowork surfaces that lack native slash-command processors.
+**Total MCP servers: 9.** **Total MCP tools: 95.** Registry: `.mcp.json`. Source of truth: `server.tool(` declarations grepped per server.js, verified against the deferred-tools surface in `claude mcp list`. Net delta from v1.2.0 (7 servers · 49 tools) → v1.3.1: `mxm-commands` added v1.2.0.1 (+2 tools) — slash-command dispatcher MCP; `mxm-notebooklm` added v1.2.1.0 (+38 tools) per ADR-018 three-layer integration pattern. Plus +6 tools across `mxm-catalog` (3→9 per v1.2.0.5 + v1.2.0.6 L2 specialist descent), `mxm-voice` (2→4 v1.2.0 expansion). v1.3.2 surface-claims-drift correction: README v1.3.1 MCP table previously declared 87 tools by undercounting behavioral / context / memory / portfolio by 2 each — caught by pre-release-audit ground-truth grep against `server.tool(` declarations. Corrected here and in README.md v1.3.2.
 
 ---
 
@@ -139,7 +140,7 @@ All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Tem
 | 006 | External Content Boundary Rule | accepted |
 | 007 | Behavioral Moat Framing Doctrine | accepted |
 | 008 | Community Pack System | accepted |
-| 009 | Pack Architecture: 6 L1 + 4 L2 + 4 L3 | accepted |
+| 009 | Pack Architecture: 6 L1 + 4 L2 + 4 L3 | accepted (amendment pending v1.3.3 — L2 nomenclature shift to vertical-bundle-packs vs. ADR-019 wizard reality) |
 | 010 | Confidence Tag Technical Educator Rubric | accepted |
 | 011 | Stripe-primary payment processor | accepted |
 | 012 | Maxim Overlay Engine (MOE) — governance layer for every installed Claude Code plugin | accepted |
@@ -147,8 +148,11 @@ All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Tem
 | 014 | Maxim Studio — AGPL-3.0 GUI shell on top of BSL-1.1 plugin | accepted |
 | 015 | Maxim Studio v0.2+ surface roadmap — TIER 2/3/4 deferred to v0.2/0.3/0.4+ | accepted |
 | 016 | Voice Writing Agent Architecture — nk-writer + voice-routing skill + per-startup template | accepted |
+| 017 | Office-as-Dispatch-Boundary + MCP-Catalog Specialist Surface | accepted |
+| 018 | External Tool Integration Pattern (three-layer: community pack + Maxim skill + MCP wrapper) | accepted |
+| 019 | Multi-Tenant Readiness (tier wizard · operator-writer template · public docs rewrite) | accepted |
 
-**Total ADRs: 16.**
+**Total ADRs: 19.** Net delta from v1.1.1 (16 → 19): +ADR-017 (v1.2.0.4) +ADR-018 (v1.2.1.0) +ADR-019 (v1.3.0). All three landed in Session 21 (2026-05-19/20).
 
 ---
 

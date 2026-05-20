@@ -92,7 +92,7 @@ npm install
 
 ## Related
 
-- `../README.md` — full MCP server catalog (7 servers, 47 tools total)
+- `../README.md` - full MCP server catalog (9 servers, 95 tools total)
 - `../mxm-context/` — absorbed `maxim-design` tools + new `watch_*` tools
 - `documents/ADRs/ADR-002-executable-contracts.md` — consolidation rationale
 - `CHANGELOG.md` § v1.0.0 — release notes

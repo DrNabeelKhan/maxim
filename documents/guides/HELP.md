@@ -876,11 +876,14 @@ Include:
 
 ## Footer
 
-**Maxim v1.3.1:** Behavioral Intelligence Architecture for Enterprise AI
+**Maxim v1.3.2:** Behavioral Intelligence Architecture for Enterprise AI
 
-- **Agents:** 90+ specialists across 7 executive offices
-- **Skills:** 34 domains with 74 behavioral frameworks
+- **Agents:** 91 specialists across 7 executive offices (24 dispatchable + 67 catalog via mxm-catalog MCP)
+- **Skills:** 36 domains with 74 behavioral frameworks
+- **MCPs:** 9 servers · 95 tools (incl. NotebookLM research synthesis per ADR-018)
 - **Commands:** 48 slash commands for every phase of work
+- **Drift detection:** 13 Proactive Watch classes
+- **ADRs:** 19 architectural decisions (15 public · 4 confidential)
 - **Governance:** Ethics gates, CSO auto-loop, compliance pre-enforcement, confidence tagging
 - **Model Support:** Anthropic, OpenAI, Gemini, Mistral, local models
 

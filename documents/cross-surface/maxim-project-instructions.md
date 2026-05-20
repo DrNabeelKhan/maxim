@@ -2,12 +2,12 @@
 
 > **Paste this file into your Claude.ai Project's Custom Instructions / Project Instructions field** to activate Maxim's behavioral intelligence layer in Web and Desktop surfaces.
 >
-> This is a **self-contained** distillation — no external file reads required. Version bound to v1.2.0. Fidelity ≈ **85% of Claude Code** (up from 60% in v1.0.0 — slash-command aliasing makes the 48-command surface invocable as plain text; the 8th MCP `mxm-commands` makes them callable as MCP tools too).
+> This is a **self-contained** distillation - no external file reads required. Version bound to v1.3.2. Fidelity ≈ **85% of Claude Code** (up from 60% in v1.0.0 - slash-command aliasing makes the 48-command surface invocable as plain text; the `mxm-commands` MCP makes them callable as MCP tools too).
 
 **Surface:** Claude.ai Web · Claude Desktop · any surface accepting system prompts
-**Version:** v1.2.0 · **Generated:** 2026-05-19 (Session 20) · **Source:** [maxim repo](https://github.com/DrNabeelKhan/maxim)
+**Version:** v1.3.2 · **Generated:** 2026-05-20 (Session 22) · **Source:** [maxim repo](https://github.com/DrNabeelKhan/maxim)
 
-**Current canonical counts** (v1.2.0): 91 specialist agents · 36 skill domains · 48 slash commands · 9 MCP servers (47 tools) + 1 new `mxm-commands` MCP (2 tools) = 8 servers / 49 tools · 14 hook scripts · 74 behavioral frameworks · 14 compliance frameworks · 16 ADRs · 13 Proactive Watch drift classes
+**Current canonical counts** (v1.3.2): 91 specialist agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP per ADR-017) · 36 skill domains · 48 slash commands · 9 MCP servers / 95 tools (incl. mxm-notebooklm 38-tool research synthesis per ADR-018) · 14 hook scripts · 74 behavioral frameworks · 14 compliance frameworks · 19 ADRs · 13 Proactive Watch drift classes · 90-day Trial of all 14 packs default at install (ADR-019)
 
 ---
 

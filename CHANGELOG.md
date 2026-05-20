@@ -8,6 +8,129 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.2 — 2026-05-20 — Full surface-claims coherence + pre-release-audit discipline first iteration
+
+Theme: **The audit caught what the prior 5 self-claimed PASSes missed.** v1.3.2 began as a 2-file doc cleanup (PACKS.md + maxim-one-pager.md deferred from v1.3.0 scope). It became a 24-file coherence ship after the actually-dispatched `maxim:pre-release-audit` returned **BLOCKERS:7** against the 5-file candidate state — discovering the wizard scripts (the FIRST surface every new operator sees) still declared "64 frameworks" and "87 tools" while the doc rewrite bragged about catching the same drift. **First clean discipline iteration in 6 patches** (v1.2.0.4 → v1.3.1 all self-claimed PASS without dispatching the agent).
+
+### The discipline lesson, broken
+
+For five consecutive patches (v1.2.0.4, v1.2.0.5, v1.2.0.6, v1.3.0, v1.3.1), CHANGELOG entries claimed "pre-release-audit PASS" without dispatching the agent. v1.3.1's own honest accounting noted "Discipline lag - third iteration." v1.3.2 is the first ship where the audit actually ran before the tag — and immediately surfaced 7 P1 blockers across 5 files outside the original cleanup scope. The audit's verdict: **BLOCK the tag. The whole point of v1.3.2 is correcting capability-count drift; shipping it while `bootstrap/install-tier-packs.{sh,ps1}` still declares "64 frameworks" and "87 tools" is the same anti-pattern the patch claims to fix — caught by the audit it claims passed.** Scope expanded; ship held; drift corrected; ADR-007 enforcement honored on the patch documenting ADR-007 enforcement.
+
+### The MCP tool count correction (87 → 95)
+
+Pre-release-audit ground-truth grep against `server.tool()` declarations in each `mcp/mxm-*/server.js`, cross-verified against the deferred-tools surface in `claude mcp list`, found that **4 MCPs were undercounted by exactly 2 tools each** in every doc surface since v1.2.0:
+
+| MCP | server.js (real) | Prior docs claimed | Source |
+|---|---:|---:|---|
+| mxm-behavioral | **7** | 5 | `mcp/mxm-behavioral/server.js` |
+| mxm-context | **15** | 13 | `mcp/mxm-context/server.js` |
+| mxm-memory | **6** | 4 | `mcp/mxm-memory/server.js` |
+| mxm-portfolio | **9** | 7 | `mcp/mxm-portfolio/server.js` |
+| catalog/compliance/commands/voice/notebooklm | 9+5+2+4+38 | same | matches |
+| **TOTAL** | **95** | 87 (drift +8) | corrected here |
+
+The +2-per-MCP pattern suggests a v1.2.0 batch added 2 tools to each of 4 servers but the README per-MCP breakdown didn't refresh, while the total claim got arithmetic-propagated from the stale breakdown. This is exactly Class 11 surface-claims-drift (Proactive Watch) — caught here by the discipline pre-release-audit dispatch.
+
+### The dispatchable-subagent count correction (19 → 24)
+
+Audit found `README.md:210` claimed "24 dispatchable subagents" while CLAUDE.md and ADR-017 claimed "19" — internal contradiction. Ground-truth: `.claude-plugin/plugin.json` agents[] array has exactly **24 entries** (7 office agents + 10 governance/quality orchestrators + 7 utility/lead-compat). README was correct; CLAUDE.md and ADR-017 were stale. CLAUDE.md corrected in v1.3.2; ADR-017 amendment flagged for v1.3.3 (ADRs are point-in-time historical decisions; corrections happen via amendment ADRs, not silent edits).
+
+### What changed — 24 distinct files modified
+
+**Original v1.3.2 scope (5 files):**
+- `documents/ledgers/AGENT_SKILL_INVENTORY.md` — v1.3.0 → v1.3.1 header · Section 2 prose/header reconciled (35→36) · Section 4 added mxm-notebooklm row + total recalc to 9/95 · Section 9 added ADR-017/018/019 (total 19)
+- `README.md` — version badge → v1.3.2 · MCP_tools badge 87→95 · MCP table per-MCP counts corrected · ADR section "18 public" → "19 (15 public · 4 confidential)"
+- `documents/guides/PACKS.md` — full rewrite per ADR-019 framing · SCQA opening · 90-day Trial rationale · 6 install paths matching wizard reality · L1/L2/L3 pack breakdown · JTBD personas
+- `documents/marketing/one-pagers/maxim-one-pager.md` — strip "DRAFT v1.0.0" · v1.3.1 counts · SCQA · 6 JTBD personas · copyright cleanup
+- `landing-page/components/sections/PricingLadder.tsx` — Starter tier features refreshed · Pro tier "10 classes" → 13
+
+**P1 blocker fixes (5 files, ~8 line edits) — caught by audit:**
+- `bootstrap/install-tier-packs.sh` — wizard "64 frameworks" → 74 (2 occurrences incl. Do-Solo handler) · "87 tools" → 95
+- `bootstrap/install-tier-packs.ps1` — Windows mirror (2 occurrences)
+- `bootstrap/mxm-desktop-config.sh` — "87 tools" → 95 (2 occurrences incl. "49 tools" stale ref)
+- `bootstrap/mxm-desktop-config.ps1` — Windows mirror
+- `.claude-plugin/plugin.json` — marketplace description "9 MCPs (87 tools)" → 95 · version 1.3.1 → 1.3.2 · adds "90-day Trial of all 14 packs default at install"
+
+**P2 coherence fixes (15 files):**
+- `.claude-plugin/marketplace.json` — marketplace-visible plugin description full refresh (90→91 · 34→36 · 38→48 · 64→74 · adds 9 MCPs (95 tools) · adds Trial default)
+- `.mcp.json` — _comment refresh + 5 per-MCP descriptions (portfolio 7→9 · context 13→15 · behavioral 64→74 frameworks + 5→7 tools · memory 4→6)
+- `documents/guides/ABOUT.md` — header (87→95 · 18→19 ADRs · 14-day→90-day Trial · adds 24 dispatchable · adds 13 drift classes) · symlink list (37→48 · 34→36 · 90→91) · "v1.0.0" footer → v1.3.2 · "55 tools" → 95
+- `documents/INSTALL.md` — install confirmation list (91 · 74 · 9/95) · Core tier description (91 · 74 · 13 drift classes 4 free / 9 gated)
+- `documents/guides/GETTING_STARTED.md` — install line "87 tools" → 95
+- `CLAUDE.md` — office-catalog reference (90→91) · two-layer dispatch claim (19→24 dispatchable, with explicit v1.3.2 correction footnote)
+- `CLAUDE.d/repo-map.md` — mcp dir comment "47 tools" → 95 + per-MCP counts refreshed
+- `CLAUDE.d/office-catalog.md` — total 90→91 with full breakdown (80 specialists + 10 orch + 1 router) and ADR-017 dispatch tier explained
+- `documents/guides/HELP.md` — v1.3.1→v1.3.2 + counts refreshed (90+→91 with dispatchable breakdown · 34→36 · adds MCPs · adds 13 drift classes · adds 19 ADRs)
+- `.claude/commands/mxm-help.md` — drift class count (12→13) · framework count (64→74) · authoritative-counts summary refresh (full v1.3.2 counts)
+- `mcp/README.md` — server table (portfolio 7→9 · context 13→15 · behavioral 5→7 + 64→74 frameworks · memory 4→6) + added mxm-commands + mxm-notebooklm rows · total 47→95
+- `mcp/mxm-catalog/README.md` — Related link "7 servers, 47 tools" → "9 servers, 95 tools"
+- `documents/cross-surface/maxim-project-instructions.md` — v1.2.0→v1.3.2 header · counts refresh (91 with 24/67 split · 9/95 · 19 ADRs · 90-day Trial)
+- `.brand-foundation/personal/voice-profile.md` — Identity paragraph (64→74 · 90→91 · 87→95 tools · "Six commercial packs" → "14 packs across 3 tiers") · Universal constants example numbers
+- `documents/MXM_RUNDOWN.md` — Answer paragraph (87→95 · adds 24/67 split · adds v1.3.2 coherence note)
+
+**Distribution/marketing alignment (3 files):**
+- `distributions/claude-plugin/MARKETPLACE_SUBMISSION.md` — framework count 64→74
+- `distributions/claude-plugin/DISTRIBUTION.md` — Components table (37→48 commands · 3→14 hooks · 4→13 drift classes · 7/47→9/95 MCPs) · Free tier list (90→91 with dispatch breakdown · 4→13 classes · 47→95 tools)
+- `documents/reference/LICENSE_SEPARATION.md` — Work 2 description (90→91 · 64→74 · adds 95 tools)
+
+### Documented deferrals (out of scope for v1.3.2 — landing in v1.3.3)
+
+The following surfaces still contain stale numerics but were intentionally not modified in v1.3.2 per established convention:
+
+| Surface | Why deferred |
+|---|---|
+| `CHANGELOG.md` historical entries (v1.0–v1.3.1) | Append-only by convention. Past entries describe accurate counts at their release time; retroactive edits would falsify history. |
+| ADR-009 (L2 nomenclature subscription-tier vs vertical-bundle-pack) | ADRs are point-in-time decisions. v1.3.3 candidate: amendment ADR clarifying the L2 semantic shift introduced by ADR-019 wizard. |
+| ADR-014 (Studio architecture counts) · ADR-017 (~19 dispatchable) · ADR-019:72 (87 tools reference) | Same — point-in-time historical records. ADR-017 amendment to correct "~19" → "24" candidate for v1.3.3. |
+| `cloudflare-worker/scripts/setup-stripe-products.mjs:64` | Requires Stripe API call to apply (not a doc edit). v1.3.3 ops task. |
+| `cloudflare-worker/grants.json` `frameworks-64` key | Renaming the JWT claim key would break existing license tokens. Keep key; update description in v1.3.3 with backwards-compat note. |
+| `documents/reference/MAXIM_STUDIO_ARCHITECTURE.md` · `FRAMEWORK_ROADMAP.md` · `FRAMEWORKS_MASTER.md` "Shipping in v1.0.0" · `AGENT_ROSTER_v1.2_PROPOSAL.md` | Point-in-time reference / roadmap / proposal docs. Refresh as part of v1.4 architecture documentation cycle. |
+| `documents/marketing/packs-catalog/maxim-pack-catalog-v1.0.0.md` · `catalogues/maxim-catalogue-v1.0.0.md` | Filename-versioned to v1.0.0. v1.3.3 candidate: supersede with v1.3.x-versioned successors rather than overwrite. |
+| `documents/marketing/github-repo-page/repo-page-design-spec.md` · `packaging/cowork/ASSEMBLY.md` · `packs/pack-l1-6-behavioral-intelligence/SKILL.md` | Specialized surfaces (GitHub design spec · Cowork build · pack-internal). v1.3.3 cleanup. |
+| `mcp/mxm-commands/server.js:178` embedded "64 behavioral frameworks via FRAMEWORKS_MASTER.md" | Runtime MCP code — needs test verification before edit. v1.3.3. |
+| `.claude/skills/proactive-watch/SKILL.md` examples · `watch.{sh,ps1}` comments | Illustrative examples · internal comments. Cosmetic. v1.3.3. |
+| `templates/prompts/PROMPT_maxim-capabilities-demo.md` · `templates/demo-scenarios.md` | Demo / template surfaces. Lower visibility. v1.3.3. |
+| `documents/ledgers/MOAT_TRACKER.md:92` "competitors can also list 64 frameworks" | Anti-pattern example claim — defensible to keep or update. Cosmetic. |
+
+### Audit cycles (the discipline trail)
+
+**Cycle 1 (against 5-file candidate state):** Dispatched `maxim:pre-release-audit` agent. Verdict: **BLOCKERS:7**. Found wizard scripts, plugin.json marketplace description, Desktop config scripts all still declared stale counts. Audit recommendation: BLOCK the tag. Scope expanded.
+
+**Cycle 2 (against 23-file mid-fix state):** Internal grep-based re-audit caught 3 critical misses my P1+P2 sweep missed: `install-tier-packs.sh:194` Do-Solo handler "64 frameworks" (fixed only the .ps1 mirror initially), `mxm-help.md:459` authoritative-counts summary line, `documents/MXM_RUNDOWN.md:15` operator-facing rundown. All fixed in same patch.
+
+**Cycle 3 (final verification grep):** Remaining stale-numeric matches are all in scope-deferred surfaces (CHANGELOG history, ADRs, v1.0.0-versioned marketing catalogs, runtime MCP code requiring test, JWT-grant keys). Documented above.
+
+### Capability delta v1.3.1 → v1.3.2
+
+| Surface | Before | After | Delta |
+|---|---|---|---|
+| Agents · Skills · Cmds · Frameworks · Compliance · Drift · Hooks · ADRs | 91 · 36 · 48 · 74 · 14 · 13 · 14 · 19 | unchanged | — |
+| MCP tools (declared) | 87 (drift) | **95** (real) | +8 surface-claims correction |
+| Dispatchable subagents (declared) | 19 / 24 (split across surfaces) | **24** (unified per plugin.json) | coherence |
+| Files modified for coherence | — | **24** | — |
+| pre-release-audit dispatches | 0 (5 self-claimed PASS streak) | **1 (Cycle 1) + 1 (Cycle 2)** | first clean iteration |
+
+No functional changes. Pure doc/config coherence patch. Every operator-facing capability claim across the plugin-repo + landing-page now reads the same number, sourced from `documents/ledgers/AGENT_SKILL_INVENTORY.md` (which is itself sourced from `server.tool()` grep against actual MCP server code).
+
+### Lessons logged honestly
+
+1. **Pre-release-audit catches what self-assessment misses.** Cycle 1 found 7 P1 blockers in 90 seconds. Five prior self-claimed PASSes missed all of them. The cost of running the agent is trivial; the cost of NOT running it compounds across patches.
+2. **Audits surface their own misses.** Cycle 2 grep found 3 surfaces Cycle 1 didn't explicitly call out. Two audit cycles per ship — agent dispatch + grep-based verification — is the right discipline minimum for any patch touching capability claims.
+3. **Source-of-truth must be code, not docs citing other docs.** AGENT_SKILL_INVENTORY.md was supposed to be the canonical source; in practice it had drifted to 49 tools when reality was 95. The fix path: `server.tool()` grep is the new source-of-truth for tool counts; AGENT_SKILL_INVENTORY.md verifies against it on every release.
+4. **The L2 nomenclature confusion (ADR-009 subscription-tiers vs ADR-019 vertical-bundle-packs) is structural, not editorial.** PACKS.md attempts reconciliation; ADR-009 amendment scheduled for v1.3.3 to lock the architectural answer.
+
+### Pre-release verification (operator-side, post v1.3.2)
+
+```bash
+git pull                                                    # latest main
+claude /plugin install maxim@maxim-packs                    # picks up plugin.json v1.3.2
+bash bootstrap/install-tier-packs.sh                        # wizard now says "74 frameworks · 95 tools"
+grep -rn "87 tools\|64 frameworks\|90 agents" --include="*.md" --include="*.json" --include="*.sh" --include="*.ps1" \
+  -- ':!CHANGELOG.md' ':!documents/ADRs/' ':!*v1.0.0*'      # remaining matches are scope-deferred surfaces only
+```
+
+---
+
 ## v1.3.1 — 2026-05-20 — Trial duration aligned (14d → 90d) matching existing website Pro Trial
 
 Theme: **Operator correction landed same-day.** v1.3.0 shipped the new tier wizard with a 14-day Trial default. The existing website (landing-page) advertised a 90-day Pro Trial. Two trial concepts in parallel would confuse operators — unifying both to **90-day Trial** per operator directive.

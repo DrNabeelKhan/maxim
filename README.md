@@ -1,14 +1,14 @@
 # Maxim — the behavioral intelligence layer for Claude
 
-> The structural moat behind every Claude output. 91 specialist agents · 74 peer-reviewed behavioral frameworks · 14 compliance frameworks · 9 MCPs · 87 tools. Framework citation enforced on every output. Drift detected before you ship. Voice locked across every surface.
+> The structural moat behind every Claude output. 91 specialist agents · 74 peer-reviewed behavioral frameworks · 14 compliance frameworks · 9 MCPs · 95 tools. Framework citation enforced on every output. Drift detected before you ship. Voice locked across every surface.
 
-![Version](https://img.shields.io/badge/version-1.3.1-blue)
+![Version](https://img.shields.io/badge/version-1.3.2-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-74-orange)
 ![Skills](https://img.shields.io/badge/skill_domains-36-purple)
 ![Commands](https://img.shields.io/badge/commands-48-yellow)
 ![MCP](https://img.shields.io/badge/MCP_servers-9-teal)
-![Tools](https://img.shields.io/badge/MCP_tools-87-teal)
+![Tools](https://img.shields.io/badge/MCP_tools-95-teal)
 ![Hooks](https://img.shields.io/badge/hooks-14-gray)
 ![Drift_Classes](https://img.shields.io/badge/drift_classes-13-red)
 ![License](https://img.shields.io/badge/license-BSL_1.1-lightgrey)
@@ -138,19 +138,21 @@ You: "Add user authentication to our app"
 
 ---
 
-## The 9 MCPs at a glance · 87 tools you can call directly
+## The 9 MCPs at a glance · 95 tools you can call directly
 
 | MCP | Tools | What it does |
 |---|---:|---|
-| **mxm-portfolio** | 7 | Project state, sync across 21+ projects, portfolio metrics |
-| **mxm-context** | 13 | Architecture docs · design refs · 13-class drift detection |
+| **mxm-portfolio** | 9 | Project state, sync across 21+ projects, portfolio metrics |
+| **mxm-context** | 15 | Architecture docs · design refs · 13-class drift detection |
 | **mxm-catalog** | 9 | Agent + office + skill + command catalog, L2 specialist descent (route_task) |
 | **mxm-compliance** | 5 | 14 jurisdictional frameworks · ROPA entries · per-jurisdiction requirements |
-| **mxm-behavioral** | 5 | 74 behavioral frameworks · recommend · apply · score moat coverage |
-| **mxm-memory** | 4 | Session history · decision log · cross-project memory |
+| **mxm-behavioral** | 7 | 74 behavioral frameworks · recommend · apply · score moat coverage |
+| **mxm-memory** | 6 | Session history · decision log · cross-project memory |
 | **mxm-voice** | 4 | Voice-driven office routing (wraps mbailey/voicemode for STT+TTS) |
 | **mxm-commands** | 2 | All 48 slash commands as MCP tools (cross-surface command parity) |
-| **mxm-notebooklm** ⭐ NEW | 38 | NotebookLM research synthesis (wraps teng-lin/notebooklm-py MIT · v1.2.1.0+) |
+| **mxm-notebooklm** | 38 | NotebookLM research synthesis (wraps teng-lin/notebooklm-py MIT · v1.2.1.0+) |
+
+> v1.3.2 surface-claims-drift correction: prior README declared 87 tools by undercounting 4 MCPs (behavioral · context · memory · portfolio) by 2 each. Caught by pre-release-audit ground-truth grep against `server.tool(` declarations. Source-of-truth: `documents/ledgers/AGENT_SKILL_INVENTORY.md`.
 
 **Cross-surface:** all 9 MCPs work on Claude Code · Desktop · Cowork. Claude.ai Web reaches them via MCP-over-API.
 
@@ -205,8 +207,8 @@ Maxim runs everywhere Claude does:
 
 | Surface | Fidelity | What works |
 |---|---|---|
-| **Claude Code** | 100% | All 48 commands · 9 MCPs (87 tools) · 24 dispatchable subagents · all behavioral overlays |
-| **Claude Desktop** | ~95% | 9 MCPs (87 tools) · paste `maxim-project-instructions.md` for behavioral layer |
+| **Claude Code** | 100% | All 48 commands · 9 MCPs (95 tools) · 24 dispatchable subagents · all behavioral overlays |
+| **Claude Desktop** | ~95% | 9 MCPs (95 tools) · paste `maxim-project-instructions.md` for behavioral layer |
 | **Claude.ai Web** | ~85% | Project instructions · MCP-over-API when available |
 | **Claude.ai Cowork** | ~85% | Plugin bundles MCPs natively |
 
@@ -214,9 +216,9 @@ Desktop one-command setup: `bash bootstrap/mxm-desktop-config.sh` or `pwsh -File
 
 ---
 
-## Architecture decisions · the 18 public ADRs
+## Architecture decisions · 19 ADRs (15 public · 4 confidential)
 
-Maxim ratifies every architectural choice via ADRs. The 14 public ones describe Maxim's commitments to operators:
+Maxim ratifies every architectural choice via ADRs. The 15 public ones describe Maxim's commitments to operators:
 
 - [ADR-002](documents/ADRs/ADR-002-documents-as-executable-contracts.md) Documents as Executable Contracts (the structural rule)
 - [ADR-004](documents/ADRs/ADR-004-free-tier-executable-contract.md) Free tier specification

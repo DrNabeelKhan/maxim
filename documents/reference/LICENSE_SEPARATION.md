@@ -60,8 +60,8 @@ network-use extension creates no disclosure obligation beyond the public GitHub 
 
 ### Work 2 — Maxim Plugin (BSL-1.1)
 
-**What it is:** A Claude Code plugin installed via `claude plugin install`. 90 agents,
-64 frameworks, 14 compliance frameworks, 9 MCP servers, 48 slash commands.
+**What it is:** A Claude Code plugin installed via `claude plugin install`. 91 agents,
+74 frameworks, 14 compliance frameworks, 9 MCP servers (95 tools), 48 slash commands.
 
 **License:** Business Source License 1.1
 

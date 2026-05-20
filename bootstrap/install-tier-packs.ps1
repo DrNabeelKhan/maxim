@@ -49,9 +49,9 @@ function Show-Wizard {
   Write-Host "Maxim Core (already installed · free forever):" -ForegroundColor White
   Write-Host "  - 91 specialist agents across 7 executive offices"
   Write-Host "  - 36 skill domains · 48 slash commands"
-  Write-Host "  - 64 behavioral frameworks active by default"
+  Write-Host "  - 74 behavioral frameworks active by default"
   Write-Host "  - 14 compliance frameworks enforced at MCP layer"
-  Write-Host "  - 9 MCPs · 87 tools including NotebookLM research synthesis"
+  Write-Host "  - 9 MCPs · 95 tools including NotebookLM research synthesis"
   Write-Host ""
   Write-Host "What you can't access yet (the structural moats Core hints at):" -ForegroundColor Yellow
   Write-Host ""
@@ -175,7 +175,7 @@ function Do-Solo {
   Write-Host "  Solo · Core ready" -ForegroundColor Green
   Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Green
   Write-Host ""
-  Write-Host "Maxim Core is fully active. 64 behavioral frameworks dispatch on"
+  Write-Host "Maxim Core is fully active. 74 behavioral frameworks dispatch on"
   Write-Host "every output. 14 compliance frameworks check every regulated task."
   Write-Host ""
   Write-Host "What stays gated until you upgrade:" -ForegroundColor Yellow

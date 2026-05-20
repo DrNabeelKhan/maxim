@@ -33,7 +33,7 @@ pwsh -File bootstrap/install-tier-packs.ps1 # Windows · or PS7 cross-platform
 /plugin install maxim@maxim-packs
 ```
 
-That installs the full behavioral intelligence layer in a single command. 91 agents across 7 executive offices, 36 skill domains, 48 slash commands, 14 governance hooks, 9 MCPs (87 tools), the `mxm-mode` output style, and the `mxm-pack-engine` binary. Free tier is fully functional out of the box.
+That installs the full behavioral intelligence layer in a single command. 91 agents across 7 executive offices, 36 skill domains, 48 slash commands, 14 governance hooks, 9 MCPs (95 tools), 74 behavioral frameworks, 14 compliance frameworks, 13 Proactive Watch drift classes, the `mxm-mode` output style, and the `mxm-pack-engine` binary. Free tier is fully functional out of the box.
 
 **Add commercial packs:**
 

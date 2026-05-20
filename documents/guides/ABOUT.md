@@ -1,6 +1,6 @@
 # Maxim: The Operating System for AI-Assisted Work
 
-> **v1.3.0 · multi-tenant readiness.** 91 governed agents · 36 skill domains · 9 MCPs (87 tools) · 74 peer-reviewed behavioral frameworks · 14 compliance frameworks · 14 executable hooks · 18 ADRs ratified · Documents as Executable Contracts. **14-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
+> **v1.3.2 · multi-tenant readiness + surface-claims coherence.** 91 governed agents · 36 skill domains · 48 slash commands · 9 MCPs (95 tools) · 74 peer-reviewed behavioral frameworks · 14 compliance frameworks · 14 executable hooks · 13 Proactive Watch drift classes · 19 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
 
 ---
 
@@ -119,9 +119,9 @@ Maxim is installed once. Every project links to it:
 
 ```
 ~/.claude/CLAUDE.md  → maxim/CLAUDE.md       (one file, all projects)
-~/.claude/commands/  → maxim/.claude/commands/ (37 commands, all projects)
-~/.claude/skills/    → maxim/.claude/skills/   (34 domains, all projects)
-~/.claude/agents/    → maxim/agents/           (90 agents, all projects)
+~/.claude/commands/  → maxim/.claude/commands/ (48 commands, all projects)
+~/.claude/skills/    → maxim/.claude/skills/   (36 domains, all projects)
+~/.claude/agents/    → maxim/agents/           (91 agents, all projects)
 ```
 
 `git pull` in maxim updates every project instantly. No per-project copies. No version drift. No maintenance burden.
@@ -143,16 +143,16 @@ Per-project, only identity files are created: `project-manifest.json`, `CLAUDE.p
 | **COO** | planner | 10 agents | Operations, delivery, sprints, support |
 | **CINO** | innovation-researcher | 4 agents | R&D, emerging tech, horizon scanning |
 
-Plus 5 cross-office orchestrators + 1 executive-router = **90 agents total**. All 90 carry Grade A DNA (Triggers + bilateral Collaboration Matrix).
+Plus 10 cross-office orchestrators + 1 executive-router = **91 agents total**. All 91 carry Grade A DNA (Triggers + bilateral Collaboration Matrix). Of these, **24 are dispatchable subagents** (declared in `plugin.json` agents[]) and the full **91-agent catalog** is reachable via `mxm-catalog` MCP per ADR-017 two-layer dispatch.
 
 ### 36 skill domains (100% with root dispatchers)
-Every domain has a SKILL.md (orchestrator), Maxim-WRAPPER.md (behavioral layer), and sub-skills that route to specialist agents. Marketing alone has a hub-and-spoke architecture with dedicated sub-skills. The `wiki` family (ingest, query, lint, explore), `voice`, `junction-guard`, `usage-aware-scheduler`, and `proactive-watch` domains complete the 34-domain inventory.
+Every domain has a SKILL.md (orchestrator), Maxim-WRAPPER.md (behavioral layer), and sub-skills that route to specialist agents. Marketing alone has a hub-and-spoke architecture with dedicated sub-skills. The `wiki` family (ingest, query, lint, explore), `voice`, `voice-routing`, `notebooklm-py`, `junction-guard`, `usage-aware-scheduler`, and `proactive-watch` domains complete the 36-domain inventory.
 
 ### 48 Slash commands
 All prefixed with `/mxm-` for uniform discovery. Product cycle chain: `/mxm-plan` → `/mxm-implement` → `/mxm-review` → `/mxm-test` → `/mxm-release`. `/mxm-watch` runs drift detection. `/mxm-session-end` runs the 9-document closure bundle. `/mxm-brand-voice` manages the 3-layer .brand-foundation load.
 
-### 9 MCP servers (55 tools)
-55 tools across 7 consolidated servers. Covers behavioral science, compliance, context and watch, design, dispatch and catalog, memory, and portfolio. Usable from Claude Desktop, Cowork, CLI, Dispatch, and claude.ai.
+### 9 MCP servers (95 tools)
+95 tools across 9 servers (verified via `server.tool()` declarations). Covers behavioral science, compliance, context and watch, dispatch and catalog, memory, portfolio, voice, commands, and NotebookLM research synthesis (per ADR-018 three-layer external-tool integration). Usable from Claude Code, Desktop, Cowork, CLI, and claude.ai Web.
 
 ### Cross-Project Portfolio Management
 `.mxm-global/` at `E:\Projects\` level with GLOBAL-CONTEXT.md, TASKS.md, PORTFOLIO-METRICS.md, INVESTOR-PROFILE.md, and project registry. `/mxm-tasks` and `/mxm-portfolio` manage work across 22 NK-universe projects.
@@ -227,9 +227,9 @@ For source-level integration or non-Claude-Code IDE work, see [documents/guides/
 
 ---
 
-**Maxim v1.0.0:** 
+**Maxim v1.3.2:**
 
-91+ agents (100% Grade A DNA). 36 skill domains. 37 commands. 9 MCP servers (55 tools). 79 frameworks. 14 executable hooks. 10 ADRs ratified. 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
+91 agents (100% Grade A DNA · 24 dispatchable + 67 specialist catalog via mxm-catalog). 36 skill domains. 48 commands. 9 MCP servers (95 tools). 74 frameworks. 14 executable hooks. 13 Proactive Watch drift classes. 19 ADRs ratified (15 public + 4 confidential). 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
 
 **License:** BSL 1.1 core with 4-year Apache 2.0 conversion per ADR-005. Commercial packs licensed separately via LemonSqueezy.
 

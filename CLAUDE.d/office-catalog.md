@@ -3,7 +3,7 @@
 > Loaded by `CLAUDE.md` as a reference module. Full agent roster across the
 > 7 Maxim executive offices + cross-domain orchestrators.
 
-**Total: 90 agents** (84 office agents + 5 cross-office orchestrators + 1 executive-router) — verified v1.1.1.
+**Total: 91 agents** (80 office specialists + 10 cross-office orchestrators + 1 executive-router) - verified v1.3.2 against `agents/MXM/` filesystem and `config/agent-registry.json`. Of these 91, **24 are dispatchable subagents** (declared in `plugin.json` agents[] array — 7 office agents + 10 governance/quality orchestrators + 7 utility/lead-compat); the remaining 67 are reachable via `mxm-catalog` MCP per ADR-017 two-layer dispatch.
 
 ---
 

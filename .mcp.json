@@ -1,6 +1,6 @@
 {
   "$schema": "https://modelcontextprotocol.io/schema/mcp.json",
-  "_comment": "Maxim v1.0.0 — declarative MCP server registry. Consolidated from 9 servers (v1.0.0) to 7 servers. dispatch + skills → catalog; design absorbed into context; context also gained watch_* tools. 47 tools total across 7 servers. v1.1.0.3 (2026-04-27): each server now spawns through mcp/_shared/spawn-with-deps.mjs which synchronously installs missing node_modules before importing the actual server.js, collapsing post-upgrade install flow from 2 restarts to 1 (BUG-007 follow-up).",
+  "_comment": "Maxim v1.3.2 — declarative MCP server registry. 9 servers / 95 tools total (verified via server.tool() grep). v1.2.0.1 added mxm-commands (+2 tools cross-surface dispatcher). v1.2.1.0 added mxm-notebooklm (+38 tools per ADR-018 three-layer external-tool pattern). v1.3.2 surface-claims-drift correction: prior descriptions undercounted behavioral/context/memory/portfolio by 2 tools each. v1.1.0.3 (2026-04-27): each server spawns through mcp/_shared/spawn-with-deps.mjs which synchronously installs missing node_modules before importing the actual server.js, collapsing post-upgrade install flow from 2 restarts to 1 (BUG-007 follow-up).",
   "mcpServers": {
     "mxm-portfolio": {
       "command": "node",
@@ -8,7 +8,7 @@
         "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
         "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-portfolio/server.js"
       ],
-      "description": "Portfolio metrics, project state, sync_portfolio across 21+ projects (7 tools)",
+      "description": "Portfolio metrics, project state, sync_portfolio across 21+ projects (9 tools)",
       "env": {
         "MXM_PROJECTS_ROOT": "${MXM_PROJECTS_ROOT:-E:/Projects}"
       }
@@ -19,7 +19,7 @@
         "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
         "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-context/server.js"
       ],
-      "description": "Project context + design refs + drift detection. 13 tools (v1.0.0: absorbed design, added watch_run/watch_report/watch_configure)"
+      "description": "Project context + design refs + drift detection (13 classes). 15 tools (v1.0.0: absorbed design, added watch_run/watch_report/watch_configure)"
     },
     "mxm-catalog": {
       "command": "node",
@@ -43,7 +43,7 @@
         "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
         "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-behavioral/server.js"
       ],
-      "description": "64 behavioral science frameworks (Fogg, COM-B, EAST, Hook, Cialdini, JTBD, AIDA, Nudge Theory, Proactive Watch + 55 more). 5 tools"
+      "description": "74 behavioral science frameworks (Fogg, COM-B, EAST, Hook, Cialdini, JTBD, AIDA, Nudge Theory, Prospect Theory, SDT, SCARF + 64 more). 7 tools"
     },
     "mxm-memory": {
       "command": "node",
@@ -51,7 +51,7 @@
         "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
         "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-memory/server.js"
       ],
-      "description": "Session history, decision log, memory search/store across project boundaries. 4 tools"
+      "description": "Session history, decision log, memory search/store across project boundaries. 6 tools"
     },
     "mxm-voice": {
       "command": "node",
