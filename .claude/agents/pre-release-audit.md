@@ -22,6 +22,14 @@ You are auditing the Maxim plugin repo before a release push. Research only — 
 - Parse every `.json` under `config/`, `.claude-plugin/`, `distributions/`, `mcp/*/package.json`, root `.mcp.json`, `config/entities.json`. Report parse failures.
 - Parse every `.yml`/`.yaml` under `config/`, `templates/`, `.github/workflows/`. Report invalid YAML.
 - `config/project-manifest.json` → `MXM_version` matches release tag. `last_activity` and `last_updated` match release date.
+- **Version consistency across all version-bearing surfaces** (Session 22 lesson — added after Mr. Khan caught `marketplace.json` outer `metadata.version` stuck at "1.1.0" while plugin shipped at v1.3.2.1):
+  - `.claude-plugin/plugin.json` → `version` matches release tag
+  - `.claude-plugin/marketplace.json` → outer `metadata.version` matches release tag AND every `plugins[].version` for the base plugin entry matches release tag
+  - `README.md` → version badge `![Version](...badge/version-X.Y.Z-blue)` matches release tag
+  - `CHANGELOG.md` → top entry header `## vX.Y.Z` matches release tag and is dated today
+  - `documents/ledgers/AGENT_SKILL_INVENTORY.md` → `Version: vX.Y.Z` header matches release tag (or one release back if inventory is intentionally lagging — flag as NIT)
+  - Distribution surfaces (`distributions/claude-plugin/MARKETPLACE_SUBMISSION.md`, `distributions/claude-plugin/DISTRIBUTION.md`) → submission version / distribution version match release tag
+  - Any version-bearing surface that fails to match release tag = BLOCKER. The catalog `metadata.version` miss persisted unnoticed from v1.1.0 → v1.3.2.1 because no audit explicitly listed it.
 
 ### 3. Reference integrity
 - Every `/mxm-*` command referenced in docs (README, HELP, CLAUDE.md, documents/reference/MXM_COMMAND_MAP.md) → file exists at `.claude/commands/{name}.md`.

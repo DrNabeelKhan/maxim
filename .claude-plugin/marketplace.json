@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Maxim commercial pack marketplace. 14 packs across 3 tiers: L1 capabilities, L2 persona bundles, L3 verticals. Licensed per-purchase via Stripe (primary; LemonSqueezy secondary, dormant until v1.0.1 per ADR-011), validated via Cloudflare Worker RS256 JWT.",
-    "version": "1.1.0"
+    "version": "1.3.2.1"
   },
   "plugins": [
     {
