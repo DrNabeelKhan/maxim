@@ -26,10 +26,20 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { readFile, readdir } from "node:fs/promises";
-import { join } from "node:path";
+import { join, dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { wrapServerWithLicenseGate } from "../_shared/license-gate.mjs";
 
-const MXM_ROOT = process.env.MXM_ROOT || "E:/Projects/Maxim/maxim";
+// MXM_ROOT auto-detection (v1.2.0.5 fix for catalog drift):
+// server.js lives at <plugin_root>/mcp/mxm-catalog/server.js, so the plugin
+// root is two directories up. Precedence:
+//   1. explicit MXM_ROOT env var (operator override)
+//   2. CLAUDE_PLUGIN_ROOT env var (Claude Code sets this automatically)
+//   3. derived from this file's location (always works regardless of CWD)
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const MXM_ROOT = process.env.MXM_ROOT
+  || process.env.CLAUDE_PLUGIN_ROOT
+  || resolve(__dirname, "..", "..");
 
 async function safeRead(filePath) {
   try {
@@ -43,54 +53,59 @@ async function safeRead(filePath) {
 // Office routing table (ex-dispatch)
 // ──────────────────────────────────────────────────────────────────────────────
 
+// OFFICES roster — synced to agents/MXM/ filesystem at v1.2.0 GA reorganization
+// (WS1 nk-writer · WS5 deprecations + CSO 9→19 · CINO +4 · orchestrators +5).
+// Updated v1.2.0.5 to fix pre-existing catalog drift documented in ADR-017.
+// Lead agents are listed in agents[] explicitly (was implicit before — get_agent_dna
+// would fail on leads if MCP roster diverged from filesystem).
 const OFFICES = {
   ceo: {
     name: "CEO Office",
     lead: "enterprise-architect",
-    keywords: ["strategy", "vision", "finance", "partnerships", "enterprise", "architecture", "investor", "business model", "governance", "negotiation"],
-    agents: ["enterprise-architect", "business-architect", "influence-strategist", "negotiation-specialist", "financial-modeler", "studio-producer", "investor-pitch-writer", "partnership-manager", "governance-specialist"],
+    keywords: ["strategy", "vision", "finance", "partnerships", "enterprise", "architecture", "investor", "business model", "governance", "negotiation", "pitch", "deck", "wardley", "togaf", "c4", "adr", "moat", "competitive"],
+    agents: ["enterprise-architect", "business-architect", "financial-modeler", "governance-specialist", "influence-strategist", "investor-pitch-writer", "negotiation-specialist", "partnership-manager", "studio-producer"],
     skill_domains: ["enterprise-architecture", "studio-operations"],
   },
   cto: {
     name: "CTO Office",
     lead: "implementer",
-    keywords: ["engineering", "code", "build", "deploy", "api", "database", "infrastructure", "devops", "cloud", "backend", "frontend", "ai", "ml", "data", "test", "performance", "security architecture", "schema", "auth", "docker", "rls", "mvp", "scaffold", "migrate", "pipeline", "supabase", "fastapi", "nextjs", "react", "typescript", "python", "node"],
-    agents: ["ai-engineer", "backend-architect", "frontend-developer", "devops-automator", "infrastructure-maintainer", "security-architect", "solution-architect", "rapid-prototyper", "rag-specialist", "prompt-engineer", "api-integrator", "cloud-cost-optimizer", "dependency-auditor", "mobile-app-builder", "support-agent-builder", "performance-engineer", "api-tester", "data-architect", "data-scientist", "analytics-reporter", "training-data-curator", "database-optimizer", "load-tester", "technology-architect", "test-data-generator"],
+    keywords: ["engineering", "code", "build", "deploy", "api", "database", "infrastructure", "devops", "cloud", "backend", "frontend", "ai", "ml", "data", "test", "performance", "security architecture", "schema", "auth", "docker", "rls", "mvp", "scaffold", "migrate", "pipeline", "supabase", "fastapi", "nextjs", "react", "typescript", "python", "node", "rag", "prompt"],
+    agents: ["implementer", "ai-engineer", "api-integrator", "backend-architect", "data-architect", "data-scientist", "database-optimizer", "dependency-auditor", "devops-automator", "frontend-developer", "infrastructure-maintainer", "mobile-app-builder", "performance-engineer", "prompt-engineer", "rag-specialist", "security-architect", "technology-architect", "training-data-curator"],
     skill_domains: ["engineering", "testing", "ai-media-generation"],
   },
   cmo: {
     name: "CMO Office",
     lead: "content-strategist",
-    keywords: ["marketing", "brand", "content", "seo", "conversion", "copy", "email", "growth", "campaign", "landing page", "social media", "ads", "persuasion", "behavioral", "video", "animation", "cinematic"],
-    agents: ["seo-specialist", "brand-guardian", "conversion-optimizer", "persuasion-specialist", "behavioral-designer", "decision-architect", "habit-formation-coach", "nudge-architect", "localization-specialist", "documentation-writer", "email-campaign-writer", "growth-hacker", "gtm-strategist", "landing-page-optimizer"],
+    keywords: ["marketing", "brand", "content", "seo", "conversion", "copy", "email", "growth", "campaign", "landing page", "social media", "ads", "persuasion", "behavioral", "video", "animation", "cinematic", "draft", "write", "compose", "post", "blog", "memo", "message", "whatsapp", "slack", "linkedin", "twitter", "newsletter", "tutorial", "doc", "readme", "proposal", "summary", "status report", "voice", "tone"],
+    agents: ["content-strategist", "nk-writer", "behavioral-designer", "brand-guardian", "conversion-optimizer", "documentation-writer", "email-campaign-writer", "growth-hacker", "gtm-strategist", "persuasion-specialist", "seo-specialist"],
     skill_domains: ["marketing", "content-creation", "search-visibility", "behavior-science-persuasion", "brand", "banner-design", "ai-media-generation"],
   },
   cso: {
     name: "CSO Office",
     lead: "security-analyst",
-    keywords: ["security", "compliance", "privacy", "ethics", "threat", "vulnerability", "incident", "audit", "gdpr", "pipeda", "pci", "penetration", "risk"],
-    agents: ["threat-modeler", "penetration-tester", "incident-responder", "compliance-officer", "ai-ethics-reviewer", "data-privacy-officer", "legal-compliance-checker", "incident-post-mortem-writer"],
+    keywords: ["security", "compliance", "privacy", "ethics", "threat", "vulnerability", "incident", "audit", "gdpr", "pipeda", "pci", "hipaa", "soc2", "iso 27001", "nist", "owasp", "stride", "pasta", "linddun", "penetration", "risk", "dpia", "sbom", "aibom", "ai risk", "regulated", "phi", "pii", "payment"],
+    agents: ["security-analyst", "ai-ethics-reviewer", "appsec-engineer", "compliance-officer", "data-privacy-officer", "dpia-specialist", "gdpr-counsel", "hipaa-counsel", "incident-post-mortem-writer", "incident-responder", "iso27001-lead-auditor", "legal-compliance-checker", "llm-security-specialist", "owasp-specialist", "penetration-tester", "sbom-analyst", "secure-code-reviewer", "soc2-auditor", "threat-modeler"],
     skill_domains: ["security", "compliance"],
   },
   cpo: {
     name: "CPO Office",
     lead: "product-strategist",
-    keywords: ["product", "ux", "ui", "user research", "feedback", "roadmap", "feature", "persona", "competitive", "pricing", "accessibility", "onboarding", "design"],
-    agents: ["ux-researcher", "ui-designer", "ui-ux-designer", "feedback-synthesizer", "trend-researcher", "competitive-analyst", "market-analyst", "pricing-strategist", "accessibility-auditor", "onboarding-designer", "product-manager"],
+    keywords: ["product", "ux", "ui", "user research", "feedback", "roadmap", "feature", "persona", "pricing", "accessibility", "onboarding", "design", "prd", "user story", "okr", "rice", "jtbd", "jobs to be done", "wcag"],
+    agents: ["product-strategist", "accessibility-auditor", "feedback-synthesizer", "onboarding-designer", "pricing-strategist", "product-manager", "ui-ux-designer", "ux-researcher"],
     skill_domains: ["product", "design", "design-system", "ui-styling", "slides", "ui-ux-pro-max", "design-resources"],
   },
   coo: {
     name: "COO Office",
     lead: "planner",
-    keywords: ["operations", "delivery", "support", "sprint", "project", "plan", "schedule", "workflow", "experiment", "changelog", "knowledge base", "phase", "milestone", "release", "organize", "cleanup", "watch", "drift", "audit", "health"],
-    agents: ["project-shipper", "support-responder", "customer-success-manager", "workflow-optimizer", "sprint-prioritizer", "experiment-tracker", "knowledge-base-curator", "tool-evaluator", "changelog-writer"],
+    keywords: ["operations", "delivery", "support", "sprint", "project", "plan", "schedule", "workflow", "experiment", "changelog", "phase", "milestone", "release", "organize", "cleanup", "watch", "drift", "audit", "health", "sre", "slo", "sli", "error budget", "post-mortem"],
+    agents: ["planner", "changelog-writer", "customer-success-manager", "experiment-tracker", "project-shipper", "sprint-prioritizer", "sre-analyst", "support-responder", "workflow-optimizer"],
     skill_domains: ["project-management", "studio-operations", "proactive-watch"],
   },
   cino: {
     name: "CINO Office",
     lead: "innovation-researcher",
-    keywords: ["innovation", "r&d", "emerging", "horizon", "research", "prototype", "experiment", "novel"],
-    agents: ["rd-coordinator"],
+    keywords: ["innovation", "r&d", "emerging", "horizon", "research", "prototype", "experiment", "novel", "tech radar", "competitive intel", "patent", "ip landscape", "cost analysis", "weak signal"],
+    agents: ["innovation-researcher", "competitive-intel-analyst", "cost-analyst", "horizon-scanner", "patent-researcher", "rd-coordinator", "skill-synthesizer", "tech-radar-author"],
     skill_domains: ["product-development-research"],
   },
 };
@@ -244,10 +259,10 @@ server.tool(
   async ({ agent_name }) => {
     const agentDirs = ["orchestrators", "ceo", "cto", "cmo", "cso", "cpo", "coo", "cino"];
     for (const dir of agentDirs) {
-      const content = await safeRead(join(MXM_ROOT, "agents/Maxim", dir, `${agent_name}.md`));
+      const content = await safeRead(join(MXM_ROOT, "agents/MXM", dir, `${agent_name}.md`));
       if (content) return { content: [{ type: "text", text: content }] };
     }
-    const rootContent = await safeRead(join(MXM_ROOT, "agents/Maxim", `${agent_name}.md`));
+    const rootContent = await safeRead(join(MXM_ROOT, "agents/MXM", `${agent_name}.md`));
     if (rootContent) return { content: [{ type: "text", text: rootContent }] };
     return { content: [{ type: "text", text: `Agent "${agent_name}" not found in agents/MXM/` }] };
   }

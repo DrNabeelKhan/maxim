@@ -2,7 +2,7 @@
 
 > **Start at $19.99 with Solo. The behavioral intelligence specialist for Claude.**
 
-![Version](https://img.shields.io/badge/version-1.2.0.4-blue)
+![Version](https://img.shields.io/badge/version-1.2.0.5-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-74-orange)
 ![Skills](https://img.shields.io/badge/skill_domains-35-purple)

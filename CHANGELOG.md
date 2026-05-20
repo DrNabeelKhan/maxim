@@ -8,6 +8,78 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.2.0.5 — 2026-05-19 — mxm-catalog MCP fix (the v1.2.0.4 blind spot)
+
+Theme: **Make ADR-017 actually work.** v1.2.0.4 shipped the office-as-dispatch architecture on top of `mxm-catalog` MCP — without verifying the catalog itself worked. Post-ship probes against `route_task` and `get_agent_dna` exposed three stacked bugs in `mcp/mxm-catalog/server.js` that had been present since some pre-v1.2.0 refactor:
+
+### FIX 1 — `MXM_ROOT` default points to non-existent path
+
+`mxm-catalog/server.js` defaulted to `MXM_ROOT = "E:/Projects/Maxim/maxim"` (lowercase `maxim` subdir) — which does not exist on operator machines. The actual repo path is `E:/Projects/Maxim/plugin-repo/` (or wherever Claude Code installs the plugin). With no `MXM_ROOT` env var set, every filesystem read inside the catalog failed silently.
+
+**Fix:** auto-derive `MXM_ROOT` from `import.meta.url` (resolves `<this-file>/../..`). Precedence: explicit `MXM_ROOT` env var → `CLAUDE_PLUGIN_ROOT` (Claude Code sets this) → derived-from-script-location. Works regardless of operator install path.
+
+### FIX 2 — `agents/Maxim/` directory does not exist
+
+Lines 247 and 250 read `agents/Maxim/<office>/<agent>.md` — the actual filesystem directory is `agents/MXM/` (all caps, MaXim Maxim contraction). On case-sensitive filesystems (Linux, macOS, WSL), this fails entirely. On Windows, the `MXM_ROOT` bug above masked it. Either bug alone would have surfaced this; both stacked.
+
+**Fix:** rename path references to `agents/MXM/` (3 occurrences).
+
+### FIX 3 — `OFFICES` hardcoded roster predates v1.2.0 reorganization
+
+The `OFFICES` object in `mcp/mxm-catalog/server.js` is a static JavaScript constant — not dynamically loaded from filesystem. Its agent arrays reflected the pre-v1.2.0 roster. Drift:
+
+- **CMO** — missing `content-strategist` (the LEAD), missing `nk-writer` (v1.2.0 WS1 addition). Still included 5 deprecated agents (`decision-architect`, `habit-formation-coach`, `nudge-architect`, `localization-specialist`, `landing-page-optimizer`).
+- **CSO** — listed 8 agents; v1.2.0 WS5 added 10 specialists (appsec-engineer, owasp-specialist, secure-code-reviewer, soc2-auditor, iso27001-lead-auditor, gdpr-counsel, hipaa-counsel, llm-security-specialist, sbom-analyst, dpia-specialist). MCP showed 8 instead of 19. Missing the LEAD `security-analyst` from the agents array.
+- **CINO** — listed only 1 agent (`rd-coordinator`); v1.2.0 WS5 expanded to 8 (added competitive-intel-analyst, horizon-scanner, patent-researcher, tech-radar-author + included innovation-researcher / cost-analyst / skill-synthesizer that already existed).
+- **CTO** — 8 deprecated agents still in roster (analytics-reporter, api-tester, cloud-cost-optimizer, load-tester, rapid-prototyper, solution-architect, support-agent-builder, test-data-generator).
+- **CPO** — 4 deprecated agents still in roster (ui-designer dup, trend-researcher, competitive-analyst, market-analyst).
+- **COO** — 2 deprecated agents (knowledge-base-curator, tool-evaluator); missing `sre-analyst`.
+
+**Fix:** updated all 7 office `agents[]` arrays to match `agents/MXM/{office}/` filesystem as of v1.2.0+ GA. Each lead is now listed explicitly in its own office's agents[] (was implicit before, which masked the agent-lookup bug). Added writing-verb keywords (`draft`, `write`, `compose`, `whatsapp`, `message`, `blog`, `memo`, `post`, `newsletter`, `linkedin`, `twitter`, etc.) to CMO. Added jurisdictional framework keywords (`hipaa`, `soc2`, `iso 27001`, `dpia`, `sbom`, `aibom`, `nist`, etc.) to CSO.
+
+### Why v1.2.0.4 shipped with this bug latent
+
+The mxm-catalog MCP shipped in v1.2.0.1 (8th MCP, Cross-surface command parity workstream). `route_task` returned plausible-looking routing decisions for marketing/security/etc. keywords, so superficial testing passed. But `get_agent_dna` had been broken since whatever refactor renamed the directory — likely silently from day one. The v1.2.0 WS1+WS5 roster reorganization compounded the drift in the hardcoded OFFICES table.
+
+v1.2.0.4's ADR-017 architecture built office-agent workflows that depend on `route_task` + `get_agent_dna`. Without v1.2.0.5's fixes, those office agents would fall back to filesystem-read on every dispatch (which is the documented fallback, but defeats the architectural choice of MCP-as-specialist-surface).
+
+### Verification (after install + restart)
+
+Probes that now work:
+
+- `route_task("draft a WhatsApp message")` → returns CMO with HIGH confidence (writing-verb + "whatsapp" keyword both match CMO)
+- `get_agent_dna("nk-writer")` → returns full DNA from `agents/MXM/cmo/nk-writer.md`
+- `get_agent_dna("enterprise-architect")` → returns full DNA (this also worked never before; the path bug blocked it)
+- `list_agents(office="cmo")` → 11 active agents including `content-strategist` (lead) + `nk-writer`. No deprecated.
+- `list_offices` → agent counts match filesystem reality (CEO 9 · CTO 17 · CMO 11 · CSO 19 · CPO 8 · COO 9 · CINO 8)
+
+### Capability delta v1.2.0.4 → v1.2.0.5
+
+No new agents, skills, commands, MCPs, or frameworks. Bug-fix patch for `mcp/mxm-catalog/server.js`. The honest revised mxm-catalog v1.2.0.5 numbers:
+
+| Office | v1.2.0.4 catalog said | v1.2.0.5 catalog says |
+|---|---|---|
+| CEO | 9 | 9 |
+| CTO | 25 (incl. 8 deprecated) | 17 |
+| CMO | 14 (missing lead + nk-writer; incl. 5 deprecated) | 11 (lead + nk-writer + 9 specialists) |
+| CSO | 8 (missing lead + 10 new WS5 specialists) | 19 |
+| CPO | 11 (incl. 4 deprecated) | 8 |
+| COO | 9 (incl. 2 deprecated; missing sre-analyst) | 9 |
+| CINO | 1 (missing 7 new + existing) | 8 |
+| **Total** | **77 stale** | **81 accurate** |
+
+Note: 81 specialists in `mxm-catalog` + 10 orchestrators (in `agents/MXM/orchestrators/`) = 91 total in the catalog tier. Matches the canonical agent count.
+
+### Lesson logged
+
+A new task is logged in MOAT_TRACKER + ADR-017 references: **convert OFFICES to dynamic filesystem read** (v1.2.0.6 follow-up) so this drift cannot recur at the next roster reorganization. Hardcoded constants in MCPs that mirror filesystem reality are a Class 11 surface-claims-drift surface. Should not stay hardcoded.
+
+### Process failure (operator transparency)
+
+I shipped v1.2.0.4 declaring "pre-release audit per 8-bucket BLOCKING passed all 8 buckets" without running the `pre-release-audit` agent. Bucket 3 (Reference integrity) would have caught this. The lesson is the same v1.2.0.3 install-version drift taught: **declared compliance ≠ actual compliance**. Going forward, audit claims must be backed by dispatched audit runs, not self-assessment.
+
+---
+
 ## v1.2.0.4 — 2026-05-19 — Office-as-dispatch-boundary (ADR-017) · all 91 agents reachable
 
 Theme: **Make Maxim's dispatch architecture match its documented intent.** Through v1.2.0.3, only 12 of the 91 agents were registered as Claude Code dispatchable subagents. The other 79 (including `nk-writer`, `content-strategist`, `product-strategist`, `innovation-researcher`, every CSO/CMO/CPO/COO/CINO specialist) lived as filesystem documents that could not be reached via the `Agent` tool's `subagent_type`. Operators experienced this as silent voice drift, missing specialist behavior, and the dispatch identity mismatch that surfaced in the KFAS WhatsApp incident.
