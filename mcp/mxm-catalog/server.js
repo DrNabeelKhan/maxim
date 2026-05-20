@@ -110,6 +110,171 @@ const OFFICES = {
   },
 };
 
+// ──────────────────────────────────────────────────────────────────────────────
+// L2 specialist descent (v1.2.0.6) — per-specialist trigger keywords
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// route_task previously stopped at the office level and returned the lead_agent
+// as the default specialist. That collapses delegation chains documented in
+// each specialist's DNA (e.g., ADR-016: content-strategist delegates writing
+// production to nk-writer).
+//
+// SPECIALISTS maps each specialist to its own trigger keywords. After office
+// classification wins, we score specialists within that office. The highest-
+// scoring specialist becomes the dispatch target; office lead is the fallback
+// if no specialist signal beats the lead's baseline.
+//
+// requires_specialist_classification: true marks specialists that have their
+// own internal classification step beyond keyword matching (e.g., nk-writer
+// classifies against VOICE_SELECTION.md's 22 content types). Downstream
+// callers should not treat HIGH route_task confidence as final — they must
+// invoke the specialist for L3 classification.
+
+const SPECIALISTS = {
+  cmo: {
+    "nk-writer": {
+      keywords: ["draft", "write", "compose", "post", "blog", "memo", "message", "whatsapp", "slack", "email", "linkedin", "twitter", "newsletter", "tutorial", "doc", "readme", "proposal", "summary", "status report", "voice"],
+      priority: 2, // higher priority than email-campaign-writer for ambiguous "email"
+      requires_specialist_classification: true,
+      classification_authority: "myVoiceDNA/VOICE_SELECTION.md",
+      negative_trigger: "active_startup + customer-facing → routes to {active_startup}-brand-writer instead",
+      adr: "ADR-016",
+    },
+    "brand-guardian": {
+      keywords: ["brand consistency", "brand drift", "voice audit", "brand check", "brand guardian"],
+      priority: 1,
+    },
+    "seo-specialist": {
+      keywords: ["seo", "aeo", "keyword", "search visibility", "search intent"],
+      priority: 1,
+    },
+    "conversion-optimizer": {
+      keywords: ["conversion", "cro", "landing page", "funnel"],
+      priority: 1,
+    },
+    "persuasion-specialist": {
+      keywords: ["persuasion", "cialdini", "scarcity", "social proof", "reciprocity"],
+      priority: 1,
+    },
+    "behavioral-designer": {
+      keywords: ["behavioral overlay", "fogg", "com-b", "east", "hook model", "nudge"],
+      priority: 1,
+    },
+    "email-campaign-writer": {
+      keywords: ["email campaign", "email sequence", "nurture sequence", "drip campaign"],
+      priority: 1,
+    },
+    "gtm-strategist": {
+      keywords: ["gtm", "go to market", "launch plan", "positioning"],
+      priority: 1,
+    },
+    "growth-hacker": {
+      keywords: ["growth hack", "viral", "growth experiment", "k-factor"],
+      priority: 1,
+    },
+    "documentation-writer": {
+      keywords: ["technical writing", "developer doc", "api reference"],
+      priority: 1,
+    },
+  },
+  cso: {
+    "threat-modeler": { keywords: ["threat model", "stride", "pasta", "linddun"], priority: 1 },
+    "penetration-tester": { keywords: ["pen test", "penetration test", "red team", "vuln scan"], priority: 1 },
+    "owasp-specialist": { keywords: ["owasp", "top 10", "llm top 10", "api top 10"], priority: 1 },
+    "llm-security-specialist": { keywords: ["prompt injection", "jailbreak", "llm security", "ai risk"], priority: 1 },
+    "appsec-engineer": { keywords: ["appsec", "application security", "auth", "session"], priority: 1 },
+    "secure-code-reviewer": { keywords: ["secure code review", "code review security"], priority: 1 },
+    "sbom-analyst": { keywords: ["sbom", "cyclonedx", "spdx", "aibom", "ai bom"], priority: 1 },
+    "dpia-specialist": { keywords: ["dpia", "privacy impact"], priority: 1 },
+    "gdpr-counsel": { keywords: ["gdpr"], priority: 1 },
+    "hipaa-counsel": { keywords: ["hipaa", "phi"], priority: 1 },
+    "soc2-auditor": { keywords: ["soc2", "soc 2"], priority: 1 },
+    "iso27001-lead-auditor": { keywords: ["iso 27001", "iso27001"], priority: 1 },
+    "ai-ethics-reviewer": { keywords: ["ai ethics", "nist ai rmf", "mitre atlas"], priority: 1 },
+    "incident-responder": { keywords: ["incident response", "live incident", "containment"], priority: 1 },
+    "incident-post-mortem-writer": { keywords: ["post-mortem", "post mortem", "blameless retro"], priority: 1 },
+    "compliance-officer": { keywords: ["compliance posture", "compliance officer"], priority: 1 },
+    "data-privacy-officer": { keywords: ["data privacy officer", "dpo"], priority: 1 },
+    "legal-compliance-checker": { keywords: ["legal compliance", "contract clause", "regulatory"], priority: 1 },
+  },
+  ceo: {
+    "investor-pitch-writer": { keywords: ["pitch deck", "investor deck", "fundraising", "raise"], priority: 1 },
+    "financial-modeler": { keywords: ["financial model", "runway", "pricing math", "cap table"], priority: 1 },
+    "partnership-manager": { keywords: ["partnership", "channel deal", "alliance"], priority: 1 },
+    "negotiation-specialist": { keywords: ["negotiation", "term sheet", "counter offer"], priority: 1 },
+    "governance-specialist": { keywords: ["governance", "board", "compliance posture board"], priority: 1 },
+    "influence-strategist": { keywords: ["influence", "executive comm", "positioning ceo"], priority: 1 },
+    "business-architect": { keywords: ["business architecture", "org design", "operating model"], priority: 1 },
+    "studio-producer": { keywords: ["studio producer", "agency coordination"], priority: 1 },
+  },
+  cto: {
+    "frontend-developer": { keywords: ["frontend", "react", "css", "ui component"], priority: 1 },
+    "backend-architect": { keywords: ["backend", "api design", "service architecture"], priority: 1 },
+    "database-optimizer": { keywords: ["database", "sql", "index", "query optimization"], priority: 1 },
+    "data-architect": { keywords: ["data architecture", "pipeline", "warehouse", "etl"], priority: 1 },
+    "data-scientist": { keywords: ["data science", "ml training", "model eval"], priority: 1 },
+    "ai-engineer": { keywords: ["ai engineering", "agent framework", "inference"], priority: 1 },
+    "prompt-engineer": { keywords: ["prompt engineering", "system prompt"], priority: 1 },
+    "rag-specialist": { keywords: ["rag", "retrieval", "embedding store", "vector store"], priority: 1 },
+    "devops-automator": { keywords: ["devops", "ci/cd", "deploy automation"], priority: 1 },
+    "infrastructure-maintainer": { keywords: ["infrastructure", "cloud iam", "cost optimization"], priority: 1 },
+    "performance-engineer": { keywords: ["performance profiling", "latency", "throughput"], priority: 1 },
+    "mobile-app-builder": { keywords: ["mobile app", "ios", "android"], priority: 1 },
+    "dependency-auditor": { keywords: ["dependency audit", "supply chain"], priority: 1 },
+    "security-architect": { keywords: ["security architecture", "secure by design"], priority: 1 },
+    "api-integrator": { keywords: ["api integration", "webhook", "sdk integration"], priority: 1 },
+    "technology-architect": { keywords: ["tech stack architecture", "framework choice"], priority: 1 },
+    "training-data-curator": { keywords: ["training data", "dataset prep"], priority: 1 },
+  },
+  cpo: {
+    "pricing-strategist": { keywords: ["pricing strategy", "van westendorp", "tier design"], priority: 1 },
+    "product-manager": { keywords: ["prd", "user story", "okr", "rice", "backlog"], priority: 1 },
+    "ux-researcher": { keywords: ["ux research", "user interview", "survey synthesis"], priority: 1 },
+    "feedback-synthesizer": { keywords: ["feedback synthesis", "nps", "theme extraction"], priority: 1 },
+    "onboarding-designer": { keywords: ["onboarding", "activation", "aha moment"], priority: 1 },
+    "ui-ux-designer": { keywords: ["ui ux design", "fitts", "hick", "gestalt"], priority: 1 },
+    "accessibility-auditor": { keywords: ["accessibility", "wcag", "a11y"], priority: 1 },
+  },
+  coo: {
+    "sprint-prioritizer": { keywords: ["sprint", "backlog grooming"], priority: 1 },
+    "project-shipper": { keywords: ["ship", "release", "deploy coordination"], priority: 1 },
+    "sre-analyst": { keywords: ["sre", "slo", "sli", "error budget"], priority: 1 },
+    "support-responder": { keywords: ["support", "ticket", "runbook"], priority: 1 },
+    "customer-success-manager": { keywords: ["customer success", "retention", "health score"], priority: 1 },
+    "experiment-tracker": { keywords: ["experiment design", "a/b test", "hypothesis"], priority: 1 },
+    "workflow-optimizer": { keywords: ["workflow optimization", "process redesign"], priority: 1 },
+    "changelog-writer": { keywords: ["changelog", "release note"], priority: 1 },
+  },
+  cino: {
+    "tech-radar-author": { keywords: ["tech radar", "technology radar", "adoption matrix"], priority: 1 },
+    "competitive-intel-analyst": { keywords: ["competitive intel", "competitor teardown", "moat analysis"], priority: 1 },
+    "patent-researcher": { keywords: ["patent research", "ip landscape", "patent search"], priority: 1 },
+    "horizon-scanner": { keywords: ["horizon scan", "weak signal", "emerging tech"], priority: 1 },
+    "cost-analyst": { keywords: ["cost analysis", "vendor pricing", "tco"], priority: 1 },
+    "rd-coordinator": { keywords: ["r&d coordination", "experiment portfolio"], priority: 1 },
+    "skill-synthesizer": { keywords: ["skill domain creation", "framework synthesis"], priority: 1 },
+  },
+};
+
+// Descend from office → specialist using SPECIALISTS keyword scoring.
+// Returns { specialist, specialist_score, requires_specialist_classification, ... }
+function descendToSpecialist(office, taskLower) {
+  const officeSpecialists = SPECIALISTS[office] || {};
+  let best = null;
+  let bestScore = 0;
+  for (const [name, config] of Object.entries(officeSpecialists)) {
+    let score = 0;
+    for (const kw of config.keywords) {
+      if (taskLower.includes(kw)) score += 2 * (config.priority || 1);
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      best = { name, ...config, score };
+    }
+  }
+  return best; // may be null if no specialist signal — caller defaults to office lead
+}
+
 function routeTask(task) {
   const taskLower = task.toLowerCase();
   const scores = {};
@@ -132,14 +297,35 @@ function routeTask(task) {
     return { office: "unroutable", confidence: "LOW", suggestion: "Use /mxm-route for manual classification" };
   }
   const officeConfig = OFFICES[best[0]];
-  const confidence = best[1] >= 6 ? "HIGH" : best[1] >= 3 ? "MEDIUM" : "LOW";
+
+  // L2 descent — try to identify a more specific specialist than the office lead
+  const specialistMatch = descendToSpecialist(best[0], taskLower);
+  const specialist = specialistMatch?.name || officeConfig.lead;
+  const isLead = specialist === officeConfig.lead;
+
+  // Confidence rubric:
+  // HIGH = strong office signal AND clear specialist match (descent succeeded with score >= 2)
+  // MEDIUM = office signal but specialist defaulted to lead OR descent score < 2
+  // LOW = weak office signal (< 3)
+  let confidence;
+  if (best[1] >= 6 && specialistMatch && specialistMatch.score >= 2) confidence = "HIGH";
+  else if (best[1] >= 3) confidence = "MEDIUM";
+  else confidence = "LOW";
+
   return {
     office: best[0],
     office_name: officeConfig.name,
     lead_agent: officeConfig.lead,
+    specialist,
+    specialist_is_lead: isLead,
+    requires_specialist_classification: specialistMatch?.requires_specialist_classification || false,
+    classification_authority: specialistMatch?.classification_authority || null,
+    negative_trigger: specialistMatch?.negative_trigger || null,
+    adr: specialistMatch?.adr || null,
     skill_domains: officeConfig.skill_domains,
     confidence,
     score: best[1],
+    specialist_score: specialistMatch?.score || 0,
     all_scores: Object.fromEntries(sorted),
   };
 }

@@ -8,6 +8,73 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.2.0.6 — 2026-05-19 — route_task L2 specialist descent (CMO writing-verb gap fix)
+
+Theme: **route_task now descends from office → specialist instead of stopping at the office lead.** Mr. Khan's KFAS routing report surfaced a real architectural gap in `route_task`: it correctly classified "draft a WhatsApp message" → CMO, but returned `lead_agent: content-strategist` instead of `nk-writer`. ADR-016 explicitly states content-strategist delegates writing production to nk-writer; collapsing to the lead defeats that delegation chain.
+
+### What changed
+
+Added a `SPECIALISTS` map per office with per-specialist trigger keywords (more specific than office-level keywords). After office classification wins, `route_task` now runs a specialist-descent pass that scores specialists within the winning office. The highest-scoring specialist becomes the dispatch target; the office lead is the fallback when no specialist signal beats baseline.
+
+**CMO specialists with descent triggers (10):** nk-writer (writing verbs: draft/write/compose/post/blog/memo/message/whatsapp/slack/email/linkedin/twitter/newsletter/tutorial/doc/readme/proposal/summary), brand-guardian (brand drift/voice audit), seo-specialist (seo/aeo/keyword), conversion-optimizer (conversion/cro/landing page), persuasion-specialist (cialdini/scarcity/social proof), behavioral-designer (fogg/com-b/east/hook), email-campaign-writer (email campaign/sequence/nurture), gtm-strategist (gtm/launch plan), growth-hacker (viral/k-factor), documentation-writer (api reference).
+
+Similar specialist maps added for **CSO** (18 specialists incl. threat-modeler/owasp-specialist/dpia-specialist/gdpr-counsel/hipaa-counsel/soc2-auditor/iso27001-lead-auditor/ai-ethics-reviewer/incident-responder), **CEO** (8 incl. investor-pitch-writer/financial-modeler/partnership-manager/negotiation-specialist), **CTO** (17 incl. frontend-developer/backend-architect/data-architect/ai-engineer/rag-specialist/devops-automator), **CPO** (7 incl. pricing-strategist/product-manager/ux-researcher/accessibility-auditor), **COO** (8 incl. sprint-prioritizer/project-shipper/sre-analyst/experiment-tracker), and **CINO** (7 incl. tech-radar-author/competitive-intel-analyst/patent-researcher/horizon-scanner).
+
+### Confidence rubric updated
+
+HIGH now requires BOTH strong office signal (score ≥ 6) AND clear specialist match (specialist score ≥ 2). MEDIUM = office signal but specialist defaulted to lead. LOW = weak office signal. Previously HIGH could be returned on office-only matches, which over-claimed routing certainty.
+
+### L2-L3 boundary made explicit
+
+For specialists with their own internal classification step (currently `nk-writer` against `VOICE_SELECTION.md`'s 22 content types), the response includes:
+
+```
+specialist:                          "nk-writer"
+requires_specialist_classification:  true
+classification_authority:            "myVoiceDNA/VOICE_SELECTION.md"
+negative_trigger:                    "active_startup + customer-facing → routes to {active_startup}-brand-writer instead"
+adr:                                 "ADR-016"
+```
+
+Downstream callers know route_task delivers office+specialist (L1+L2). Content-type classification (L3) is the specialist's responsibility once embodied. Per ADR-016 Step 3, nk-writer surfaces a 5-choice operator prompt if the task doesn't match one of VOICE_SELECTION.md's 22 content types.
+
+### Verification
+
+```
+route_task("draft a WhatsApp message to open KFAS discussion with a contact for ARIA")
+  → office: cmo
+    lead_agent: content-strategist
+    specialist: nk-writer                          ← descent worked
+    specialist_is_lead: false
+    requires_specialist_classification: true       ← signals L3 work needed
+    classification_authority: myVoiceDNA/VOICE_SELECTION.md
+    negative_trigger: active_startup → brand-writer
+    adr: ADR-016
+    confidence: HIGH
+    score: <office-level>
+    specialist_score: <specialist-level>
+```
+
+### Active_startup negative-trigger NOT resolved in MCP
+
+`route_task` cannot read `config/project-manifest.json` from the calling project (project_id is just an identifier string, not a path resolver in the current MCP signature). The negative_trigger string is returned as informational guidance. nk-writer applies the negative trigger when embodied, reading the manifest itself.
+
+### Capability delta v1.2.0.5 → v1.2.0.6
+
+No new agents, skills, commands, MCPs, frameworks, or ADRs. Bug-fix patch for `mcp/mxm-catalog/server.js` adding L2 specialist descent. The shape of route_task's response gains 4 fields (specialist, specialist_is_lead, requires_specialist_classification, classification_authority, negative_trigger, adr, specialist_score) — backward-compatible additions to the existing fields.
+
+### Files changed
+
+- `mcp/mxm-catalog/server.js` — added SPECIALISTS map (~75 entries) + descendToSpecialist() function + routeTask() L2 descent
+- `CHANGELOG.md` — this entry
+- `config/agent-registry.json` + 7 other version-bearing files — bumped to 1.2.0.6
+
+### Process note
+
+Caught by Mr. Khan in a fresh Claude Code session running v1.2.0.5 — the FIRST time the architecture was tested end-to-end on the real KFAS prompt. Validates the lesson from v1.2.0.4/5: declarative architecture and runtime behavior diverge. End-to-end testing in a real session is the only ground truth. Going forward, route_task is now part of the v1.2.0.6 pre-release-audit's Reference Integrity check (Bucket 3).
+
+---
+
 ## v1.2.0.5 — 2026-05-19 — mxm-catalog MCP fix (the v1.2.0.4 blind spot)
 
 Theme: **Make ADR-017 actually work.** v1.2.0.4 shipped the office-as-dispatch architecture on top of `mxm-catalog` MCP — without verifying the catalog itself worked. Post-ship probes against `route_task` and `get_agent_dna` exposed three stacked bugs in `mcp/mxm-catalog/server.js` that had been present since some pre-v1.2.0 refactor:

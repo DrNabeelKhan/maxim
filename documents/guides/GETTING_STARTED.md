@@ -273,5 +273,5 @@ After updating, run `/mxm-status` in each project to verify.
 ---
 
 **Built by:** Dr. Nabeel Khan · iSimplification.io
-**Version:** Maxim v1.2.0.5 · 91 agents · 35 skill domains
+**Version:** Maxim v1.2.0.6 · 91 agents · 35 skill domains
 **Repo:** https://github.com/DrNabeelKhan/maxim
