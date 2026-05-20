@@ -27,7 +27,7 @@ incoming tasks and routes to the correct office lead
 before any skill is activated.
 
 **Last updated:** 2026-04-12
-**Source of truth:** `config/agent-registry.json` v6.2.0
+**Source of truth:** `config/agent-registry.json` v1.2.0.3
 
 ---
 
@@ -544,7 +544,7 @@ Behavioral science and domain frameworks from `documents/reference/FRAMEWORKS_MA
 
 ---
 
-**Source of truth:** `config/agent-registry.json` v6.2.0
+**Source of truth:** `config/agent-registry.json` v1.2.0.3
   + `.claude/skills/` (skill files)
 **Maintained by:** DrNabeelKhan | iSimplification.io
 **Last updated:** 2026-04-11

@@ -86,12 +86,12 @@ maxim/
 ├── tools/subagent-catalog/                 ← Proxy to community-packs/awesome-claude-code-subagents (4 commands: list/search/fetch/invalidate)
 ├── ide-adapters/                           ← 16 IDE adapter configs (.adal, .agent, .claude-plugin, .codebuddy, .codex, .continue, .cursor, .factory, .gemini, .github, .kilocode, .kiro, .mastracode, .openclaw, .opencode, .pi) — each adapts Maxim's planning-with-files skill for its IDE. Synced weekly via sync-sources.yml.
 │
-├── mcp/                                    ← 7 MCP SERVERS (47 tools total) — see mcp/README.md (consolidated v1.0.0)
+├── mcp/                                    ← 8 MCP servers (47 tools total) — see mcp/README.md (consolidated v1.0.0)
 │   ├── mxm-portfolio/              7 tools — sync_portfolio, portfolio metrics, tasks
 │   ├── mxm-context/                13 tools — v1.0.0 absorbed design (4) + added watch_* (3); manifest, decision log, session memory, operator profile, brand design, drift detection
 │   ├── mxm-catalog/                9 tools — v1.0.0 merged dispatch + skills; office routing, agent DNA, handoff chain, skill/command catalog
 │   ├── mxm-compliance/             5 tools — 14 compliance frameworks
-│   ├── mxm-behavioral/             5 tools — 64 behavioral frameworks (added proactive-watch v1.0.0)
+│   ├── mxm-behavioral/             5 tools — 74 behavioral frameworks (added proactive-watch v1.0.0)
 │   ├── mxm-memory/                 4 tools — cross-session memory search
 │   └── mxm-voice/                  4 tools — v1.0.0+ — voice-driven office routing (wraps mbailey/voicemode)
 │

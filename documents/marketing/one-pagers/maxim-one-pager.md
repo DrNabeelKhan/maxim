@@ -73,7 +73,7 @@ A **governed multi-agent operating system** running across every Claude surface 
 
 **Without Maxim:** every Claude session starts cold. Compliance is manual. No behavioral science. Every project independent. Generic agents. Version drift.
 
-**With Maxim:** sessions resume full context. Compliance automatic. 64 behavioral frameworks applied structurally. Portfolio-wide awareness. 90 governed specialists. Zero drift via `git pull` + Proactive Watch.
+**With Maxim:** sessions resume full context. Compliance automatic. 74 behavioral frameworks applied structurally. Portfolio-wide awareness. 90 governed specialists. Zero drift via `git pull` + Proactive Watch.
 
 **The math:** a human chief of staff costs $200K. A compliance officer costs $150K. A behavioral scientist costs $160K. A 15-person marketing team costs $1.5M+. Maxim replaces all of them — governed, tireless, deepening with every session — for the cost of a Claude subscription + pack licenses.
 

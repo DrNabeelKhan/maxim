@@ -109,7 +109,17 @@ Write-Log "  frameworks=$Frameworks compliance=$Compliance"
 $ExcludePatterns = @(
     'CHANGELOG\.md$'
     'documents[\\/]ADRs[\\/]INDEX\.md$'
+    'documents[\\/]ADRs[\\/]ADR-[0-9]+'                # individual ADRs are historical
     'documents[\\/]ledgers[\\/]DEBUGGING_PLAYBOOK\.md$'
+    'documents[\\/]ledgers[\\/]BUG_TRACKER\.md$'       # append-only bug ledger
+    'documents[\\/]ledgers[\\/]MOAT_TRACKER\.md$'      # positioning entries dated to release
+    'documents[\\/]sales[\\/]launch[\\/]'              # dated launch artifacts
+    'documents[\\/]marketing[\\/]catalogues[\\/]'      # versioned catalogues
+    'documents[\\/]marketing[\\/]packs-catalog[\\/]'   # versioned pack catalogues
+    'documents[\\/]sales[\\/]MOE_v1_[0-9]+_'           # versioned build plans
+    'documents[\\/]references[\\/]'                    # historical session bridges
+    'templates[\\/]prompts[\\/]PROMPT_'                # version-bound demo prompts
+    '[\\/]cinematic-styles[\\/]'                       # ai-media-generation skill — per-stack mechanics
     '[\\/]v[0-9][0-9.]*-[a-zA-Z0-9-]+\.md$'
     '[\\/]changelog[\\/]'
     'migration-log'
@@ -135,11 +145,13 @@ function Test-Excluded($path) {
 }
 
 function Get-PluginRepoSurfaces {
-    Get-ChildItem -Path $RepoRoot -Recurse -File -Include '*.md', 'agent-registry.json' |
+    Get-ChildItem -Path $RepoRoot -Recurse -File -Include '*.md', 'agent-registry.json', 'plugin.json' |
         Where-Object {
             $rel = $_.FullName.Substring($RepoRoot.Path.Length + 1)
             -not (Test-Excluded $_.FullName) -and
-            ($_.Extension -eq '.md' -or $_.Name -eq 'agent-registry.json')
+            ($_.Extension -eq '.md' -or
+             $_.Name -eq 'agent-registry.json' -or
+             ($_.Name -eq 'plugin.json' -and $_.FullName -match '[\\/]\.claude-plugin[\\/]plugin\.json$'))
         } |
         Select-Object -ExpandProperty FullName
 }
@@ -182,15 +194,22 @@ function Sync-File($filePath) {
     $after = $before
     foreach ($a in $Anchors) {
         $kwEsc = [regex]::Escape($a.keyword)
-        # SAFE pattern: only match in two strict forms (matches sync-counts.sh):
+        # SAFE pattern — three strict forms (matches sync-counts.sh):
         #   1. <num>+<space><kw>             — "+"-suffix marks open-ended count claim
-        #   2. <num><space><adj><space><kw>  — adjective-prefixed (specialist|governed|Maxim|peer-reviewed)
-        # Bare "<num> <kw>" is intentionally NOT matched — too many false positives
-        # (per-office breakdowns, complexity thresholds, historical changelog entries).
+        #   2. <num><space><adj><space><kw>  — adjective-prefixed (specialist|governed|peer-reviewed|Maxim|slash)
+        #   3. <num><space><kw>              — ONLY for compound (multi-word) anchors
+        #                                       (e.g., "skill domains", "MCP servers", "behavioral frameworks").
+        #                                       Compounds are specific enough to avoid the false-positive
+        #                                       classes single-word bare-matches would hit.
         $patternPlus = "\b\d{1,4}\+(\s+)$kwEsc\b"
-        $patternAdj  = "\b\d{1,4}(\s+(?:specialist|governed|peer-reviewed|Maxim)\s+)$kwEsc\b"
+        $patternAdj  = "\b\d{1,4}(\s+(?:specialist|governed|peer-reviewed|Maxim|slash)\s+)$kwEsc\b"
         $after = [regex]::Replace($after, $patternPlus, "$($a.count)+`$1$($a.keyword)", 'IgnoreCase')
         $after = [regex]::Replace($after, $patternAdj,  "$($a.count)`$1$($a.keyword)",  'IgnoreCase')
+        # Compound keyword detection: anchor contains a whitespace character.
+        if ($a.keyword -match '\s') {
+            $patternCompound = "\b\d{1,4}(\s+)$kwEsc\b"
+            $after = [regex]::Replace($after, $patternCompound, "$($a.count)`$1$($a.keyword)", 'IgnoreCase')
+        }
     }
     if ($before -eq $after) { return $false }
     if ($DryRun -or $Check) {

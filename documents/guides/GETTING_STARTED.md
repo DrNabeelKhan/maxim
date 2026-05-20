@@ -132,7 +132,7 @@ Open `config\project-manifest.json` and complete **all** fields marked `// REQUI
 - [ ] `maintainer` — your GitHub username
 - [ ] `last_updated` — today’s date (YYYY-MM-DD)
 - [ ] `next_review` — 30 days from today
-- [ ] `MXM_version` — must match installed Maxim version (`6.2.0`)
+- [ ] `MXM_version` — must match installed Maxim version (`1.2.0.3`)
 
 Every agent reads this file at runtime — compliance gates, model provider, and project identity are set once and enforced everywhere.
 
@@ -229,8 +229,8 @@ bash .mxm-skills/bootstrap/new-project-setup.sh
 | Document | Purpose |
 |---|---|
 | [`documents/reference/MXM_INSTALL.md`](documents/reference/MXM_INSTALL.md) | Full adopter reference — folder map, troubleshooting, update command |
-| [`documents/reference/SKILLS_MAP.md`](documents/reference/SKILLS_MAP.md) | 22 skill domains — what each covers |
-| [`documents/reference/FRAMEWORKS_MASTER.md`](documents/reference/FRAMEWORKS_MASTER.md) | 63 behavioral frameworks applied automatically |
+| [`documents/reference/SKILLS_MAP.md`](documents/reference/SKILLS_MAP.md) | 35 skill domains — what each covers |
+| [`documents/reference/FRAMEWORKS_MASTER.md`](documents/reference/FRAMEWORKS_MASTER.md) | 74 behavioral frameworks applied automatically |
 | [`config/agent-registry.json`](config/agent-registry.json) | Full agent catalog |
 | [`documents/governance/ETHICAL_GUIDELINES.md`](documents/governance/ETHICAL_GUIDELINES.md) | Governance layer and super_user mode |
 
@@ -238,7 +238,7 @@ bash .mxm-skills/bootstrap/new-project-setup.sh
 
 ## Upgrading from Older Versions
 
-**Already using Maxim v1.0.0 or v1.0.0?** Run the update tool to bring per-project files current.
+**Already using an older Maxim version?** Run the update tool to bring per-project files current.
 
 **Windows (PowerShell 7+):**
 ```powershell
@@ -273,5 +273,5 @@ After updating, run `/mxm-status` in each project to verify.
 ---
 
 **Built by:** Dr. Nabeel Khan · iSimplification.io
-**Version:** Maxim v1.0.0 · 87 agents · 22 skill domains
+**Version:** Maxim v1.2.0.3 · 91 agents · 35 skill domains
 **Repo:** https://github.com/DrNabeelKhan/maxim

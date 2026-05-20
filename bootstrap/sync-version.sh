@@ -122,15 +122,20 @@ sync_file "documents/reference/SKILLS_MAP.md" \
   "v$TARGET" \
   "Source of truth line"
 
-sync_file "documents/ledgers/SESSION_CONTINUITY.md" \
-  "| agent-registry.json version | $CURRENT |" \
-  "| agent-registry.json version | $TARGET |" \
-  "Registry table"
-
 sync_file "bootstrap/new-project-setup.sh" \
-  "\"mxm_version\": \"$CURRENT\"" \
-  "\"mxm_version\": \"$TARGET\"" \
+  "\"MXM_version\": \"$CURRENT\"" \
+  "\"MXM_version\": \"$TARGET\"" \
   "Generated manifest"
+
+sync_file ".claude-plugin/plugin.json" \
+  "\"version\": \"$CURRENT\"" \
+  "\"version\": \"$TARGET\"" \
+  "Plugin manifest (installed version)"
+
+sync_file "documents/guides/GETTING_STARTED.md" \
+  "v$CURRENT" \
+  "v$TARGET" \
+  "Version refs"
 
 # ── Update last_updated in registry ──────────────────────────────────────
 

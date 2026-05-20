@@ -43,7 +43,7 @@ The following artifacts constitute the Anthropic marketplace submission. All pat
 |---|---|---|
 | Architecture Decision Records | `documents/ADRs/` (or `docs/adr/` per branch) | Submission quality signal — 10 ADRs |
 | Agent + skill inventory | `documents/ledgers/AGENT_SKILL_INVENTORY.md` | Authoritative capability counts |
-| Frameworks master | `documents/reference/FRAMEWORKS_MASTER.md` | 64 behavioral frameworks |
+| Frameworks master | `documents/reference/FRAMEWORKS_MASTER.md` | 74 behavioral frameworks |
 | Ethical guidelines | `documents/governance/ETHICAL_GUIDELINES.md` | Governance boundaries |
 | Moat tracker | `documents/ledgers/MOAT_TRACKER.md` | Defensibility claims with mechanism + citation |
 | Changelog | `CHANGELOG.md` | Release history |

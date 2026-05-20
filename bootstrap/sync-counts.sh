@@ -113,7 +113,17 @@ log "  frameworks=${FRAMEWORKS:-?} compliance=${COMPLIANCE:-?}"
 EXCLUDE_PATTERNS=(
   '/CHANGELOG\.md$'
   '/documents/ADRs/INDEX\.md$'
+  '/documents/ADRs/ADR-[0-9]+'             # individual ADRs are historical records — counts in justification text describe state AT TIME OF DECISION
   '/documents/ledgers/DEBUGGING_PLAYBOOK\.md$'  # append-only journal of past patterns; historical refs preserved
+  '/documents/ledgers/BUG_TRACKER\.md$'    # append-only bug ledger; entries describe state at time of incident
+  '/documents/ledgers/MOAT_TRACKER\.md$'   # positioning entries dated to release; historical counts are evidence
+  '/documents/sales/launch/'               # dated launch artifacts (twitter threads, promo strategy) — frozen at launch date
+  '/documents/marketing/catalogues/'       # versioned catalogues (e.g. maxim-catalogue-v1.0.0.md)
+  '/documents/marketing/packs-catalog/'    # versioned pack catalogues
+  '/documents/sales/MOE_v1_[0-9]+_'        # versioned build plans (MOE_v1_1_BUILD_PLAN.md)
+  '/documents/references/'                 # historical session reconfiguration + bridge logs
+  '/templates/prompts/PROMPT_'             # version-bound demo prompts (versions + counts move together; don't sync in isolation)
+  '/cinematic-styles/'                     # ai-media-generation skill — counts here are per-stack mechanics, not global state
   '/v[0-9][0-9.]*-[a-zA-Z0-9-]+\.md$'   # versioned historical (maxim-pack-catalog-v1.0.0.md)
   '/changelog/'                           # any directory named changelog
   '/migration-log'
@@ -141,7 +151,7 @@ is_excluded() {
 # Plugin-repo glob list — markdown + JSON
 collect_plugin_repo_surfaces() {
   cd "$REPO_ROOT"
-  find . -type f \( -name "*.md" -o -path "*/config/agent-registry.json" \) \
+  find . -type f \( -name "*.md" -o -path "*/config/agent-registry.json" -o -path "*/.claude-plugin/plugin.json" \) \
     -not -path "./node_modules/*" \
     -not -path "./.git/*" \
     -not -path "./mcp/*/node_modules/*" \
@@ -207,16 +217,22 @@ build_perl_script() {
   for entry in "${ANCHORS[@]}"; do
     local anchor="${entry%|*}"
     local count="${entry##*|}"
-    # SAFE pattern: only match in two strict forms:
+    # SAFE pattern — three strict forms:
     #   1. <num>+<space><kw>             — "+"-suffix marks open-ended count claim (e.g., "90+ agents")
-    #   2. <num><space><adj><space><kw>  — adjective-prefixed (specialist|governed|Maxim|peer-reviewed)
-    # We DO NOT match bare "<num> <kw>" — too many false positives:
-    #   - per-office breakdowns ("25 agents" for CTO)
-    #   - complexity thresholds (">= 3 agents")
-    #   - historical changelog entries ("87 agents at v1.0.0")
-    # Class 11 detection still flags those; humans review manually.
+    #   2. <num><space><adj><space><kw>  — adjective-prefixed (specialist|governed|peer-reviewed|Maxim|slash)
+    #   3. <num><space><kw>              — ONLY for compound (multi-word) anchors
+    #                                       (e.g., "skill domains", "MCP servers", "behavioral frameworks").
+    #                                       Compounds are specific enough to avoid the false-positive
+    #                                       classes that bare single-word matches would hit
+    #                                       (per-office breakdowns, complexity thresholds,
+    #                                       historical changelog entries).
+    # Class 11 detection still flags edge cases for human review.
     script+="s/\\b\\d{1,4}\\+(\\s+)$anchor\\b/${count}+\$1$anchor/gi;"
-    script+="s/\\b\\d{1,4}(\\s+(?:specialist|governed|peer-reviewed|Maxim)\\s+)$anchor\\b/${count}\$1$anchor/gi;"
+    script+="s/\\b\\d{1,4}(\\s+(?:specialist|governed|peer-reviewed|Maxim|slash)\\s+)$anchor\\b/${count}\$1$anchor/gi;"
+    # Compound keyword detection: anchor contains a whitespace character.
+    if [[ "$anchor" == *" "* ]]; then
+      script+="s/\\b\\d{1,4}(\\s+)$anchor\\b/${count}\$1$anchor/gi;"
+    fi
   done
   printf '%s' "$script"
 }

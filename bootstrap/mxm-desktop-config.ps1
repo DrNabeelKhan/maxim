@@ -119,6 +119,71 @@ try {
     Write-Fail "Validation failed. Original config restored. Open an issue with the .bak file attached."
 }
 
+# ─── Pre-install MCP deps (v1.2.0.3+) ────────────────────────────────────────
+# Claude Desktop's MCP client has a ~60s `initialize` timeout. Without this
+# pre-warm, the first Desktop launch hits the cold spawn-with-deps install
+# loop (~30–60s for 7 servers) and times out — reporting "failed" servers
+# that are actually still running. Pre-installing here moves that cost into
+# this script (where the operator is already watching progress) so the very
+# first Desktop launch finds all node_modules in place and short-circuits.
+
+Write-Info "Pre-installing MCP server dependencies (eliminates Desktop first-launch timeout)..."
+
+# Restore PluginRoot to a filesystem-friendly form for Test-Path / npm install
+$PluginRootFs = $PluginRoot.Replace('/', [IO.Path]::DirectorySeparatorChar)
+$Sentinel = Join-Path $PluginRootFs ".mcp-deps-installed"
+
+$PreInstallCount = 0
+$PreInstallSkipped = 0
+$PreInstallFailed = 0
+
+$McpDir = Join-Path $PluginRootFs "mcp"
+$McpServerDirs = Get-ChildItem -Path $McpDir -Directory -Filter "mxm-*" -ErrorAction SilentlyContinue
+
+foreach ($srvDir in $McpServerDirs) {
+    $pkgJson = Join-Path $srvDir.FullName "package.json"
+    $nodeModules = Join-Path $srvDir.FullName "node_modules"
+    if (-not (Test-Path $pkgJson)) {
+        $PreInstallSkipped++
+        continue
+    }
+    if ((Test-Path $nodeModules) -and (Test-Path $Sentinel)) {
+        $PreInstallSkipped++
+        continue
+    }
+    Write-Host "  installing $($srvDir.Name)… " -NoNewline
+    try {
+        Push-Location $srvDir.FullName
+        $npmOutput = & npm install --omit=dev --no-audit --no-fund --silent 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "ok" -ForegroundColor Green
+            $PreInstallCount++
+        } else {
+            Write-Host "FAIL" -ForegroundColor Red
+            $PreInstallFailed++
+        }
+    } catch {
+        Write-Host "FAIL ($_)" -ForegroundColor Red
+        $PreInstallFailed++
+    } finally {
+        Pop-Location
+    }
+}
+
+if ($PreInstallFailed -eq 0) {
+    $SentinelContent = @{
+        installed_at = (Get-Date -AsUTC).ToString('yyyy-MM-ddTHH:mm:ssZ')
+        installed_count = $PreInstallCount
+        skipped_count = $PreInstallSkipped
+        plugin_root = $PluginRoot
+        installer = "bootstrap/mxm-desktop-config.ps1"
+    } | ConvertTo-Json
+    Set-Content -Path $Sentinel -Value $SentinelContent -Encoding utf8
+    Write-Ok "MCP deps ready (installed: $PreInstallCount, already-present: $PreInstallSkipped). Sentinel written."
+} else {
+    Write-Warn "MCP install partial (installed: $PreInstallCount, failed: $PreInstallFailed). First Desktop launch may still hit timeout."
+}
+
 # ─── Report final state ───────────────────────────────────────────────────────
 $TotalServers = $Config.mcpServers.Count
 $PreservedCount = $TotalServers - 8
@@ -132,12 +197,12 @@ Write-Host "  Config:  $ConfigFile"
 Write-Host "  Backup:  $(Split-Path $BackupFile -Leaf)"
 Write-Host "  Plugin:  $PluginVersion"
 Write-Host "  Servers: $TotalServers total ($PreservedCount preserved + 8 Maxim MCPs = 49 tools)"
+Write-Host "  Deps:    pre-installed ($PreInstallCount new, $PreInstallSkipped already-present)"
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Cyan
-Write-Host "  1. Quit Claude Desktop completely (Cmd-Q on Mac, fully exit on Windows)"
+Write-Host "  1. Quit Claude Desktop completely (Cmd-Q on Mac, fully exit on Windows/Linux)"
 Write-Host "  2. Reopen Claude Desktop"
-Write-Host "  3. First spawn of mxm-commands MCP will run 'npm install' (~10 sec one-time)"
-Write-Host "  4. All 8 Maxim MCPs (49 tools) will be available in conversations"
+Write-Host "  3. All 8 Maxim MCPs (49 tools) appear immediately — no first-launch wait."
 Write-Host ""
 Write-Host "Optional - activate behavioral layer in Desktop Projects:" -ForegroundColor Cyan
 Write-Host "  Paste contents of documents/cross-surface/maxim-project-instructions.md"

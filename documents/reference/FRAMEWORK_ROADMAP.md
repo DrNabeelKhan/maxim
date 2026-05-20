@@ -25,7 +25,7 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 
 ## 🎯 v1.1.0 — Runtime Hardening (SHIPPED 2026-04-27)
 
-**Theme:** Close the runtime enforcement gap exposed by the v1.0.0 launch audit. v1.1.0 ships v1.1.A only — the foundation that gates every paid-tier feature. v1.1.B (MOE) and v1.1.C (7 compliance frameworks) move to v1.1.1 per the 2026-04-27 scope decision: ship the foundation now rather than wait for the full bundle.
+**Theme:** Close the runtime enforcement gap exposed by the v1.0.0 launch audit. v1.1.0 ships v1.1.A only — the foundation that gates every paid-tier feature. v1.1.B (MOE) and v1.1.C (14 compliance frameworks) move to v1.1.1 per the 2026-04-27 scope decision: ship the foundation now rather than wait for the full bundle.
 
 ### 🔒 v1.1.0 — Runtime Hardening — MCP license middleware (SHIPPED v1.1.A)
 
@@ -36,12 +36,12 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 **Shipped capability.**
 
 - New shared module `mcp/_shared/license-gate.ts` — single `requireValidLicense(toolName)` helper that reads `MXM_LICENSE_JWT` env var, calls the Worker `/validate` endpoint, and throws on deny/expired/revoked.
-- All 7 MCP servers call the gate at the start of every `@tool`-decorated handler. Starter tier (free) gets a short-TTL anonymous JWT with rate-limited grants; paid tiers get their checkout-issued JWT with tier-specific grant set.
+- All 8 MCP servers call the gate at the start of every `@tool`-decorated handler. Starter tier (free) gets a short-TTL anonymous JWT with rate-limited grants; paid tiers get their checkout-issued JWT with tier-specific grant set.
 - Worker-side `/validate` endpoint logs (tool, tier, project_id, timestamp) to a KV namespace for usage analytics — feeds the portfolio dashboard and support debugging.
 - Tier-grant enforcement: the validate response includes the tier's grant list; tools that require specific grants (e.g., `mempalace_kg_add` requires `mempalace-full`) check locally after the gate clears.
 
 **Ship gates (v1.1.0 release status — updated 2026-04-27 post-deploy):**
-- [x] `requireValidLicense` middleware merged into all 7 MCP servers — **SHIPPED**
+- [x] `requireValidLicense` middleware merged into all 8 MCP servers — **SHIPPED**
 - [x] Worker `/validate` endpoint deployed + KV binding live — **LIVE** at `https://maxim-license-api.isystematic.workers.dev` (Version `54be3b40-6b81...`)
 - [x] Starter tier anonymous JWT issuer live — **LIVE** (Pro Trial 90d auto-activates per v1.1.0.1 hotfix; falls back to Starter post-trial)
 - [x] End-to-end test: clone public repo without a license → tool calls fail with clear error — **SHIPPED** (FIRST_RUN_FAILED test in `mcp/_shared/license-gate.test.mjs`)
@@ -57,7 +57,7 @@ Deferral does **not** mean the frameworks are unavailable to customers — the k
 - Obfuscating MCP source code — the public-source strategy stays. Value is gated by runtime, not code secrecy.
 - Moving framework definitions server-side — they stay public as marketing/reference assets.
 - Real ML-driven framework scoring — deferred to v2.0.
-- v1.1.B (MOE) and v1.1.C (7 compliance frameworks) — moved to v1.1.1 per scope decision below.
+- v1.1.B (MOE) and v1.1.C (14 compliance frameworks) — moved to v1.1.1 per scope decision below.
 
 ---
 
@@ -89,7 +89,7 @@ vs. previous flow (~2 min, 2 restarts).
 
 **Theme:** Combines the two workstreams originally bundled into v1.1 alongside the license middleware:
 - v1.1.B Maxim Overlay Engine (per ADR-012) — apply governance to every Claude Code plugin
-- v1.1.C 7 compliance frameworks — fill the regulated-industry surface area
+- v1.1.C 14 compliance frameworks — fill the regulated-industry surface area
 
 **Why split.** Foundation (license middleware in v1.1.0) gates everything; we shipped it standalone so users get tier-enforced runtime now. v1.1.1 (self-update + install docs) shipped 2026-04-28 to unblock tester onboarding. MOE + compliance frameworks land together in v1.1.2 because MOE's tier-gating depends on the license layer (already shipped) and compliance frameworks plug into MOE's PreToolUse compliance gate.
 
@@ -105,13 +105,13 @@ vs. previous flow (~2 min, 2 restarts).
 | §22 | NIST SP 800-53 | US federal controls baseline | [csrc.nist.gov/publications/detail/sp/800-53/rev-5/final](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final) | 🔴 HIGH — FedRAMP foundation |
 | §24 | LGPD (Brazil) | BR data protection | [gov.br/anpd](https://www.gov.br/anpd/pt-br) | 🟡 LOW — reactive to demand |
 
-**7 compliance frameworks.** Expected effort: 2–3 days per framework (template, compliance matrix, MCP integration, test cases). ~14–21 dev-days total.
+**14 compliance frameworks.** Expected effort: 2–3 days per framework (template, compliance matrix, MCP integration, test cases). ~14–21 dev-days total.
 
 ### 🧩 v1.1.1 — Maxim Overlay Engine (MOE)
 
 **Theme:** Shift Maxim from "a plugin among many" to **the governance layer that applies to every installed Claude Code plugin**. Architectural decision ratified in [ADR-012](../ADRs/ADR-012-overlay-engine-architecture.md).
 
-**Problem.** Maxim v1.0.0 ships 64 behavioral frameworks, 14 compliance frameworks, the confidence-tagging rubric (ADR-010), MOAT-row citation doctrine (ADR-007), and Proactive Watch drift detection. None of this applies to outputs produced by other plugins the user has installed — autocomplete tools, testing harnesses, doc generators, third-party MCP servers. Maxim's moat layer covers only Maxim-originated work, which is the wrong coverage surface for a *governance* product.
+**Problem.** Maxim v1.0.0 ships 74 behavioral frameworks, 14 compliance frameworks, the confidence-tagging rubric (ADR-010), MOAT-row citation doctrine (ADR-007), and Proactive Watch drift detection. None of this applies to outputs produced by other plugins the user has installed — autocomplete tools, testing harnesses, doc generators, third-party MCP servers. Maxim's moat layer covers only Maxim-originated work, which is the wrong coverage surface for a *governance* product.
 
 **Shipped capability.**
 
@@ -169,7 +169,7 @@ Four interception points implemented via Claude Code's existing hook API. No coo
 
 **Locked design (Session 14, 2026-04-27):** Full proposal in [`AGENT_ROSTER_v1.2_PROPOSAL.md`](./AGENT_ROSTER_v1.2_PROPOSAL.md).
 
-**Scope split (locked Session 20, 2026-05-19):** Original v1.2 plan bundled 10 behavioral frameworks (30–40 dev-days, ~50% of total budget) + Class 13 drift detection into a single 55–78-day release. Pre-sprint audit re-estimated WS5 roster reorganization at 10–15 days (consolidation + new, not count-neutral renames) and surfaced WS7's hard dependency on v1.1.2 MOE shipping first. To bring v1.2.0 GA into a defensible 6–9 week cadence, the work is split:
+**Scope split (locked Session 20, 2026-05-19):** Original v1.2 plan bundled 74 behavioral frameworks (30–40 dev-days, ~50% of total budget) + Class 13 drift detection into a single 55–78-day release. Pre-sprint audit re-estimated WS5 roster reorganization at 10–15 days (consolidation + new, not count-neutral renames) and surfaced WS7's hard dependency on v1.1.2 MOE shipping first. To bring v1.2.0 GA into a defensible 6–9 week cadence, the work is split:
 
 - **v1.2.0 GA** (~30–43 dev-days): WS1–WS5 + WS6a (4 HIGH-priority behavioral frameworks)
 - **v1.2.1 follow-up** (~21–29 dev-days, after v1.1.2 MOE ships): WS6b (6 MED-priority behavioral frameworks) + WS7 (Class 13 drift)
@@ -431,7 +431,7 @@ Items occasionally requested but not on the roadmap. These may be reconsidered p
 |---|---|---|
 | 2026-04-21 | Initial roadmap: 18 frameworks deferred from v1.0.0 → v1.1/v1.2 (7 compliance + 10 behavioral + 1 AI governance overlap) | Maxim v1.0.0 launch audit |
 | 2026-04-21 | v1.1 add: Runtime Hardening — MCP license middleware across all 7 servers. v1.3 add: AI Governance & Security — 5 frameworks (NIST AI RMF, OWASP LLM Top 10, MITRE ATLAS, Constitutional AI, AIBOM). Future Considerations appendix (Tiers 2–6 unscheduled). | Maxim v1.0.0 launch |
-| 2026-04-27 | **v1.1 split into v1.1.0 (shipped — license middleware only) + v1.1.1 (planned — MOE + 7 compliance frameworks).** Foundation shipped standalone so users get tier-enforced runtime now; MOE + compliance frameworks land together in v1.1.1 because MOE's tier-gating depends on the (already-shipped) license layer. | Session 15 close |
+| 2026-04-27 | **v1.1 split into v1.1.0 (shipped — license middleware only) + v1.1.1 (planned — MOE + 14 compliance frameworks).** Foundation shipped standalone so users get tier-enforced runtime now; MOE + compliance frameworks land together in v1.1.1 because MOE's tier-gating depends on the (already-shipped) license layer. | Session 15 close |
 | 2026-04-21 | Domain Expansions scheduled: RevOps (v1.3), Regulated Industries operator roster (v1.4), Fintech Specialist domain (v1.4), Cinematic / Video-AI Production (v1.5). | Maxim v1.0.0 launch |
 | 2026-04-23 | v1.1 adds Maxim Overlay Engine (MOE) per ADR-012. Four hook-based interception points (SessionStart / UserPromptSubmit / PreToolUse / PostToolUse) apply Maxim's behavioral, compliance, and confidence layers to every Claude Code plugin the operator has installed. Tier-gated via the v1.1 license middleware. Proactive Watch gains class 13 "third-party-plugin drift" in v1.2. OVERLAY_PAIRINGS.md publishes v1.3. | Maxim v1.0.0 launch |
 

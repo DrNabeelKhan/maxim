@@ -1,6 +1,6 @@
 # Maxim Cowork Plugin
 
-Maxim is an 87-agent behavioral intelligence platform. It applies behavioral science (Fogg, COM-B, EAST), 63 frameworks, and 22 skill domains to every output — routing tasks automatically through 7 executive offices. Model-agnostic and provider-pluggable.
+Maxim is an 87-agent behavioral intelligence platform. It applies behavioral science (Fogg, COM-B, EAST), 63 frameworks, and 35 skill domains to every output — routing tasks automatically through 7 executive offices. Model-agnostic and provider-pluggable.
 
 ---
 

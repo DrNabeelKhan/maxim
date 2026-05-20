@@ -43,7 +43,7 @@ After installation, `/plugin list` confirms the plugin is active. The plugin loa
 - 35+ skill domains (core behavioral + office domains)
 - 37+ slash commands
 - 4 free Proactive Watch drift classes (inventory, version, cross-doc, stale-handoff)
-- 7 MCP servers, 47 tools
+- 8 MCP servers, 47 tools
 - Full CSO auto-loop governance
 - Full `mxm-mode` output style
 - Full behavioral-moat enforcement hook

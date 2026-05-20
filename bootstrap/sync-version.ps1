@@ -87,16 +87,16 @@ $versionTargets = @(
         Note    = "Version refs"
     },
     @{
-        File    = "documents/ledgers/SESSION_CONTINUITY.md"
-        Pattern = "| agent-registry.json version | {OLD} |"
-        Replace = "| agent-registry.json version | {NEW} |"
-        Note    = "Registry table"
+        File    = "bootstrap/new-project-setup.sh"
+        Pattern = '"MXM_version": "{OLD}"'
+        Replace = '"MXM_version": "{NEW}"'
+        Note    = "Generated manifest version"
     },
     @{
-        File    = "bootstrap/new-project-setup.sh"
-        Pattern = '"mxm_version": "{OLD}"'
-        Replace = '"mxm_version": "{NEW}"'
-        Note    = "Generated manifest version"
+        File    = ".claude-plugin/plugin.json"
+        Pattern = '"version": "{OLD}"'
+        Replace = '"version": "{NEW}"'
+        Note    = "Plugin manifest (installed version)"
     }
 )
 

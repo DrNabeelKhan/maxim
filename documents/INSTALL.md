@@ -1,6 +1,6 @@
 # Installing Maxim
 
-> **Maxim** is the behavioral intelligence layer for Claude Code — 91 specialist agents across 7 executive offices, 64 behavioral frameworks, 14 compliance frameworks, and drift detection on every session.
+> **Maxim** is the behavioral intelligence layer for Claude Code — 91 specialist agents across 7 executive offices, 74 behavioral frameworks, 14 compliance frameworks, and drift detection on every session.
 >
 > This guide covers: install, choose packs, verify, upgrade, uninstall, troubleshoot.
 
@@ -11,7 +11,7 @@
 | Requirement | Why |
 |---|---|
 | **Claude Code** ([install](https://claude.com/claude-code)) | Maxim is a Claude Code plugin |
-| **Node.js 18+** ([download](https://nodejs.org)) | Maxim's 7 MCP servers run on Node |
+| **Node.js 18+** ([download](https://nodejs.org)) | Maxim's 8 MCP servers run on Node |
 | **Git** | Used by the plugin marketplace cache |
 | **Internet on first install** | License JWT issuance (90-day Pro Trial auto-activates; falls back to Starter forever after) |
 
@@ -45,12 +45,12 @@ Choose **"Install for you (user scope)"** when prompted.
 
 ### Restart Claude Code once
 
-The first session after install will auto-install the 7 MCP servers' Node dependencies (~30 seconds, runs once). After the restart you'll see all 7 MCPs `✓ Connected`.
+The first session after install will auto-install the 8 MCP servers' Node dependencies (~30 seconds, runs once). After the restart you'll see all 7 MCPs `✓ Connected`.
 
 ### What you get free (Starter tier, forever)
 
 - All 90 agents
-- All 38 slash commands
+- All 48 slash commands
 - All 64 frameworks (advisory mode)
 - Full executive routing
 - Local MemPalace memory
@@ -64,7 +64,7 @@ Pro Trial unlocks:
 - Behavioral audit (50/month)
 - Semantic MemPalace (cross-project graph search)
 - 11-class Proactive Watch
-- 3 compliance frameworks
+- 14 compliance frameworks
 - Voice mode (10 min/day)
 - Brand overlays (20/month)
 
@@ -163,7 +163,7 @@ Pick the L1 packs that match your work. Each is independent.
 /plugin install mxm-pack-l1-3-proactive-watch@maxim-packs     # Full 11-class drift detection
 /plugin install mxm-pack-l1-4-compliance-shield@maxim-packs   # 14 regulated-industry frameworks
 /plugin install mxm-pack-l1-5-brand-design-pro@maxim-packs    # 15 cinematic brand styles
-/plugin install mxm-pack-l1-6-behavioral-intelligence@maxim-packs  # 64 behavioral frameworks live
+/plugin install mxm-pack-l1-6-behavioral-intelligence@maxim-packs  # 74 behavioral frameworks live
 ```
 
 **Strategy B — L2 persona bundles (one bundle = several L1s combined)**
@@ -298,7 +298,7 @@ rm -rf <project>/.claude-sessions-memory
 plugin:maxim:mxm-portfolio  ✗ Failed to connect
 ```
 
-**Most common cause:** the spawn-with-deps wrapper hasn't run yet. Just restart Claude Code one more time — the first restart triggers `npm install` for the 7 MCP servers (~30 seconds), the second restart loads them connected.
+**Most common cause:** the spawn-with-deps wrapper hasn't run yet. Just restart Claude Code one more time — the first restart triggers `npm install` for the 8 MCP servers (~30 seconds), the second restart loads them connected.
 
 **If that doesn't fix it:** manually install MCP deps:
 

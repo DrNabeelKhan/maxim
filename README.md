@@ -2,7 +2,7 @@
 
 > **Start at $19.99 with Solo. The behavioral intelligence specialist for Claude.**
 
-![Version](https://img.shields.io/badge/version-1.2.0-blue)
+![Version](https://img.shields.io/badge/version-1.2.0.3-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-74-orange)
 ![Skills](https://img.shields.io/badge/skill_domains-35-purple)
@@ -100,7 +100,7 @@ Full catalog and pricing at https://maxim.isystematic.com/pricing.
 
 ## What Maxim Is
 
-Maxim is a **behavioral intelligence layer** that runs on top of any AI model. It is not a prompt library. It is not a chatbot wrapper. It is a governed, multi-agent operating system with 90+ specialists, 34 skill domains, executive office routing, inter-agent handoff protocol, voice-driven invocation, RAG-backed knowledge graph, usage-aware scheduling, Proactive Watch drift detection, and behavioral science embedded at every layer.
+Maxim is a **behavioral intelligence layer** that runs on top of any AI model. It is not a prompt library. It is not a chatbot wrapper. It is a governed, multi-agent operating system with 90+ specialists, 35 skill domains, executive office routing, inter-agent handoff protocol, voice-driven invocation, RAG-backed knowledge graph, usage-aware scheduling, Proactive Watch drift detection, and behavioral science embedded at every layer.
 
 The moat is not the tools. It is **Fogg Behavior Model, COM-B, EAST, Hook Model, and 64 peer-reviewed frameworks** baked into every skill, applied automatically rather than on request. Every output is confidence-tagged. Every security or compliance signal triggers the CSO auto-loop. Every release passes through a governed chain. Every document is treated as an Executable Contract with drift detection running on every session start.
 
@@ -206,11 +206,11 @@ See [`documents/guides/GETTING_STARTED.md`](documents/guides/GETTING_STARTED.md)
 | [`documents/guides/GETTING_STARTED.md`](documents/guides/GETTING_STARTED.md) | Full install guide — global + subtree paths |
 | [`documents/reference/MXM_INSTALL.md`](documents/reference/MXM_INSTALL.md) | One-page adopter reference — architecture, troubleshooting |
 | [`documents/reference/MXM_COMMAND_MAP.md`](documents/reference/MXM_COMMAND_MAP.md) | All slash commands with examples |
-| [`documents/reference/SKILLS_MAP.md`](documents/reference/SKILLS_MAP.md) | 33 skill domains with capability map |
-| [`documents/reference/FRAMEWORKS_MASTER.md`](documents/reference/FRAMEWORKS_MASTER.md) | 63 behavioral frameworks |
+| [`documents/reference/SKILLS_MAP.md`](documents/reference/SKILLS_MAP.md) | 35 skill domains with capability map |
+| [`documents/reference/FRAMEWORKS_MASTER.md`](documents/reference/FRAMEWORKS_MASTER.md) | 74 behavioral frameworks |
 | [`config/agent-registry.json`](config/agent-registry.json) | Full agent catalog (90 agents) |
 | [`documents/ledgers/AGENT_SKILL_INVENTORY.md`](documents/ledgers/AGENT_SKILL_INVENTORY.md) | Authoritative inventory: every agent, skill, command, MCP tool, hook — updated on every count change |
-| [`mcp/README.md`](mcp/README.md) | 9 MCP servers · 44 tools (auto-discovery via `.mcp.json`) |
+| [`mcp/README.md`](mcp/README.md) | 8 MCP servers · 44 tools (auto-discovery via `.mcp.json`) |
 | [`documents/reference/AGENTS.md`](documents/reference/AGENTS.md) | Downstream agent instructions (wiki + brand foundation usage, v1.0.0+) |
 | [`documents/ledgers/MOAT_TRACKER.md`](documents/ledgers/MOAT_TRACKER.md) | Defensibility tracking + feature timeline |
 | [`documents/governance/ETHICAL_GUIDELINES.md`](documents/governance/ETHICAL_GUIDELINES.md) | Governance layer |

@@ -50,7 +50,7 @@ github.com/DrNabeelKhan/maxim
 ### About section (gear icon → Edit repository details)
 
 **Description** (350 char max):
-> The Claude-native operating system. 91 governed agents across 7 executive offices. 64 behavioral frameworks. 14 compliance frameworks. Continuous drift detection. Documents as Executable Contracts. One `git pull` updates every project.
+> The Claude-native operating system. 91 governed agents across 7 executive offices. 74 behavioral frameworks. 14 compliance frameworks. Continuous drift detection. Documents as Executable Contracts. One `git pull` updates every project.
 
 **Website:** `https://maxim.isystematic.com`
 
@@ -132,7 +132,7 @@ The README is the GitHub-native document. It must render clean in GitHub's markd
 
 <p align="center">
   <b>The Claude-native operating system for AI-assisted work.</b><br>
-  91 governed agents · 64 behavioral frameworks · 14 compliance frameworks<br>
+  91 governed agents · 74 behavioral frameworks · 14 compliance frameworks<br>
   Continuous drift detection · Documents as Executable Contracts · One <code>git pull</code>
 </p>
 

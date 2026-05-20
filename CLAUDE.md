@@ -409,14 +409,14 @@ When any threshold is exceeded, scheduled tasks sleep until `resets_at`. Usage i
 | `documents/ADRs/README.md` | ADR rules: numbering, lifecycle, when to write |
 | `documents/ADRs/TEMPLATE.md` | ADR template with 4 mandatory sections |
 | `documents/ADRs/INDEX.md` | All ADRs with current status |
-| `documents/reference/FRAMEWORKS_MASTER.md` | 63 behavioral frameworks |
+| `documents/reference/FRAMEWORKS_MASTER.md` | 74 behavioral frameworks |
 | `documents/governance/ETHICAL_GUIDELINES.md` | Governance boundaries |
 | `documents/ledgers/SESSION_CONTINUITY.md` | Session memory bridge |
 | `CLAUDE.project.md` | Project-specific overrides |
 | `config/project-manifest.json` | Project identity, compliance, lifecycle, tech stack |
 | `config/project-manifest.TEMPLATE.json` | Template for new project adoption (v2.0.0 schema) |
 | `config/agent-registry.json` | **Plugin-level only.** Absent in user projects is correct and expected — Claude reads it from `$CLAUDE_PLUGIN_ROOT/config/`. Never warn about its absence in non-plugin-repo projects. |
-| `mcp/README.md` | 9 MCP servers (44 tools) |
+| `mcp/README.md` | 8 MCP servers (44 tools) |
 | `.mcp.json` | Root MCP server registry (auto-discovery) |
 | `.env.example` | Environment variable template |
 | `documents/reference/AGENTS.md` | Downstream agent instructions (wiki + brand foundation usage) |

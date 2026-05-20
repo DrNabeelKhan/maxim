@@ -8,6 +8,48 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.2.0.3 — 2026-05-19 — Install-version drift fix + Desktop first-launch reliability
+
+Theme: **Make `claude mcp list` and `/plugin` report the correct version, and stop Claude Desktop from reporting MCPs as failed on first launch.** v1.2.0/.1/.2 all shipped while `.claude-plugin/plugin.json` was silently stuck at v1.1.0 — the install identified itself by the wrong version. Separately, Claude Desktop's ~60s MCP initialize timeout was racing the cold `npm install` loop in `spawn-with-deps.mjs`, marking servers failed even though their processes were still running and would complete.
+
+### FIX: `.claude-plugin/plugin.json` propagation
+
+`bootstrap/sync-version.{sh,ps1}` did not include `.claude-plugin/plugin.json` in its target list, so every v1.2 bump left the install manifest stale. Added it. The description string's capability counts (`90 specialist agents`, `64 peer-reviewed behavioral frameworks`, etc.) are now handled by `sync-counts.{sh,ps1}` instead of manual sweeps — script-side `find` / `Get-ChildItem` now discover `.claude-plugin/plugin.json`. One-time correction: `1.1.0 → 1.2.0.3` plus counts `90/34/38/64 → 91/35/48/74`.
+
+### FIX: Claude Desktop first-launch MCP timeout
+
+Two compounding root causes diagnosed from `%APPDATA%\Claude\logs\mcp.log`:
+
+1. **Cold `npm install` race against Desktop's MCP timeout** — `spawn-with-deps.mjs` runs `npm install` for all 7 mcp/mxm-*/ servers serially under a file-lock on first launch. ~30–60s end-to-end. Claude Desktop's MCP-client `initialize` timeout is ~60s; portfolio reliably hit `MCP error -32001: Request timed out` at ~58s. UI reports "Server disconnected" even though processes are still running and complete the install seconds later. Fix: `bootstrap/mxm-desktop-config.{sh,ps1}` now pre-installs MCP deps after writing config and writes the `.mcp-deps-installed` sentinel. First Desktop launch finds all `node_modules` in place and `spawn-with-deps.mjs` short-circuits at `depsAllPresent()`.
+
+2. **`mxm-commands` crashed with `ERR_MODULE_NOT_FOUND` during first launch** — waiter `spawn-with-deps.mjs` polled `depsAllPresent()` (= "all `node_modules/` dirs exist"), saw mxm-commands' dir mid-install, short-circuited install, then failed to import `@modelcontextprotocol/sdk/server/mcp.js` because npm hadn't yet written the file. Fix: `depsAllPresent()` now also requires the sentinel file (`mcp/_shared/spawn-with-deps.mjs:71`). Sentinel is written only after the install loop completes — eliminates the race.
+
+### FIX: Capability-count propagation hardening (sync-counts)
+
+The compound-keyword class of count claims (`X skill domains`, `X MCP servers`, `X behavioral frameworks`) was missed by the prior strict adjective-prefix regex. Expanded the safe-pattern set:
+
+- Added third match branch for compound (multi-word) anchors — bare `<num> <kw>` is safe when `<kw>` itself is specific enough to rule out per-office breakdowns / complexity thresholds / historical entries
+- Added `slash` to the adjective alternation so `X slash commands` matches
+- Widened `EXCLUDE_PATTERNS`: individual ADRs (`ADR-NNN`), `BUG_TRACKER.md`, `MOAT_TRACKER.md`, dated launch artifacts, versioned catalogues, `MOE_v1_N_*` build plans, `documents/references/` session bridges, `templates/prompts/PROMPT_*` (version-bound), and `cinematic-styles/` per-stack mechanics. History is preserved; current-state docs propagate.
+
+Net: 29 plugin-repo + 7 landing-page current-state surfaces caught up to canonical (91/35/48/74/8/49).
+
+### FIX: sync-version target list cleanup
+
+- `bootstrap/new-project-setup.sh` field was looked up as lowercase `mxm_version` but file uses uppercase `MXM_version` — case mismatch hidden by the per-file NOT-FOUND skip. Fixed.
+- `documents/ledgers/SESSION_CONTINUITY.md` no longer has the `| agent-registry.json version | X |` registry table — file was restructured. Removed obsolete target.
+- 5 docs caught up from stale version refs (v1.0.0 / v6.2.0 / v1.1.1) → v1.2.0.3: HELP.md, MXM_COMMAND_MAP.md, SKILLS_MAP.md, GETTING_STARTED.md, new-project-setup.sh generated-manifest version.
+
+### Mac tester coverage
+
+`bootstrap/mxm-desktop-config.sh` is the entry point for Mac/Linux/WSL/Git-Bash testers. Pre-install loop uses bash `for srv in $PLUGIN_ROOT/mcp/mxm-*; do npm install ...; done` — identical npm behavior across platforms, identical sentinel format. PowerShell `.ps1` covers Windows native plus PS7+ on Mac/Linux. No platform-specific code paths beyond OS detection at config-file location.
+
+### Capability delta v1.2.0.2 → v1.2.0.3
+
+No new agents, skills, commands, or MCPs. Pure infrastructure patch. Capability counts unchanged at canonical values (91 / 35 / 48 / 74 / 8 servers · 49 tools / 14 compliance frameworks).
+
+---
+
 ## v1.2.0.2 — 2026-05-19 — Cross-platform Desktop config helper + customer-facing docs
 
 Theme: **Make v1.2.0.1's Desktop MCP setup one-command for Mac testers** (and Windows · Linux · WSL). v1.2.0.1 shipped the `mxm-commands` MCP + manual config snippet but required testers to hand-edit `claude_desktop_config.json`. v1.2.0.2 ships a cross-platform helper script that does the work.

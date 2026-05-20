@@ -141,6 +141,60 @@ fi
 
 ok "JSON validated."
 
+# ─── Pre-install MCP deps (v1.2.0.3+) ────────────────────────────────────────
+# Claude Desktop's MCP client has a ~60s `initialize` timeout. Without this
+# pre-warm, the first Desktop launch hits the cold spawn-with-deps install
+# loop (~30–60s for 7 servers) and times out — reporting "failed" servers
+# that are actually still running. Pre-installing here moves that cost into
+# this script (where the operator is already watching progress) so the very
+# first Desktop launch finds all node_modules in place and short-circuits.
+#
+# Sentinel `.mcp-deps-installed` makes spawn-with-deps skip its install path
+# on every subsequent spawn. Idempotent — re-running this script is safe.
+
+info "Pre-installing MCP server dependencies (eliminates Desktop first-launch timeout)..."
+
+PREINSTALL_COUNT=0
+PREINSTALL_SKIPPED=0
+PREINSTALL_FAILED=0
+
+for srv in "$PLUGIN_ROOT/mcp/"mxm-*; do
+  [[ -d "$srv" ]] || continue
+  srv_name=$(basename "$srv")
+  if [[ ! -f "$srv/package.json" ]]; then
+    PREINSTALL_SKIPPED=$((PREINSTALL_SKIPPED+1))
+    continue
+  fi
+  if [[ -d "$srv/node_modules" ]] && [[ -f "$PLUGIN_ROOT/.mcp-deps-installed" ]]; then
+    PREINSTALL_SKIPPED=$((PREINSTALL_SKIPPED+1))
+    continue
+  fi
+  echo -n "  installing $srv_name… "
+  if (cd "$srv" && npm install --omit=dev --no-audit --no-fund --silent 2>/dev/null); then
+    echo "ok"
+    PREINSTALL_COUNT=$((PREINSTALL_COUNT+1))
+  else
+    echo "FAIL"
+    PREINSTALL_FAILED=$((PREINSTALL_FAILED+1))
+  fi
+done
+
+if [[ $PREINSTALL_FAILED -eq 0 ]]; then
+  # Write sentinel so spawn-with-deps short-circuits on every future spawn
+  cat > "$PLUGIN_ROOT/.mcp-deps-installed" <<EOF
+{
+  "installed_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "installed_count": $PREINSTALL_COUNT,
+  "skipped_count": $PREINSTALL_SKIPPED,
+  "plugin_root": "$PLUGIN_ROOT",
+  "installer": "bootstrap/mxm-desktop-config.sh"
+}
+EOF
+  ok "MCP deps ready (installed: $PREINSTALL_COUNT, already-present: $PREINSTALL_SKIPPED). Sentinel written."
+else
+  warn "MCP install partial (installed: $PREINSTALL_COUNT, failed: $PREINSTALL_FAILED). First Desktop launch may still hit timeout."
+fi
+
 # ─── Report final state ───────────────────────────────────────────────────────
 echo ""
 echo -e "${GREEN}=========================================================${NC}"
@@ -151,12 +205,12 @@ echo -e "  Config:  $CONFIG_FILE"
 echo -e "  Backup:  $(basename "$BACKUP_FILE")"
 echo -e "  Plugin:  $PLUGIN_VERSION"
 echo -e "  Servers: 8 Maxim MCPs (49 tools total)"
+echo -e "  Deps:    pre-installed ($PREINSTALL_COUNT new, $PREINSTALL_SKIPPED already-present)"
 echo ""
 echo -e "${CYAN}Next steps:${NC}"
-echo -e "  1. ${YELLOW}Quit Claude Desktop completely${NC} (Cmd-Q on Mac, fully exit on Windows)"
+echo -e "  1. ${YELLOW}Quit Claude Desktop completely${NC} (Cmd-Q on Mac, fully exit on Windows/Linux)"
 echo -e "  2. Reopen Claude Desktop"
-echo -e "  3. First spawn of mxm-commands MCP will run 'npm install' (~10 sec one-time)"
-echo -e "  4. All 8 Maxim MCPs (49 tools) will be available in conversations"
+echo -e "  3. All 8 Maxim MCPs (49 tools) appear immediately — no first-launch wait."
 echo ""
 echo -e "${CYAN}Optional — activate behavioral layer in Desktop Projects:${NC}"
 echo -e "  Paste contents of ${YELLOW}documents/cross-surface/maxim-project-instructions.md${NC}"

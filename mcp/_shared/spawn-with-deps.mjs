@@ -69,6 +69,12 @@ function listMcpServers() {
 }
 
 function depsAllPresent() {
+  // Sentinel gate (v1.2.0.3): the sentinel is written ONLY after the install
+  // loop completes for all servers. Without this check, a waiter spawn could
+  // see a node_modules/ dir that exists mid-install (npm is still writing
+  // files inside) and skip install — then fail to import a dependency that
+  // isn't yet on disk. Observed in mxm-commands during Desktop first launch.
+  if (!fs.existsSync(SENTINEL)) return false;
   const servers = listMcpServers();
   if (servers.length === 0) return false;
   return servers.every((s) => {
