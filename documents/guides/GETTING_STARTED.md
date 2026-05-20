@@ -1,6 +1,6 @@
-# Getting Started with Maxim (v1.3.0)
+# Getting Started with Maxim (v1.3.1)
 
-> Add 91 governed AI agents to your project in under 1 minute. Then run a 14-day Trial of all 14 packs (default · no card required) to see the moat work on your real work before deciding which tier to keep.
+> Add 91 governed AI agents to your project in under 1 minute. Then run a 90-day Trial of all 14 packs (default · no card required) to see the moat work on your real work before deciding which tier to keep.
 
 ---
 
@@ -296,5 +296,5 @@ After updating, run `/mxm-status` in each project to verify.
 ---
 
 **Built by:** Dr. Nabeel Khan · iSimplification.io
-**Version:** Maxim v1.3.0 · 91 agents · 36 skill domains
+**Version:** Maxim v1.3.1 · 91 agents · 36 skill domains
 **Repo:** https://github.com/DrNabeelKhan/maxim

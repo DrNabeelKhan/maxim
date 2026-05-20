@@ -78,12 +78,12 @@ show_wizard() {
   echo ""
   echo -e "${BOLD}Which path matches you?${NC}"
   echo ""
-  echo -e "  ${BOLD}${GREEN}[1]${NC}  ${BOLD}14-day trial${NC}  ${CYAN}(default — recommended)${NC}"
+  echo -e "  ${BOLD}${GREEN}[1]${NC}  ${BOLD}90-day trial${NC}  ${CYAN}(default — recommended)${NC}"
   echo "                  All 14 packs unlocked. See the full moat work."
   echo "                  No card required. Cancel anytime."
   echo "                  ${YELLOW}Why we default to this:${NC} hard to evaluate a moat"
   echo "                  you can't see. Run your real work through it for"
-  echo "                  two weeks, then decide what's worth keeping."
+  echo "                  three months, then decide what's worth keeping."
   echo ""
   echo -e "  ${BOLD}[2]${NC}  Solo            — Core only · upgrade anytime"
   echo "                  Best for: solo operators evaluating Maxim."
@@ -141,11 +141,11 @@ install_l3() {
 
 issue_trial_jwt() {
   echo ""
-  echo -e "${BOLD}Activating 14-day trial${NC}..."
+  echo -e "${BOLD}Activating 90-day trial${NC}..."
   echo -e "  ${CYAN}→${NC} Requesting trial JWT from license worker..."
   # Delegate to existing license-gate trial-issue endpoint
-  if claude /plugin run mxm-pack-engine activate --trial 14 >/dev/null 2>&1; then
-    echo -e "  ${GREEN}ok${NC} Trial JWT issued (expires in 14 days)"
+  if claude /plugin run mxm-pack-engine activate --trial 90 >/dev/null 2>&1; then
+    echo -e "  ${GREEN}ok${NC} Trial JWT issued (expires in 90 days)"
   else
     echo -e "  ${YELLOW}manual activation needed${NC}"
     echo -e "     Visit ${CYAN}https://maxim.isystematic.com/trial${NC} to claim your trial JWT"
@@ -160,7 +160,7 @@ do_trial() {
   issue_trial_jwt
   echo ""
   echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-  echo -e "${GREEN}  Trial active — 14 days · all 14 packs unlocked${NC}"
+  echo -e "${GREEN}  Trial active — 90 days · all 14 packs unlocked${NC}"
   echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
   echo ""
   echo "What to try first (suggestions ranked by impact):"
@@ -180,7 +180,7 @@ do_trial() {
   echo "     → instantiates your own operator-writer · routes every"
   echo "       writing task through your voice automatically"
   echo ""
-  echo "Trial ends in 14 days. We'll remind you at day 10."
+  echo "Trial ends in 90 days. We'll remind you at day 80."
   echo "To convert: visit maxim.isystematic.com/pricing or /mxm-status"
   echo ""
 }
@@ -202,7 +202,7 @@ do_solo() {
   echo "  • Voice lock across all outputs (L1.5 Brand & Design Pro)"
   echo "  • 74-framework behavioral dispatch (L1.6 Behavioral Intel)"
   echo ""
-  echo -e "${CYAN}Try them free for 14 days:${NC} ${BOLD}bash bootstrap/install-tier-packs.sh trial${NC}"
+  echo -e "${CYAN}Try them free for 90 days:${NC} ${BOLD}bash bootstrap/install-tier-packs.sh trial${NC}"
   echo ""
   echo "Or upgrade individually anytime: /plugin install <pack-id>@maxim-packs"
   echo ""

@@ -14,7 +14,7 @@
 
 **Answer:** Maxim is a behavioral intelligence layer that runs on top of Claude. It adds **91 specialist agents** routed through 7 executive offices · **36 skill domains** · **74 peer-reviewed behavioral frameworks** dispatched per task · **14 compliance frameworks** enforced at the MCP layer · **9 MCPs (87 tools)** including NotebookLM research synthesis · **13 drift classes** scanning every session start · **structural framework citation** on every output (ADR-007) · **confidence tag** on every output (ADR-010). Every emission Maxim ships is grounded, audited, and traceable.
 
-**v1.3.0 multi-tenant readiness:** the install wizard defaults to **14-day Trial** of all 14 packs (no card required). See the moat work on your real work before deciding which tier to keep.
+**v1.3.0 multi-tenant readiness:** the install wizard defaults to **90-day Trial** of all 14 packs (no card required). See the moat work on your real work before deciding which tier to keep.
 
 ---
 

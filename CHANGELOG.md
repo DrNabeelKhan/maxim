@@ -8,6 +8,34 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.1 — 2026-05-20 — Trial duration aligned (14d → 90d) matching existing website Pro Trial
+
+Theme: **Operator correction landed same-day.** v1.3.0 shipped the new tier wizard with a 14-day Trial default. The existing website (landing-page) advertised a 90-day Pro Trial. Two trial concepts in parallel would confuse operators — unifying both to **90-day Trial** per operator directive.
+
+### What changed
+
+- `bootstrap/install-tier-packs.{sh,ps1}` — trial copy updated: 14-day → 90-day, two weeks → three months, day 10 reminder → day 80 reminder
+- `--trial 14` CLI arg → `--trial 90` for `mxm-pack-engine activate` invocation
+- `ADR-019` — wizard trial duration + JWT expiry + endowment-effect period all updated to 90 days
+- `README.md` — Trial CTA → 90 days. Use-case timeline rewritten for 12-week window (Week 1-2 install · Week 3-5 drift catches · Week 6-9 framework citations · Week 10-12 data review)
+- `INSTALL.md` · `MXM_RUNDOWN.md` · `GETTING_STARTED.md` — Trial duration aligned
+- `MOAT_TRACKER.md` MOAT-13 row — Trial duration in positioning claim + mechanism description
+- Landing-page (already at 90-day) — NO CHANGES (was already correct per existing Pro Trial advertising)
+
+### Why 90 days, not 60
+
+The landing-page (`E:/Projects/Maxim/landing-page/`) has advertised a 90-day Pro Trial since v1.1.0.1 across Hero, Pricing, CtaFooter, Docs, StructuredData, OpenGraph. Decreasing to 60 days would break the existing advertising commitment. Operator confirmed: keep 90 days to align with the website's existing claim.
+
+### Capability delta v1.3.0 → v1.3.1
+
+No functional changes. Trial duration string updated across 7 plugin-repo files. Same 14 packs unlock, same auto-activate-on-install behavior, same license-gate Cloudflare Worker JWT issuance — just a longer evaluation window.
+
+### Lesson
+
+When v1.3.0's tier wizard was designed, I picked 14 days without checking the existing website's advertised trial duration. **Cross-surface drift check is a pre-design step**, not a post-ship correction. ADR-019 § "License compatibility check" already mandates checking existing commitments before new shipping; trial duration deserves the same check. Adding to the next pre-release-audit run.
+
+---
+
 ## v1.3.0 — 2026-05-20 — Multi-tenant readiness (tier wizard · operator-writer template · public docs rewrite)
 
 Theme: **Maxim transitions from "the maintainer's tool" to "operator-team product" structurally.** Two single-tenant assumptions that v1.2 testing exposed get refactored simultaneously, plus all public-facing docs rewritten with use cases + behavioral persuasion framing per ADR-019.
@@ -22,7 +50,7 @@ Replaces 14 separate `/plugin install` commands with one operator decision. 6 op
 
 | # | Tier | What it does | Framing |
 |---|---|---|---|
-| **1** | **14-day Trial (default · pre-selected)** | All 14 packs. No card. Cancel anytime. | Default Effect + Endowment + Loss Aversion |
+| **1** | **90-day Trial (default · pre-selected)** | All 14 packs. No card. Cancel anytime. | Default Effect + Endowment + Loss Aversion |
 | 2 | Solo | Core only. Free forever. | Capability-first |
 | 3 | Pro | Core + 6 L1 (structural moats) | Loss-frame on what Solo gives up |
 | 4 | Team | Core + L1 + 4 L2 verticals | Vertical framing |
@@ -31,7 +59,7 @@ Replaces 14 separate `/plugin install` commands with one operator decision. 6 op
 
 **No prices in the wizard** per operator directive — Anchoring (Tversky) works against capability framing if cost surfaces first. Prices live at `maxim.isystematic.com/pricing` for after-trial decisions.
 
-Trial JWT issuance delegates to existing license-gate Cloudflare Worker (ADR-003, confidential) via `mxm-pack-engine activate --trial 14`.
+Trial JWT issuance delegates to existing license-gate Cloudflare Worker (ADR-003, confidential) via `mxm-pack-engine activate --trial 90`.
 
 ### NEW: `_template-operator-writer.md` — Multi-tenant voice routing
 

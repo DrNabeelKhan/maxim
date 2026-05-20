@@ -34,8 +34,8 @@ v1.3.0 ships **multi-tenant readiness** as a unified release covering three coor
 - Presents 6 options in deliberate order: **Trial** (default · pre-selected) · Solo · Pro · Team · Enterprise · Individual
 - Frames each tier by **capability**, not by **price** — Solo and Pro descriptions describe what's UNLOCKED, never what it costs (per operator directive)
 - Uses **loss aversion** in capability descriptions: "audit trail on every AI decision" (preventing the loss of un-audited outputs) · "drift catching regressions BEFORE ship" (preventing wasted shipped-broken-thing time) · "voice LOCKED across outputs" (preventing voice-drift damage)
-- Defaults to **14-day trial of all 14 packs** so the operator's first encounter with paid capabilities is exploration, not commitment
-- Trial mechanic delegated to existing license-gate infrastructure (Cloudflare Worker issues 14-day-expiry JWT per ADR-003)
+- Defaults to **90-day trial of all 14 packs** so the operator's first encounter with paid capabilities is exploration, not commitment
+- Trial mechanic delegated to existing license-gate infrastructure (Cloudflare Worker issues 90-day-expiry JWT per ADR-003)
 
 ### Change 2 — Operator-Writer template pattern (generalizes ADR-016)
 
@@ -88,7 +88,7 @@ This matches Prospect Theory's reference-point principle: by the time the operat
 Default Effect (Thaler & Sunstein 2008) — the default frames as the recommended path. Defaulting to Trial:
 
 - **Reduces decision friction** (Fogg B=MAP, Ability axis) — operator just presses Enter
-- **Enables endowment** (Kahneman & Knetsch 1991) — once they have all 14 packs working, giving them up after 14 days feels like loss, not "not buying"
+- **Enables endowment** (Kahneman & Knetsch 1991) — once they have all 14 packs working, giving them up after 90 days feels like loss, not "not buying"
 - **Honors loss aversion** — operators who try then cancel have CONFIRMED what they're losing; their decision to cancel is informed, not speculative
 - **Generates trial-to-paid conversion data** — Maxim can measure "trial-to-pack-purchase per tier" with the JWT system
 

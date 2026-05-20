@@ -2,7 +2,7 @@
 
 > The structural moat behind every Claude output. 91 specialist agents · 74 peer-reviewed behavioral frameworks · 14 compliance frameworks · 9 MCPs · 87 tools. Framework citation enforced on every output. Drift detected before you ship. Voice locked across every surface.
 
-![Version](https://img.shields.io/badge/version-1.3.0-blue)
+![Version](https://img.shields.io/badge/version-1.3.1-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-74-orange)
 ![Skills](https://img.shields.io/badge/skill_domains-36-purple)
@@ -22,14 +22,14 @@
 /plugin install maxim@maxim-packs
 ```
 
-Then activate your tier (default: **14-day Trial of all 14 packs · no card · cancel anytime**):
+Then activate your tier (default: **90-day Trial of all 14 packs · no card · cancel anytime**):
 
 ```bash
 bash bootstrap/install-tier-packs.sh        # Mac · Linux · WSL · Git Bash
 pwsh -File bootstrap/install-tier-packs.ps1 # Windows · or PS7 cross-platform
 ```
 
-The wizard pre-selects Trial because **a moat is hard to evaluate when you can't see it**. Run your real work through Maxim for two weeks. Then decide what's worth keeping.
+The wizard pre-selects Trial because **a moat is hard to evaluate when you can't see it**. Run your real work through Maxim for three months. Then decide what's worth keeping.
 
 > Per ADR-019 (Multi-Tenant Readiness): every operator starts with the same first-run experience. Pre-existing operators (like Maxim's maintainer running `nk-writer`) keep their advanced configurations untouched.
 
@@ -158,13 +158,14 @@ You: "Add user authentication to our app"
 
 ## The trial · why we default to it
 
-You can't evaluate a moat you can't see. The 14-day trial unlocks all 6 L1 packs (the structural moats) plus L2 vertical bundles plus L3 industry packs. Run your real work through Maxim for two weeks:
+You can't evaluate a moat you can't see. The 90-day trial unlocks all 6 L1 packs (the structural moats) plus L2 vertical bundles plus L3 industry packs. Run your real work through Maxim for three months:
 
-- **Day 1-3:** install runs, you trigger your first auto-loops
-- **Day 4-7:** drift detection catches something you didn't know was broken (Class 11 surface-claims-drift is the typical first surprise)
-- **Day 8-14:** you have data — which packs you actually used, which fired auto-loops on your real work, which framework citations changed your decisions
+- **Week 1-2:** install runs, you trigger your first auto-loops
+- **Week 3-5:** drift detection catches something you didn't know was broken (Class 11 surface-claims-drift is the typical first surprise)
+- **Week 6-9:** behavioral framework citations start changing your decisions — you see WHICH framework Maxim applied to which output, you understand why
+- **Week 10-12:** you have data — which packs you actually used, which fired auto-loops on your real work, which compliance gates blocked work that would have been broken
 
-By day 14 you know exactly which tier matches your work. Convert or downgrade without guessing.
+By day 90 you know exactly which tier matches your work. Convert or downgrade without guessing.
 
 ---
 
@@ -176,7 +177,7 @@ By day 14 you know exactly which tier matches your work. Convert or downgrade wi
 | **Pro** | Core + 6 L1 packs | Serious operators on 1-2 projects |
 | **Team** | Core + L1 + 4 L2 verticals | Teams across founder · growth · pro · agency |
 | **Enterprise** | All 14 packs (incl. L3 healthcare · legal · fintech · govtech) | Regulated industries · multi-team orgs |
-| **Trial** | All 14 packs · 14 days · no card | Anyone evaluating |
+| **Trial** | All 14 packs · 90 days · no card | Anyone evaluating |
 
 Pricing at [maxim.isystematic.com/pricing](https://maxim.isystematic.com/pricing) — you decide after the trial, not before.
 

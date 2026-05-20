@@ -67,13 +67,13 @@ function Show-Wizard {
   Write-Host ""
   Write-Host "Which path matches you?" -ForegroundColor White
   Write-Host ""
-  Write-Host "  [1]  " -NoNewline; Write-Host "14-day trial" -ForegroundColor Green -NoNewline
+  Write-Host "  [1]  " -NoNewline; Write-Host "90-day trial" -ForegroundColor Green -NoNewline
   Write-Host "  " -NoNewline; Write-Host "(default - recommended)" -ForegroundColor Cyan
   Write-Host "                  All 14 packs unlocked. See the full moat work."
   Write-Host "                  No card required. Cancel anytime."
   Write-Host "                  Why we default to this: hard to evaluate a moat"
   Write-Host "                  you can't see. Run your real work through it for"
-  Write-Host "                  two weeks, then decide what's worth keeping."
+  Write-Host "                  three months, then decide what's worth keeping."
   Write-Host ""
   Write-Host "  [2]  Solo            - Core only · upgrade anytime"
   Write-Host "                  Best for: solo operators evaluating Maxim."
@@ -123,12 +123,12 @@ function Install-L3 { Write-Host ""; Write-Host "Installing 4 L3 industry packs.
 
 function Issue-TrialJWT {
   Write-Host ""
-  Write-Host "Activating 14-day trial..." -ForegroundColor White
+  Write-Host "Activating 90-day trial..." -ForegroundColor White
   Write-Host "  -> Requesting trial JWT from license worker..." -ForegroundColor Cyan
   try {
-    & claude /plugin run mxm-pack-engine activate --trial 14 2>$null | Out-Null
+    & claude /plugin run mxm-pack-engine activate --trial 90 2>$null | Out-Null
     if ($LASTEXITCODE -eq 0) {
-      Write-Host "  ok Trial JWT issued (expires in 14 days)" -ForegroundColor Green
+      Write-Host "  ok Trial JWT issued (expires in 90 days)" -ForegroundColor Green
     } else {
       Write-Host "  manual activation needed" -ForegroundColor Yellow
       Write-Host "     Visit https://maxim.isystematic.com/trial to claim your trial JWT" -ForegroundColor Cyan
@@ -144,7 +144,7 @@ function Do-Trial {
   Install-L1; Install-L2; Install-L3; Issue-TrialJWT
   Write-Host ""
   Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Green
-  Write-Host "  Trial active - 14 days · all 14 packs unlocked" -ForegroundColor Green
+  Write-Host "  Trial active - 90 days · all 14 packs unlocked" -ForegroundColor Green
   Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Green
   Write-Host ""
   Write-Host "What to try first (suggestions ranked by impact):"
@@ -164,7 +164,7 @@ function Do-Trial {
   Write-Host "     -> instantiates your own operator-writer · routes every"
   Write-Host "       writing task through your voice automatically"
   Write-Host ""
-  Write-Host "Trial ends in 14 days. We'll remind you at day 10."
+  Write-Host "Trial ends in 90 days. We'll remind you at day 80."
   Write-Host "To convert: visit maxim.isystematic.com/pricing or /mxm-status"
   Write-Host ""
 }
@@ -186,7 +186,7 @@ function Do-Solo {
   Write-Host "  - Voice lock across all outputs (L1.5 Brand & Design Pro)"
   Write-Host "  - 74-framework behavioral dispatch (L1.6 Behavioral Intel)"
   Write-Host ""
-  Write-Host "Try them free for 14 days: " -NoNewline -ForegroundColor Cyan
+  Write-Host "Try them free for 90 days:" -NoNewline -ForegroundColor Cyan
   Write-Host ".\bootstrap\install-tier-packs.ps1 trial" -ForegroundColor White
   Write-Host ""
   Write-Host "Or upgrade individually anytime: /plugin install <pack-id>@maxim-packs"

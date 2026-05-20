@@ -16,9 +16,9 @@
     "gated": false,
     "gated_approval_required_from": null,
     "archived_reason": null,
-    "last_activity": "2026-05-19",
+    "last_activity": "2026-05-20",
     "staleness_warning_days": 30,
-    "last_sprint": "v1.2.0-GA-full-sprint",
+    "last_sprint": "v1.3.0-multi-tenant-readiness",
     "launch_status": "v1.0.0 launched 2026-04-21; v1.0.1 + v1.1.0 shipped 2026-04-27; v1.2.0 GA shipped 2026-05-19 (Session 20)"
   },
   "meta": {
