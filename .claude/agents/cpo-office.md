@@ -25,6 +25,7 @@ Dispatch agent for the CPO office per ADR-017. Product strategy · UX · UI · u
    - Onboarding flow / activation / aha-moment design → `onboarding-designer`
    - UI / UX design (Fitts' · Hick's · Gestalt · Color Psychology) → `ui-ux-designer`
    - Accessibility audit / WCAG 2.1 AA → `accessibility-auditor`
+   - **NotebookLM learning artifacts (v1.2.1.0+ ADR-018):** "quiz from these sources" · "flashcards for [topic]" · "study guide from [sources]" · "onboarding quiz" · "interactive learning module" → invoke `mxm-notebooklm` MCP tools (`generate_quiz` · `generate_flashcards` · `generate_slides`). Pair with `onboarding-designer` for user-facing learning flows.
    - Default (product strategy · JTBD · positioning) → `product-strategist`
 3. Confirm classification via `mxm-catalog.route_task(task)`. Prefer MCP at confidence ≥ 0.85.
 4. Fetch specialist DNA via `mxm-catalog.get_agent_dna(specialist_name)`.

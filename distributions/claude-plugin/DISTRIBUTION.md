@@ -40,10 +40,10 @@ After installation, `/plugin list` confirms the plugin is active. The plugin loa
 ### Free tier (shipped with plugin)
 
 - 90+ Maxim agents across 7 offices
-- 35+ skill domains (core behavioral + office domains)
+- 36+ skill domains (core behavioral + office domains)
 - 37+ slash commands
 - 4 free Proactive Watch drift classes (inventory, version, cross-doc, stale-handoff)
-- 8 MCP servers, 47 tools
+- 9 MCP servers, 47 tools
 - Full CSO auto-loop governance
 - Full `mxm-mode` output style
 - Full behavioral-moat enforcement hook

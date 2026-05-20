@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 #
-# mxm-desktop-config.sh — Auto-configure Claude Desktop with all 8 Maxim MCPs.
+# mxm-desktop-config.sh — Auto-configure Claude Desktop with all 9 Maxim MCPs.
 #
 # Cross-platform: macOS · Linux · WSL · Git Bash on Windows.
 # Operator-friendly: one-line setup, no manual JSON editing required.
@@ -13,7 +13,7 @@
 #   1. Detects OS, locates claude_desktop_config.json
 #   2. Backs up existing config to .bak-pre-maxim-<timestamp>
 #   3. Locates Maxim plugin install cache (auto-detects version)
-#   4. Merges 8 Maxim MCP server entries into mcpServers (preserves existing
+#   4. Merges 9 Maxim MCP server entries into mcpServers (preserves existing
 #      entries like vazir + your preferences block)
 #   5. Validates JSON
 #   6. Reports next steps (restart Claude Desktop)
@@ -110,7 +110,7 @@ if ! command -v node >/dev/null 2>&1; then
   fail "node not found on PATH. Install Node.js 20+ from https://nodejs.org"
 fi
 
-info "Merging 8 Maxim MCP entries into mcpServers (preserving existing entries)..."
+info "Merging 9 Maxim MCP entries into mcpServers (preserving existing entries)..."
 
 node - "$CONFIG_FILE" "$WRAPPER" "$PLUGIN_ROOT" <<'NODESCRIPT'
 const fs = require('fs');
@@ -118,7 +118,7 @@ const [, , configFile, wrapper, pluginRoot] = process.argv;
 const config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
 config.mcpServers = config.mcpServers || {};
 
-const servers = ['mxm-portfolio','mxm-context','mxm-catalog','mxm-compliance','mxm-behavioral','mxm-memory','mxm-voice','mxm-commands'];
+const servers = ['mxm-portfolio','mxm-context','mxm-catalog','mxm-compliance','mxm-behavioral','mxm-memory','mxm-voice','mxm-commands','mxm-notebooklm'];
 
 for (const name of servers) {
   config.mcpServers[name] = {
@@ -204,13 +204,13 @@ echo ""
 echo -e "  Config:  $CONFIG_FILE"
 echo -e "  Backup:  $(basename "$BACKUP_FILE")"
 echo -e "  Plugin:  $PLUGIN_VERSION"
-echo -e "  Servers: 8 Maxim MCPs (49 tools total)"
+echo -e "  Servers: 9 Maxim MCPs (87 tools total)"
 echo -e "  Deps:    pre-installed ($PREINSTALL_COUNT new, $PREINSTALL_SKIPPED already-present)"
 echo ""
 echo -e "${CYAN}Next steps:${NC}"
 echo -e "  1. ${YELLOW}Quit Claude Desktop completely${NC} (Cmd-Q on Mac, fully exit on Windows/Linux)"
 echo -e "  2. Reopen Claude Desktop"
-echo -e "  3. All 8 Maxim MCPs (49 tools) appear immediately — no first-launch wait."
+echo -e "  3. All 9 Maxim MCPs (49 tools) appear immediately — no first-launch wait."
 echo ""
 echo -e "${CYAN}Optional — activate behavioral layer in Desktop Projects:${NC}"
 echo -e "  Paste contents of ${YELLOW}documents/cross-surface/maxim-project-instructions.md${NC}"

@@ -7,7 +7,7 @@
 **Surface:** Claude.ai Web · Claude Desktop · any surface accepting system prompts
 **Version:** v1.2.0 · **Generated:** 2026-05-19 (Session 20) · **Source:** [maxim repo](https://github.com/DrNabeelKhan/maxim)
 
-**Current canonical counts** (v1.2.0): 91 specialist agents · 35 skill domains · 48 slash commands · 8 MCP servers (47 tools) + 1 new `mxm-commands` MCP (2 tools) = 8 servers / 49 tools · 14 hook scripts · 74 behavioral frameworks · 14 compliance frameworks · 16 ADRs · 13 Proactive Watch drift classes
+**Current canonical counts** (v1.2.0): 91 specialist agents · 36 skill domains · 48 slash commands · 9 MCP servers (47 tools) + 1 new `mxm-commands` MCP (2 tools) = 8 servers / 49 tools · 14 hook scripts · 74 behavioral frameworks · 14 compliance frameworks · 16 ADRs · 13 Proactive Watch drift classes
 
 ---
 

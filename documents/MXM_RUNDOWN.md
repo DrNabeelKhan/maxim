@@ -6,7 +6,7 @@
 
 ## What Is Maxim?
 
-A behavioral intelligence layer that runs on top of Claude (and other AI models). It adds 91 specialist agents, 35 skill domains, 64 behavioral science frameworks, and 8 MCP servers to every Claude session — across Code, Desktop, CLI, Cowork, and Dispatch.
+A behavioral intelligence layer that runs on top of Claude (and other AI models). It adds 91 specialist agents, 36 skill domains, 64 behavioral science frameworks, and 9 MCP servers to every Claude session — across Code, Desktop, CLI, Cowork, and Dispatch.
 
 ---
 
@@ -144,7 +144,7 @@ Ready-to-use prompts in `templates/prompts/`:
 | Prompt | Use Case |
 |---|---|
 | `PROMPT_health-check.md` | Verify full Maxim installation (8 layers) |
-| `PROMPT_maxim-capabilities-demo.md` | Demo all 8 MCP servers |
+| `PROMPT_maxim-capabilities-demo.md` | Demo all 9 MCP servers |
 | `PROMPT_project-global-sync.md` | Sync project state to global context |
 | `PROMPT_new-project-setup.md` | Bootstrap a new Maxim project |
 | `PROMPT_existing-project-organize.md` | Organize existing project folders |

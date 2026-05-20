@@ -159,6 +159,19 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 
 ---
 
+### MOAT-12 · Research synthesis via NotebookLM with multi-office routing · ADR-018 SHIPPED v1.2.1.0
+
+| Field | Value |
+|---|---|
+| **Positioning claim** | Maxim is the only Claude plugin that ships **NotebookLM integration as a first-class capability** with multi-office routing (CINO research synthesis · CMO content production · CPO learning artifacts · CSO compliance gate). 38 MCP tools cover the complete upstream feature surface. Cross-surface by construction — works on Claude Code · Desktop · Web · Cowork via MCP. |
+| **Mechanism** | Three-layer integration pattern (ADR-018): community-pack copy of upstream MIT skill + Maxim-flavored skill with behavioral framing (Diátaxis + Diffusion of Innovations + Dual Coding Theory) + 38-tool MCP server wrapping the notebooklm CLI. The mcp-catalog `SPECIALISTS` routing classifies tasks into the right office's notebooklm-specialist (research / content production / learning artifacts). Source uploads trigger CSO `compliance-orchestrator` auto-loop for PII/regulated-data scanning before Google ingestion. |
+| **Anti-pattern** | A competing plugin that wraps NotebookLM ships a flat CLI passthrough — no office routing, no ethics gate on source upload, no behavioral framing on artifact selection, no audit trail tying the artifact back to compliance posture. Operator gets the tool but loses the governance layer that makes the tool safe and consistent across regulated workflows. |
+| **Pack(s)** | Free tier (per ADR-018 free-tier-default for external tool wrappers). Benefits Pack 6 Behavioral Intelligence indirectly — artifact-selection framing cites Pack 6 frameworks. |
+| **Primary framework** | Diátaxis (Procopiou) — distinct artifact types serve distinct learning modes (tutorials · how-to · reference · explanation). Diffusion of Innovations (Rogers) — multi-format artifacts let each adopter category consume in their preferred mode. ADR-018 ratified 2026-05-20. |
+| **Proof** | [ADR-018](../ADRs/ADR-018-external-tool-integration-pattern.md). v1.2.1.0 commits. `.claude/skills/notebooklm-py/SKILL.md` (Maxim-flavored). `community-packs/notebooklm-py/` (upstream MIT verbatim). `mcp/mxm-notebooklm/server.js` (38 tools across notebook/source/chat/research/generate/artifact/auth/profile domains). Office routing wired in `mcp/mxm-catalog/server.js` SPECIALISTS map for CINO · CMO · CPO. CSO source-upload ethics gate documented in `.claude/agents/cso-office.md`. |
+
+---
+
 ## Decommissioned Claims
 
 _(None — this row appears when a moat claim is retired.)_

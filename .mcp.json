@@ -71,6 +71,17 @@
         "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-commands/server.js"
       ],
       "description": "Slash-command dispatcher — exposes all 48 /mxm-* commands as MCP tools. Closes command-parity gap for Claude Desktop / Web. 2 tools (mxm_command, list_commands). Added v1.2.0.1."
+    },
+    "mxm-notebooklm": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/_shared/spawn-with-deps.mjs",
+        "${CLAUDE_PLUGIN_ROOT}/mcp/mxm-notebooklm/server.js"
+      ],
+      "description": "NotebookLM research synthesis — wraps teng-lin/notebooklm-py (MIT). 38 tools across notebook/source/chat/research/generate/artifact/auth/profile. Free-tier per ADR-018. Operator must install: pip install \"notebooklm-py[browser]\" && playwright install chromium && notebooklm login. Added v1.2.1.0.",
+      "env": {
+        "NOTEBOOKLM_BIN": "${NOTEBOOKLM_BIN:-notebooklm}"
+      }
     }
   }
 }

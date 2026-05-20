@@ -176,6 +176,15 @@ const SPECIALISTS = {
       keywords: ["technical writing", "developer doc", "api reference"],
       priority: 1,
     },
+    // notebooklm-py for CMO content production (v1.2.1.0 · ADR-018)
+    "notebooklm-content-production": {
+      keywords: ["create a podcast", "generate audio overview", "video explainer about", "generate infographic", "audio overview for our team", "video overview about", "team podcast"],
+      priority: 2,
+      requires_specialist_classification: true,
+      mcp_server: "mxm-notebooklm",
+      adr: "ADR-018",
+      skill: ".claude/skills/notebooklm-py",
+    },
   },
   cso: {
     "threat-modeler": { keywords: ["threat model", "stride", "pasta", "linddun"], priority: 1 },
@@ -234,6 +243,15 @@ const SPECIALISTS = {
     "onboarding-designer": { keywords: ["onboarding", "activation", "aha moment"], priority: 1 },
     "ui-ux-designer": { keywords: ["ui ux design", "fitts", "hick", "gestalt"], priority: 1 },
     "accessibility-auditor": { keywords: ["accessibility", "wcag", "a11y"], priority: 1 },
+    // notebooklm-py for CPO learning artifacts (v1.2.1.0 · ADR-018)
+    "notebooklm-learning-artifacts": {
+      keywords: ["quiz from these sources", "flashcards for", "study guide from", "training material from", "onboarding quiz", "interactive learning module"],
+      priority: 2,
+      requires_specialist_classification: true,
+      mcp_server: "mxm-notebooklm",
+      adr: "ADR-018",
+      skill: ".claude/skills/notebooklm-py",
+    },
   },
   coo: {
     "sprint-prioritizer": { keywords: ["sprint", "backlog grooming"], priority: 1 },
@@ -253,6 +271,18 @@ const SPECIALISTS = {
     "cost-analyst": { keywords: ["cost analysis", "vendor pricing", "tco"], priority: 1 },
     "rd-coordinator": { keywords: ["r&d coordination", "experiment portfolio"], priority: 1 },
     "skill-synthesizer": { keywords: ["skill domain creation", "framework synthesis"], priority: 1 },
+    // notebooklm-py integration (v1.2.1.0 · ADR-018) — research synthesis via mxm-notebooklm MCP
+    "notebooklm-research": {
+      keywords: ["notebooklm", "notebook lm", "summarize these urls", "summarize these sources", "synthesize these papers", "knowledge synthesis", "research synthesis", "deep research", "audio overview", "podcast about", "audio podcast", "mind map of", "knowledge map"],
+      priority: 2,
+      requires_specialist_classification: true,
+      classification_authority: "mxm-notebooklm MCP (38 tools)",
+      mcp_server: "mxm-notebooklm",
+      adr: "ADR-018",
+      skill: ".claude/skills/notebooklm-py",
+      upstream: "teng-lin/notebooklm-py (MIT)",
+      fragility_disclosure: "wraps undocumented Google API; see ADR-018 § Mandatory Disclosure",
+    },
   },
 };
 

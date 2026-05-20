@@ -86,7 +86,7 @@ maxim/
 ├── tools/subagent-catalog/                 ← Proxy to community-packs/awesome-claude-code-subagents (4 commands: list/search/fetch/invalidate)
 ├── ide-adapters/                           ← 16 IDE adapter configs (.adal, .agent, .claude-plugin, .codebuddy, .codex, .continue, .cursor, .factory, .gemini, .github, .kilocode, .kiro, .mastracode, .openclaw, .opencode, .pi) — each adapts Maxim's planning-with-files skill for its IDE. Synced weekly via sync-sources.yml.
 │
-├── mcp/                                    ← 8 MCP servers (47 tools total) — see mcp/README.md (consolidated v1.0.0)
+├── mcp/                                    ← 9 MCP servers (47 tools total) — see mcp/README.md (consolidated v1.0.0)
 │   ├── mxm-portfolio/              7 tools — sync_portfolio, portfolio metrics, tasks
 │   ├── mxm-context/                13 tools — v1.0.0 absorbed design (4) + added watch_* (3); manifest, decision log, session memory, operator profile, brand design, drift detection
 │   ├── mxm-catalog/                9 tools — v1.0.0 merged dispatch + skills; office routing, agent DNA, handoff chain, skill/command catalog

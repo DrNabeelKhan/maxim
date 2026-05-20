@@ -8,6 +8,123 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.2.1.0 — 2026-05-20 — NotebookLM integration (38 MCP tools · ADR-018 three-layer pattern)
+
+Theme: **First canonical external-tool integration under ADR-018.** Operator directive — "*all features of repo without compromise*" — for `teng-lin/notebooklm-py`. Ships as three layers: community-pack copy of upstream MIT skill + Maxim-flavored skill with behavioral framing + 38-tool MCP server wrapping the full upstream CLI surface. Cross-surface (Claude Code · Desktop · Web · Cowork) via MCP rather than Code-only via skill.
+
+### NEW: ADR-018 — External Tool Integration Pattern
+
+Codifies the three-layer pattern for every future external tool Maxim composes with (Notion · Linear · Slack · Figma · Higgsfield · etc.). License compatibility check + fragility disclosure + free-tier-default decision rubric. The NotebookLM integration is Maxim's first canonical implementation under this ADR.
+
+### NEW: 9th Maxim MCP — `mxm-notebooklm` (38 tools across 8 domains)
+
+Wraps `notebooklm` CLI with `--json` flag. Free-tier (no license gate per ADR-018 free-tier-default for external tool wrappers).
+
+| Domain | Tools | Purpose |
+|---|---|---|
+| **notebook** (6) | `notebook_create` · `notebook_list` · `notebook_get` · `notebook_rename` · `notebook_delete` · `notebook_share` | Notebook lifecycle + sharing |
+| **source** (8) | `source_add_url` · `source_add_youtube` · `source_add_drive` · `source_add_text` · `source_add_file` · `source_list` · `source_wait` · `source_delete` | Multi-format source ingestion |
+| **chat** (2) | `chat_ask` · `chat_history` | Q+A over sources with citation; optional save-as-note |
+| **research** (3) | `research_web` · `research_drive` · `research_wait` | Deep research agents (15–30+min); auto-import findings |
+| **generate** (9) | `generate_audio_overview` · `generate_video_overview` · `generate_slides` · `generate_infographic` · `generate_quiz` · `generate_flashcards` · `generate_report` · `generate_data_table` · `generate_mindmap` | All 9 NotebookLM artifact types. Audio/video are long-running (10–45min) — return task_id |
+| **artifact** (4) | `artifact_list` · `artifact_wait` · `artifact_download` · `artifact_get` | Poll-and-download for completed artifacts |
+| **auth** (4) | `auth_check` · `auth_refresh` · `auth_inspect` · `auth_login` | Google auth state mgmt |
+| **profile** (2) | `profile_list` · `profile_switch` | Multi-account profile switching |
+
+Every non-auth tool runs `auth_check` as a preflight (cached 5min); on auth failure returns structured remediation instructions instead of raw CLI errors.
+
+### NEW: `.claude/skills/notebooklm-py/SKILL.md` — Maxim-flavored skill
+
+Maxim's authored contribution on top of upstream:
+- ADR-007 framework citations: **Diátaxis** (Procopiou) for artifact-type selection · **Diffusion of Innovations** (Rogers) for multi-format generation · **Dual Coding Theory** (Paivio) for audio + visual pairing
+- Office routing: **CINO primary** (research synthesis) · **CMO secondary** (audio/video/podcast production) · **CPO secondary** (quiz/flashcards/onboarding artifacts)
+- CSO `compliance-orchestrator` auto-loop on every source upload (PII / regulated-data scan before Google ingestion)
+- Fragility disclosure on every output audit trail (per ADR-018 § Mandatory Disclosure)
+- Pre-flight install + auth check (fail-closed with structured remediation)
+- Three example workflows (startup pitch research · customer onboarding curriculum · compliance research)
+
+### NEW: `community-packs/notebooklm-py/` (faithful upstream)
+
+Per ADR-008 Community Pack System + ADR-018:
+- `SKILL.md` — upstream skill verbatim (643 lines, never modified)
+- `LICENSE` — upstream MIT (Copyright 2026 Teng Lin)
+- `UPSTREAM_README.md` — upstream README verbatim (268 lines)
+- `MAXIM_INTEGRATION.md` — Maxim's authored integration notes (license combination · value-add summary · update protocol)
+
+### Office routing wired in mxm-catalog SPECIALISTS
+
+Three new specialist entries in `mcp/mxm-catalog/server.js`:
+- **CINO** `notebooklm-research`: keywords for "summarize these urls" · "deep research" · "audio overview" · "mind map of" · "knowledge synthesis"
+- **CMO** `notebooklm-content-production`: keywords for "create a podcast" · "video explainer" · "infographic from research"
+- **CPO** `notebooklm-learning-artifacts`: keywords for "quiz from these sources" · "flashcards for" · "study guide from"
+
+Each carries `mcp_server: "mxm-notebooklm"` + `adr: "ADR-018"` + `skill: ".claude/skills/notebooklm-py"` + `fragility_disclosure` flag.
+
+### CSO ethics gate (mandatory)
+
+`cso-office.md` adds an explicit "NotebookLM source-upload ethics gate" section. Source content is scanned for PII / PHI / payment / regulated-content per the operator's declared compliance frameworks BEFORE upload to Google. Block on signal until operator confirms data-processing posture. Audit logged to `.mxm-skills/compliance-audit.jsonl`.
+
+### Cross-surface coverage
+
+- **Claude Code:** 9 MCPs auto-discover via `.mcp.json` (was 8)
+- **Claude Desktop:** `bootstrap/mxm-desktop-config.{sh,ps1}` adds mxm-notebooklm to the merge list; pre-install loop runs for 8 mxm-* dirs (notebooklm doesn't bundle dependencies — uses npm modules from the wrapper, not the upstream Python package)
+- **Claude.ai Web:** MCP-via-API support when surface lands; structurally ready
+- **Cowork:** `packaging/cowork/plugin.json` declares 9 mcp_connectors (manifest update)
+
+### Operator setup (one-time, per machine)
+
+Maxim ships the wrapper; operator installs the upstream:
+
+```bash
+pip install "notebooklm-py[browser]"
+playwright install chromium
+notebooklm login
+notebooklm auth check
+```
+
+After this, the `mxm-notebooklm` MCP picks up auth automatically.
+
+### Fragility disclosure (per ADR-018)
+
+Upstream uses **undocumented Google APIs**. Every operation's output carries:
+```
+fragility_disclosure: ADR-018 · upstream uses undocumented Google APIs · production use at operator risk
+```
+
+If a Google API change breaks upstream, the wrapper returns structured errors with remediation path (`pip install --upgrade notebooklm-py` + check upstream issues). Maxim's other 8 MCPs continue working — only this one degrades.
+
+### Capability delta v1.2.0.6 → v1.2.1.0
+
+| Surface | Before | After | Delta |
+|---|---|---|---|
+| Dispatchable subagents | 24 | 24 | unchanged |
+| Reachable agent catalog | 91 | 91 | unchanged |
+| Skill domains | 35 | **36** | +1 (notebooklm-py) |
+| MCPs | 8 | **9** | +1 (mxm-notebooklm) |
+| MCP tools | 49 | **87** | +38 (notebooklm full surface) |
+| ADRs | 17 | **18** | +1 (ADR-018) |
+| Public MOAT rows | 11 | **12** | +1 (MOAT-12 research synthesis) |
+| Community packs | N | N+1 | +1 (notebooklm-py upstream) |
+| Frameworks | 74 | 74 | unchanged |
+| Compliance frameworks | 14 | 14 | unchanged |
+| Drift classes | 13 | 13 | unchanged |
+
+**Net: 38 new MCP tools available across every Claude surface that has the MCP layer.** First external-tool integration with full feature coverage. Pattern is now codified (ADR-018) for the next integration.
+
+### Pre-release verification
+
+After install + restart:
+- `claude mcp list` → 9 ✓ Connected Maxim MCPs (was 8)
+- `mxm-notebooklm.auth_check` returns either OK (already authed) or structured install instructions
+- `mxm-catalog.route_task("create a podcast about AI safety using these papers")` → CMO + `notebooklm-content-production` specialist with HIGH confidence
+- `mxm-catalog.route_task("deep research on UAE-PDPL compliance")` → CINO + `notebooklm-research` specialist (CSO compliance auto-loop fires)
+
+### Process note (continuing the discipline lesson from v1.2.0.4/5/6)
+
+This patch shipped with operator-tested probes at design time, not after-the-fact: route_task descent logic validated against the proposed trigger keywords BEFORE commit. ADR-018 explicitly requires this discipline ("Operator-tested before tag") for future external-tool integrations.
+
+---
+
 ## v1.2.0.6 — 2026-05-19 — route_task L2 specialist descent (CMO writing-verb gap fix)
 
 Theme: **route_task now descends from office → specialist instead of stopping at the office lead.** Mr. Khan's KFAS routing report surfaced a real architectural gap in `route_task`: it correctly classified "draft a WhatsApp message" → CMO, but returned `lead_agent: content-strategist` instead of `nk-writer`. ADR-016 explicitly states content-strategist delegates writing production to nk-writer; collapsing to the lead defeats that delegation chain.

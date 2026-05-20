@@ -85,7 +85,7 @@ an embedded asset in the Studio binary; Studio extracts to `~/.mxm-studio/maxim/
 | 90 agent .md files | `agents/MXM/{office}/*.md` | Specialist agent DNA |
 | 64 framework SKILL.md | `composable-skills/frameworks/*/` | Behavioral framework catalog |
 | 48 slash commands | `.claude/commands/mxm-*.md` | Claude Code TUI commands |
-| 35 skill domains | `.claude/skills/*/` | Domain dispatchers |
+| 36 skill domains | `.claude/skills/*/` | Domain dispatchers |
 | 14 hook scripts | `.claude/hooks/{session-start,session-end,pre-commit,...}.{sh,ps1}` | Lifecycle automation |
 | 7 MCP server stubs | `mcp/mxm-{portfolio,context,catalog,compliance,behavioral,memory,voice}/` | MCP server.js + package.json + license-gate.mjs |
 | 16 pack folders | `packs/pack-l{1,2,3}-*/` | Pack SKILL.md content |
@@ -288,7 +288,7 @@ User downloads Maxim Studio
 │ 90 agents           │        │ /webhook/stripe → JWT issue    │
 │ 64 frameworks       │        │ KV: LICENSES, RATE_LIMIT       │
 │ 14 compliance       │        │ Secrets: JWT keys, STRIPE_KEY  │
-│ 8 MCP servers       │        │ Proprietary (not open-sourced) │
+│ 9 MCP servers       │        │ Proprietary (not open-sourced) │
 │ Pack SKILL.md       │        └──────────────────────────────┘
 │ License gates       │                      │
 │ BSL-1.1 licensed    │                      │ Stripe webhook

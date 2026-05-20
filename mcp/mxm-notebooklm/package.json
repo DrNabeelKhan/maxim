@@ -1,0 +1,24 @@
+{
+  "name": "mxm-notebooklm",
+  "version": "1.0.0",
+  "description": "Maxim Framework — NotebookLM integration MCP server (v1.2.1.0). Wraps teng-lin/notebooklm-py CLI with 38 tools across 8 domains. Cross-surface research synthesis: Claude Code + Desktop + Web + Cowork. MIT upstream — no license gate per ADR-018.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.24.0"
+  },
+  "maxim": {
+    "adr": "ADR-018",
+    "shipped_in": "v1.2.1.0",
+    "tool_count": 38,
+    "upstream": "teng-lin/notebooklm-py",
+    "upstream_license": "MIT",
+    "maxim_license_gate": false,
+    "tier": "free",
+    "fragility_disclosure": "Wraps undocumented Google API via notebooklm-py. Upstream warns this is best for prototypes/research/personal projects rather than production."
+  }
+}

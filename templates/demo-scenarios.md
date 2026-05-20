@@ -25,7 +25,7 @@ Ten scenarios that show a representative slice of Maxim's capability surface in 
 /plugin install maxim@maxim-packs
 ```
 
-**Expected visible output:** marketplace added, plugin cached, 90 agents + 34 skills + 38 commands + 8 MCP servers registered. Then type `/` and let Claude Code show the slash-command autocomplete — the screen fills with `/mxm-*` commands.
+**Expected visible output:** marketplace added, plugin cached, 90 agents + 34 skills + 38 commands + 9 MCP servers registered. Then type `/` and let Claude Code show the slash-command autocomplete — the screen fills with `/mxm-*` commands.
 
 **Narration cue:** "One command. Ninety specialists, thirty-four skills, seven MCP servers. Installed."
 

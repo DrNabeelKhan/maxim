@@ -11,7 +11,7 @@
 | Requirement | Why |
 |---|---|
 | **Claude Code** ([install](https://claude.com/claude-code)) | Maxim is a Claude Code plugin |
-| **Node.js 18+** ([download](https://nodejs.org)) | Maxim's 8 MCP servers run on Node |
+| **Node.js 18+** ([download](https://nodejs.org)) | Maxim's 9 MCP servers run on Node |
 | **Git** | Used by the plugin marketplace cache |
 | **Internet on first install** | License JWT issuance (90-day Pro Trial auto-activates; falls back to Starter forever after) |
 
@@ -45,7 +45,7 @@ Choose **"Install for you (user scope)"** when prompted.
 
 ### Restart Claude Code once
 
-The first session after install will auto-install the 8 MCP servers' Node dependencies (~30 seconds, runs once). After the restart you'll see all 7 MCPs `✓ Connected`.
+The first session after install will auto-install the 9 MCP servers' Node dependencies (~30 seconds, runs once). After the restart you'll see all 7 MCPs `✓ Connected`.
 
 ### What you get free (Starter tier, forever)
 
@@ -298,7 +298,7 @@ rm -rf <project>/.claude-sessions-memory
 plugin:maxim:mxm-portfolio  ✗ Failed to connect
 ```
 
-**Most common cause:** the spawn-with-deps wrapper hasn't run yet. Just restart Claude Code one more time — the first restart triggers `npm install` for the 8 MCP servers (~30 seconds), the second restart loads them connected.
+**Most common cause:** the spawn-with-deps wrapper hasn't run yet. Just restart Claude Code one more time — the first restart triggers `npm install` for the 9 MCP servers (~30 seconds), the second restart loads them connected.
 
 **If that doesn't fix it:** manually install MCP deps:
 

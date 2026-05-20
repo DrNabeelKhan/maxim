@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 # Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 #
-# mxm-desktop-config.ps1 — Auto-configure Claude Desktop with all 8 Maxim MCPs.
+# mxm-desktop-config.ps1 — Auto-configure Claude Desktop with all 9 Maxim MCPs.
 #
 # Cross-platform PowerShell: works on Windows PowerShell 5.1+, PowerShell 7+
 # (which also runs on macOS / Linux). Companion to mxm-desktop-config.sh.
@@ -13,7 +13,7 @@
 #   1. Detects OS, locates claude_desktop_config.json
 #   2. Backs up existing config to .bak-pre-maxim-<timestamp>
 #   3. Locates Maxim plugin install cache (auto-detects version)
-#   4. Merges 8 Maxim MCP server entries into mcpServers (preserves existing
+#   4. Merges 9 Maxim MCP server entries into mcpServers (preserves existing
 #      entries like vazir + your preferences block)
 #   5. Validates JSON
 #   6. Reports next steps (restart Claude Desktop)
@@ -93,10 +93,11 @@ if (-not $Config.mcpServers) {
 # ─── Build + merge 8 MCP entries ──────────────────────────────────────────────
 $MaximServers = @(
     'mxm-portfolio', 'mxm-context', 'mxm-catalog', 'mxm-compliance',
-    'mxm-behavioral', 'mxm-memory', 'mxm-voice', 'mxm-commands'
+    'mxm-behavioral', 'mxm-memory', 'mxm-voice', 'mxm-commands',
+    'mxm-notebooklm'
 )
 
-Write-Info "Merging 8 Maxim MCP entries into mcpServers (preserving existing entries)..."
+Write-Info "Merging 9 Maxim MCP entries into mcpServers (preserving existing entries)..."
 
 foreach ($name in $MaximServers) {
     $Config.mcpServers[$name] = @{
@@ -186,7 +187,7 @@ if ($PreInstallFailed -eq 0) {
 
 # ─── Report final state ───────────────────────────────────────────────────────
 $TotalServers = $Config.mcpServers.Count
-$PreservedCount = $TotalServers - 8
+$PreservedCount = $TotalServers - 9
 
 Write-Host ""
 Write-Host "=========================================================" -ForegroundColor Green
@@ -196,13 +197,13 @@ Write-Host ""
 Write-Host "  Config:  $ConfigFile"
 Write-Host "  Backup:  $(Split-Path $BackupFile -Leaf)"
 Write-Host "  Plugin:  $PluginVersion"
-Write-Host "  Servers: $TotalServers total ($PreservedCount preserved + 8 Maxim MCPs = 49 tools)"
+Write-Host "  Servers: $TotalServers total ($PreservedCount preserved + 9 Maxim MCPs = 87 tools)"
 Write-Host "  Deps:    pre-installed ($PreInstallCount new, $PreInstallSkipped already-present)"
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Cyan
 Write-Host "  1. Quit Claude Desktop completely (Cmd-Q on Mac, fully exit on Windows/Linux)"
 Write-Host "  2. Reopen Claude Desktop"
-Write-Host "  3. All 8 Maxim MCPs (49 tools) appear immediately — no first-launch wait."
+Write-Host "  3. All 9 Maxim MCPs (87 tools) appear immediately — no first-launch wait."
 Write-Host ""
 Write-Host "Optional - activate behavioral layer in Desktop Projects:" -ForegroundColor Cyan
 Write-Host "  Paste contents of documents/cross-surface/maxim-project-instructions.md"

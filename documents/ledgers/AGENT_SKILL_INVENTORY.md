@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.2.0.2 · **Last verified:** 2026-05-19
+**Version:** v1.2.1.0 · **Last verified:** 2026-05-20
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -26,7 +26,7 @@ Single source of truth for Maxim's capability counts. On every commit that touch
 
 ---
 
-## Section 2 — Domain Skills (35)
+## Section 2 — Domain Skills (36)
 
 Skills live under `.claude/skills/<domain>/SKILL.md`. Domain list authoritative in `documents/reference/SKILLS_MAP.md` and `CLAUDE.d/dispatch.md`.
 
@@ -52,7 +52,7 @@ All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/ref
 
 ---
 
-## Section 4 — MCP Servers (8 servers, 49 tools)
+## Section 4 — MCP Servers (9 servers, 87 tools)
 
 | Server | Path | Tools |
 |---|---|---:|
@@ -125,7 +125,7 @@ Voice management: `.brand-foundation/VOICE-MANAGEMENT.md`. Command: `/mxm-brand-
 
 ---
 
-## Section 9 — Architecture Decision Records (16)
+## Section 9 — Architecture Decision Records (18)
 
 All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Template: `documents/ADRs/TEMPLATE.md`.
 

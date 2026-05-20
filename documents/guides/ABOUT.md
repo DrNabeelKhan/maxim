@@ -1,6 +1,6 @@
 # Maxim: The Operating System for AI-Assisted Work
 
-> 90+ governed agents. 35 skill domains. 8 MCP servers (55 tools). 79 behavioral science frameworks. 14 executable hooks. 10 ADRs ratified. Documents as Executable Contracts.
+> 90+ governed agents. 36 skill domains. 9 MCP servers (55 tools). 79 behavioral science frameworks. 14 executable hooks. 10 ADRs ratified. Documents as Executable Contracts.
 > One `/plugin install maxim@anthropic-official` powers every project you build.
 
 ---
@@ -146,13 +146,13 @@ Per-project, only identity files are created: `project-manifest.json`, `CLAUDE.p
 
 Plus 5 cross-office orchestrators + 1 executive-router = **90 agents total**. All 90 carry Grade A DNA (Triggers + bilateral Collaboration Matrix).
 
-### 35 skill domains (100% with root dispatchers)
+### 36 skill domains (100% with root dispatchers)
 Every domain has a SKILL.md (orchestrator), Maxim-WRAPPER.md (behavioral layer), and sub-skills that route to specialist agents. Marketing alone has a hub-and-spoke architecture with dedicated sub-skills. The `wiki` family (ingest, query, lint, explore), `voice`, `junction-guard`, `usage-aware-scheduler`, and `proactive-watch` domains complete the 34-domain inventory.
 
 ### 48 Slash commands
 All prefixed with `/mxm-` for uniform discovery. Product cycle chain: `/mxm-plan` → `/mxm-implement` → `/mxm-review` → `/mxm-test` → `/mxm-release`. `/mxm-watch` runs drift detection. `/mxm-session-end` runs the 9-document closure bundle. `/mxm-brand-voice` manages the 3-layer .brand-foundation load.
 
-### 8 MCP servers (55 tools)
+### 9 MCP servers (55 tools)
 55 tools across 7 consolidated servers. Covers behavioral science, compliance, context and watch, design, dispatch and catalog, memory, and portfolio. Usable from Claude Desktop, Cowork, CLI, Dispatch, and claude.ai.
 
 ### Cross-Project Portfolio Management
@@ -214,7 +214,7 @@ Maxim gives you all of them. governed, tireless, and improving with every sessio
 /plugin install maxim@anthropic-official
 ```
 
-One command installs the full framework. 91+ agents, 35 skill domains, 48 slash commands, 8 MCP servers, 55 tools, 14 executable hooks, 74 behavioral frameworks. Free tier fully functional on install.
+One command installs the full framework. 91+ agents, 36 skill domains, 48 slash commands, 9 MCP servers, 55 tools, 14 executable hooks, 74 behavioral frameworks. Free tier fully functional on install.
 
 ```
 /plugin marketplace add https://github.com/DrNabeelKhan/maxim
@@ -230,7 +230,7 @@ For source-level integration or non-Claude-Code IDE work, see [documents/guides/
 
 **Maxim v1.0.0:** 
 
-91+ agents (100% Grade A DNA). 35 skill domains. 37 commands. 8 MCP servers (55 tools). 79 frameworks. 14 executable hooks. 10 ADRs ratified. 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
+91+ agents (100% Grade A DNA). 36 skill domains. 37 commands. 9 MCP servers (55 tools). 79 frameworks. 14 executable hooks. 10 ADRs ratified. 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
 
 **License:** BSL 1.1 core with 4-year Apache 2.0 conversion per ADR-005. Commercial packs licensed separately via LemonSqueezy.
 

@@ -10,7 +10,7 @@
 /plugin install maxim@anthropic-official
 ```
 
-That installs the full behavioral intelligence layer in a single command. 91+ agents across 7 executive offices, 35+ skill domains, 37+ slash commands, 3 governance hooks, 4 free drift monitors, the `mxm-mode` output style, and the `mxm-pack-engine` binary. Free tier is fully functional out of the box.
+That installs the full behavioral intelligence layer in a single command. 91+ agents across 7 executive offices, 36+ skill domains, 37+ slash commands, 3 governance hooks, 4 free drift monitors, the `mxm-mode` output style, and the `mxm-pack-engine` binary. Free tier is fully functional out of the box.
 
 **Add commercial packs:**
 
@@ -229,7 +229,7 @@ bash .mxm-skills/bootstrap/new-project-setup.sh
 | Document | Purpose |
 |---|---|
 | [`documents/reference/MXM_INSTALL.md`](documents/reference/MXM_INSTALL.md) | Full adopter reference — folder map, troubleshooting, update command |
-| [`documents/reference/SKILLS_MAP.md`](documents/reference/SKILLS_MAP.md) | 35 skill domains — what each covers |
+| [`documents/reference/SKILLS_MAP.md`](documents/reference/SKILLS_MAP.md) | 36 skill domains — what each covers |
 | [`documents/reference/FRAMEWORKS_MASTER.md`](documents/reference/FRAMEWORKS_MASTER.md) | 74 behavioral frameworks applied automatically |
 | [`config/agent-registry.json`](config/agent-registry.json) | Full agent catalog |
 | [`documents/governance/ETHICAL_GUIDELINES.md`](documents/governance/ETHICAL_GUIDELINES.md) | Governance layer and super_user mode |
@@ -273,5 +273,5 @@ After updating, run `/mxm-status` in each project to verify.
 ---
 
 **Built by:** Dr. Nabeel Khan · iSimplification.io
-**Version:** Maxim v1.2.0.6 · 91 agents · 35 skill domains
+**Version:** Maxim v1.2.1.0 · 91 agents · 36 skill domains
 **Repo:** https://github.com/DrNabeelKhan/maxim

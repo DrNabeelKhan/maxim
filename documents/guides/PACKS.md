@@ -8,7 +8,7 @@
 
 The Maxim core framework is licensed under Business Source License 1.1 with a 4-year conversion to Apache 2.0. The core is free for non-pack production use today, and fully open-source in four years regardless of anything the Licensor decides later. Use it internally, use it with clients, fork it, ship it inside your own product. The only restriction is that you cannot resell a competing commercial pack catalog. That restriction is ratified by ADR-005.
 
-**The free Starter tier is an Executable Contract (ADR-004).** It is not crippleware. It is the complete Maxim governance substrate with 90 agents, 35 skill domains, 48 slash commands, 74 behavioral frameworks, 49 MCP tools, and 4 free drift-detection watch classes. Packs layer specific enforcement and compounding intelligence on top of that substrate.
+**The free Starter tier is an Executable Contract (ADR-004).** It is not crippleware. It is the complete Maxim governance substrate with 90 agents, 36 skill domains, 48 slash commands, 74 behavioral frameworks, 87 MCP tools, and 4 free drift-detection watch classes. Packs layer specific enforcement and compounding intelligence on top of that substrate.
 
 ---
 

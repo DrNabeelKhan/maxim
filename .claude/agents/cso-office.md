@@ -51,6 +51,17 @@ Dispatch agent for the CSO office per ADR-017. Security · compliance · privacy
 
 If `mxm-catalog` unreachable, read `agents/MXM/cso/<specialist>.md` from filesystem. Tag audit: `via filesystem (MCP unavailable)`.
 
+## NotebookLM source-upload ethics gate (v1.2.1.0+ ADR-018)
+
+Any operation invoking the `mxm-notebooklm` MCP that uploads source content (URLs · PDFs · text · Drive files · YouTube transcripts · audio · video · images) to Google's NotebookLM service triggers this office's auto-loop BEFORE the upload happens. Scan source content for:
+
+- PII (names · emails · phone · addresses · IDs)
+- PHI (health-related identifiable info — HIPAA)
+- Financial / payment data (PCI-DSS)
+- Regulated content per declared `compliance.frameworks` in project-manifest
+
+On PII/regulated signal detected: BLOCK the upload until operator confirms data-processing posture. Audit logged to `.mxm-skills/compliance-audit.jsonl`. Fragility disclosure (ADR-018) added to the audit trail.
+
 ## Auto-Loop Triggers (cannot be bypassed unless super_user)
 
 CSO office fires automatically when any of the following signals appear in any task on any office:

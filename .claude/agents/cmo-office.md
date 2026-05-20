@@ -29,6 +29,7 @@ Dispatch agent for the CMO office per ADR-017. Marketing · brand · content · 
    - GTM strategy / launch plan / positioning → `gtm-strategist`
    - Growth hack / viral mechanic / experiment → `growth-hacker`
    - Documentation / technical writing / guides → `documentation-writer`
+   - **NotebookLM content production (v1.2.1.0+ ADR-018):** "create a podcast" · "audio overview for the team" · "video explainer about" · "infographic from research" → invoke `mxm-notebooklm` MCP tools (`generate_audio_overview` · `generate_video_overview` · `generate_infographic`). Operator voice (`nk-writer`) may be added for intro/outro of audio content.
    - Default (general marketing · content strategy · editorial) → `content-strategist`
 4. Confirm classification via `mxm-catalog.route_task(task)`. Prefer MCP at confidence ≥ 0.85.
 5. Fetch specialist DNA via `mxm-catalog.get_agent_dna(specialist_name)`.

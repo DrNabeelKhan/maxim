@@ -70,6 +70,7 @@ documents/architecture/
 !documents/ADRs/ADR-015-maxim-studio-v02-roadmap.md
 !documents/ADRs/ADR-016-voice-writing-agent-architecture.md
 !documents/ADRs/ADR-017-office-as-dispatch-boundary.md
+!documents/ADRs/ADR-018-external-tool-integration-pattern.md
 
 # ── Maxim ledger state (session-local, never committed) ──────────────────
 # documents/ledgers/ holds the canonical Executable Contract ledgers.
@@ -112,7 +113,12 @@ entities.json
 .claude/worktrees/
 
 # ── Community packs (installed locally, never committed) ─────────────────
-community-packs/
+# Exception per ADR-018 § Layer 1: small external-CLI-tool packs (single
+# SKILL.md + LICENSE + README + Maxim integration notes, ~4 files total) are
+# committed for upstream-drift detection. Large multi-thousand-file packs
+# (alirezarezvani/claude-skills-library, higgsfield-*, etc.) remain gitignored.
+community-packs/*
+!community-packs/notebooklm-py
 
 # ── Operator overlay for brand foundation (personal identity, never commit) ──
 .brand-foundation/personal.local/

@@ -1,8 +1,8 @@
 {
-  "version": "1.2.0.6",
+  "version": "1.2.1.0",
   "project": "Maxim Agent Platform — iSimplification.io",
   "description": "Single source of truth for Maxim agents and skills catalog. v1.2.0 achieves 100% Grade A DNA coverage across all 91 agents (full Triggers + Collaboration Matrix sections) after the v1.2.0 GA roster reorganization. VoltAgent, external subtrees, and domain dispatch tracked in config/dependency-registry.json.",
-  "last_updated": "2026-05-19",
+  "last_updated": "2026-05-20",
   "agent_dna_coverage": {
     "grade_a": 91,
     "grade_b": 0,

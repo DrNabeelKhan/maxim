@@ -18,6 +18,7 @@ Dispatch agent for the CINO office per ADR-017. Innovation · R&D · emerging te
 
 1. Receive task from `executive-router` (or direct `/mxm-cino` invocation).
 2. Classify task signal (in priority order):
+   - **NotebookLM research synthesis (v1.2.1.0+ ADR-018):** keywords "notebooklm" · "summarize these urls" · "synthesize these papers" · "deep research" · "knowledge synthesis" · "audio overview" · "mind map of" → invoke `mxm-notebooklm` MCP tools (skill: `.claude/skills/notebooklm-py/`)
    - Tech radar / technology adoption matrix → `tech-radar-author`
    - Competitive intelligence / moat analysis / competitor teardown → `competitive-intel-analyst`
    - Patent research / IP landscape → `patent-researcher`
