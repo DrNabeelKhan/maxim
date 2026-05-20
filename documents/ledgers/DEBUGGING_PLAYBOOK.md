@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Status:** 3 entries — §1 captures the v1.0.0 launch install bug-bash (2026-04-21..2026-04-27); §2 captures the Session 15 capability-count drift codification ("DNA gap"); **§3 captures the Session 22 pre-release-audit discipline restoration + BUG-008 cross-platform path bug (PATTERN-01 recurrence #4)**.
+**Status:** 4 entries — §1 captures the v1.0.0 launch install bug-bash (2026-04-21..2026-04-27); §2 captures the Session 15 capability-count drift codification ("DNA gap"); §3 captures the Session 22 pre-release-audit discipline restoration + BUG-008 cross-platform path bug (PATTERN-01 recurrence #4); **§4 captures the Session 22 BUG-009 discovery — external-tool wrapper drift against upstream CLI shape, PATTERN-02 candidate**.
 
 ---
 
@@ -134,6 +134,58 @@ After hypothesis 9 we hit a wall — Windows structural tests kept passing, but 
 - ADR-002 Documents as Executable Contracts — CHANGELOG audit-claim line is part of the executable contract; falsifying it violates the contract structurally
 - PATTERN-01 (Recurring-Pattern Registry in BUG_TRACKER.md) — fourth recurrence formally counted
 - Pre-release-audit agent: `agents/MXM/orchestrators/pre-release-audit.md` (8-bucket audit definition)
+
+---
+
+## §4 — 2026-05-20 — BUG-009 mxm-notebooklm wrapper CLI-shape drift (PATTERN-02 candidate: external-tool wrapper drift against upstream CLI shape)
+
+**Context.** Session 22, late evening, post-v1.3.2.1 ship. Mr. Khan ran the live end-to-end mxm-notebooklm workflow: NotebookLM source ingestion (screenshot + 2 text files) → infographic generation → mind-map generation → bundle assembly → LinkedIn post via nk-writer. The test exercised the upstream `notebooklm` CLI directly (not via the MCP wrapper) because the upstream CLI wasn't yet on PATH when the MCP first probed.
+
+Mid-workflow, my PowerShell command `notebooklm generate mind-map --wait` failed with `Error: No such option: --wait`. I had passed `--wait` because most generate subcommands support it. Mind-map doesn't.
+
+That single error opened the bigger investigation: if mind-map doesn't take `--wait`, what else does the wrapper get wrong? I grep'd `mcp/mxm-notebooklm/server.js` for every `args.push(...)` against the actual CLI help output.
+
+**Hypothesis tree.**
+
+1. *Just a `--wait` mismatch on mind-map.* → REJECTED. Looking at the wrapper's `generate_mindmap` tool (line 605), the wrapper invokes `["generate", "mindmap", "-n", notebook_id]`. The CLI help showed the subcommand is `mind-map` (with hyphen), not `mindmap`. The wrapper would 100%-fail on this tool just on subcommand name, before `--wait` even mattered.
+
+2. *Subcommand naming convention drift.* → CONFIRMED + EXPANDED. Audited the other 8 generate tools. Found `slides` should be `slide-deck`, `datatable` should be `data-table`. Three subcommand mismatches across 9 generate tools (33% catastrophic-fail rate).
+
+3. *Flag-shape drift.* → CONFIRMED. `generate_infographic` and `generate_slides` push `--topic` as a flag; the CLI takes DESCRIPTION as a positional arg. `generate_data_table` pushes `--query` as optional flag; the CLI takes DESCRIPTION as a REQUIRED positional. `generate_audio_overview` length enum has `medium`; the CLI accepts `default`. Quiz/flashcards push `--num-questions`/`--num-cards`; the CLI uses `--quantity` categorical (`fewer|standard|more`). Report pushes `--template`; the CLI uses `--format` enum. Video format + style enums almost entirely different between wrapper and CLI.
+
+4. *Wrapper was authored against an older upstream version.* → CONFIRMED. v1.2.1.0 was shipped 2026-05-20; the `notebooklm-py` package on disk is 0.4.1 (latest). The wrapper appears authored against a 0.3.x or earlier shape. Upstream CLI shape evolved between release and now.
+
+5. *V1.2.1.0 self-claimed "operator-tested" was actually untested through the MCP.* → CONFIRMED. CHANGELOG v1.2.1.0 says "operator-tested probes at design time" but the probe was direct-CLI route_task descent verification, not end-to-end MCP wrapper testing. Same anti-pattern Session 22 broke for pre-release-audit: self-claimed validation without actual validation.
+
+**Root cause(s).**
+
+*Surface-level:* MCP wrapper at `mcp/mxm-notebooklm/server.js` has 12+ confirmed CLI-shape mismatches across 9 generate tools, plus likely more in 29 unaudited tools (source_*, chat_*, research_*, artifact_*, auth_*, profile_*, notebook_*).
+
+*Structural:* When an ADR-018 three-layer integration wraps an upstream CLI, the wrapper's `args.push(...)` calls are SCHEMA-COUPLED to the upstream's exact subcommand names + flag shapes + enum values. Upstream is free to evolve those (rename `mindmap` → `mind-map`, refactor flags, add new enum values) between releases. The wrapper has no contract holding upstream stable. No CI test catches the drift. No version pin warns the operator. Silent breakage on upstream upgrade is the default failure mode.
+
+*Process:* v1.2.1.0 self-claimed operator-testing without actually testing through the MCP layer. The wrapper was AUTHORED against the CLI but the AUTHOR tested by reading the upstream's docs, not by invoking the wrapper as an operator would.
+
+**Fix.**
+
+*v1.3.2.2 partial fix (shipped):* 6 high-confidence corrections in `mcp/mxm-notebooklm/server.js`. Each carries inline `// BUG-009 fix (v1.3.2.2):` comment citing the cause. 3 subcommand renames + 2 `--topic` → positional DESCRIPTION + 1 `--query` → REQUIRED positional + 1 audio length enum.
+
+*v1.3.3 candidate (full fix):* Comprehensive 38-tool audit. For every tool in `mcp/mxm-notebooklm/server.js`, run `notebooklm <subcommand> --help` against live CLI, diff against `args.push(...)` calls, fix every mismatch. Add `peerDependencies` version-pin in `mcp/mxm-notebooklm/package.json`. Add a CI step that runs `notebooklm <each-subcommand> --help` and compares against a checked-in snapshot, detecting upstream shape changes before they reach operators.
+
+**Regression guards.**
+
+*Pattern-level:* This is the first articulated occurrence of PATTERN-02 — external-tool wrapper drift against upstream CLI shape. It will recur with every future ADR-018 integration (Notion, Linear, Slack, Figma, Higgsfield, etc.). The mitigation MUST be structural: version-pin the upstream, snapshot `--help` output for each subcommand, CI-diff the snapshot on every upgrade, document the drift in the wrapper's MAXIM_INTEGRATION.md.
+
+*Process-level:* Codify "operator-tested at design time" as a hard discipline. Not direct-CLI testing by the author. End-to-end MCP-wrapper testing by an operator who hasn't seen the wrapper code. This is the only test that catches CLI-shape drift between author intent and runtime reality.
+
+*ADR-018 amendment candidate (v1.3.3):* Promote the snapshot-based drift detection to a § Mandatory Disclosure alongside "license compatibility check" and "fragility disclosure." Title: "Upstream CLI shape stability check (mandatory)."
+
+**Cross-links.**
+
+- BUG-009 (OPEN with 12-mismatch catalog + partial-fix-shipped) — `documents/ledgers/BUG_TRACKER.md`
+- CHANGELOG v1.3.2.2 — full bug narrative + lesson logged about v1.2.1.0 self-claimed operator-testing
+- ADR-018 (External Tool Integration Pattern) — fragility-disclosure-on-every-output pattern realized; the pattern needs amendment to add upstream CLI shape stability
+- BUG-007 (RESOLVED) — earlier external-tool integration discipline failure (plugin-upgrade node_modules absence); same pattern in a different layer
+- §3 above — Session 22 pre-release-audit discipline restoration; PATTERN-02 emerged as the second new pattern surfaced in the same session
 
 ---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
