@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Status:** 2 entries — §1 captures the v1.0.0 launch install bug-bash (2026-04-21..2026-04-27); §2 captures the Session 15 capability-count drift codification ("DNA gap").
+**Status:** 3 entries — §1 captures the v1.0.0 launch install bug-bash (2026-04-21..2026-04-27); §2 captures the Session 15 capability-count drift codification ("DNA gap"); **§3 captures the Session 22 pre-release-audit discipline restoration + BUG-008 cross-platform path bug (PATTERN-01 recurrence #4)**.
 
 ---
 
@@ -96,6 +96,44 @@ After hypothesis 9 we hit a wall — Windows structural tests kept passing, but 
 **Methodology that worked.** Operator's "this should be in your project DNA" feedback flipped the framing from "let me sweep this" to "let me prevent the next sweep." Acceptance test wasn't traditional unit tests — it was running sync-counts against the just-finished manual sweep and counting how many ADDITIONAL surfaces it caught (12 in plugin-repo, all confirmed legitimate stale claims my manual sweep missed). The synthetic 90→91 INVENTORY bump test confirmed forward-direction correctness. The restore + re-run test confirmed idempotency.
 
 **Cross-links:** Operator feedback `~/.claude/projects/E--Projects-Maxim/memory/feedback_capability_count_propagation.md` · `composable-skills/frameworks/proactive-watch.md` Class 11 spec · `bootstrap/sync-counts.{sh,ps1}` · `config/watch-profile.{yml,TEMPLATE.yml}` Class 11 config · `CLAUDE.md` + `CLAUDE.d/protocols.md` (Commit Protocol updated) · `documents/proposals/v1.0.x-count-drift-codification.md` (full proposal).
+
+---
+
+## §3 — 2026-05-20 — Pre-release-audit discipline restoration + BUG-008 cross-platform path bug (PATTERN-01 recurrence #4)
+
+**Context.** Session 22, two ships in same day (v1.3.2 + v1.3.2.1). v1.3.2 started as a 2-file doc cleanup (PACKS.md + maxim-one-pager.md deferred from v1.3.0 scope). Operator's first attempt to "stage and commit" surfaced a structural problem: the prior 5 patches (v1.2.0.4 → v1.3.1) all claimed "pre-release-audit PASS" in their CHANGELOG entries WITHOUT dispatching the agent. v1.3.1 CHANGELOG honestly logged "Discipline lag — third iteration." Session 22's job: break the pattern by actually dispatching the agent, then keep it broken across multiple ships in a row.
+
+**Hypothesis tree.**
+1. *The agent isn't worth running for "small" patches.* → REJECTED. Cycle 1 of v1.3.2 against a 5-file candidate state found **7 P1 blockers** in 90 seconds. Including: wizard scripts (the FIRST surface every operator sees) still declared "64 frameworks · 87 tools" while the patch claimed to fix exactly that drift. Self-assessment had missed this for 5 consecutive releases.
+2. *One audit dispatch is sufficient.* → REJECTED. Cycle 1 caught office-facing surfaces; Cycle 2 (grep-based internal re-audit) caught 3 additional misses: `install-tier-packs.sh:194` Do-Solo handler (only fixed in .ps1 mirror, not .sh), `mxm-help.md:459` summary, `MXM_RUNDOWN.md:15`. The pattern: agent dispatch + grep verification = minimum discipline.
+3. *v1.3.2.1 (patch-of-patch) doesn't need the audit because it's tiny.* → REJECTED. Cycle 1 against v1.3.2.1 found 2 P1 blockers v1.3.2 should have caught: `maxim-one-pager.md:41` still said "19 dispatchable subagents" (despite the file being in v1.3.2 scope) + `mxm-self-update.ps1` slow-restart banner missing the BUG-008 caveat line that .sh had. **The audit catches the previous audit's misses.**
+4. *Cross-platform shell scripts ported from Linux work on Windows Git Bash.* → REJECTED. BUG-008 surfaced: `bootstrap/mxm-self-update.sh` line 37 sets `HOME_CLAUDE="${HOME}/.claude"`. On Windows Git Bash `$HOME` is MSYS-style `/c/Users/SDO`. Line 113-144 interpolates this path into a Python heredoc. **Python on Windows uses native filesystem APIs and cannot resolve `/c/Users/...` paths** — raises `FileNotFoundError`, which the script's try/except swallows as a stderr warning and exits 0 ("succeeds"). Marketplace pull + install-cache sync work; registry update silently fails. Every Windows operator since v1.1.1 has hit this; nobody noticed because the warning was buried in stderr.
+
+**Root cause(s).**
+
+*Discipline pattern:* Self-assessment of audit outcomes is a structural anti-pattern when the audit checks against a list (capability counts across N surfaces). The author of the change is the worst auditor of it. Pre-release-audit dispatch is the only mechanism that catches drift the author has tunnel vision on.
+
+*BUG-008 cross-platform path:* MSYS-style POSIX-emulation paths (`/c/Users/...`) are produced by Git Bash on Windows when bash resolves `$HOME` or `$USERPROFILE`-converted variables. These paths are valid inside the MSYS process tree (bash can `cd /c/Users/`) but invalid when handed to Windows-native processes (Python.exe, cmd.exe, native APIs). PATTERN-01 (cross-platform structural assumptions) struck for the 4th time after BUG-003 (exec bit) / BUG-004 (PATH) / BUG-005 (sparse-checkout) — but inverted: previous PATTERN-01 hits were Windows-only assumptions breaking on Linux/Mac; BUG-008 is a Linux-style path assumption breaking on Windows Git Bash.
+
+**Fix.**
+
+*Discipline pattern fix:* Every patch from v1.3.2 forward dispatches `maxim:pre-release-audit` agent BEFORE writing the CHANGELOG audit-claim line. Cycle 2 (grep-based) follows agent dispatch as final verification. CHANGELOG records both cycles' findings honestly — never "self-claimed PASS." Codified in v1.3.2 CHANGELOG § "Lessons logged honestly" + v1.3.2.1 § "Lesson logged."
+
+*BUG-008 fix (planned v1.3.3):* Replace path interpolation with Python-resolved path inside the heredoc: `from pathlib import Path; path = str(Path.home() / ".claude" / "plugins" / "installed_plugins.json")`. Cross-platform by construction. Alternative: `cygpath -w` conversion at top of script. Manual operator-side remediation already in BUG_TRACKER.md BUG-008 § "Proposed fix." Applied for Mr. Khan in Session 22 by direct edit of `installed_plugins.json` after each self-update.
+
+**Regression guards.**
+
+*Discipline pattern:* Convention enforced. Next-session-startup block in `agents-handoff.md` reminds: "Pre-release-audit dispatch BEFORE tag. NEVER self-claim PASS."
+
+*BUG-008:* Promote the script's `WARN: cannot read registry` to a hard-fail ERROR + exit 1. Buried warnings caused 5 releases of silent drift. Plus a CI step on `windows-latest`: run `/mxm-self-update` + verify registry SHA matches.
+
+**Cross-links.**
+- BUG-008 (OPEN) — full root-cause + proposed fix + manual remediation in `documents/ledgers/BUG_TRACKER.md`
+- CHANGELOG v1.3.2 + v1.3.2.1 entries — full audit-cycle narratives + carryover deferral lists
+- ADR-007 Behavioral Moat Framing — the discipline IS the moat enforcement; self-claimed audits violate ADR-007 § Framework citation requirement applied to internal process docs
+- ADR-002 Documents as Executable Contracts — CHANGELOG audit-claim line is part of the executable contract; falsifying it violates the contract structurally
+- PATTERN-01 (Recurring-Pattern Registry in BUG_TRACKER.md) — fourth recurrence formally counted
+- Pre-release-audit agent: `agents/MXM/orchestrators/pre-release-audit.md` (8-bucket audit definition)
 
 ---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
