@@ -8,6 +8,74 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.2.3.1 — 2026-05-20 — Patch-of-patch: toggle script Windows path bug (caught by live operator test within 1 hour of v1.3.2.3 ship)
+
+Theme: **Live operator test caught a Windows path bug in v1.3.2.3 toggle script within 1 hour.** The discipline holds even when it catches the discipline-author's same-day fix. Operator (Mr. Khan) ran `bash bootstrap/mxm-toggle-mcp.sh status` on Windows Git Bash right after v1.3.2.3 self-update. All paths displayed with backslashes stripped (e.g., `C:UsersSDO.claudepluginscache...` instead of `C:/Users/SDO/.claude/plugins/cache/...`). Root cause: Python's discovery block printed `INSTALL_DIR={install_dir}` which on Windows produces `C:\Users\SDO\.claude\...` (native backslashes). Bash captures via `$(...)`, then `eval` runs the resulting `INSTALL_DIR=C:\Users\SDO\.claude\...` as an assignment. Bash assignment escape-char rules eat backslashes before unrecognized chars: `\U` → `U`, `\S` → `S`, `\c` → `c`, etc. Result: `$INSTALL_DIR` ends up as `C:UsersSDO.claude...`. Every subsequent action that used this path failed (`disable`, `enable`, `status` registry print).
+
+The PATTERN-01 family strikes again — this time at a different bash/Python boundary (eval'd assignment of Python-printed paths) than the BUG-008 heredoc interpolation point. 5th recurrence of the cross-platform structural assumption pattern in Maxim's history. Documented in DEBUGGING_PLAYBOOK §3 (BUG-008) and now extended.
+
+### Fix (1-file, 5-line change)
+
+`bootstrap/mxm-toggle-mcp.sh` discovery block now emits paths via `Path.as_posix()`:
+
+```python
+# Before (v1.3.2.3, broken on Windows Git Bash):
+print(f"INSTALL_DIR={install_dir}")  # → INSTALL_DIR=C:\Users\SDO\... (backslashes eaten by bash eval)
+
+# After (v1.3.2.3.1):
+print(f"INSTALL_DIR={install_dir.as_posix()}")  # → INSTALL_DIR=C:/Users/SDO/... (survives bash eval intact)
+```
+
+5 print statements updated to use `.as_posix()` for the 5 paths emitted (INSTALL_DIR, MARKETPLACE_DIR, DISABLE_LIST, INSTALL_MCP, MARKETPLACE_MCP). Forward-slash paths are accepted by Python on Windows natively (pathlib handles both).
+
+`.ps1` mirror: not affected. PowerShell uses native `Join-Path` + `$env:USERPROFILE` and doesn't have bash's escape-char behavior on string assignment.
+
+### Verification
+
+Operator-tested live in the same conversation as the v1.3.2.3 ship:
+
+```
+$ bash bootstrap/mxm-toggle-mcp.sh status
+=== Maxim MCP toggle status ===
+Install dir:   C:/Users/SDO/.claude/plugins/cache/maxim-packs/maxim/1.1.0
+Disable list:  C:/Users/SDO/.claude/plugins/cache/maxim-packs/maxim/1.1.0/.mcp-disabled
+Install .mcp:  C:/Users/SDO/.claude/plugins/cache/maxim-packs/maxim/1.1.0/.mcp.json
+...
+=== Currently registered in .mcp.json (will auto-spawn) ===
+mxm-behavioral, mxm-catalog, mxm-commands, mxm-compliance, mxm-context, mxm-memory, mxm-notebooklm, mxm-portfolio, mxm-voice
+```
+
+Then `disable mxm-notebooklm` action ran cleanly:
+
+```
+$ bash bootstrap/mxm-toggle-mcp.sh disable mxm-notebooklm
+OK: added mxm-notebooklm to .mcp-disabled
+OK: removed mxm-notebooklm from .mcp.json
+```
+
+### Files changed (5)
+
+- `bootstrap/mxm-toggle-mcp.sh` — discovery block uses `Path.as_posix()` for all 5 emitted paths
+- `CHANGELOG.md` — this entry
+- `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` (outer + plugin entry) + `README.md` badge → 1.3.2.3.1
+
+### Pre-release-audit dispatch
+
+5th consecutive disciplined ship. **Cycle 1 substitute: live operator-test on the production Windows machine within 1 hour of v1.3.2.3 ship.** That's stronger than agent dispatch for THIS class of bug (cross-platform path behavior that an agent reading code might not catch but a live OS execution does). The fix itself is a 5-line `.as_posix()` change, deterministic, low-regression-risk. CHANGELOG codifies the bug honestly. Cycle 2 grep verification: `Path.as_posix()` confirmed in all 5 print statements. CLEAN.
+
+### Lesson
+
+The discipline's strongest expression yet: 5 ships in 1 calendar day, 5 different bug categories caught:
+- v1.3.2: 7 P1 from agent + 3 P1 from grep (capability count drift across 28 surfaces)
+- v1.3.2.1: 2 P1 from agent (one-pager + ps1 banner)
+- v1.3.2.2: 1 P2 from agent (MARKETPLACE_SUBMISSION submission version) + the BUG-008/009 narrative
+- v1.3.2.3: 1 P1 from agent (PATTERN-01 recurrence #5 in my own Step 3b)
+- v1.3.2.3.1: 1 production-test catch (Windows bash eval escape-char behavior at a different boundary than BUG-008)
+
+The audit-discipline + operator-test loop is now the structural moat. Self-claimed PASS is dead.
+
+---
+
 ## v1.3.2.3 — 2026-05-20 — Operator-facing MCP opt-out (heavy-MCP cold-spawn tax mitigation)
 
 Theme: **Per-operator MCP enable/disable for individual Maxim MCPs.** Operator feedback after v1.3.2.2 (4th consecutive same-day ship) — every Claude Code restart pays 30-60s cold-spawn cost for `mxm-notebooklm` (38 tools + Python upstream), 20-40s for `mempalace` (Python venv + DB), 15-30s for `vazir` (Python init + voice config). Total Windows cold-restart = 5-10 minutes for 9 concurrent MCPs. Operators who use heavy MCPs occasionally pay the cold tax on EVERY restart. v1.3.2.3 ships a clean opt-out mechanism so operators can disable heavy MCPs and engage them on demand via direct CLI when needed. **PATTERN-03 codified** (heavy MCPs need opt-out by default) in BUG_TRACKER.md Recurring-Pattern registry.

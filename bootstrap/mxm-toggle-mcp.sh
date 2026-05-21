@@ -33,6 +33,10 @@ ACTION="${1:-status}"
 MCP_NAME="${2:-}"
 
 # Locate install cache + marketplace cache via Python (BUG-008-style path discipline).
+# v1.3.2.3.1 fix: emit paths with forward slashes via Path.as_posix() so bash eval
+# does not strip backslashes (Windows paths like C:\Users\... get \U \S \c etc.
+# interpreted as escape sequences in bash assignment and stripped). Forward-slash
+# paths survive bash eval intact and Python on Windows accepts them natively.
 PATHS=$(python - <<'PYEOF'
 from pathlib import Path
 home = Path.home()
@@ -46,11 +50,11 @@ if not versions:
     print("NO_VERSION_DIR")
     raise SystemExit(1)
 install_dir = versions[0]
-print(f"INSTALL_DIR={install_dir}")
-print(f"MARKETPLACE_DIR={marketplace}")
-print(f"DISABLE_LIST={install_dir / '.mcp-disabled'}")
-print(f"INSTALL_MCP={install_dir / '.mcp.json'}")
-print(f"MARKETPLACE_MCP={marketplace / '.mcp.json'}")
+print(f"INSTALL_DIR={install_dir.as_posix()}")
+print(f"MARKETPLACE_DIR={marketplace.as_posix()}")
+print(f"DISABLE_LIST={(install_dir / '.mcp-disabled').as_posix()}")
+print(f"INSTALL_MCP={(install_dir / '.mcp.json').as_posix()}")
+print(f"MARKETPLACE_MCP={(marketplace / '.mcp.json').as_posix()}")
 PYEOF
 )
 
