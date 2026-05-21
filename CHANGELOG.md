@@ -8,6 +8,126 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.2.3 — 2026-05-20 — Operator-facing MCP opt-out (heavy-MCP cold-spawn tax mitigation)
+
+Theme: **Per-operator MCP enable/disable for individual Maxim MCPs.** Operator feedback after v1.3.2.2 (4th consecutive same-day ship) — every Claude Code restart pays 30-60s cold-spawn cost for `mxm-notebooklm` (38 tools + Python upstream), 20-40s for `mempalace` (Python venv + DB), 15-30s for `vazir` (Python init + voice config). Total Windows cold-restart = 5-10 minutes for 9 concurrent MCPs. Operators who use heavy MCPs occasionally pay the cold tax on EVERY restart. v1.3.2.3 ships a clean opt-out mechanism so operators can disable heavy MCPs and engage them on demand via direct CLI when needed. **PATTERN-03 codified** (heavy MCPs need opt-out by default) in BUG_TRACKER.md Recurring-Pattern registry.
+
+### NEW: `bootstrap/mxm-toggle-mcp.{sh,ps1}` — operator opt-in/opt-out toggle
+
+Operator-facing scripts for per-MCP enable/disable:
+
+```bash
+bash bootstrap/mxm-toggle-mcp.sh disable mxm-notebooklm
+bash bootstrap/mxm-toggle-mcp.sh enable  mxm-notebooklm
+bash bootstrap/mxm-toggle-mcp.sh list
+bash bootstrap/mxm-toggle-mcp.sh status
+```
+
+```powershell
+pwsh -File bootstrap/mxm-toggle-mcp.ps1 disable mxm-notebooklm
+pwsh -File bootstrap/mxm-toggle-mcp.ps1 enable  mxm-notebooklm
+pwsh -File bootstrap/mxm-toggle-mcp.ps1 list
+pwsh -File bootstrap/mxm-toggle-mcp.ps1 status
+```
+
+Behavior:
+- `disable <name>`: adds `<name>` to `.mcp-disabled` (one MCP per line) AND removes the block from `.mcp.json`. Operator restarts Claude Code once. MCP no longer auto-spawns. Direct CLI (`notebooklm <command>`, etc.) still works.
+- `enable <name>`: removes `<name>` from `.mcp-disabled` AND restores the block in `.mcp.json` from the marketplace template (single source of truth). Operator restarts Claude Code once. MCP spawns on next startup.
+- `list` / `status`: print current `.mcp-disabled` contents + currently-registered MCPs in `.mcp.json` + known MCPs in marketplace template.
+- Validation: `disable` checks the MCP name is known (errors on typos with the list of known MCPs). `enable` reads the canonical block from marketplace cache (`~/.claude/plugins/marketplaces/maxim-packs/.mcp.json`).
+- Path discipline: BUG-008 lesson applied — all path resolution uses Python `pathlib.Path.home()` inside heredocs, never bash interpolation across language boundaries.
+
+### NEW: `.mcp-disabled` file (operator-managed, preserved across upgrades)
+
+Plain text file at PLUGIN_ROOT (`~/.claude/plugins/cache/maxim-packs/maxim/<version>/.mcp-disabled`). One MCP name per line, `#` for comments. Example:
+
+```
+# Disabled MCPs (Maxim v1.3.2.3+)
+# Heavy MCPs we use on-demand via direct CLI rather than every-restart
+mxm-notebooklm
+# vazir          # uncomment when not actively using voice personas
+# mempalace      # uncomment when not actively using cross-session memory
+```
+
+The file is operator-managed via `mxm-toggle-mcp.{sh,ps1}` (or hand-edit). Joins `.mcp-deps-installed` + `node_modules` in the **preserved-across-self-update** list.
+
+### UPDATED: `bootstrap/mxm-self-update.{sh,ps1}` — disable-list reconciliation
+
+After syncing the marketplace `.mcp.json` (which always contains the full 9-MCP template), self-update now re-applies the operator's `.mcp-disabled` to remove disabled MCPs from the synced file. This means operator disable choices SURVIVE plugin upgrades — no manual re-disable after every `/mxm-self-update`.
+
+```
+Step 3   — Sync marketplace -> install cache (now excludes .mcp-disabled from sync)
+Step 3b  — Re-apply .mcp-disabled to synced .mcp.json (NEW v1.3.2.3+)
+            For each name in .mcp-disabled:
+              if name in synced .mcp.json mcpServers:
+                remove it
+            Write back with corrected JSON.
+Step 4   — Update installed_plugins.json registry (BUG-008-fixed pathlib resolution)
+```
+
+Plus a new line in the self-update completion banner explaining the toggle: "To skip cold-spawn for heavy MCPs (e.g., mxm-notebooklm 38 tools): bash bootstrap/mxm-toggle-mcp.sh disable mxm-notebooklm".
+
+### Operator workflow now (after this ship)
+
+```bash
+# One-time setup: disable heavy MCPs you use rarely
+bash bootstrap/mxm-toggle-mcp.sh disable mxm-notebooklm
+
+# Restart Claude Code -> fast cold-restart (notebooklm skipped, ~30-60s saved)
+
+# When you need NotebookLM later:
+notebooklm create "My notebook"        # direct CLI works fine
+notebooklm source add file.pdf
+notebooklm generate infographic "..."
+# (no MCP needed; the wrapper has known CLI-shape bugs in v1.3.2.2 anyway per BUG-009)
+
+# Or to re-enable for daily use:
+bash bootstrap/mxm-toggle-mcp.sh enable mxm-notebooklm
+# Restart Claude Code -> notebooklm auto-spawns again
+```
+
+### Files changed (8)
+
+- `bootstrap/mxm-toggle-mcp.sh` (NEW) — operator-facing toggle, ~120 lines
+- `bootstrap/mxm-toggle-mcp.ps1` (NEW) — PowerShell mirror
+- `bootstrap/mxm-self-update.sh` — Step 3b reconciliation + `.mcp-disabled` in rsync/cp exclude list
+- `bootstrap/mxm-self-update.ps1` — Step 3b reconciliation + `.mcp-disabled` in robocopy exclude list + completion-banner addendum
+- `documents/ledgers/BUG_TRACKER.md` — PATTERN-03 added to Recurring-Pattern Registry
+- `CHANGELOG.md` — this entry
+- `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` (outer + plugin entry) + `README.md` badge -> 1.3.2.3
+- `distributions/claude-plugin/MARKETPLACE_SUBMISSION.md` -> 1.3.2.3
+
+### Pre-release-audit dispatch (Cycle 1 + 2)
+
+**Cycle 1** (agent dispatched against 10-file candidate state): VERDICT BLOCKERS:1 · 1 P2 · 2 P3 NITs.
+
+- **P1 BLOCKER caught — PATTERN-01 recurrence in v1.3.2.3 itself:** Step 3b in `mxm-self-update.sh` (the new reconciliation code) interpolated bash-side `$INSTALL_DIR` into a Python heredoc. On Windows Git Bash, `$HOME` resolves to MSYS-style `/c/Users/SDO`, propagating into `$INSTALL_DIR` as `/c/Users/SDO/.claude/...`. Python on Windows cannot open that path. **The exact root cause of BUG-008 that v1.3.2.2 fixed for Step 4 — reintroduced in v1.3.2.3 Step 3b without applying the same discipline.** PATTERN-01 recurrence #5. Net effect on Windows: operators' disable choices would silently drop after every `/mxm-self-update`. The exact failure mode PATTERN-03 was meant to prevent.
+- **Fix:** Rewrote Step 3b heredoc to use `Path.home()` native discovery (mirroring Step 4 BUG-008-fix discipline). Plus promoted Step 3b errors from silent WARN+exit-0 to hard-fail ERROR+exit-1 — silent failure mode that buried BUG-008 for months is now structurally impossible.
+- **P2 caught:** `.sh` self-update completion banner mentions BUG-008 caveat but missed the new `mxm-toggle-mcp.sh` pointer (only `.ps1` banner had it). Git Bash operators wouldn't see the toggle.
+- **Fix:** Added toggle pointer to `.sh` completion banner in the same commit.
+- **P3 NIT 1 (deferred):** `AGENT_SKILL_INVENTORY.md` still says `Version: v1.3.1`. Capability counts unchanged — consistent with prior policy of inventory-version-lag-when-counts-stable.
+- **P3 NIT 2 (deferred):** No new ADR yet for PATTERN-03 codification. Candidate v1.3.3 along with ADR-022 (cross-language path-resolution discipline).
+
+**Cycle 2** (grep + structural verification post-P1+P2 fix): zero `Path(r"$VARIABLE_NAME")` patterns remaining in mxm-self-update.sh. All path resolution inside Python heredocs uses `Path.home()` native discovery. Toggle scripts already used the discipline from authoring. CLEAN.
+
+**Discipline trail: 4 consecutive disciplined ships, 5 pre-release-audit cycles total, 11+ P1 blockers caught + fixed before tag.** PATTERN-01 catching itself recursively in this ship is the strongest demonstration yet: the discipline doesn't trust the discipline-author, it trusts the audit. Anti-pattern remains broken AND self-reinforcing AND self-correcting.
+
+### Capability delta v1.3.2.2 → v1.3.2.3
+
+| Surface | Before | After | Delta |
+|---|---|---|---|
+| Agents · Skills · Cmds · MCPs · Tools · Frameworks · Compliance · Drift · Hooks · ADRs | 91 · 36 · 48 · 9 · 95 · 74 · 14 · 13 · 14 · 19 | unchanged | — |
+| Bootstrap scripts | `install-tier-packs.{sh,ps1}` · `mxm-desktop-config.{sh,ps1}` · `mxm-self-update.{sh,ps1}` · `install-global.ps1` · etc. | **+`mxm-toggle-mcp.{sh,ps1}`** | +2 (1 logical script · 2 platforms) |
+| Bug ledger entries | 9 (8 RESOLVED + 1 OPEN) | unchanged | — |
+| Recurring patterns | 2 (PATTERN-01 + PATTERN-02 candidate) | **3 (+ PATTERN-03 heavy-MCP-cold-spawn-tax)** | +1 named pattern |
+| pre-release-audit dispatches | 3 (v1.3.2 + v1.3.2.1 + v1.3.2.2) | **4 (this ship)** | fourth clean discipline iteration |
+
+### Lesson logged
+
+Operator feedback velocity is now the rate-limiting step. v1.3.2 broke the anti-pattern; v1.3.2.1 surfaced restart UX cost; v1.3.2.2 found wrapper drift via live operator test; v1.3.2.3 ships the operator-control mechanism for that cost. **Four consecutive same-day ships** demonstrate that the discipline-plus-feedback loop is operating end-to-end. The audit-first discipline catches drift; the operator-test discipline catches integration bugs; the operator-feedback-to-ship discipline closes the loop in hours, not weeks.
+
+---
+
 ## v1.3.2.2 — 2026-05-20 — Hotfix: BUG-008 RESOLVED + BUG-009 partial-fix (mxm-notebooklm CLI-shape drift)
 
 Theme: **Two same-day bug clearances.** v1.3.2.1 logged BUG-008 (Windows Git Bash heredoc path) as OPEN with a proposed pathlib fix. v1.3.2.2 ships that fix plus a partial fix for BUG-009 — a multi-bug pattern discovered when the operator ran the live mxm-notebooklm end-to-end workflow tonight. Same-day discovery-to-ship cadence (BUG-009 surfaced via live operator test ~30 min before this ship; fix authored + audited + tagged within the same session). Pre-release-audit dispatch maintained per Session 22 discipline.

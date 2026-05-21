@@ -31,7 +31,15 @@ Patterns that have struck more than once earn a permanent entry here with a name
 
 ### PATTERN-01 · Cross-platform structural assumptions (Windows-Git → Mac/Linux)
 
-Three of the v1.0.0 launch bugs (BUG-003 exec bit, BUG-004 PATH, BUG-005 sparse-checkout) were invisible to local Windows testing and only surfaced on a real macOS install. Mitigation: add a CI job that runs `claude plugin install` on `macos-latest` after every push to main; gate releases on it. Tracked as v1.1 hardening item.
+Three of the v1.0.0 launch bugs (BUG-003 exec bit, BUG-004 PATH, BUG-005 sparse-checkout) were invisible to local Windows testing and only surfaced on a real macOS install. **BUG-008 (v1.3.2.2) was the 4th recurrence** — inverted: Linux-style path semantics broke on Windows Git Bash via Python heredoc. RESOLVED via Python-native `pathlib.Path.home()`. Mitigation: add a CI job that runs `claude plugin install` + `bash bootstrap/mxm-self-update.sh` on `macos-latest` AND `windows-latest` after every push to main; gate releases on it. Plus candidate ADR-022 codifying the discipline (any script crossing bash → other-language for user-home paths MUST use the other language's native path resolution).
+
+### PATTERN-02 · External-tool wrapper drift against upstream CLI shape
+
+BUG-009 (v1.3.2.2) surfaced this for the first time: the mxm-notebooklm MCP wrapper at `mcp/mxm-notebooklm/server.js` had 12+ CLI-shape mismatches against the upstream `notebooklm-py` 0.4.1 CLI (subcommand renames, flag-vs-positional drift, enum value drift). The wrapper was authored against an older upstream CLI; upstream evolved between v1.2.1.0 ship and operator-test surfaces; nobody noticed because v1.2.1.0 self-claimed "operator-tested at design time" without actually testing through the MCP layer. **Will recur with every future ADR-018 integration** (Notion, Linear, Slack, Figma, Higgsfield, etc.) unless mitigated. Candidate mitigation: peerDependencies version-pin in `mcp/<tool>/package.json` + CI step running `<upstream> <each-subcommand> --help` against a checked-in snapshot to detect shape changes BEFORE they reach operators. Plus discipline: operator-tested through the MCP wrapper by an operator who hasn't seen the wrapper code, BEFORE any ADR-018 integration ships.
+
+### PATTERN-03 · Heavy MCPs need opt-out by default (cold-spawn tax)
+
+Surfaced in operator feedback after v1.3.2.2 ship: every Claude Code restart pays 30-60s cold-spawn cost for `mxm-notebooklm` (Python upstream + 38-tool registry) and 20-40s for `mempalace` (Python venv + DB connection) and 15-30s for `vazir` (Python init + voice persona load). Total Windows cold-restart = 5-10 minutes for 9 MCPs concurrent. Operators who use heavy MCPs occasionally (LinkedIn post once a week, voice persona rare) pay the cold tax on EVERY restart. **v1.3.2.3 ships the opt-out mechanism**: `bootstrap/mxm-toggle-mcp.{sh,ps1}` operator-facing toggle + `.mcp-disabled` file preserved across upgrades + `mxm-self-update.{sh,ps1}` re-applies the disable list to the synced `.mcp.json` after each upgrade. Operators can disable mxm-notebooklm / mempalace / vazir / any other heavy MCP and engage them on demand via direct CLI when needed. Documented in CHANGELOG v1.3.2.3.
 
 ---
 

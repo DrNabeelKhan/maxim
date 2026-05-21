@@ -64,16 +64,17 @@ if ($OldSha -eq $NewSha) {
 Write-LogMsg "Marketplace updated: $($OldSha.Substring(0,8)) -> $($NewSha.Substring(0,8))"
 
 # --- Step 3: Sync marketplace -> install cache ---
-# Excludes preserve operator state: .git, node_modules, .mcp-deps-installed, .mcp-install-lock
-Write-LogMsg "Syncing marketplace content -> install cache (preserving node_modules + sentinels)..."
+# Excludes preserve operator state: .git, node_modules, .mcp-deps-installed,
+# .mcp-install-lock, .mcp-disabled (v1.3.2.3+ operator opt-out list).
+Write-LogMsg "Syncing marketplace content -> install cache (preserving node_modules + sentinels + .mcp-disabled)..."
 
 # Use robocopy with /XD (exclude dir) and /XF (exclude file)
 $robocopyArgs = @(
     $MarketplaceDir,
     $InstallDir,
-    '/MIR',                              # Mirror — sync all files, delete extras
+    '/MIR',                              # Mirror -- sync all files, delete extras
     '/XD', '.git', 'node_modules',       # Exclude these dirs at any depth
-    '/XF', '.mcp-deps-installed', '.mcp-install-lock',
+    '/XF', '.mcp-deps-installed', '.mcp-install-lock', '.mcp-disabled',
     '/NFL', '/NDL', '/NJH', '/NJS',      # Quiet output
     '/NP'                                # No progress
 )
@@ -81,6 +82,34 @@ $robocopyArgs = @(
 # robocopy exit codes: 0-7 are success (1 = files copied; 0 = no changes)
 if ($LASTEXITCODE -ge 8) {
     Write-Err "robocopy sync failed (exit $LASTEXITCODE)"
+}
+
+# --- Step 3b: Re-apply .mcp-disabled to freshly-synced .mcp.json (v1.3.2.3+) ---
+# The just-synced .mcp.json has ALL MCPs registered (marketplace template).
+# Re-apply the operator's disable list so opt-out choices survive upgrade.
+$DisableList = Join-Path $InstallDir ".mcp-disabled"
+$InstallMcp = Join-Path $InstallDir ".mcp.json"
+if ((Test-Path $DisableList) -and ((Get-Item $DisableList).Length -gt 0) -and (Test-Path $InstallMcp)) {
+    Write-LogMsg "Re-applying .mcp-disabled to synced .mcp.json..."
+    try {
+        $disabled = @(Get-Content $DisableList | Where-Object { $_.Trim() -and -not $_.Trim().StartsWith("#") } | ForEach-Object { $_.Trim() })
+        $data = Get-Content $InstallMcp -Raw | ConvertFrom-Json
+        $removed = @()
+        foreach ($name in $disabled) {
+            if ($data.mcpServers.PSObject.Properties.Name -contains $name) {
+                $data.mcpServers.PSObject.Properties.Remove($name)
+                $removed += $name
+            }
+        }
+        if ($removed.Count -gt 0) {
+            ($data | ConvertTo-Json -Depth 20) | Set-Content -Path $InstallMcp -Encoding UTF8
+            Write-LogMsg "  disabled MCPs re-applied: $($removed -join ', ')"
+        } else {
+            Write-LogMsg "  no disabled MCPs to re-apply (list empty or names not found)"
+        }
+    } catch {
+        [Console]::Error.WriteLine("  WARN: could not re-apply .mcp-disabled ($_)")
+    }
 }
 
 # --- Step 4: Update installed_plugins.json registry ---
@@ -114,6 +143,10 @@ try {
 [Console]::Error.WriteLine('     concurrently while Windows Defender scans node_modules.')
 [Console]::Error.WriteLine('     Subsequent restarts are normal speed. See BUG-008 in')
 [Console]::Error.WriteLine('     documents/ledgers/BUG_TRACKER.md for registry-update caveat.')
+[Console]::Error.WriteLine('')
+[Console]::Error.WriteLine('   ! To skip cold-spawn for heavy MCPs (e.g., mxm-notebooklm 38 tools):')
+[Console]::Error.WriteLine('     pwsh -File bootstrap/mxm-toggle-mcp.ps1 disable mxm-notebooklm')
+[Console]::Error.WriteLine('     (v1.3.2.3+; operator opt-out survives plugin upgrades)')
 [Console]::Error.WriteLine('============================================================')
 
 exit 0

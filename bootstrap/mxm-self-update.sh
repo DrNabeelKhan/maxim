@@ -77,7 +77,8 @@ log "Marketplace updated: ${OLD_SHA:0:8} → ${NEW_SHA:0:8}"
 #   node_modules/               — npm-installed deps; preserve to avoid re-install
 #   .mcp-deps-installed         — spawn-with-deps wrapper sentinel
 #   .mcp-install-lock           — concurrent-install lock file
-log "Syncing marketplace content → install cache (preserving node_modules + sentinels)…"
+#   .mcp-disabled               — operator opt-out list (v1.3.2.3+; preserved so disable choices survive upgrade)
+log "Syncing marketplace content → install cache (preserving node_modules + sentinels + .mcp-disabled)…"
 
 if command -v rsync >/dev/null 2>&1; then
     rsync -a --delete \
@@ -85,10 +86,16 @@ if command -v rsync >/dev/null 2>&1; then
         --exclude='node_modules/' \
         --exclude='.mcp-deps-installed' \
         --exclude='.mcp-install-lock' \
+        --exclude='.mcp-disabled' \
         "$MARKETPLACE_DIR/" "$INSTALL_DIR/" >&2
 else
-    # Fallback for environments without rsync (rare on Windows Git-Bash)
+    # Fallback for environments without rsync (rare on Windows Git-Bash).
+    # Also preserves the operator's .mcp-disabled file by skipping copy + restore.
     log "(rsync not found — using cp fallback; slower but functional)"
+    DISABLED_PRESERVE=""
+    if [ -f "$INSTALL_DIR/.mcp-disabled" ]; then
+        DISABLED_PRESERVE=$(cat "$INSTALL_DIR/.mcp-disabled")
+    fi
     for entry in "$MARKETPLACE_DIR"/.* "$MARKETPLACE_DIR"/*; do
         name=$(basename "$entry")
         # Skip . / .. / .git / pseudo-entries
@@ -106,6 +113,69 @@ else
             cp -R "$entry" "$INSTALL_DIR/" 2>/dev/null
         fi
     done
+    # Restore .mcp-disabled if the cp loop accidentally clobbered it.
+    if [ -n "$DISABLED_PRESERVE" ]; then
+        echo "$DISABLED_PRESERVE" > "$INSTALL_DIR/.mcp-disabled"
+    fi
+fi
+
+# ─── Step 3b: Re-apply .mcp-disabled to freshly-synced .mcp.json (v1.3.2.3+) ─
+# The just-synced .mcp.json has ALL MCPs registered (marketplace template).
+# If the operator has disabled MCPs via bootstrap/mxm-toggle-mcp.sh, the disable
+# list at $INSTALL_DIR/.mcp-disabled must be re-applied here so the operator's
+# choices survive plugin upgrades.
+if [ -f "$INSTALL_DIR/.mcp-disabled" ] && [ -s "$INSTALL_DIR/.mcp-disabled" ]; then
+    log "Re-applying .mcp-disabled to synced .mcp.json…"
+    # BUG-008 lesson applied (v1.3.2.3 hotfix-of-hotfix): path discovery via
+    # Path.home() inside the heredoc instead of bash interpolation of
+    # $INSTALL_DIR. On Windows Git Bash, bash $HOME is MSYS-style /c/Users/...
+    # which Python on Windows cannot open. PATTERN-01 recurrence #5 prevented.
+    # Hard-fail on errors (not silent WARN+exit-0) so disable choices cannot
+    # be silently dropped on Windows upgrades.
+    python - <<PYEOF
+import json
+import sys
+from pathlib import Path
+
+# Native cross-platform path resolution.
+install_parent = Path.home() / ".claude" / "plugins" / "cache" / "maxim-packs" / "maxim"
+versions = sorted([d for d in install_parent.iterdir() if d.is_dir()])
+if not versions:
+    print("  ERROR: no install version dir under " + str(install_parent), file=sys.stderr)
+    raise SystemExit(1)
+install_dir = versions[0]
+mcp_path = install_dir / ".mcp.json"
+disable_path = install_dir / ".mcp-disabled"
+
+if not mcp_path.exists():
+    print(f"  ERROR: .mcp.json not found at {mcp_path}", file=sys.stderr)
+    raise SystemExit(1)
+
+try:
+    data = json.loads(mcp_path.read_text(encoding="utf-8"))
+except Exception as e:
+    print(f"  ERROR: could not parse .mcp.json ({e})", file=sys.stderr)
+    raise SystemExit(1)
+
+disabled = [line.strip() for line in disable_path.read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.strip().startswith("#")]
+
+removed = []
+for name in disabled:
+    if name in data.get("mcpServers", {}):
+        del data["mcpServers"][name]
+        removed.append(name)
+
+if removed:
+    try:
+        mcp_path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    except Exception as e:
+        print(f"  ERROR: could not write reconciled .mcp.json ({e})", file=sys.stderr)
+        raise SystemExit(1)
+    print(f"  disabled MCPs re-applied: {', '.join(removed)}", file=sys.stderr)
+else:
+    print("  no disabled MCPs to re-apply (list empty or names not found in .mcp.json)", file=sys.stderr)
+PYEOF
 fi
 
 # ─── Step 4: Update installed_plugins.json gitCommitSha + lastUpdated ─
@@ -173,6 +243,10 @@ echo "  ⚠ First restart may take 5-10 min on Windows: 9 MCPs cold-spawn" >&2
 echo "    concurrently while Windows Defender scans node_modules." >&2
 echo "    Subsequent restarts are normal speed. See BUG-008 in" >&2
 echo "    documents/ledgers/BUG_TRACKER.md for registry-update caveat." >&2
+echo "" >&2
+echo "  ⚠ To skip cold-spawn for heavy MCPs (e.g., mxm-notebooklm 38 tools):" >&2
+echo "    bash bootstrap/mxm-toggle-mcp.sh disable mxm-notebooklm" >&2
+echo "    (v1.3.2.3+; operator opt-out survives plugin upgrades)" >&2
 echo "════════════════════════════════════════════════════════════" >&2
 
 exit 0
