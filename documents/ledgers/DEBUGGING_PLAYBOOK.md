@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Status:** 4 entries — §1 captures the v1.0.0 launch install bug-bash (2026-04-21..2026-04-27); §2 captures the Session 15 capability-count drift codification ("DNA gap"); §3 captures the Session 22 pre-release-audit discipline restoration + BUG-008 cross-platform path bug (PATTERN-01 recurrence #4); **§4 captures the Session 22 BUG-009 discovery — external-tool wrapper drift against upstream CLI shape, PATTERN-02 candidate**.
+**Status:** 5 entries — §1 captures the v1.0.0 launch install bug-bash (2026-04-21..2026-04-27); §2 captures the Session 15 capability-count drift codification ("DNA gap"); §3 captures the Session 22 pre-release-audit discipline restoration + BUG-008 cross-platform path bug (PATTERN-01 recurrence #4); §4 captures the Session 22 BUG-009 discovery — external-tool wrapper drift against upstream CLI shape (PATTERN-02 candidate); **§5 captures the Session 22 PATTERN-01 recurrences #5 and #6 — bash/Python interop bugs at 2 additional boundaries (v1.3.2.3 Step 3b eval + v1.3.2.3.1 bash-assignment-escape-char)**.
 
 ---
 
@@ -186,6 +186,61 @@ That single error opened the bigger investigation: if mind-map doesn't take `--w
 - ADR-018 (External Tool Integration Pattern) — fragility-disclosure-on-every-output pattern realized; the pattern needs amendment to add upstream CLI shape stability
 - BUG-007 (RESOLVED) — earlier external-tool integration discipline failure (plugin-upgrade node_modules absence); same pattern in a different layer
 - §3 above — Session 22 pre-release-audit discipline restoration; PATTERN-02 emerged as the second new pattern surfaced in the same session
+
+---
+
+## §5 — 2026-05-20 — PATTERN-01 recurrences #5 and #6 (bash/Python interop at 2 additional boundaries)
+
+**Context.** Same calendar day as §3 (BUG-008 PATTERN-01 #4). Two more PATTERN-01 occurrences surfaced in the same session, in scripts that were AUTHORED to apply the §3 BUG-008 lesson. The discipline catches the discipline-author. Each at a distinct bash/Python interop boundary.
+
+### Recurrence #5 — v1.3.2.3 mxm-self-update.sh Step 3b
+
+**Trigger.** v1.3.2.3 shipped `bootstrap/mxm-self-update.sh` with a new Step 3b that re-applies `.mcp-disabled` to the freshly-synced `.mcp.json` after each upgrade. The author (me) had just shipped BUG-008's pathlib fix for Step 4 in v1.3.2.2 — the lesson should have transferred. It didn't.
+
+**Hypothesis tree.**
+1. *Step 3b is fine because it uses a heredoc, not a heredoc-with-bash-var-into-Python.* → REJECTED. Audit Cycle 1 read the code: Step 3b uses `Path(r"$INSTALL_DIR")` inside the heredoc, where `$INSTALL_DIR` came from bash-side `ls -d "$INSTALL_CACHE_PARENT"/*/` on line 48. `INSTALL_CACHE_PARENT="${HOME}/.claude/..."`. On Windows Git Bash, `$HOME` = `/c/Users/SDO`. So `$INSTALL_DIR` is MSYS-style `/c/Users/SDO/.claude/...` — exactly the path Python on Windows cannot resolve. Same bug as BUG-008, different file, same script.
+
+**Root cause.** I copy-pasted the heredoc pattern for Step 3b without applying the lesson from Step 4 (which used `Path.home()` natively). The temporal gap between "shipping BUG-008 fix in Step 4" and "writing new Step 3b code" was hours — long enough to forget the lesson. The author is the worst auditor.
+
+**Fix.** Rewrote Step 3b heredoc to use `Path.home()` native discovery inside the heredoc, removing all bash-var-into-Python-path interpolation. Plus promoted Step 3b errors from silent WARN+exit-0 to hard-fail ERROR+exit-1.
+
+**How caught.** Pre-release-audit agent dispatch (Cycle 1 against v1.3.2.3 candidate state). The audit prompt explicitly named Step 3b path-resolution as a check item. Agent read the code, spotted the regression, returned BLOCKERS:1.
+
+### Recurrence #6 — v1.3.2.3 bootstrap/mxm-toggle-mcp.sh discovery block
+
+**Trigger.** v1.3.2.3 also shipped `bootstrap/mxm-toggle-mcp.sh` (the operator-facing toggle). The discovery block at the top uses Python heredoc to compute install + marketplace paths, prints them as `INSTALL_DIR=<path>`, and bash `eval`s the captured output. Audit Cycle 1 did NOT catch this — code reading didn't reveal the bug, because the heredoc was correctly using `Path.home()` Python-native. The bug was downstream: Python's print output goes through bash's eval, which has its own escape-char rules.
+
+**Discovery moment.** Within 1 hour of v1.3.2.3 push, the operator (Mr. Khan) ran `bash bootstrap/mxm-toggle-mcp.sh status` on Windows Git Bash. Output: `Install dir: C:UsersSDO.claudepluginscachemaxim-packsmaxim1.1.0` — backslashes stripped from every path. All subsequent actions (disable/enable/status registry-list) failed because `$INSTALL_DIR` etc. now contained nonexistent paths.
+
+**Hypothesis tree.**
+1. *Heredoc preserved the backslashes; the bug must be elsewhere.* → CONFIRMED. The Python heredoc with `Path.home()` produced correct paths like `C:\Users\SDO\.claude\plugins\cache\maxim-packs\maxim\1.1.0`. Python printed them via `print(f"INSTALL_DIR={install_dir}")`. Bash captured via `$(...)` — still intact at this point.
+2. *Bash assignment eats backslashes.* → CONFIRMED. The eval'd string contains lines like `INSTALL_DIR=C:\Users\SDO\.claude\plugins\...`. Bash assignment statement parses the unquoted RHS through word splitting + escape-char rules. `\U`, `\S`, `\c` are not recognized escape sequences, but bash STILL strips the backslash. Final `$INSTALL_DIR` value: `C:UsersSDO.claudepluginscachemaxim-packsmaxim1.1.0`. All actions then fail because that path doesn't exist.
+
+**Root cause.** Bash's assignment-statement escape-char processing of Python-PRINTED native Windows paths. **Distinct boundary from BUG-008** (which was bash-VARIABLE-INTO-Python-heredoc) and **distinct from recurrence #5** ($INSTALL_DIR-INTO-heredoc). PATTERN-01 family with three concrete sub-patterns now identified:
+- Sub-pattern A (BUG-008): bash $VAR interpolated INTO Python heredoc, MSYS path doesn't open
+- Sub-pattern B (v1.3.2.3 Step 3b): same as A, different file
+- Sub-pattern C (v1.3.2.3.1): Python prints path → bash eval interprets backslashes as escape sequences → strips them
+
+**Fix.** Emit paths via `Path.as_posix()` so they print with FORWARD slashes. Forward-slash paths survive bash eval intact (no escape interpretation of `/`) AND Python on Windows accepts them natively (pathlib handles both separators). 5 print statements updated in the discovery block.
+
+**How caught.** Live operator test on production Windows machine within 1 hour of v1.3.2.3 ship. Stronger than agent code-review for this class of bug — the agent COULD have caught it by reasoning about bash assignment-escape rules, but the live execution surfaces the actual `eval` behavior unambiguously.
+
+### Combined PATTERN-01 lesson (across recurrences #4 + #5 + #6)
+
+Cross-language string interop is the structural risk. ANY script that crosses bash → Python (or other language) MUST resolve paths INSIDE the inner language's native APIs AND emit them in a separator-neutral form (forward slashes on Windows, or single-quoted to bypass bash escape rules). Three distinct bash/Python boundaries have been bug sites in Maxim's history; each needs explicit handling.
+
+Candidate **ADR-022** for v1.3.3: codify the cross-language path-resolution discipline as a Mandatory Disclosure for any future `bootstrap/*.{sh,ps1}` script. Sub-patterns A/B/C all listed with their concrete failure modes and the validated remediations (pathlib.Path.home() for A/B; .as_posix() for C).
+
+### Discipline trail observation
+
+The 5-ship 1-day cadence demonstrated that **the audit catches the audit-author's own ship** (recurrence #5) AND **the live operator test catches what code review missed** (recurrence #6). Both layers are load-bearing. Self-claimed PASS would have shipped 2 broken patches; the agent + operator-test loop caught them within 1 hour.
+
+**Cross-links.**
+- §3 above — BUG-008 PATTERN-01 #4 (sub-pattern A)
+- CHANGELOG v1.3.2.3 — recurrence #5 caught in Cycle 1
+- CHANGELOG v1.3.2.3.1 — recurrence #6 caught by live operator test
+- BUG_TRACKER PATTERN-01 entry (recurrences now numbered #4, #5, #6)
+- ADR-022 candidate for v1.3.3 (cross-language path-resolution discipline)
 
 ---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
