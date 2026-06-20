@@ -120,6 +120,7 @@ entities.json
 # (alirezarezvani/claude-skills-library, higgsfield-*, etc.) remain gitignored.
 community-packs/*
 !community-packs/notebooklm-py
+!community-packs/awesome-agent-skills
 
 # ── Operator overlay for brand foundation (personal identity, never commit) ──
 .brand-foundation/personal.local/

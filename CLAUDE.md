@@ -444,3 +444,4 @@ When any threshold is exceeded, scheduled tasks sleep until `resets_at`. Usage i
 | `community-packs/ui-ux-pro-max/` | nextlevelbuilder UI/UX library (7 skills) |
 | `community-packs/higgsfield-*/` | 40 video/cinematic prompt skills |
 | `community-packs/design-templates/` | 59 brand DESIGN.md templates |
+| `community-packs/awesome-agent-skills/` | VoltAgent 1000+ skill index — STEP-1-miss fallback registry (search via `bootstrap/mxm-find-skill.sh`); v1.3.4+ |

@@ -8,6 +8,40 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.4 — 2026-06-19 — `awesome-agent-skills` fallback registry (Maxim's STEP-1-miss skill search)
+
+Theme: **When Maxim has no native skill, search 1000+ external skills instead of giving up.** Operator directive — give Maxim a searchable place to find a skill when it lacks one, so it stops falling through to cookie-cutter default output.
+
+### Added — `community-packs/awesome-agent-skills/` (shipped, not gitignored)
+
+Vendored `VoltAgent/awesome-agent-skills` (MIT, clean inside BSL-1.1) — a curated **index of 1000+ agent skills** from official dev teams (Stripe, Figma, OpenAI, HashiCorp, Supabase, Vercel, …) + community. A single 226 KB `SKILLS_CATALOG.md`, so it qualifies under the **small-pack committed exception** (`.gitignore` updated: `!community-packs/awesome-agent-skills`) — it ships with the plugin, unlike the multi-thousand-file packs that stay gitignored. Includes `LICENSE` (MIT) + `MAXIM_INTEGRATION.md` per ADR-008.
+
+### Added — `bootstrap/mxm-find-skill.sh`
+
+The searchable mechanism: greps the catalog for an intent and returns external skill candidates + their source links, flagged 🔴 Maxim-UNENHANCED (ADR-008). Cross-platform path resolution (script-relative; no `$HOME` interpolation, per BUG-008). Usage: `bash bootstrap/mxm-find-skill.sh "stripe billing"`.
+
+### Role — STEP-1b fallback in the dispatch (the missing rung)
+
+Inserts a search **between** "no native Maxim skill" and "log a gap": native skill? → else search `awesome-agent-skills` → match? fetch + apply the Maxim behavioral overlay (confidence tag + framework citation) + flag UNENHANCED → else log a genuine gap.
+
+### Deferred — auto-wiring held for "Maxim default-on"
+
+Per operator directive, the finder is **NOT yet wired into the auto-dispatch** (CLAUDE.md STEP-1b is documented in `MAXIM_INTEGRATION.md`, not enforced). The auto-search belongs to the planned **"Maxim default-on" always-on-router ADR** (Session-23 simplification brainstorm) — the router will call `mxm-find-skill` automatically on a skill miss. This release ships the searchable *place* + the finder; the *automatic* use lands with the router.
+
+### No count changes
+
+Community packs are not in the capability counts (37 skills / 78 frameworks unchanged). Version bump → 1.3.4 (plugin.json, marketplace.json outer + entry, README badge). `awesome-agent-skills` added to CLAUDE.md reference index.
+
+### Pre-release-audit (honest narrative)
+
+`maxim:pre-release-audit` returned **READY TO PUSH** (no blockers) + caught 2 NITs, both fixed before commit: (1) the finder's multi-word search was broken (`index(line, q)` whole-phrase match → `"stripe billing"` returned 0, the exact "give up" the feature prevents) — **rewritten to tokenize the query and rank by terms-matched, then re-tested** (`"social media post"` → postiz-agent / social-content / typefully; `"figma design system"` → 3 figma design-system skills); (2) one stale "to ship it" sentence in `MAXIM_INTEGRATION.md` corrected to past tense. Version consistency PASS (1.3.4 across plugin.json + marketplace outer/entry + README). MIT license + attribution present; no count drift (37/78 untouched).
+
+### Files changed
+
+`community-packs/awesome-agent-skills/{SKILLS_CATALOG.md,LICENSE,MAXIM_INTEGRATION.md}` (NEW) · `bootstrap/mxm-find-skill.sh` (NEW, multi-word ranked search) · `.gitignore` (un-ignore the pack) · `CLAUDE.md` (reference index) · version bump → 1.3.4 · this entry.
+
+---
+
 ## v1.3.3 — 2026-06-19 — Loops skill + 4 loop-derived behavioral frameworks (74 → 78)
 
 Theme: **Adopt the agentic-loop discipline as a skill, and codify the behavioral patterns it introduces as frameworks.** Sourced from a Session-23 graph-search of three external loop systems (`Forward-Future/loop-library`, `inferencegod/autonomy-loop`, `zeenie-ai/MachinaOS`) — loop-library + autonomy-loop are cited as prior art per ADR-007. Adopted as a **skill, not a command** (operator directive: "use loops skill if it solves the issue and does not require a command").
