@@ -8,14 +8,24 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
-## Post-v1.3.6 (off-tag) — 2026-06-19 — Cross-surface honesty + submission-doc coherence
+## v1.3.7 — 2026-06-20 — Invisible MCP deps on update (+ cross-surface doc coherence)
 
-Doc-only; **no capability change, no version bump (stays 1.3.6)** — counts were already canonical at v1.3.6, this fixed stale copies. Verified two cycles (grep + `maxim:pre-release-audit` → READY TO PUSH).
+Pre-release-audit dispatched before tag. No capability-count changes (91 agents · 37 skills · 48 commands · 9 MCPs/95 tools · 78 frameworks · 16 hooks · 20 ADRs unchanged).
+
+### Fixed — a `claude plugin update` never costs a slow first restart again (`mcp/_shared/spawn-with-deps.mjs`)
+
+The native `claude plugin update` installs the new version into a fresh dir **without** `node_modules`, so the first MCP spawn used to `npm install` all 9 servers — a slow, online-only first restart (5–10 min on Windows; some MCPs time out and surface late). The spawn-with-deps wrapper now **reuses a matching prior version's `node_modules`**: on a missing-deps spawn it finds a sibling installed plugin version whose per-server **dependency signature is identical** and copies its `node_modules` in **offline** (no npm, no network), falling back to `npm install` only for a genuine fresh install or a real dependency change. Signature-guarded (compares `dependencies` + `optionalDependencies`, ignoring name/version/scripts) so incompatible deps are never reused; cross-platform (`fs.cpSync`); records `reused_count` in the install sentinel. Plugin updates are now **invisible for all users on every MCP-running surface** (CLI + Desktop). Integration-tested (3-version layout: picks the deps-matching donor, skips a mismatched one, server imports, exit 0); `node --check` clean. Complements `/mxm-self-update` (which already preserved node_modules) by bringing the same guarantee to the native `claude plugin update` path everyone else uses.
+
+### Changed — cross-surface hook-CLI-only honesty + submission-doc coherence (was off-tag `ee989df`, now tagged in v1.3.7)
+
+Doc-only; counts were already canonical at v1.3.6, this fixed stale copies. Verified two cycles (grep + `maxim:pre-release-audit`).
 
 - **Hook honesty (CLI-only).** Marketing/submission copy that stated hook-enforced governance as an absolute now qualifies it: the pre-commit Executable-Contracts gate, the session-start Proactive-Watch auto-run, and the ADR-021 default-on router are **Claude Code CLI only** (hooks don't run on Desktop/Web/Cowork — [anthropics/claude-code#45514](https://github.com/anthropics/claude-code/issues/45514)). Skills, commands, and MCP remain cross-surface per `AGENT_SKILL_INVENTORY §5` (the source of truth). The "91-agent catalog via `mxm-catalog` MCP" cross-surface parity claim was verified correct and **kept**.
 - **`MARKETPLACE_SUBMISSION.md` migrated v1.3.2.3 → v1.3.6.** The Anthropic submission package was a half-stale v1.3.2.3 snapshot. Full migration: version stamps, the version-consistency table/claim (verified: plugin.json / marketplace.json outer+entry / README badge all 1.3.6), pre-submission checklist, and "Known limitations." Body counts → canonical (37 skills · 78 frameworks · 16 hooks · 20 ADRs/16 public · 9 bug entries). BUG-009 retargeted to upstream `notebooklm-py` **0.7.2**.
 - **One-pager + ADR INDEX.** `maxim-one-pager.md`: counts 36→37 / 74→78 (incl. the compact `91/37/…/78/…` slash-string) + v1.3.6 stamps + hook-CLI-only surface caveat. `documents/ADRs/INDEX.md`: public-ADR prose count "Fifteen"→"Sixteen" + ADR-021.
 - **Deferred (flagged, not touched):** Cowork packaging (frozen at v1.2.0; ships a legit 8-connector/49-tool subset) · `maxim-surface-guide.md` (v1.2.0.2 staleness; its MCP-on-Desktop matrix now contradicts §5) · `maxim-project-instructions.md` line-10 "(v1.3.2)" label. Each needs its own reconciliation, not a count-push.
+
+### Version → 1.3.7 (plugin.json · marketplace.json outer+entry · README badge · inventory stamp). No count changes.
 
 ---
 

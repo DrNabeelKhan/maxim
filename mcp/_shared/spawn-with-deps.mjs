@@ -6,6 +6,13 @@
 //
 // BUG-007 follow-up (v1.1.0.3): collapses 2-restart upgrade to 1-restart.
 //
+// Donor reuse (v1.3.7): the native `claude plugin update` installs a new
+// version dir WITHOUT node_modules, so a first spawn used to npm-install all
+// servers (slow, online-only). On any UPDATE a prior version dir still sits
+// beside this one with valid node_modules; when its deps match we copy them in
+// offline instead of installing — making updates invisible for all users on
+// every surface that runs MCPs. Fresh installs (no donor) still npm-install.
+//
 // Without this wrapper, the SessionStart hook (.claude/hooks/session-start.{sh,ps1})
 // runs AFTER Claude Code has already tried to spawn the 7 MCP servers (and failed
 // with ERR_MODULE_NOT_FOUND because node_modules are absent). User has to restart
@@ -123,6 +130,44 @@ function releaseLock() {
   } catch {}
 }
 
+// Deps signature = the dependency sets only (ignores name/version/scripts), so
+// a matching prior-version server is a safe donor even across plugin versions.
+function readDepsSignature(pkgPath) {
+  try {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+    return JSON.stringify({ d: pkg.dependencies || {}, o: pkg.optionalDependencies || {} });
+  } catch {
+    return null;
+  }
+}
+
+// Find a sibling installed version of THIS plugin that already has this
+// server's node_modules with an identical dependency signature. The plugin
+// cache layout is <marketplace>/<plugin>/<version>/, so sibling versions live
+// in PLUGIN_ROOT's parent dir. Returns the donor node_modules path or null.
+function findDonorNodeModules(srv) {
+  const wantSig = readDepsSignature(path.join(MCP_DIR, srv, "package.json"));
+  if (!wantSig) return null;
+  const versionsDir = path.dirname(PLUGIN_ROOT);
+  const current = path.basename(PLUGIN_ROOT);
+  let siblings;
+  try {
+    siblings = fs.readdirSync(versionsDir);
+  } catch {
+    return null;
+  }
+  for (const v of siblings) {
+    if (v === current) continue;
+    const donorSrv = path.join(versionsDir, v, "mcp", srv);
+    const donorNm = path.join(donorSrv, "node_modules");
+    if (!fs.existsSync(donorNm)) continue;
+    if (readDepsSignature(path.join(donorSrv, "package.json")) === wantSig) {
+      return donorNm;
+    }
+  }
+  return null;
+}
+
 async function installMissingDeps() {
   // Try to acquire the lock; another spawn-with-deps may already be installing.
   const start = Date.now();
@@ -153,11 +198,12 @@ async function installMissingDeps() {
     }
 
     console.error("──────────────────────────────────────────────────────");
-    console.error("Maxim: installing MCP server dependencies (first run, ~30–60 sec)…");
+    console.error("Maxim: preparing MCP server dependencies (first run)…");
     console.error("──────────────────────────────────────────────────────");
 
     const servers = listMcpServers();
     let installed = 0;
+    let reused = 0;
     let skipped = 0;
     let failed = 0;
 
@@ -167,6 +213,21 @@ async function installMissingDeps() {
       const nmPath = path.join(srvDir, "node_modules");
       if (!fs.existsSync(pkgPath)) { skipped++; continue; }
       if (fs.existsSync(nmPath)) { skipped++; continue; }
+      // Prefer reusing a matching prior-version node_modules (offline, fast) —
+      // this makes plugin updates invisible. Fall back to npm install on any failure.
+      const donor = findDonorNodeModules(srv);
+      if (donor) {
+        try {
+          console.error(`  reusing ${srv} deps from prior version…`);
+          fs.cpSync(donor, nmPath, { recursive: true });
+          reused++;
+          continue;
+        } catch (err) {
+          const msg = (err?.message || "copy error").split("\n")[0];
+          console.error(`  reuse failed for ${srv} (${msg}); installing instead`);
+          try { fs.rmSync(nmPath, { recursive: true, force: true }); } catch {}
+        }
+      }
       try {
         console.error(`  installing ${srv}…`);
         execSync("npm install --omit=dev --no-audit --no-fund --silent", {
@@ -189,6 +250,7 @@ async function installMissingDeps() {
           {
             installed_at: new Date().toISOString(),
             installed_count: installed,
+            reused_count: reused,
             skipped_count: skipped,
             plugin_root: PLUGIN_ROOT,
             installer: "spawn-with-deps.mjs",
@@ -197,9 +259,9 @@ async function installMissingDeps() {
           2
         ),
       );
-      console.error(`Maxim: MCP deps ready (installed: ${installed}, already-present: ${skipped}).`);
+      console.error(`Maxim: MCP deps ready (reused: ${reused}, installed: ${installed}, already-present: ${skipped}).`);
     } else {
-      console.error(`Maxim: MCP install partial (installed: ${installed}, failed: ${failed}). The current server may not start cleanly.`);
+      console.error(`Maxim: MCP install partial (reused: ${reused}, installed: ${installed}, failed: ${failed}). The current server may not start cleanly.`);
     }
   } finally {
     if (acquired) releaseLock();

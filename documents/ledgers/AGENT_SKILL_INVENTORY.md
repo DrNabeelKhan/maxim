@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.6 · **Last verified:** 2026-06-19 (v1.3.6 product-compatibility verification ship)
+**Version:** v1.3.7 · **Last verified:** 2026-06-20 (v1.3.7 invisible-MCP-deps-on-update ship)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
