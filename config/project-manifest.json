@@ -16,9 +16,9 @@
     "gated": false,
     "gated_approval_required_from": null,
     "archived_reason": null,
-    "last_activity": "2026-06-19T12:00:00Z",
+    "last_activity": "2026-06-19T20:30:00Z",
     "staleness_warning_days": 30,
-    "last_sprint": "v1.3.3-loops-skill-and-4-loop-derived-frameworks",
+    "last_sprint": "v1.3.6-default-on-router-and-compatibility-verification",
     "launch_status": "v1.0.0 launched 2026-04-21; v1.0.1 + v1.1.0 shipped 2026-04-27; v1.2.0 GA shipped 2026-05-19 (Session 20); v1.3.0+v1.3.1 shipped 2026-05-20 (Session 21); v1.3.2 + v1.3.2.1 + v1.3.2.2 + v1.3.2.3 + v1.3.2.3.1 shipped 2026-05-20 (Session 22 — 5 consecutive disciplined ships in 1 calendar day) — pre-release-audit discipline anti-pattern broken AND self-correcting (6 audit verifications · 13+ P1 blockers caught + fixed before tag · PATTERN-01 caught at 4 distinct bash/Python boundaries · PATTERN-02 + PATTERN-03 candidates logged) + BUG-008 RESOLVED + BUG-009 OPEN partial-fix-shipped + MCP toggle feature shipped + mxm-notebooklm disabled on operator local machine + NotebookLM end-to-end workflow validated + privacy policy + Anthropic marketplace submission package shipped"
   },
   "meta": {
