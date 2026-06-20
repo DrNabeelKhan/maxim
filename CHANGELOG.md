@@ -8,6 +8,17 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## Post-v1.3.6 (off-tag) — 2026-06-19 — Cross-surface honesty + submission-doc coherence
+
+Doc-only; **no capability change, no version bump (stays 1.3.6)** — counts were already canonical at v1.3.6, this fixed stale copies. Verified two cycles (grep + `maxim:pre-release-audit` → READY TO PUSH).
+
+- **Hook honesty (CLI-only).** Marketing/submission copy that stated hook-enforced governance as an absolute now qualifies it: the pre-commit Executable-Contracts gate, the session-start Proactive-Watch auto-run, and the ADR-021 default-on router are **Claude Code CLI only** (hooks don't run on Desktop/Web/Cowork — [anthropics/claude-code#45514](https://github.com/anthropics/claude-code/issues/45514)). Skills, commands, and MCP remain cross-surface per `AGENT_SKILL_INVENTORY §5` (the source of truth). The "91-agent catalog via `mxm-catalog` MCP" cross-surface parity claim was verified correct and **kept**.
+- **`MARKETPLACE_SUBMISSION.md` migrated v1.3.2.3 → v1.3.6.** The Anthropic submission package was a half-stale v1.3.2.3 snapshot. Full migration: version stamps, the version-consistency table/claim (verified: plugin.json / marketplace.json outer+entry / README badge all 1.3.6), pre-submission checklist, and "Known limitations." Body counts → canonical (37 skills · 78 frameworks · 16 hooks · 20 ADRs/16 public · 9 bug entries). BUG-009 retargeted to upstream `notebooklm-py` **0.7.2**.
+- **One-pager + ADR INDEX.** `maxim-one-pager.md`: counts 36→37 / 74→78 (incl. the compact `91/37/…/78/…` slash-string) + v1.3.6 stamps + hook-CLI-only surface caveat. `documents/ADRs/INDEX.md`: public-ADR prose count "Fifteen"→"Sixteen" + ADR-021.
+- **Deferred (flagged, not touched):** Cowork packaging (frozen at v1.2.0; ships a legit 8-connector/49-tool subset) · `maxim-surface-guide.md` (v1.2.0.2 staleness; its MCP-on-Desktop matrix now contradicts §5) · `maxim-project-instructions.md` line-10 "(v1.3.2)" label. Each needs its own reconciliation, not a count-push.
+
+---
+
 ## v1.3.6 — 2026-06-19 — Product-compatibility verification + hook hardening
 
 Theme: **Verify what we shipped against the actual Claude Code product docs, and be honest about where it runs.** Triggered by the operator's "check the docs" instinct (the autonomy-loop/MachinaOS lesson: structural tests pass, the real platform decides).
