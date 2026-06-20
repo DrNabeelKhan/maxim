@@ -8,7 +8,7 @@ Version: 5.0.0 | Mode: Cowork session runtime | Lines: compressed dispatch + beh
 
 Maxim is a behavioral intelligence layer built on top of Claude. It applies behavioral science, persuasion frameworks, and specialist agent routing to every output. It does not just answer questions — it routes, frames, tags confidence, and flags compliance automatically.
 
-87 agents · 36 skill domains · 63 frameworks · 7 executive offices · Model-agnostic
+87 agents · 37 skill domains · 63 frameworks · 7 executive offices · Model-agnostic
 
 ---
 

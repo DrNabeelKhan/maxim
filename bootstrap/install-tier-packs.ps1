@@ -48,8 +48,8 @@ function Show-Wizard {
   Write-Host ""
   Write-Host "Maxim Core (already installed · free forever):" -ForegroundColor White
   Write-Host "  - 91 specialist agents across 7 executive offices"
-  Write-Host "  - 36 skill domains · 48 slash commands"
-  Write-Host "  - 74 behavioral frameworks active by default"
+  Write-Host "  - 37 skill domains · 48 slash commands"
+  Write-Host "  - 78 behavioral frameworks active by default"
   Write-Host "  - 14 compliance frameworks enforced at MCP layer"
   Write-Host "  - 9 MCPs · 95 tools including NotebookLM research synthesis"
   Write-Host ""
@@ -60,7 +60,7 @@ function Show-Wizard {
   Write-Host "  L1.3  Proactive Watch       - drift caught BEFORE you ship"
   Write-Host "  L1.4  Compliance Shield     - 14 frameworks enforced on every output"
   Write-Host "  L1.5  Brand & Design Pro    - your voice locked across AI outputs"
-  Write-Host "  L1.6  Behavioral Intel      - the flagship moat (74 frameworks dispatched)"
+  Write-Host "  L1.6  Behavioral Intel      - the flagship moat (78 frameworks dispatched)"
   Write-Host ""
   Write-Host "  L2 vertical bundles for founders · growth · professional · agency"
   Write-Host "  L3 industry packs for healthcare · legal · fintech · govtech"
@@ -175,7 +175,7 @@ function Do-Solo {
   Write-Host "  Solo · Core ready" -ForegroundColor Green
   Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Green
   Write-Host ""
-  Write-Host "Maxim Core is fully active. 74 behavioral frameworks dispatch on"
+  Write-Host "Maxim Core is fully active. 78 behavioral frameworks dispatch on"
   Write-Host "every output. 14 compliance frameworks check every regulated task."
   Write-Host ""
   Write-Host "What stays gated until you upgrade:" -ForegroundColor Yellow

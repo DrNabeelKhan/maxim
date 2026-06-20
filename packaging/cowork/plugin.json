@@ -3,7 +3,7 @@
   "name": "maxim",
   "display_name": "Maxim",
   "version": "1.2.0",
-  "description": "Behavioral intelligence layer for Claude.ai Cowork. Multi-agent framework with 7 executive offices + 91 specialist agents, 74 behavioral frameworks, 14 compliance frameworks, 35 skill domains, 48 slash commands (TIER 1 verb-first + TIER 2 office + TIER 3 persona + domain/workflow), 8 MCP connectors (49 tools total incl. new mxm-commands dispatcher), 13 Proactive Watch drift classes. Ships ~85% fidelity of the full Claude Code deployment.",
+  "description": "Behavioral intelligence layer for Claude.ai Cowork. Multi-agent framework with 7 executive offices + 91 specialist agents, 78 behavioral frameworks, 14 compliance frameworks, 37 skill domains, 48 slash commands (TIER 1 verb-first + TIER 2 office + TIER 3 persona + domain/workflow), 8 MCP connectors (49 tools total incl. new mxm-commands dispatcher), 13 Proactive Watch drift classes. Ships ~85% fidelity of the full Claude Code deployment.",
   "author": {
     "name": "Maxim",
     "url": "https://github.com/yourorg/maxim"

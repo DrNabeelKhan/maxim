@@ -8,6 +8,47 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.3 — 2026-06-19 — Loops skill + 4 loop-derived behavioral frameworks (74 → 78)
+
+Theme: **Adopt the agentic-loop discipline as a skill, and codify the behavioral patterns it introduces as frameworks.** Sourced from a Session-23 graph-search of three external loop systems (`Forward-Future/loop-library`, `inferencegod/autonomy-loop`, `zeenie-ai/MachinaOS`) — loop-library + autonomy-loop are cited as prior art per ADR-007. Adopted as a **skill, not a command** (operator directive: "use loops skill if it solves the issue and does not require a command").
+
+### Added — `loops` skill (skills 36 → 37)
+
+`.claude/skills/loops/SKILL.md` (COO / `planner`). Bounded agent-loop orchestration: a loop is a finite feedback process with an **explicit stopping condition** and a **named terminal state** (`success` · `clean no-op` · `blocked` · `approval-required` · `exhausted` · `stagnated`), run over Maxim's existing offices/agents — not a new command surface. Ships the 31-loop catalog mapped to Maxim surfaces, **10 native gap-loops** (fresh-clone, recent-feedback-sweep, coverage-ratchet, production-error-sweep, champion-challenger as the priorities), and the Maxim behavioral overlay (confidence tagging per ADR-010, framework citation per ADR-007, CSO auto-loop on regulated loops, the no-fabrication rule). Full adoption rationale + 31-loop mapping in `documents/architecture/MAXIM_LOOP_ADOPTION_PLAN.md`.
+
+### Added — 4 loop-derived behavioral frameworks (74 → 78)
+
+In `FRAMEWORKS_MASTER.md` (§69–72), each with literature citation per ADR-007:
+- **§69 Bounded Agent Loop (Explicit Stopping Conditions)** — cybernetics/control-theory feedback loop with operationalized terminal states.
+- **§70 Independent Verification (Generation–Approval Separation)** — separation-of-duties / four-eyes principle applied to agent output.
+- **§71 Champion–Challenger with Holdout (Goodhart-Resistance)** — Goodhart's Law + holdout validation; anti-overfitting promotion.
+- **§72 No-Fabrication (Evidence-Bound Claims)** — formalizes Maxim's confidence-tagging (ADR-010) into a citable framework (every rate carries its N).
+
+### Changed — stale framework-reference refresh
+
+- `cloudflare-worker/grants.json` — `frameworks-64` description refreshed to 78 + a do-not-rename note. **The JWT claim key `frameworks-64` is deliberately KEPT** — renaming it would invalidate every issued token.
+- `cloudflare-worker/scripts/setup-stripe-products.mjs` — product string "64 → 78 behavioral frameworks". ⚠️ **Operator action pending:** the live Stripe product description only updates when the script is re-run (API push) — a doc edit alone does not change Stripe.
+- `FRAMEWORKS_MASTER.md` header/footer/version-history refreshed (v5.1 → v6.0); evolution recorded as 64 (v1.0.0) → 74 (v1.2.0) → 78 (v1.3.3).
+
+### Count propagation
+
+`bootstrap/sync-counts.{sh,ps1}` propagated skills 36→37 + frameworks 74→78 across 28 plugin-repo + 5 landing-page surfaces. Per DEBUGGING_PLAYBOOK §2, sync-counts deliberately skips **bare-form** counts ("74 frameworks", "frameworks-74" badges) to avoid false positives — those ~17 surfaces (install wizard, marketplace.json, PACKS, README badges, MARKETPLACE_SUBMISSION, etc.) were swept manually and re-verified clean.
+
+### Pre-release-audit dispatch — honest narrative (NOT self-claimed)
+
+**Cycle 1 (`maxim:pre-release-audit` agent) returned BLOCKERS:3:**
+1. Frameworks 74→78 propagation left stale on every operator-facing narrative surface (sync-counts conservative-regex gap).
+2. Skills 36→37 propagation partial on the same surfaces (some still read 35).
+3. No v1.3.3 CHANGELOG entry.
+
+**All three fixed before tag.** Cycle 2 (grep) confirms: `git ls-files | grep` for stale `74 frameworks` / `36 skills` / version `1.3.2.3.1` returns only CHANGELOG history + the intentional `frameworks-64` JWT key + gitignored runtime/architecture docs. The audit caught exactly the count-drift class Maxim fights — the discipline held. Residual out-of-scope drift noted for a later sweep: an `agents-90` badge in a marketing design-spec (agent count, not frameworks/skills) and a few non-framework counts (MCP "49 tools", "10 ADRs") on stale guide surfaces.
+
+### Files changed
+
+`.claude/skills/loops/SKILL.md` (NEW) · `FRAMEWORKS_MASTER.md` · `AGENT_SKILL_INVENTORY.md` (source of truth: skills 37, frameworks 78) · `SKILLS_MAP.md` · `grants.json` · `setup-stripe-products.mjs` · `CHANGELOG.md` · `config/project-manifest.json` · version bump (`plugin.json` + `marketplace.json` outer metadata + plugin entry + `README.md` badges → 1.3.3) · plus ~20 narrative surfaces swept for the 36→37 / 74→78 counts.
+
+---
+
 ## v1.3.2.3.1 — 2026-05-20 — Patch-of-patch: toggle script Windows path bug (caught by live operator test within 1 hour of v1.3.2.3 ship)
 
 Theme: **Live operator test caught a Windows path bug in v1.3.2.3 toggle script within 1 hour.** The discipline holds even when it catches the discipline-author's same-day fix. Operator (Mr. Khan) ran `bash bootstrap/mxm-toggle-mcp.sh status` on Windows Git Bash right after v1.3.2.3 self-update. All paths displayed with backslashes stripped (e.g., `C:UsersSDO.claudepluginscache...` instead of `C:/Users/SDO/.claude/plugins/cache/...`). Root cause: Python's discovery block printed `INSTALL_DIR={install_dir}` which on Windows produces `C:\Users\SDO\.claude\...` (native backslashes). Bash captures via `$(...)`, then `eval` runs the resulting `INSTALL_DIR=C:\Users\SDO\.claude\...` as an assignment. Bash assignment escape-char rules eat backslashes before unrecognized chars: `\U` → `U`, `\S` → `S`, `\c` → `c`, etc. Result: `$INSTALL_DIR` ends up as `C:UsersSDO.claude...`. Every subsequent action that used this path failed (`disable`, `enable`, `status` registry print).

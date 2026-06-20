@@ -1,6 +1,6 @@
 # Maxim: User Guide
 
-**Maxim v1.3.1** | 91+ agents (100% Grade A DNA) · 36 skill domains · 48 commands · 74 frameworks · 9 MCP servers (49 tools) · 14 executable hooks · 10 ADRs ratified
+**Maxim v1.3.1** | 91+ agents (100% Grade A DNA) · 37 skill domains · 48 commands · 78 frameworks · 9 MCP servers (49 tools) · 14 executable hooks · 10 ADRs ratified
 
 ---
 
@@ -879,7 +879,7 @@ Include:
 **Maxim v1.3.2:** Behavioral Intelligence Architecture for Enterprise AI
 
 - **Agents:** 91 specialists across 7 executive offices (24 dispatchable + 67 catalog via mxm-catalog MCP)
-- **Skills:** 36 domains with 74 behavioral frameworks
+- **Skills:** 36 domains with 78 behavioral frameworks
 - **MCPs:** 9 servers · 95 tools (incl. NotebookLM research synthesis per ADR-018)
 - **Commands:** 48 slash commands for every phase of work
 - **Drift detection:** 13 Proactive Watch classes

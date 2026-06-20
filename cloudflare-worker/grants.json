@@ -266,7 +266,7 @@
     "executive-routing": "Executive office routing via /mxm-route and /mxm-{office} commands",
     "ceo-automation": "CEO Automation skill — overnight + morning briefing cycles",
     "framework-stubs-10": "10 behavioral framework stubs (names + descriptions; not full deep-dive)",
-    "frameworks-64": "All 64 behavioral frameworks fully dispatchable (FRAMEWORKS_MASTER.md complete)",
+    "frameworks-64": "All behavioral frameworks fully dispatchable (78 as of v1.3.3; auto-tracks AGENT_SKILL_INVENTORY.md Section 6). NOTE: JWT claim key 'frameworks-64' is intentionally retained for token backwards-compatibility — do NOT rename (would invalidate issued tokens).",
     "watch-classes-4": "4 free Proactive Watch drift classes (inventory, version, cross-doc, stale-handoff)",
     "watch-classes-10": "All 10 Proactive Watch drift classes",
     "proactive-watch-full": "Full Proactive Watch including triage routing and recurring-pattern detection",

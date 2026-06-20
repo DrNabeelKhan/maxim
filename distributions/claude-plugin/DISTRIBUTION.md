@@ -40,7 +40,7 @@ After installation, `/plugin list` confirms the plugin is active. The plugin loa
 ### Free tier (shipped with plugin)
 
 - 91 Maxim agents across 7 offices (24 dispatchable + 67 specialist catalog via mxm-catalog MCP per ADR-017)
-- 36 skill domains (core behavioral + office domains + notebooklm-py + voice-routing)
+- 37 skill domains (core behavioral + office domains + notebooklm-py + voice-routing)
 - 48 slash commands
 - 13 Proactive Watch drift classes (4 free at Core severity, 9 gated severity-block at Pro+)
 - 9 MCP servers, 95 tools

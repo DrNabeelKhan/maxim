@@ -61,7 +61,7 @@ const SUBSCRIPTION_PRODUCTS = [
     {
         tier_base: "solo",
         name: "Maxim Solo",
-        description: "The behavioral intelligence specialist for Claude. Unlimited behavioral_audit, all 64 behavioral frameworks, nudge design, persuasion tools. The MOAT tier.",
+        description: "The behavioral intelligence specialist for Claude. Unlimited behavioral_audit, all 78 behavioral frameworks, nudge design, persuasion tools. The MOAT tier.",
         seats: 1,
         prices: {
             month: 1999,  // $19.99

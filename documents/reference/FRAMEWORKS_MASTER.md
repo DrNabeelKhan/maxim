@@ -4,15 +4,15 @@
 
 **Complete cross-reference matrix of industry frameworks — shipping and roadmap.**
 
-| Version                     | 5.1                    |
+| Version                     | 6.0                    |
 | --------------------------- | ---------------------- |
-| Frameworks shipping v1.0.0  | **64**                 |
-| Frameworks total documented | 78 (64 shipped + 14 roadmap — 4 duplicated across roadmap tracks) |
+| Frameworks active (v1.3.3)  | **78** — source of truth: [AGENT_SKILL_INVENTORY.md](../ledgers/AGENT_SKILL_INVENTORY.md) §6 |
+| Evolution                   | 64 (v1.0.0) → 74 (v1.2.0) → 78 (v1.3.3) |
 | Categories                  | 9                      |
-| Agents Using Frameworks     | 90 (all)               |
-| New in v1.0.0               | 🆕 2 (CCPA §16, FedRAMP §23) + Proactive Watch |
-| Deferred to v1.1 / v1.2     | 18 — see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md) |
-| Last Updated                | 2026-04-21             |
+| Agents Using Frameworks     | 91 (all)               |
+| New in v1.3.3               | 🆕 4 loop-derived (§69–72): Bounded Loop · Independent Verification · Champion–Challenger · No-Fabrication |
+| Deferred to roadmap         | see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md) |
+| Last Updated                | 2026-06-19             |
 
 > **Reading this file:** the §N sections below document every framework, shipped and planned. Items with 🆕 that are not yet implemented as dispatchable `SKILL.md` files are marked in this header's "Deferred" row. Those remain valid reference material and can be reasoned about by specialist agents, but are not yet wired into the automated dispatch. See the [roadmap](./FRAMEWORK_ROADMAP.md) for implementation schedule.
 
@@ -2615,6 +2615,118 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
+### 🆕 69. Bounded Agent Loop (Explicit Stopping Conditions)
+
+| Attribute         | Details                                                                          |
+| ----------------- | -------------------------------------------------------------------------------- |
+| **Owner**         | Cybernetics / control theory (Wiener) — operationalized for agentic loops        |
+| **Purpose**       | Run an agent task as a finite feedback loop with an explicit stop, not open-ended autonomy |
+| **Official Docs** | [Forward-Future Loop Library](https://signals.forwardfuture.ai/loop-library/) (prior art, per ADR-007) |
+| **Maturity**      | Emerging (2026) — codified into Maxim's `loops` skill v1.3.3                      |
+
+#### The Cycle & Terminal States
+
+| Stage              | Description                                              |
+| ------------------ | ------------------------------------------------------- |
+| Observe → Choose → Act → Verify → Record → Repeat-or-stop | The bounded feedback cycle each iteration runs |
+| **Terminal state** | One of: `success` · `clean no-op` · `blocked` · `approval-required` · `exhausted` · `stagnated` — named honestly on exit |
+| **Stopping condition** | A rubric, threshold, benchmark, reviewer decision, or finite scenario set — never "until it looks good"; no invented time/cost budgets |
+
+#### Agents Using This Framework
+
+| Agent       | Application                                  |
+| ----------- | -------------------------------------------- |
+| Planner     | Composes the loop + enforces the stop        |
+| Implementer | Per-iteration act step                       |
+| Tester      | Coverage / quality-streak loops              |
+| Reviewer    | Per-iteration verification checkpoint        |
+
+---
+
+### 🆕 70. Independent Verification (Generation–Approval Separation)
+
+| Attribute         | Details                                                                          |
+| ----------------- | -------------------------------------------------------------------------------- |
+| **Owner**         | Separation of Duties / Four-Eyes Principle (internal controls — COSO/ISACA)       |
+| **Purpose**       | The agent that produces work is never the agent that approves it                  |
+| **Official Docs** | [COSO Internal Control Framework](https://www.coso.org/) · [ISACA](https://www.isaca.org/) |
+| **Maturity**      | Established (governance) — applied to agent output in Maxim v1.3.3                |
+
+#### Key Components
+
+| Component             | Description                                              |
+| --------------------- | -------------------------------------------------------- |
+| Generation/approval split | Producer and verifier are distinct agents/passes     |
+| Independent reviewer  | Re-checks against the requirement, not the producer's claim |
+| Fail-closed gate      | No verifier present + no opt-in → refuse to mark done    |
+
+#### Agents Using This Framework
+
+| Agent              | Application                              |
+| ------------------ | ---------------------------------------- |
+| Reviewer           | Independent verification pass            |
+| Tester             | Proof-of-test re-validation              |
+| Security Analyst   | CSO independent check on regulated output|
+| Pre-Release Audit  | Adversarial pre-tag verification         |
+
+---
+
+### 🆕 71. Champion–Challenger with Holdout (Goodhart-Resistance)
+
+| Attribute         | Details                                                                          |
+| ----------------- | -------------------------------------------------------------------------------- |
+| **Owner**         | Goodhart's Law (Charles Goodhart) + holdout validation (statistical learning)     |
+| **Purpose**       | Promote a change only if it beats the incumbent on a *frozen holdout* without weakening a must-pass check |
+| **Official Docs** | [Goodhart's Law](https://en.wikipedia.org/wiki/Goodhart%27s_law) · holdout/cross-validation literature |
+| **Maturity**      | Established (ML/eval) — applied to prompt/policy/framework changes in Maxim v1.3.3 |
+
+#### Key Components
+
+| Component        | Description                                              |
+| ---------------- | ------------------------------------------------------- |
+| Champion vs challenger | Incumbent kept until a challenger provably wins   |
+| Frozen holdout   | Untouched evaluation set, separate from the working set |
+| Must-pass gates  | Promotion blocked if any guardrail check regresses      |
+| Uncertainty → incumbent | Keep the champion when the result is ambiguous   |
+
+#### Agents Using This Framework
+
+| Agent              | Application                              |
+| ------------------ | ---------------------------------------- |
+| Experiment Tracker | Versioned champion/challenger experiments|
+| Data Scientist     | Holdout design + significance            |
+| Product Strategist | Policy promotion decisions               |
+| Confidence Tagger  | Promotion confidence on holdout evidence |
+
+---
+
+### 🆕 72. No-Fabrication (Evidence-Bound Claims)
+
+| Attribute         | Details                                                                          |
+| ----------------- | -------------------------------------------------------------------------------- |
+| **Owner**         | Epistemic honesty / evidentialism — operationalized as the autonomy-loop honesty rule |
+| **Purpose**       | Every rate or metric carries its sample size / interval; no claim ships without evidence |
+| **Official Docs** | [inferencegod/autonomy-loop](https://github.com/inferencegod/autonomy-loop) (prior art, per ADR-007) |
+| **Maturity**      | Emerging (2026) — formalizes Maxim's confidence-tagging (ADR-010) into a citable framework |
+
+#### Key Components
+
+| Component             | Description                                              |
+| --------------------- | -------------------------------------------------------- |
+| Evidence-bound reporting | "12/30 passing", not "mostly passing"                |
+| Sample-size disclosure | Any rate states N (and interval where applicable)       |
+| No-claim-without-proof | A loop never reports `error`/`exhausted` as `success`   |
+
+#### Agents Using This Framework
+
+| Agent            | Application                                |
+| ---------------- | ----------------------------------------- |
+| Confidence Tagger| Confidence rubric (ADR-010) enforcement   |
+| Reviewer         | Rejects unsupported claims                 |
+| Security Analyst | Evidence-bound compliance assertions       |
+
+---
+
 ## 📊 Framework-to-Agent Mapping Summary
 
 | Framework                   | Total Agents | Primary Category        |
@@ -2658,6 +2770,10 @@ Behavior = Capability × Opportunity × Motivation
 | **🆕 Prospect Theory**      | **5**        | **Behavior Science**    |
 | **🆕 Diffusion of Innovations**| **5**     | **Behavior Science**    |
 | **🆕 Emotional Design Model**| **5**       | **Behavior Science**    |
+| **🆕 Bounded Agent Loop**   | **4**        | **Behavior Science**    |
+| **🆕 Independent Verification**| **4**     | **Governance**          |
+| **🆕 Champion–Challenger (Holdout)**| **4**| **Behavior Science**    |
+| **🆕 No-Fabrication**       | **3**        | **Governance**          |
 
 ---
 
@@ -2746,14 +2862,16 @@ Behavior = Capability × Opportunity × Motivation
 | 4.1     | 2026-03-01 | Added Behavior Science & Persuasion (8 frameworks)                      |
 | 5.0     | 2026-04-01 | 🆕 Gap Analysis Update: +9 Compliance, +10 Behavioral (78 documented)  |
 | 5.1     | 2026-04-21 | Maxim v1.0.0 launch reconciliation: 64 ship today, 18 deferred to v1.1/v1.2 — see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md) |
+| 5.2     | 2026-05-19 | v1.2.0: +10 behavioral (WS6a +4, WS6b +6) — 64 → 74 active                |
+| 6.0     | 2026-06-19 | v1.3.3: +4 loop-derived behavioral frameworks (Bounded Loop · Independent Verification · Champion–Challenger · No-Fabrication) — 74 → 78 active |
 
 ---
 
-**Last Updated:** 2026-04-21
-**Version:** 5.1
+**Last Updated:** 2026-06-19
+**Version:** 6.0
 **Maintained By:** Maxim framework library maintainers
-**Shipping in v1.0.0:** 64 frameworks (63 SKILL.md + 1 proactive-watch.md)
-**Deferred to roadmap:** 18 frameworks — see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md) for v1.1 (compliance) and v1.2 (behavioral) schedule
+**Current (v1.3.3):** 78 active behavioral frameworks. Source of truth: [AGENT_SKILL_INVENTORY.md](../ledgers/AGENT_SKILL_INVENTORY.md) §6.
+**Historical (v1.0.0 launch):** 64 frameworks (63 SKILL.md + 1 proactive-watch.md); 18 then-deferred — see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md). Evolution: 64 (v1.0.0) → 74 (v1.2.0) → 78 (v1.3.3).
 
 ---
 

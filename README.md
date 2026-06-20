@@ -1,11 +1,11 @@
 # Maxim — the behavioral intelligence layer for Claude
 
-> The structural moat behind every Claude output. 91 specialist agents · 74 peer-reviewed behavioral frameworks · 14 compliance frameworks · 9 MCPs · 95 tools. Framework citation enforced on every output. Drift detected before you ship. Voice locked across every surface.
+> The structural moat behind every Claude output. 91 specialist agents · 78 peer-reviewed behavioral frameworks · 14 compliance frameworks · 9 MCPs · 95 tools. Framework citation enforced on every output. Drift detected before you ship. Voice locked across every surface.
 
-![Version](https://img.shields.io/badge/version-1.3.2.3.1-blue)
+![Version](https://img.shields.io/badge/version-1.3.3-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
-![Frameworks](https://img.shields.io/badge/frameworks-74-orange)
-![Skills](https://img.shields.io/badge/skill_domains-36-purple)
+![Frameworks](https://img.shields.io/badge/frameworks-78-orange)
+![Skills](https://img.shields.io/badge/skill_domains-37-purple)
 ![Commands](https://img.shields.io/badge/commands-48-yellow)
 ![MCP](https://img.shields.io/badge/MCP_servers-9-teal)
 ![Tools](https://img.shields.io/badge/MCP_tools-95-teal)
@@ -146,7 +146,7 @@ You: "Add user authentication to our app"
 | **mxm-context** | 15 | Architecture docs · design refs · 13-class drift detection |
 | **mxm-catalog** | 9 | Agent + office + skill + command catalog, L2 specialist descent (route_task) |
 | **mxm-compliance** | 5 | 14 jurisdictional frameworks · ROPA entries · per-jurisdiction requirements |
-| **mxm-behavioral** | 7 | 74 behavioral frameworks · recommend · apply · score moat coverage |
+| **mxm-behavioral** | 7 | 78 behavioral frameworks · recommend · apply · score moat coverage |
 | **mxm-memory** | 6 | Session history · decision log · cross-project memory |
 | **mxm-voice** | 4 | Voice-driven office routing (wraps mbailey/voicemode for STT+TTS) |
 | **mxm-commands** | 2 | All 48 slash commands as MCP tools (cross-surface command parity) |

@@ -1,6 +1,6 @@
 # Installing Maxim (v1.3.0)
 
-> **Maxim** is the behavioral intelligence layer for Claude Code — 91 specialist agents across 7 executive offices, 74 behavioral frameworks, 14 compliance frameworks, drift detection on every session, and a 90-day Trial of all 14 packs that activates by default.
+> **Maxim** is the behavioral intelligence layer for Claude Code — 91 specialist agents across 7 executive offices, 78 behavioral frameworks, 14 compliance frameworks, drift detection on every session, and a 90-day Trial of all 14 packs that activates by default.
 >
 > This guide covers: Core install → tier wizard (Trial default) → multi-surface deployment → verify → troubleshoot.
 
@@ -57,7 +57,7 @@ The first registers the marketplace; the second installs the base plugin.
 Confirm the install dialog shows:
 - **Version:** v1.1.0 or later
 - **By:** Dr. Nabeel Khan
-- 91 specialist agents · 74 behavioral frameworks · 14 compliance frameworks · 9 MCPs (95 tools)
+- 91 specialist agents · 78 behavioral frameworks · 14 compliance frameworks · 9 MCPs (95 tools)
 
 Choose **"Install for you (user scope)"** when prompted.
 
@@ -69,7 +69,7 @@ The first session after install will auto-install the 9 MCP servers' Node depend
 
 - All 91 agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP)
 - All 48 slash commands
-- All 74 frameworks (advisory mode)
+- All 78 frameworks (advisory mode)
 - Full executive routing
 - Local MemPalace memory
 - 13 Proactive Watch drift classes (4 free severity, 9 gated severity-block at Pro+)
@@ -182,7 +182,7 @@ Pick the L1 packs that match your work. Each is independent.
 /plugin install mxm-pack-l1-3-proactive-watch@maxim-packs     # Full 11-class drift detection
 /plugin install mxm-pack-l1-4-compliance-shield@maxim-packs   # 14 regulated-industry frameworks
 /plugin install mxm-pack-l1-5-brand-design-pro@maxim-packs    # 15 cinematic brand styles
-/plugin install mxm-pack-l1-6-behavioral-intelligence@maxim-packs  # 74 behavioral frameworks live
+/plugin install mxm-pack-l1-6-behavioral-intelligence@maxim-packs  # 78 behavioral frameworks live
 ```
 
 **Strategy B — L2 persona bundles (one bundle = several L1s combined)**

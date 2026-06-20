@@ -85,7 +85,7 @@ an embedded asset in the Studio binary; Studio extracts to `~/.mxm-studio/maxim/
 | 90 agent .md files | `agents/MXM/{office}/*.md` | Specialist agent DNA |
 | 64 framework SKILL.md | `composable-skills/frameworks/*/` | Behavioral framework catalog |
 | 48 slash commands | `.claude/commands/mxm-*.md` | Claude Code TUI commands |
-| 36 skill domains | `.claude/skills/*/` | Domain dispatchers |
+| 37 skill domains | `.claude/skills/*/` | Domain dispatchers |
 | 14 hook scripts | `.claude/hooks/{session-start,session-end,pre-commit,...}.{sh,ps1}` | Lifecycle automation |
 | 7 MCP server stubs | `mcp/mxm-{portfolio,context,catalog,compliance,behavioral,memory,voice}/` | MCP server.js + package.json + license-gate.mjs |
 | 16 pack folders | `packs/pack-l{1,2,3}-*/` | Pack SKILL.md content |

@@ -7,7 +7,7 @@
 **Surface:** Claude.ai Web · Claude Desktop · any surface accepting system prompts
 **Version:** v1.3.2 · **Generated:** 2026-05-20 (Session 22) · **Source:** [maxim repo](https://github.com/DrNabeelKhan/maxim)
 
-**Current canonical counts** (v1.3.2): 91 specialist agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP per ADR-017) · 36 skill domains · 48 slash commands · 9 MCP servers / 95 tools (incl. mxm-notebooklm 38-tool research synthesis per ADR-018) · 14 hook scripts · 74 behavioral frameworks · 14 compliance frameworks · 19 ADRs · 13 Proactive Watch drift classes · 90-day Trial of all 14 packs default at install (ADR-019)
+**Current canonical counts** (v1.3.2): 91 specialist agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP per ADR-017) · 37 skill domains · 48 slash commands · 9 MCP servers / 95 tools (incl. mxm-notebooklm 38-tool research synthesis per ADR-018) · 14 hook scripts · 78 behavioral frameworks · 14 compliance frameworks · 19 ADRs · 13 Proactive Watch drift classes · 90-day Trial of all 14 packs default at install (ADR-019)
 
 ---
 
@@ -344,7 +344,7 @@ To get higher-fidelity Maxim:
 This file is version-bound to **Maxim v1.2.0** (Session 20, 2026-05-19). When Maxim ships a new release, regenerate this file from the source repo. The repo's `/mxm-release` command produces an updated `documents/cross-surface/maxim-project-instructions.md` as part of its cross-surface packaging step.
 
 **v1.2.0 changes from v1.0.0:**
-- Counts current (91 agents · 35 skills · 48 commands · 74 frameworks · 13 drift classes)
+- Counts current (91 agents · 37 skills · 48 commands · 78 frameworks · 13 drift classes)
 - New "Slash Command Aliases" section — closes the slash-command gap in Desktop / Web by making the 48-command surface invocable as text
 - TIER 1 (verb-first) + TIER 3 (persona dispatchers) commands documented
 - References the new `mxm-commands` MCP server (8th MCP, 2 tools) as an alternative invocation surface for Desktop / Code

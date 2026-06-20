@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.1 · **Last verified:** 2026-05-20 (v1.3.2 doc-cleanup ship)
+**Version:** v1.3.3 · **Last verified:** 2026-06-19 (v1.3.3 loops + frameworks ship)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -26,13 +26,13 @@ Single source of truth for Maxim's capability counts. On every commit that touch
 
 ---
 
-## Section 2 — Domain Skills (36)
+## Section 2 — Domain Skills (37)
 
 Skills live under `.claude/skills/<domain>/SKILL.md`. Domain list authoritative in `documents/reference/SKILLS_MAP.md` and `CLAUDE.d/dispatch.md`.
 
-Categories: AI media, banner design, behavioral science, brand, CEO automation, compliance, content, design (dispatcher + sub-domains), design resources, design system, engineering, enterprise architecture, junction guard, marketing, memory-palace, operator profile, proactive watch, product, product development research, project management, search visibility, security, session memory, slides, studio operations, testing, UI styling, UI/UX Pro Max, usage-aware scheduler, voice, **voice-routing**, wiki (ingest/query/lint/explore).
+Categories: AI media, banner design, behavioral science, brand, CEO automation, compliance, content, design (dispatcher + sub-domains), design resources, design system, engineering, enterprise architecture, junction guard, marketing, memory-palace, operator profile, proactive watch, product, product development research, project management, search visibility, security, session memory, slides, studio operations, testing, UI styling, UI/UX Pro Max, usage-aware scheduler, voice, **voice-routing**, **loops**, wiki (ingest/query/lint/explore).
 
-**Total domain skills: 36.** Net delta from v1.1.1 (34 → 36): `voice-routing` added 2026-05-19 per ADR-016 — callable lookup wrapper around `myVoiceDNA/VOICE_SELECTION.md`; consumed by `nk-writer` agent and per-startup brand-writer instances. `notebooklm-py` added 2026-05-20 per ADR-018 — Maxim-flavored skill wrapping the upstream `teng-lin/notebooklm-py` MIT skill; layered with ADR-007 framework citations (Diátaxis · Diffusion of Innovations · Dual Coding Theory) and CSO compliance-orchestrator auto-loop on source uploads.
+**Total domain skills: 37.** Net delta (36 → 37): `loops` added 2026-06-19 (v1.3.3) — bounded agent-loop orchestration skill; the 31-loop catalog mapped to Maxim offices + 10 native gap-loops + the Maxim behavioral overlay (confidence tagging, framework citation, CSO auto-loop, no-fabrication). Prior art loop-library + autonomy-loop, cited per ADR-007. Prior delta from v1.1.1 (34 → 36): `voice-routing` added 2026-05-19 per ADR-016 — callable lookup wrapper around `myVoiceDNA/VOICE_SELECTION.md`; consumed by `nk-writer` agent and per-startup brand-writer instances. `notebooklm-py` added 2026-05-20 per ADR-018 — Maxim-flavored skill wrapping the upstream `teng-lin/notebooklm-py` MIT skill; layered with ADR-007 framework citations (Diátaxis · Diffusion of Innovations · Dual Coding Theory) and CSO compliance-orchestrator auto-loop on source uploads.
 
 ---
 
@@ -88,7 +88,7 @@ Under `.claude/hooks/`:
 
 ---
 
-## Section 6 — Behavioral Frameworks (74)
+## Section 6 — Behavioral Frameworks (78)
 
 Cataloged in `documents/reference/FRAMEWORKS_MASTER.md`. Core families include Fogg Behavior Model, COM-B, EAST, Cialdini Persuasion, Cognitive Load Theory, Behavioral Moat Framing Doctrine (ADR-007), Technical Educator Rubric (ADR-010), and the meta-framework Proactive Watch (ADR-002). v1.2.0 added 10 frameworks across WS6a+WS6b at full ADR-007 7-section depth:
 
@@ -96,7 +96,7 @@ Cataloged in `documents/reference/FRAMEWORKS_MASTER.md`. Core families include F
 
 **WS6b (6 MED-priority):** `scarf` (David Rock — Status/Certainty/Autonomy/Relatedness/Fairness), `theory-of-planned-behavior` (Ajzen — Attitudes + Subjective Norms + Perceived Behavioral Control), `social-learning-theory` (Bandura — modeling + self-efficacy), `operant-conditioning` (Skinner — reinforcement schedules with ethics gating on variable-ratio), `diffusion-of-innovations` (Rogers — 5 adopter categories + Moore's chasm), `emotional-design` (Norman — visceral/behavioral/reflective).
 
-**Total frameworks: 74.** Net delta from v1.1.1 (64 → 74): +4 WS6a + +6 WS6b in v1.2.0.
+**Total frameworks: 78.** Net delta (74 → 78): +4 loop-derived behavioral frameworks in v1.3.3 — Bounded Agent Loop (Explicit Stopping Conditions) · Independent Verification (Generation–Approval Separation) · Champion–Challenger with Holdout (Goodhart-Resistance) · No-Fabrication (Evidence-Bound Claims). Codified from the `loops` skill adoption; prior art loop-library + autonomy-loop, cited per ADR-007. Prior delta from v1.1.1 (64 → 74): +4 WS6a + +6 WS6b in v1.2.0.
 
 ### Proactive Watch drift classes (13)
 

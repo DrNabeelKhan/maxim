@@ -40,7 +40,7 @@ before any skill is activated.
 | CMO | `content-strategist` | `content-creation` · `marketing` · `search-visibility` · `behavior-science-persuasion` · `brand` · `ai-media-generation` |
 | CSO | `security-analyst` | `security` · `compliance` |
 | CPO | `product-strategist` | `product` · `product-development-research` · `design` · `ui-ux-pro-max` · `design-system` · `ui-styling` · `slides` · `banner-design` |
-| COO | `planner` | `project-management` · `studio-operations` · `testing` |
+| COO | `planner` | `project-management` · `studio-operations` · `testing` · `loops` |
 | CINO | `innovation-researcher` | `product-development-research` (innovation) |
 | Orchestrators | `executive-router` | all domains (routing only) |
 
@@ -76,6 +76,7 @@ before any skill is activated.
 | 24 | [`memory-palace`](#memory-palace) | MemPalace Knowledge Graph | All Offices | All agents (via MCP) |
 | 25 | [`operator-profile`](#operator-profile) | Operator Personalization | All Offices | All agents (always active) |
 | 26 | [`design-resources`](#design-resources) | Design Reference Library | CPO | `ui-ux-designer` · `ui-designer` · `product-strategist` |
+| 27 | `loops` | Loop Orchestration (bounded agent loops) | COO | `planner` · `reviewer` · `tester` · `security-analyst` (regulated loops) |
 
 ---
 

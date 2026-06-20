@@ -91,7 +91,7 @@ maxim/
 │   ├── mxm-context/                15 tools - manifest, decision log, session memory, operator profile, brand design, drift detection (3 watch_*), design template, skill gaps
 │   ├── mxm-catalog/                9 tools - office routing (route_task L2 specialist descent), agent DNA, handoff chain, skill/command catalog, search
 │   ├── mxm-compliance/             5 tools — 14 compliance frameworks
-│   ├── mxm-behavioral/             5 tools — 74 behavioral frameworks (added proactive-watch v1.0.0)
+│   ├── mxm-behavioral/             5 tools — 78 behavioral frameworks (added proactive-watch v1.0.0)
 │   ├── mxm-memory/                 4 tools — cross-session memory search
 │   └── mxm-voice/                  4 tools — v1.0.0+ — voice-driven office routing (wraps mbailey/voicemode)
 │

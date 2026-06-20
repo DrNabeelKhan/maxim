@@ -1,6 +1,6 @@
 # Maxim: The Operating System for AI-Assisted Work
 
-> **v1.3.2 · multi-tenant readiness + surface-claims coherence.** 91 governed agents · 36 skill domains · 48 slash commands · 9 MCPs (95 tools) · 74 peer-reviewed behavioral frameworks · 14 compliance frameworks · 14 executable hooks · 13 Proactive Watch drift classes · 19 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
+> **v1.3.2 · multi-tenant readiness + surface-claims coherence.** 91 governed agents · 37 skill domains · 48 slash commands · 9 MCPs (95 tools) · 78 peer-reviewed behavioral frameworks · 14 compliance frameworks · 14 executable hooks · 13 Proactive Watch drift classes · 19 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
 
 ---
 
@@ -145,7 +145,7 @@ Per-project, only identity files are created: `project-manifest.json`, `CLAUDE.p
 
 Plus 10 cross-office orchestrators + 1 executive-router = **91 agents total**. All 91 carry Grade A DNA (Triggers + bilateral Collaboration Matrix). Of these, **24 are dispatchable subagents** (declared in `plugin.json` agents[]) and the full **91-agent catalog** is reachable via `mxm-catalog` MCP per ADR-017 two-layer dispatch.
 
-### 36 skill domains (100% with root dispatchers)
+### 37 skill domains (100% with root dispatchers)
 Every domain has a SKILL.md (orchestrator), Maxim-WRAPPER.md (behavioral layer), and sub-skills that route to specialist agents. Marketing alone has a hub-and-spoke architecture with dedicated sub-skills. The `wiki` family (ingest, query, lint, explore), `voice`, `voice-routing`, `notebooklm-py`, `junction-guard`, `usage-aware-scheduler`, and `proactive-watch` domains complete the 36-domain inventory.
 
 ### 48 Slash commands
@@ -195,7 +195,7 @@ If you are managing a portfolio of projects across multiple verticals with compl
 ### With Maxim
 - Every session resumes with full context. decisions, preferences, skill gaps, operator profile
 - Compliance is automatic. CSO auto-loop, jurisdiction-specific pre-enforcement
-- 74 behavioral frameworks applied structurally, not on request
+- 78 behavioral frameworks applied structurally, not on request
 - Portfolio-wide awareness across tasks, metrics, and synergies for 22 projects
 - 90+ specialist agents (100% Grade A DNA) with governed handoff chains and bilateral Collaboration Matrix
 - One `git pull` updates everything. zero drift, zero maintenance (Proactive Watch catches drift at session start)
@@ -213,7 +213,7 @@ Maxim gives you all of them. governed, tireless, and improving with every sessio
 /plugin install maxim@anthropic-official
 ```
 
-One command installs the full framework. 91+ agents, 36 skill domains, 48 slash commands, 9 MCP servers, 55 tools, 14 executable hooks, 74 behavioral frameworks. Free tier fully functional on install.
+One command installs the full framework. 91+ agents, 37 skill domains, 48 slash commands, 9 MCP servers, 55 tools, 14 executable hooks, 78 behavioral frameworks. Free tier fully functional on install.
 
 ```
 /plugin marketplace add https://github.com/DrNabeelKhan/maxim
@@ -229,7 +229,7 @@ For source-level integration or non-Claude-Code IDE work, see [documents/guides/
 
 **Maxim v1.3.2:**
 
-91 agents (100% Grade A DNA · 24 dispatchable + 67 specialist catalog via mxm-catalog). 36 skill domains. 48 commands. 9 MCP servers (95 tools). 74 frameworks. 14 executable hooks. 13 Proactive Watch drift classes. 19 ADRs ratified (15 public + 4 confidential). 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
+91 agents (100% Grade A DNA · 24 dispatchable + 67 specialist catalog via mxm-catalog). 37 skill domains. 48 commands. 9 MCP servers (95 tools). 78 frameworks. 14 executable hooks. 13 Proactive Watch drift classes. 19 ADRs ratified (15 public + 4 confidential). 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
 
 **License:** BSL 1.1 core with 4-year Apache 2.0 conversion per ADR-005. Commercial packs licensed separately via LemonSqueezy.
 
