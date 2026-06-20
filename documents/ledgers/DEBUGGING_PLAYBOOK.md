@@ -242,6 +242,22 @@ The 5-ship 1-day cadence demonstrated that **the audit catches the audit-author'
 - BUG_TRACKER PATTERN-01 entry (recurrences now numbered #4, #5, #6)
 - ADR-022 candidate for v1.3.3 (cross-language path-resolution discipline)
 
+## §6 — 2026-06-20 — Native `claude plugin update` drops MCP node_modules → slow first restart (BUG-007 follow-up; donor-reuse fix, v1.3.7)
+
+**Symptom.** Operator restarted expecting the v1.3.3–v1.3.6 features (esp. the ADR-021 router) live; they were absent. The **installed** plugin was frozen at **v1.3.2.3** (commit `003d4d9`, lastUpdated 2026-05-21). A plain restart reloads the cached plugin — it does NOT pull marketplace updates. The router banner could not fire because the router hook was not installed at all (not the [#10225](https://github.com/anthropics/claude-code/issues/10225) match-but-not-execute bug — simply absent).
+
+**Root cause (the deeper one).** After updating to v1.3.6 via `claude plugin marketplace update` + `claude plugin update`, all 9 MCP `node_modules` were **missing** in the freshly-installed version dir. The native `claude plugin update` installs the new version into a new `…/<version>/` dir **without** carrying `node_modules` (unlike Maxim's own `/mxm-self-update`, which preserves them). The `spawn-with-deps.mjs` wrapper (BUG-007 fix) then `npm install`s all 9 servers on the first MCP spawn — a slow, online-only first restart (5–10 min on Windows; some MCPs exceed the handshake timeout and surface late).
+
+**Fix (v1.3.7, `5a177e2`).** Extended `spawn-with-deps.mjs` with **donor reuse**: on a missing-`node_modules` spawn it finds a **sibling installed plugin version** whose per-server dependency signature (`dependencies` + `optionalDependencies`, ignoring name/version/scripts) is identical and copies its `node_modules` in **offline** (`fs.cpSync`, no npm, no network), falling back to `npm install` only for a genuine fresh install or a real dep change. Records `reused_count` in the sentinel. **Verified on the real machine:** firing the v1.3.7 wrapper printed `reusing … from prior version` for all 9 and wrote `reused: 9, installed: 0` — zero npm installs.
+
+**Immediate remediation (operator hitting a slow post-update restart):** the wrapper self-heals on the next spawn; to skip the wait, copy `…/<prev-version>/mcp/*/node_modules` → `…/<new-version>/mcp/*/node_modules` (deps identical when no MCP changed) + write the `.mcp-deps-installed` sentinel — exactly what v1.3.7 now automates.
+
+**Lessons.**
+1. **A restart ≠ an update.** Restarts reload the cached plugin; pulling a new version needs `claude plugin marketplace update <mp>` + `claude plugin update <plugin>@<mp>` (or `/mxm-self-update`). Verify the *installed* version (registry + on-disk feature files), not the source/origin version.
+2. **The native update path is not Maxim's update path.** `/mxm-self-update` preserved node_modules; the native `claude plugin update` everyone else uses did not. A mitigation that lives only in Maxim's own updater leaves the majority path broken — put the guarantee where it runs regardless of update mechanism (the spawn wrapper).
+
+**Cross-links.** CHANGELOG v1.3.7 · BUG_TRACKER BUG-007 (original node_modules-absence fix) · `mcp/_shared/spawn-with-deps.mjs`.
+
 ---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
 Licensed under Business Source License 1.1 (converts to Apache 2.0 after 4 years per ADR-005).
