@@ -8,6 +8,34 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.6 — 2026-06-19 — Product-compatibility verification + hook hardening
+
+Theme: **Verify what we shipped against the actual Claude Code product docs, and be honest about where it runs.** Triggered by the operator's "check the docs" instinct (the autonomy-loop/MachinaOS lesson: structural tests pass, the real platform decides).
+
+### Verified — the v1.3.5 router contract is correct (Claude Code CLI)
+
+Checked the `UserPromptSubmit` hook against [code.claude.com/docs/en/hooks](https://code.claude.com/docs/en/hooks): the event exists, `prompt`/`cwd` input fields are real, the emitted `{"hookSpecificOutput":{"hookEventName":"UserPromptSubmit","additionalContext":"..."}}` is the documented schema, exit-0 adds stdout as context (exit-2 *erases the prompt* — confirming "always exit 0" was correct), and `${CLAUDE_PLUGIN_ROOT}` is exported to hooks. The [plugins reference](https://code.claude.com/docs/en/plugins-reference) lists `UserPromptSubmit` among plugin-shippable events. **No code fix needed.** 🟢
+
+### Changed — surface-compatibility honesty (hooks are CLI-only)
+
+Verification surfaced that **hooks are a Claude Code CLI-exclusive feature** — they do NOT run in Claude Desktop / Web / Cowork ([parity request #45514](https://github.com/anthropics/claude-code/issues/45514)). So all hook-enforced governance (pre-commit secret scan, session-start drift detection, the ADR-021 router) is CLI-bound; on Desktop it degrades to advisory/opt-in. Documented in `AGENT_SKILL_INVENTORY.md` §5 (source of truth) and ADR-021 (the v1.3.5 "default-on" claim corrected to a CLI property). Skills, commands, MCP remain cross-surface.
+
+### Changed — hook command hardening
+
+`.claude/hooks/hooks.json` — all 4 hook commands now quote `"${CLAUDE_PLUGIN_ROOT}"` (per the docs example) so install paths containing spaces resolve correctly. JSON validated.
+
+### Operator action
+
+After install + restart, **verify the `🧭 Maxim:` router banner appears** — a known upstream bug ([#10225](https://github.com/anthropics/claude-code/issues/10225)) can make plugin `UserPromptSubmit` hooks "match but not execute" in some versions. The contract is verified correct, so a non-fire is upstream, not the hook.
+
+### Deferred
+
+Exhaustive cross-surface marketing-claims sweep (any doc implying hook-enforced governance works on Desktop) — backlog item; the canonical source-of-truth (§5) now states the limitation.
+
+### No count changes. Version → 1.3.6. Pre-release-audit dispatched before tag.
+
+---
+
 ## v1.3.5 — 2026-06-19 — Maxim Default-On (always-on intent router) · ADR-021
 
 Theme: **Maxim stops being opt-in.** The product's biggest usability flaw — you had to *remember* `/mxm-design`, and if you forgot you got cookie-cutter default output — is now fixed structurally. An always-on router classifies every prompt and routes it through the right office + skills + frameworks automatically, **with the routing token cost shown so you can judge the tax and opt out.**

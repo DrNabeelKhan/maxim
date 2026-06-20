@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.3 · **Last verified:** 2026-06-19 (v1.3.3 loops + frameworks ship)
+**Version:** v1.3.6 · **Last verified:** 2026-06-19 (v1.3.6 product-compatibility verification ship)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -86,6 +86,8 @@ Under `.claude/hooks/`:
 | `user-prompt-router.{sh,ps1}` | Linux/Mac/Win | **UserPromptSubmit** — Default-On intent router (ADR-021): classify prompt → inject office/skills/frameworks → show routing token cost; conservative match + opt-out (`router-off`) |
 
 **Total hook scripts: 16** (8 hooks × 2 platforms). Net delta (14 → 16): `user-prompt-router.{sh,ps1}` added v1.3.5 (ADR-021) — the always-on intent router that makes Maxim default-on instead of opt-in.
+
+**Surface compatibility (verified 2026-06-19 against code.claude.com):** hooks run in **Claude Code CLI only**. They do NOT execute in Claude Desktop / Web / Cowork (hooks are a CLI-exclusive feature; parity request [anthropics/claude-code#45514](https://github.com/anthropics/claude-code/issues/45514)). So all hook-enforced governance — pre-commit secret/PII scan, session-start drift detection, and the ADR-021 default-on router — is **CLI-bound**; on Desktop/Web/Cowork it degrades to advisory/opt-in. Skills, commands, and MCP servers remain cross-surface. (v1.3.6 hardened all 4 hook commands to quote `"${CLAUDE_PLUGIN_ROOT}"` for install paths containing spaces.)
 
 ---
 

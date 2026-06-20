@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/.claude/hooks/session-start.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/session-start.sh"
           }
         ]
       }
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/.claude/hooks/session-end.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/session-end.sh"
           }
         ]
       }
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/.claude/hooks/mxm-guard.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/mxm-guard.sh"
           }
         ]
       }
@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/.claude/hooks/user-prompt-router.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/user-prompt-router.sh"
           }
         ]
       }
