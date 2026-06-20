@@ -53,8 +53,8 @@ v1.3.2 · BSL 1.1 (core) + Proprietary packs · Built in Canada · Apache 2.0 in
 | **74** | Behavioral science frameworks (Fogg · COM-B · EAST · Hook · SCARF · Prospect Theory · 68 more) |
 | **14** | Compliance frameworks (GDPR · PIPEDA · UAE-PDPL · HIPAA · PCI-DSS · SOC2 · ISO 27001/13485/14971 · NIST CSF · EU AI Act · CASL · FINTRAC · WCAG 2.1) |
 | **13** | Proactive Watch drift classes (4 free at Core severity, 9 with gated severity-block at Pro+) |
-| **14** | Executable hooks across session lifecycle + git hygiene + pre-commit |
-| **19** | ADRs (15 public + 4 confidential) ratifying every architectural decision |
+| **16** | Executable hooks across session lifecycle + git hygiene + pre-commit + the default-on router |
+| **20** | ADRs (16 public + 4 confidential) ratifying every architectural decision |
 
 ---
 

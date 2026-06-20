@@ -70,7 +70,7 @@ All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/ref
 
 ---
 
-## Section 5 — Hooks (14 scripts, 7 hooks × 2 platforms)
+## Section 5 — Hooks (16 scripts, 8 hooks × 2 platforms)
 
 Under `.claude/hooks/`:
 
@@ -83,8 +83,9 @@ Under `.claude/hooks/`:
 | `git-hygiene-preamble.{sh,ps1}` | Linux/Mac/Win | Pre-stage hygiene: staleness banners, junction check |
 | `git-hygiene-postamble.{sh,ps1}` | Linux/Mac/Win | Post-commit hygiene: session-end bundle check |
 | `mxm-guard.{sh,ps1}` | Linux/Mac/Win | Junction read-only enforcement |
+| `user-prompt-router.{sh,ps1}` | Linux/Mac/Win | **UserPromptSubmit** — Default-On intent router (ADR-021): classify prompt → inject office/skills/frameworks → show routing token cost; conservative match + opt-out (`router-off`) |
 
-**Total hook scripts: 14** (7 hooks × 2 platforms).
+**Total hook scripts: 16** (8 hooks × 2 platforms). Net delta (14 → 16): `user-prompt-router.{sh,ps1}` added v1.3.5 (ADR-021) — the always-on intent router that makes Maxim default-on instead of opt-in.
 
 ---
 
@@ -126,7 +127,7 @@ Voice management: `.brand-foundation/VOICE-MANAGEMENT.md`. Command: `/mxm-brand-
 
 ---
 
-## Section 9 — Architecture Decision Records (19)
+## Section 9 — Architecture Decision Records (20)
 
 All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Template: `documents/ADRs/TEMPLATE.md`.
 
@@ -151,8 +152,9 @@ All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Tem
 | 017 | Office-as-Dispatch-Boundary + MCP-Catalog Specialist Surface | accepted |
 | 018 | External Tool Integration Pattern (three-layer: community pack + Maxim skill + MCP wrapper) | accepted |
 | 019 | Multi-Tenant Readiness (tier wizard · operator-writer template · public docs rewrite) | accepted |
+| 021 | Maxim Default-On (Always-On Intent Router) | accepted |
 
-**Total ADRs: 19.** Net delta from v1.1.1 (16 → 19): +ADR-017 (v1.2.0.4) +ADR-018 (v1.2.1.0) +ADR-019 (v1.3.0). All three landed in Session 21 (2026-05-19/20).
+**Total ADRs: 20.** Net delta (19 → 20): +ADR-021 (v1.3.5 — the always-on intent router that makes Maxim default-on). Prior (16 → 19): +ADR-017 (v1.2.0.4) +ADR-018 (v1.2.1.0) +ADR-019 (v1.3.0), Session 21. (Count = 16 public + 4 confidential foundational ADRs.)
 
 ---
 

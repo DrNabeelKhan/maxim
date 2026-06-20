@@ -8,6 +8,41 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.5 — 2026-06-19 — Maxim Default-On (always-on intent router) · ADR-021
+
+Theme: **Maxim stops being opt-in.** The product's biggest usability flaw — you had to *remember* `/mxm-design`, and if you forgot you got cookie-cutter default output — is now fixed structurally. An always-on router classifies every prompt and routes it through the right office + skills + frameworks automatically, **with the routing token cost shown so you can judge the tax and opt out.**
+
+### Added — `UserPromptSubmit` intent router (hooks 14 → 16)
+
+- **`.claude/hooks/user-prompt-router.{sh,ps1}`** — fires on every prompt. Deterministic keyword classification vs `config/routing-table.json` → **only on a confident match**, injects a routing directive (office + skills + frameworks, cited per ADR-007, confidence-tagged per ADR-010) and instructs Claude to open with a banner: `🧭 Maxim: <office> · <skills> · <frameworks> · routing ~N tokens`. A no-match prompt **passes through silently** (vanilla Claude — no over-routing). Path-safe (prompt via env, not source interpolation — BUG-008 lesson). Logs each decision + token cost to `.mxm-skills/routing-log.jsonl`.
+- **`config/routing-table.json`** — operator-editable intent map (8 routes: design · content · build · security · strategy · product · research · plan). Edit keywords/skills/frameworks freely; `"enabled": false` or `.mxm-skills/router-off` disables.
+- **`ADR-021`** — Maxim Default-On (public; ADRs 15 → 16). Codifies the router, the token-transparency requirement, the conservative-match + opt-out discipline, and defers the LLM-classifier upgrade.
+
+### Completes the v1.3.3–v1.3.5 arc
+
+The router is the consumer the prior two releases built for: classify → native Maxim skill (the catalog), or → **`mxm-find-skill` fallback** (v1.3.4) on a skill miss, or → **`loops`** orchestration (v1.3.3). The pieces existed; this fires them automatically.
+
+### Verified
+
+Tested on simulated `UserPromptSubmit` inputs: `"design a landing page"` → CPO + design skills (~148 tok); `"write a social media post"` → CMO + AIDA/Hook/Cialdini/Fogg (~151 tok); `"what time is it"` → silent passthrough; `router-off` sentinel → silent. Routing log written with token estimates.
+
+### Operator notes
+
+- **Claude Code CLI only** — hooks are a CLI-exclusive feature (verified against code.claude.com); on Claude Desktop / Web / Cowork the router does not fire and Maxim falls back to opt-in (no regression). "Default-on" is a CLI property until Desktop hook parity ships ([anthropics/claude-code#45514](https://github.com/anthropics/claude-code/issues/45514)).
+- **Restart required + verify** — hooks load at session start; the router activates on the next Claude Code restart. Confirm the `🧭 Maxim:` banner appears (a known upstream bug, [#10225](https://github.com/anthropics/claude-code/issues/10225), can make plugin UserPromptSubmit hooks match-but-not-execute — the contract is verified correct, so a non-fire is upstream, not the hook).
+- **Behavioral change** — Maxim will now route automatically. If a route is wrong or unwanted, edit `config/routing-table.json` or drop `.mxm-skills/router-off`.
+- The STEP-1b auto-wiring of `mxm-find-skill` (held in v1.3.4) lands here: the router's directive tells Claude to run it on a skill miss.
+
+### Pre-release-audit (honest narrative)
+
+`maxim:pre-release-audit` Cycle 1 verdict: **BLOCKERS:6.** The router hook itself **PASSed all robustness checks** — runtime-tested both `.sh` and `.ps1`: never blocks a prompt, silent passthrough on no-match / empty / malformed stdin, no BUG-008 interpolation landmine (prompt flows via env var, quoted heredoc), valid emitted JSON. The 6 blockers were all **partial-sweep ADR-count drift** (19→20, 15→16 public): the canonical `AGENT_SKILL_INVENTORY §9` ledger left stale (19, no ADR-021 row) while its dependent INDEX was correct, plus middot (`·`), "architectural decisions" phrasing, and standalone "15 public" variants the prose sweep missed. **All 6 fixed**, plus 1 the audit itself missed (the one-pager's `**14** |` hook table-cell). Cycle 2: comprehensive grep across prose / badge / table-cell formats → `hooks=16, ADRs=20/16-public` everywhere clean. Skills 37 / frameworks 78 untouched; version 1.3.5 consistent. The discipline caught exactly the partial-sweep drift it exists for — not self-claimed PASS. (Deferred NITs: project-manifest version frozen at 1.0.0 across all ships; fallback-command default text `"<need>"` vs table's `"<intent>"` — table value wins at runtime.)
+
+### Files changed
+
+`.claude/hooks/user-prompt-router.{sh,ps1}` (NEW) · `config/routing-table.json` (NEW) · `documents/ADRs/ADR-021-maxim-default-on-router.md` (NEW) · `.claude/hooks/hooks.json` (UserPromptSubmit) · `AGENT_SKILL_INVENTORY.md` §5 (16/8) · `documents/ADRs/INDEX.md` (16) · `.gitignore` (un-ignore ADR-021) · `CLAUDE.md` (hook-count) · version → 1.3.5.
+
+---
+
 ## v1.3.4 — 2026-06-19 — `awesome-agent-skills` fallback registry (Maxim's STEP-1-miss skill search)
 
 Theme: **When Maxim has no native skill, search 1000+ external skills instead of giving up.** Operator directive — give Maxim a searchable place to find a skill when it lacks one, so it stops falling through to cookie-cutter default output.

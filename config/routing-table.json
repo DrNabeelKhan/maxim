@@ -1,0 +1,70 @@
+{
+  "_doc": "Maxim Default-On Router (ADR-021). The UserPromptSubmit hook (user-prompt-router.{sh,ps1}) reads this to classify intent and inject a routing directive. Edit freely: add keywords, reorder, retune. Set enabled=false (or create .mxm-skills/router-off) to disable. A prompt matching no route passes through silently (vanilla Claude).",
+  "enabled": true,
+  "min_keyword_hits": 1,
+  "show_token_cost": true,
+  "log": ".mxm-skills/routing-log.jsonl",
+  "routes": [
+    {
+      "id": "design",
+      "keywords": ["design", "ui", "ux", "landing page", "website", "interface", "layout", "component", "style", "css", "tailwind", "figma", "brand", "logo", "banner", "mockup", "wireframe", "theme", "dark mode"],
+      "office": "CPO",
+      "skills": ["ui-ux-pro-max", "design", "ui-styling", "design-system", "brand", "banner-design"],
+      "frameworks": ["Fitts' Law", "Color Psychology", "Emotional Design Model", "Nielsen Heuristics"]
+    },
+    {
+      "id": "content",
+      "keywords": ["write", "post", "social media", "linkedin", "twitter", "tweet", "blog", "article", "copy", "email", "newsletter", "caption", "headline", "content", "story", "announce", "marketing", "campaign", "seo"],
+      "office": "CMO",
+      "skills": ["content-creation", "marketing", "brand", "search-visibility", "behavior-science-persuasion"],
+      "frameworks": ["AIDA", "Hook Model", "Cialdini's 6 Principles", "Fogg Behavior Model (FBM)", "Prospect Theory"]
+    },
+    {
+      "id": "build",
+      "keywords": ["build", "implement", "code", "function", "api", "endpoint", "feature", "refactor", "debug", "fix", "bug", "test", "deploy", "backend", "frontend", "database", "rag", "pipeline"],
+      "office": "CTO",
+      "skills": ["engineering", "testing"],
+      "frameworks": ["TDD / FIRST principles", "Fogg Behavior Model (FBM)", "Systematic Debugging"]
+    },
+    {
+      "id": "security",
+      "keywords": ["security", "compliance", "gdpr", "hipaa", "soc2", "iso 27001", "pci", "threat", "vulnerability", "owasp", "audit", "privacy", "pii", "encryption", "penetration", "ethics", "risk"],
+      "office": "CSO",
+      "skills": ["security", "compliance"],
+      "frameworks": ["STRIDE", "OWASP Top 10", "NIST CSF", "Independent Verification"]
+    },
+    {
+      "id": "strategy",
+      "keywords": ["strategy", "business model", "pitch", "investor", "fundraise", "gtm", "go-to-market", "pricing", "partnership", "wardley", "roadmap vision", "moat", "competitive", "architecture", "adr", "enterprise"],
+      "office": "CEO",
+      "skills": ["enterprise-architecture", "ceo-automation"],
+      "frameworks": ["Wardley Mapping", "Strategyzer BMC", "Minto Pyramid", "Prospect Theory"]
+    },
+    {
+      "id": "product",
+      "keywords": ["product", "prd", "user story", "okr", "prioritize", "jtbd", "jobs to be done", "roadmap", "backlog", "feature spec", "user research", "persona", "onboarding"],
+      "office": "CPO",
+      "skills": ["product", "product-development-research"],
+      "frameworks": ["Jobs-to-be-Done (JTBD)", "INVEST", "RICE", "OKR"]
+    },
+    {
+      "id": "research",
+      "keywords": ["research", "innovation", "emerging tech", "horizon scan", "r&d", "trend", "whitepaper", "competitive analysis", "market analysis", "deep dive"],
+      "office": "CINO",
+      "skills": ["product-development-research"],
+      "frameworks": ["Diffusion of Innovations", "Jobs-to-be-Done (JTBD)"]
+    },
+    {
+      "id": "plan",
+      "keywords": ["plan", "sprint", "milestone", "schedule", "organize", "workflow", "operations", "delivery", "loop", "iterate until", "sweep"],
+      "office": "COO",
+      "skills": ["project-management", "loops"],
+      "frameworks": ["Coverage Matrix", "Bounded Agent Loop (Explicit Stopping Conditions)"]
+    }
+  ],
+  "fallback": {
+    "_doc": "When no route's keywords match well, suggest the v1.3.4 fallback skill search before treating it as a genuine gap.",
+    "command": "bash bootstrap/mxm-find-skill.sh \"<intent>\"",
+    "note": "External candidates are 🔴 Maxim-UNENHANCED (ADR-008) until the behavioral overlay is applied."
+  }
+}

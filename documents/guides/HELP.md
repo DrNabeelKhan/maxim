@@ -1,6 +1,6 @@
 # Maxim: User Guide
 
-**Maxim v1.3.1** | 91+ agents (100% Grade A DNA) · 37 skill domains · 48 commands · 78 frameworks · 9 MCP servers (49 tools) · 14 executable hooks · 10 ADRs ratified
+**Maxim v1.3.1** | 91+ agents (100% Grade A DNA) · 37 skill domains · 48 commands · 78 frameworks · 9 MCP servers (49 tools) · 16 executable hooks · 10 ADRs ratified
 
 ---
 
@@ -883,7 +883,7 @@ Include:
 - **MCPs:** 9 servers · 95 tools (incl. NotebookLM research synthesis per ADR-018)
 - **Commands:** 48 slash commands for every phase of work
 - **Drift detection:** 13 Proactive Watch classes
-- **ADRs:** 19 architectural decisions (15 public · 4 confidential)
+- **ADRs:** 20 architectural decisions (16 public · 4 confidential)
 - **Governance:** Ethics gates, CSO auto-loop, compliance pre-enforcement, confidence tagging
 - **Model Support:** Anthropic, OpenAI, Gemini, Mistral, local models
 

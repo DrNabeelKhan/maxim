@@ -72,6 +72,7 @@ documents/architecture/
 !documents/ADRs/ADR-017-office-as-dispatch-boundary.md
 !documents/ADRs/ADR-018-external-tool-integration-pattern.md
 !documents/ADRs/ADR-019-multi-tenant-readiness.md
+!documents/ADRs/ADR-021-maxim-default-on-router.md
 
 # ── Maxim ledger state (session-local, never committed) ──────────────────
 # documents/ledgers/ holds the canonical Executable Contract ledgers.
@@ -160,3 +161,4 @@ distributions/claude-plugin/bin/mxm-pack-engine
 distributions/claude-plugin/bin/mxm-pack-engine-darwin
 distributions/claude-plugin/bin/mxm-pack-engine-darwin-amd64
 distributions/claude-plugin/.mcp.json
+.mxm-skills/routing-log.jsonl

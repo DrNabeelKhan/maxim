@@ -27,8 +27,9 @@ Every public ADR declares a commitment Maxim makes to its users — a contract t
 | [ADR-017](ADR-017-office-as-dispatch-boundary.md) | Office-as-Dispatch-Boundary + MCP-Catalog Specialist Surface | accepted | 2026-05-19 |
 | [ADR-018](ADR-018-external-tool-integration-pattern.md) | External Tool Integration Pattern — three-layer (community-pack + Maxim skill + MCP wrapper) | accepted | 2026-05-20 |
 | [ADR-019](ADR-019-multi-tenant-readiness.md) | Multi-Tenant Readiness — tier wizard + operator-writer template + persuasion-framed public docs | accepted | 2026-05-20 |
+| [ADR-021](ADR-021-maxim-default-on-router.md) | Maxim Default-On (Always-On Intent Router) | accepted | 2026-06-19 |
 
-**Published:** 15 · **Accepted:** 15 · **Superseded:** 0 · **Rejected:** 0
+**Published:** 16 · **Accepted:** 16 · **Superseded:** 0 · **Rejected:** 0
 
 ---
 

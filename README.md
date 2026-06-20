@@ -2,14 +2,14 @@
 
 > The structural moat behind every Claude output. 91 specialist agents · 78 peer-reviewed behavioral frameworks · 14 compliance frameworks · 9 MCPs · 95 tools. Framework citation enforced on every output. Drift detected before you ship. Voice locked across every surface.
 
-![Version](https://img.shields.io/badge/version-1.3.4-blue)
+![Version](https://img.shields.io/badge/version-1.3.5-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-78-orange)
 ![Skills](https://img.shields.io/badge/skill_domains-37-purple)
 ![Commands](https://img.shields.io/badge/commands-48-yellow)
 ![MCP](https://img.shields.io/badge/MCP_servers-9-teal)
 ![Tools](https://img.shields.io/badge/MCP_tools-95-teal)
-![Hooks](https://img.shields.io/badge/hooks-14-gray)
+![Hooks](https://img.shields.io/badge/hooks-16-gray)
 ![Drift_Classes](https://img.shields.io/badge/drift_classes-13-red)
 ![License](https://img.shields.io/badge/license-BSL_1.1-lightgrey)
 
@@ -216,9 +216,9 @@ Desktop one-command setup: `bash bootstrap/mxm-desktop-config.sh` or `pwsh -File
 
 ---
 
-## Architecture decisions · 19 ADRs (15 public · 4 confidential)
+## Architecture decisions · 20 ADRs (16 public · 4 confidential)
 
-Maxim ratifies every architectural choice via ADRs. The 15 public ones describe Maxim's commitments to operators:
+Maxim ratifies every architectural choice via ADRs. The 16 public ones describe Maxim's commitments to operators:
 
 - [ADR-002](documents/ADRs/ADR-002-documents-as-executable-contracts.md) Documents as Executable Contracts (the structural rule)
 - [ADR-004](documents/ADRs/ADR-004-free-tier-executable-contract.md) Free tier specification
@@ -229,7 +229,8 @@ Maxim ratifies every architectural choice via ADRs. The 15 public ones describe 
 - [ADR-016](documents/ADRs/ADR-016-voice-writing-agent-architecture.md) Voice Writing Agent Architecture
 - [ADR-017](documents/ADRs/ADR-017-office-as-dispatch-boundary.md) Office-as-Dispatch-Boundary
 - [ADR-018](documents/ADRs/ADR-018-external-tool-integration-pattern.md) External Tool Integration Pattern
-- [ADR-019](documents/ADRs/ADR-019-multi-tenant-readiness.md) **Multi-Tenant Readiness (v1.3.0)**
+- [ADR-019](documents/ADRs/ADR-019-multi-tenant-readiness.md) Multi-Tenant Readiness (v1.3.0)
+- [ADR-021](documents/ADRs/ADR-021-maxim-default-on-router.md) **Maxim Default-On — always-on intent router (v1.3.5)**
 - plus ADR-011 · ADR-012 · ADR-013 · ADR-014 · ADR-015 (see [INDEX.md](documents/ADRs/INDEX.md))
 
 Four additional ADRs cover internal architecture (dispatch baseline · IP protection · Worker license issuance · external content boundary) and remain in the operator's private ledger.

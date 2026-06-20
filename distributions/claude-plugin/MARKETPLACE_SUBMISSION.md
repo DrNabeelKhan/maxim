@@ -28,7 +28,7 @@ Live since 2026-04-21 (v1.0.0 launch). Currently at v1.3.2.3. Used by 21+ projec
 |---|---|---|
 | Plugin manifest | `.claude-plugin/plugin.json` | v1.3.2.3 — declares 91 agents · 37 skills · 48 commands · 78 frameworks · 14 compliance · 9 MCPs (95 tools) · 90-day Trial of 14 packs default |
 | Marketplace manifest | `.claude-plugin/marketplace.json` | v1.3.2.3 — pack catalog (Maxim base plugin + 14 paid packs across L1 · L2 · L3 tiers) · outer metadata.version + plugin entry version both at 1.3.2.3 (per v1.3.2.1 Bucket 1 amendment) |
-| README | `README.md` (root) | v1.3.2.3 with 9-MCP/95-tool table, 6 use cases, ADR index (15 public · 4 confidential) |
+| README | `README.md` (root) | v1.3.2.3 with 9-MCP/95-tool table, 6 use cases, ADR index (16 public · 4 confidential) |
 | LICENSE | `LICENSE` (root) | BSL 1.1 — converts to Apache 2.0 after 4 years per ADR-005 |
 | Version | `1.3.2.3` consistent across plugin.json + marketplace.json (outer + plugin entry) + README badge + this submission doc | Verified by v1.3.2.3 pre-release-audit Cycle 1 Bucket 1 (the bucket Mr. Khan added in v1.3.2.1 after the catalog metadata.version drift was caught) |
 
@@ -48,7 +48,7 @@ Live since 2026-04-21 (v1.0.0 launch). Currently at v1.3.2.3. Used by 21+ projec
 | Output styles | `distributions/claude-plugin/output-styles/mxm-mode.md` | 1 (`mxm-mode`) |
 | Statusline | `.claude/hooks/mxm-statusline.{sh,ps1}` | 2 (bash + PowerShell) |
 | Binary | `mxm-pack-engine` | Cross-platform (linux/amd64 · darwin/arm64 · darwin/amd64 · windows/amd64) |
-| Architecture Decision Records | `documents/ADRs/ADR-001..ADR-019` | 19 total (15 public · 4 confidential) |
+| Architecture Decision Records | `documents/ADRs/ADR-001..ADR-021` | 20 total (16 public · 4 confidential) |
 | Architecture Decision Records — public list | INDEX.md | ADR-002 · 004 · 007 · 008 · 009 · 010 · 011 · 012 · 013 · 014 · 015 · 016 · 017 · 018 · 019 |
 
 ### Supporting documentation (quality signal for reviewers)
