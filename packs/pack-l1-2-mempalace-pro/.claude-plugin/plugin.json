@@ -1,6 +1,6 @@
 {
   "name": "mxm-pack-l1-2-mempalace-pro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Maxim commercial pack: L1.2 MemPalace Pro. Ships as part of the L1 tier per ADR-009. Behavioral-science-anchored, MOAT-registered, BSL-excluded (separately licensed via Stripe). Requires an activated license JWT to run.",
   "author": {
     "name": "Dr. Nabeel Khan",
@@ -17,9 +17,7 @@
     "behavioral-science",
     "commercial"
   ],
-  "skills": [
-    "./"
-  ],
+  "skills": "./skills/",
   "dependencies": [
     {
       "name": "maxim",
