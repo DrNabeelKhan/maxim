@@ -8,6 +8,20 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.8.2 — 2026-06-26 — L1/L2/L3 pack loading fix + `mxm-commands` command parity (the 49th command)
+
+Patch. Two fixes surfaced when v1.3.8.1 landed on a **Claude Code 2.1.136** install: the commercial packs failed to load, and the cross-surface command-parity MCP was a command short. No capability change (91 agents · 52 skills · 49 commands · 9 MCPs/95 tools · 78 frameworks · 16 hooks · 21 ADRs/17 public). The 14 packs bump independently to **1.0.1**.
+
+### Fixed — all 14 commercial packs `✘ failed to load` ("Path escapes plugin directory: ./ (skills)")
+
+Every L1/L2/L3 pack shipped `SKILL.md` at the pack root and declared `"skills": ["./"]`. Claude Code **2.1.136** rejects `./` because it normalizes to the plugin root *exactly*, not *strictly inside* it — so the loader reads it as escaping. (Newer builds accept `["./"]`, and v2.1.142+ even auto-discovers a root `SKILL.md` with no field — but 2.1.136 predates both. The maxim plugin itself was unaffected: it points `"skills"` at a real subdirectory.) **Fix:** each pack moves `SKILL.md` → `skills/<slug>/SKILL.md` and declares `"skills": "./skills/"` — the version-robust layout the maxim plugin already uses successfully. All six installed L1 packs flip from `✘ failed to load` to `✔ enabled` (verified via `claude plugin list`, which re-evaluates load status — `claude plugin validate` does **not** catch this; it is schema-only and the broken pack "passes" it). Packs `1.0.0`→`1.0.1`. DEBUGGING_PLAYBOOK §8.
+
+### Fixed — `mxm-commands` MCP was missing the 49th command and hardcoded a stale total
+
+The `mxm-commands` MCP is how Claude Desktop / Claude.ai Web invoke Maxim's command surface — native plugin slash commands are a Claude Code CLI-only feature, so this MCP is the cross-surface parity layer. Its registry still listed **48** commands (hardcoded `total: 48` + five stale comment/description strings) and never registered **`/mxm-workflow`** (added in v1.3.8). Added the `/mxm-workflow` route and made `total` **computed from the registry length** so the count can never drift from reality again.
+
+---
+
 ## v1.3.8.1 — 2026-06-26 — Count/version propagation tooling repaired (the count-drift root cause)
 
 Patch. Repairs the two tools that caused every release's manual count/version "whack-a-mole", adds a fail-closed pre-commit gate so drift can't ship again, and corrects 3 residual stale claims the now-complete tools surfaced. Capability counts unchanged (91 agents · 52 skills · 49 commands · 9 MCPs/95 tools · 78 frameworks · 16 hooks · 21 ADRs/17 public).

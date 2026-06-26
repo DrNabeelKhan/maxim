@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.8.1 · **Last verified:** 2026-06-26 (v1.3.8.1 count/version propagation tooling repair)
+**Version:** v1.3.8.2 · **Last verified:** 2026-06-26 (v1.3.8.1 count/version propagation tooling repair)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -129,7 +129,7 @@ Voice management: `.brand-foundation/VOICE-MANAGEMENT.md`. Command: `/mxm-brand-
 
 ---
 
-## Section 9 — Architecture Decision Records (20)
+## Section 9 — Architecture Decision Records (21)
 
 All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Template: `documents/ADRs/TEMPLATE.md`.
 

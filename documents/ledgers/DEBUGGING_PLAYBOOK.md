@@ -282,5 +282,27 @@ The 5-ship 1-day cadence demonstrated that **the audit catches the audit-author'
 **Cross-links.** CHANGELOG v1.3.8 (count-propagation note) · [[project_v1.3.8_shipped]] memory (sync-version BROKEN / sync-counts INCOMPLETE) · `bootstrap/sync-version.{sh,ps1}` · `bootstrap/sync-counts.{sh,ps1}` · `.claude/hooks/pre-commit.{sh,ps1}` · PATTERN-01 registry (BUG_TRACKER).
 
 ---
+
+## §8 — 2026-06-26 — L1 paid packs `✘ failed to load`: `"skills": ["./"]` rejected by the Claude Code 2.1.136 loader ("Path escapes plugin directory")
+
+**Symptom.** After the operator updated to v1.3.8.1 and restarted, the maxim plugin itself loaded fine (agents + skills + MCP all available), but all 6 installed L1 commercial packs showed `✘ failed to load` in `claude plugin list`, with the loader error: `Path escapes plugin directory: ./ (skills)`. Distinct from the corrupt-install incident — this is a manifest-shape problem, not a partial copy.
+
+**Root cause — a version-gated loader behavior.** Each pack ships a single `SKILL.md` **at the pack root** and declares `"skills": ["./"]` in `plugin.json`. The current published docs (plugins-reference) actually say `["./"]` *is* valid (the `SKILL.md` frontmatter `name` becomes the skill name), and **v2.1.142+** even auto-discovers a root-level `SKILL.md` with **no** `skills` field. BUT the operator runs **Claude Code 2.1.136** — older than both behaviors. On 2.1.136 the loader resolves `pluginRoot + "/" + "./"`, which normalizes to `pluginRoot` *exactly* (no trailing separator), so the "must be strictly inside the plugin dir" check fails → "Path escapes plugin directory." The maxim plugin was unaffected because it declares `"skills": "./.claude/skills/"` — a string path to a **subdirectory** that *contains* skill subdirs, which passes the strictly-inside check.
+
+**Fix (version-robust — works on every Claude Code version).** Give each pack the explicit subdirectory layout instead of the terse root form:
+- move `SKILL.md` → `skills/<slug>/SKILL.md` (slug = pack topic, e.g. `ai-governance`)
+- set `"skills": "./skills/"` (string path to the parent dir — exactly the maxim plugin's proven pattern)
+
+Applied to all **14 source packs** (`packs/pack-l{1,2,3}-*`, uncommitted) **and** the **6 live cache packs** (`~/.claude/plugins/cache/maxim-packs/mxm-pack-l1-*/1.0.0/`). After the cache edit, `claude plugin list` re-evaluated and all 6 flipped to `✔ enabled`.
+
+**Lessons.**
+1. **Plugin-manifest features are version-gated; the docs describe the newest loader.** `["./"]` validity and root-`SKILL.md` auto-discovery both require *newer* than the operator's 2.1.136. Always test a manifest change against the operator's actual `claude --version`, not against "what the docs say is supported."
+2. **Prefer the explicit `skills/<name>/SKILL.md` + `"skills": "./skills/"` layout for shipped packs.** It is the lowest-common-denominator that loads on every version. The terse `["./"]` is a newer convenience that silently breaks older installs.
+3. **`claude plugin validate` ≠ load.** Validate only checks the manifest JSON schema — the broken `["./"]` pack *passes* `validate` yet fails at load. The real verification is a reload (`claude plugin list` re-evaluates load status, or `/reload-plugins` in-session). Don't trust validate to catch path-escape rejections.
+4. **A healthy host plugin can coexist with failing child packs.** "No mxm commands" and "packs failed to load" were two *separate* issues sharing one restart — diagnose each independently rather than assuming one root cause.
+
+**Cross-links.** [[project_v1.3.8_shipped]] memory (L1-packs note → now RESOLVED) · `packs/pack-l*/.claude-plugin/plugin.json` · plugins-reference doc (skills field, lines on `["./"]` validity + v2.1.142 auto-discovery) · §6 (the corrupt-install incident this was initially conflated with).
+
+---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
 Licensed under Business Source License 1.1 (converts to Apache 2.0 after 4 years per ADR-005).
