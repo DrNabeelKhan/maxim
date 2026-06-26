@@ -30,10 +30,18 @@ $cwd = if ($data.cwd) { "$($data.cwd)" } else { '.' }
 if (Test-Path (Join-Path $cwd '.mxm-skills\router-off')) { exit 0 }
 
 $minhits = if ($table.min_keyword_hits) { [int]$table.min_keyword_hits } else { 1 }
+$weak = @{}; foreach ($w in $table.weak_keywords) { $weak["$w".ToLower()] = $true }
 $best = $null; $bestHits = 0
 foreach ($r in $table.routes) {
-  $hits = 0
-  foreach ($k in $r.keywords) { if ($plow.Contains("$k".ToLower())) { $hits++ } }
+  $hits = 0; $strong = 0
+  foreach ($k in $r.keywords) {
+    # Word-boundary match (allow simple plural) — avoids substring false routes
+    # like "code"->codex, "api"->therapist, "plan"->explanation, "feature"->features.
+    $pat = '\b' + [Regex]::Escape("$k".ToLower()) + '(?:s|es)?\b'
+    if ([Regex]::IsMatch($plow, $pat)) { $hits++; if (-not $weak.ContainsKey("$k".ToLower())) { $strong++ } }
+  }
+  # A single weak-only keyword is not a confident route: need >=1 strong OR >=2 total.
+  if (($hits -eq 0) -or (($strong -eq 0) -and ($hits -lt 2))) { continue }
   if ($hits -gt $bestHits) { $best = $r; $bestHits = $hits }
 }
 if ((-not $best) -or ($bestHits -lt $minhits)) { exit 0 }  # no confident route -> passthrough

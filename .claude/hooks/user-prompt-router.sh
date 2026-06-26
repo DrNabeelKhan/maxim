@@ -22,7 +22,7 @@ PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." 2
 INPUT="$(cat)"
 
 MXM_HOOK_INPUT="$INPUT" MXM_PLUGIN_ROOT="$PLUGIN_ROOT" python3 <<'PYEOF' 2>/dev/null || true
-import os, json, datetime
+import os, json, re, datetime
 from pathlib import Path
 
 def out_nothing():
@@ -55,9 +55,23 @@ if (Path(cwd) / ".mxm-skills" / "router-off").exists():
     out_nothing()
 
 minhits = int(table.get("min_keyword_hits", 1))
+weak = set(w.lower() for w in table.get("weak_keywords", []))
+
+def _kw_hit(k, text):
+    # Word-boundary match (allows a simple plural). Plain substring matching
+    # caused false routes: "code"->codex, "api"->therapist, "plan"->explanation,
+    # "feature"->features. \b anchors each keyword to whole words.
+    return re.search(r"\b" + re.escape(k.lower()) + r"(?:s|es)?\b", text) is not None
+
 best, best_hits = None, 0
 for r in table.get("routes", []):
-    hits = sum(1 for k in r.get("keywords", []) if k.lower() in plow)
+    matched = [k for k in r.get("keywords", []) if _kw_hit(k, plow)]
+    hits = len(matched)
+    strong = sum(1 for k in matched if k.lower() not in weak)
+    # A single weak-only keyword (e.g. "plan" in "back to our plan") is not a
+    # confident route: require >=1 strong hit OR >=2 total hits.
+    if hits == 0 or (strong == 0 and hits < 2):
+        continue
     if hits > best_hits:
         best, best_hits = r, hits
 if not best or best_hits < minhits:
