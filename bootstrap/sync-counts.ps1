@@ -92,6 +92,12 @@ $McpServers = $null; $McpTools = $null
 if ($Section4 -match '\((\d+)\s+server') { $McpServers = [int]$Matches[1] }
 if ($Section4 -match '(\d+)\s+tools?\)') { $McpTools = [int]$Matches[1] }
 
+# ADR counts (Section 9 prose: "**Total ADRs: 21.**" + "(... 17 public + 4 confidential ...)")
+$AdrTotal = $null; $AdrPublic = $null
+$invRaw = Get-Content $Inventory -Raw
+if ($invRaw -match '\*\*Total ADRs:\s*(\d+)') { $AdrTotal = [int]$Matches[1] }
+if ($invRaw -match '(\d+)\s+public\s+\+\s+\d+\s+confidential') { $AdrPublic = [int]$Matches[1] }
+
 if (-not $Agents) {
     Write-Error "FATAL: could not parse Section 1 agent count"
     exit 2
@@ -145,13 +151,14 @@ function Test-Excluded($path) {
 }
 
 function Get-PluginRepoSurfaces {
-    Get-ChildItem -Path $RepoRoot -Recurse -File -Include '*.md', 'agent-registry.json', 'plugin.json' |
+    Get-ChildItem -Path $RepoRoot -Recurse -File -Include '*.md', 'agent-registry.json', 'plugin.json', 'marketplace.json' |
         Where-Object {
             $rel = $_.FullName.Substring($RepoRoot.Path.Length + 1)
             -not (Test-Excluded $_.FullName) -and
             ($_.Extension -eq '.md' -or
              $_.Name -eq 'agent-registry.json' -or
-             ($_.Name -eq 'plugin.json' -and $_.FullName -match '[\\/]\.claude-plugin[\\/]plugin\.json$'))
+             ($_.Name -eq 'plugin.json' -and $_.FullName -match '[\\/]\.claude-plugin[\\/]plugin\.json$') -or
+             ($_.Name -eq 'marketplace.json' -and $_.FullName -match '[\\/]\.claude-plugin[\\/]marketplace\.json$'))
         } |
         Select-Object -ExpandProperty FullName
 }
@@ -188,6 +195,13 @@ if ($Hooks)      { $Anchors += @{ keyword = 'hooks';                 count = $Ho
 if ($Frameworks) { $Anchors += @{ keyword = 'behavioral frameworks'; count = $Frameworks } }
 if ($Compliance) { $Anchors += @{ keyword = 'compliance frameworks'; count = $Compliance } }
 
+# Capability-summary "list" nouns — synced ONLY adjacent to a middot "·" (the summary
+# signature). "agents"/"frameworks" are EXCLUDED: office rosters ("16 agents · lead:")
+# and "78 behavioral vs 14 compliance vs top-3 frameworks" make them ambiguous.
+$ListAnchors = @()
+if ($Skills)   { $ListAnchors += @{ keyword = 'skills';   count = $Skills } }
+if ($Commands) { $ListAnchors += @{ keyword = 'commands'; count = $Commands } }
+
 function Sync-File($filePath) {
     $before = Get-Content $filePath -Raw -ErrorAction SilentlyContinue
     if ($null -eq $before) { return $false }
@@ -210,6 +224,28 @@ function Sync-File($filePath) {
             $patternCompound = "\b\d{1,4}(\s+)$kwEsc\b"
             $after = [regex]::Replace($after, $patternCompound, "$($a.count)`$1$($a.keyword)", 'IgnoreCase')
         }
+    }
+    # Capability-summary "list" nouns: require an adjacent middot "·" (U+00B7), so
+    # breakdowns like "(26 commands)" / "Office - 16 agents" are never touched.
+    # NOTE: group refs are braced (${1}) — .NET reads an un-braced $1 followed by the
+    # count digits as group $152 (invalid -> kept literal). Braces disambiguate.
+    foreach ($n in $ListAnchors) {
+        $nEsc = [regex]::Escape($n.keyword)
+        $after = [regex]::Replace($after, "\b\d{1,4}(\s+$nEsc\s*·)", "$($n.count)`${1}", 'IgnoreCase')
+        $after = [regex]::Replace($after, "(·\s*)\d{1,4}(\s+$nEsc\b)", "`${1}$($n.count)`${2}", 'IgnoreCase')
+    }
+    # ADR counts (no office/sub breakdown -> simple bare + specific forms are safe)
+    if ($AdrTotal) {
+        $after = [regex]::Replace($after, "\b\d{1,4}(\s+ADRs\b)", "$AdrTotal`${1}", 'IgnoreCase')
+        $after = [regex]::Replace($after, "\b\d{1,4}(\s+[Aa]rchitectural decisions)", "$AdrTotal`${1}", 'IgnoreCase')
+        $after = [regex]::Replace($after, "\b\d{1,4}(\s+Architecture Decision Records)", "$AdrTotal`${1}", 'IgnoreCase')
+        $after = [regex]::Replace($after, "\b\d{1,4}(\s+total\s+\(\s*\d+\s+public)", "$AdrTotal`${1}", 'IgnoreCase')
+        $after = [regex]::Replace($after, "\*\*\d{1,4}\*\*(\s*\|\s*ADRs\b)", "**$AdrTotal**`${1}", 'IgnoreCase')
+    }
+    if ($AdrPublic) {
+        $after = [regex]::Replace($after, "\b\d{1,4}(\s+public\b[^0-9\n]{0,8}\d+\s+confidential)", "$AdrPublic`${1}", 'IgnoreCase')
+        $after = [regex]::Replace($after, "(Public ADRs \()\d{1,4}(\))", "`${1}$AdrPublic`${2}", 'IgnoreCase')
+        $after = [regex]::Replace($after, "\b\d{1,4}(\s+public\s+(?:ADRs?|ones)\b)", "$AdrPublic`${1}", 'IgnoreCase')
     }
     if ($before -eq $after) { return $false }
     if ($DryRun -or $Check) {

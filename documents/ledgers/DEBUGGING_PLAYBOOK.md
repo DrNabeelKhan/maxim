@@ -259,5 +259,28 @@ The 5-ship 1-day cadence demonstrated that **the audit catches the audit-author'
 **Cross-links.** CHANGELOG v1.3.7 · BUG_TRACKER BUG-007 (original node_modules-absence fix) · `mcp/_shared/spawn-with-deps.mjs`.
 
 ---
+
+## §7 — 2026-06-26 — The count/version propagation tools were broken/incomplete (the real cause of recurring count-drift; PATTERN-01 #7)
+
+**Symptom.** Every release (incl. v1.3.8) required a manual "whack-a-mole" sweep of stale capability counts across ~12 docs + the marketplace listing. `bootstrap/sync-version.sh --version X.Y.Z` exited **1 with zero output** and bumped nothing; `config/agent-registry.json`'s version had been chronically stale (1.3.1 while the product was 1.3.7).
+
+**Root cause (two independent bugs).**
+1. **`sync-version.sh` — PATTERN-01 #7 (cross-platform path).** The version read was `CURRENT=$(python3 -c "...open('$REGISTRY')..." 2>/dev/null || node -e "...readFileSync('$REGISTRY')..." 2>/dev/null)`. `$REGISTRY` is an MSYS path (`/e/Projects/Maxim/...`); **Windows-native node/python cannot resolve it** (node: `node:fs` ENOENT) → both readers fail → `CURRENT=""` → the command substitution exits non-zero → **`set -e` killed the script at that line, silently** (stderr suppressed by `2>/dev/null`), never reaching the friendly error-check below it. A `set -e` + suppressed-stderr + cross-platform-interpreter combo that fails invisibly.
+2. **`sync-counts.sh` — incomplete coverage.** (a) It only matched **compound** anchors ("skill domains", "slash commands"), so bare-form prose ("37 skills", "48 commands") was never updated. (b) It **never scanned `.claude-plugin/marketplace.json`** — the live marketplace *description* shipped "37 skill domains, 48 slash commands" stale. (c) No ADR-count handling.
+
+**Fix (v1.3.8.1).**
+- `sync-version.{sh,ps1}` → **pure-shell version read** (grep/sed; no node/python, no MSYS-path dependency), dropped `set -e`, expanded the surface list to all version-bearing files (incl. **marketplace.json ×2** + the inventory stamp), added `--check`/`-Check`. Bumped agent-registry 1.3.1→1.3.8.
+- `sync-counts.{sh,ps1}` → added **marketplace.json** to the scan + **ADR-count** forms + bare-form summary anchors, **guarded by middot-adjacency** (see lessons). Now produces only correct fixes (validated: 3 real residuals fixed, 0 false positives; `.ps1 -Check` 0/828).
+- **Wired `sync-version --check` + `sync-counts --check` into `pre-commit.{sh,ps1}`** (fail-closed: blocks on exit 1 = drift; version always, counts only when the inventory is staged). Count/version drift now fails the commit instead of shipping.
+
+**Lessons.**
+1. **PATTERN-01 #7 — never feed an MSYS absolute path to a Windows-native interpreter.** Read JSON in pure shell (grep/sed) or convert the path. And `set -e` + `2>/dev/null` on the failing line = an *invisible* abort — the friendly error never runs. Prefer explicit error handling over `set -e` when a step's stderr is suppressed.
+2. **Bare single-word count matching is unsafe; require a structural signature.** "16 agents · lead:" (office roster), "(26 commands)" (tier breakdown), "top-3 frameworks" (per-agent qualifier), and "14 compliance frameworks" (a *different* count) all share the "N noun" shape. The safe discriminator is **middot `·` adjacency** (the capability-summary signature) — and even that is unsafe for **agents** (office rosters use "N agents ·") and **frameworks** (behavioral-78 vs compliance-14 vs top-3). Only `skills`/`commands`/`ADRs` are unambiguous enough.
+3. **.NET regex ≠ perl on un-braced backrefs.** In PowerShell `[regex]::Replace`, a replacement of `"$count$1"` where `$count` is digits produces `"52$1"` → fine, but `"$1$count"` produces `"$152"` → .NET reads `$152` as group 152 (invalid → kept literal). **Brace every group ref (`${1}`)**; perl is unaffected. Caught by a unit test before the file scan.
+4. **The tool, not the discipline, was the gap.** "Counts must match on every commit" was real policy, but the propagation tool silently didn't propagate. Fixing the *tool* + a fail-closed pre-commit gate is the structural fix; manual sweeps were treating the symptom.
+
+**Cross-links.** CHANGELOG v1.3.8 (count-propagation note) · [[project_v1.3.8_shipped]] memory (sync-version BROKEN / sync-counts INCOMPLETE) · `bootstrap/sync-version.{sh,ps1}` · `bootstrap/sync-counts.{sh,ps1}` · `.claude/hooks/pre-commit.{sh,ps1}` · PATTERN-01 registry (BUG_TRACKER).
+
+---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
 Licensed under Business Source License 1.1 (converts to Apache 2.0 after 4 years per ADR-005).

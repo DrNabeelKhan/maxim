@@ -1,166 +1,147 @@
 #!/usr/bin/env bash
 # Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
 # SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years per ADR-005)
-
-# sync-version.sh — Maxim Version Sync Tool
-# Version: 1.0.0
 #
-# Reads version from config/agent-registry.json (single source of truth)
-# and propagates it to ALL files that contain version strings.
+# sync-version.sh — Maxim Version Sync Tool
+# Version: 2.0.0
+#
+# Reads the version from config/agent-registry.json (single source of truth)
+# and propagates it to EVERY version-bearing surface. The read is PURE SHELL
+# (grep/sed) — no node/python — because Windows-native interpreters cannot
+# resolve MSYS absolute paths (/e/Projects/...), which silently broke v1.x of
+# this tool under `set -e` (PATTERN-01: cross-platform path resolution).
 #
 # Usage:
-#   cd maxim
-#   bash bootstrap/sync-version.sh              # apply changes
-#   bash bootstrap/sync-version.sh --dry-run    # preview only
-#   bash bootstrap/sync-version.sh --version 5.3.0  # bump + sync
+#   bash bootstrap/sync-version.sh                 # propagate the registry version to all surfaces
+#   bash bootstrap/sync-version.sh --version X.Y.Z # bump the registry + propagate
+#   bash bootstrap/sync-version.sh --dry-run       # preview, no writes
+#   bash bootstrap/sync-version.sh --check         # exit 1 if any surface disagrees (no writes) — for CI / pre-commit
 #
-# Cross-platform: Linux, macOS, Windows (Git Bash / WSL)
+# Cross-platform: Linux, macOS, Windows (Git Bash / WSL). No `set -e` (it masked
+# the read failure); errors are reported explicitly and exit with a clear code.
+# Exit: 0 = ok / in sync · 1 = drift remains (--check) · 2 = environment/parse error
 # ─────────────────────────────────────────────────────────────────────────
 
-set -euo pipefail
+set -uo pipefail
 
-Maxim="$(cd "$(dirname "$0")/.." && pwd)"
+MAXIM="$(cd "$(dirname "$0")/.." && pwd)"
 DRY_RUN=false
+CHECK=false
 NEW_VERSION=""
 
-# Parse args
 while [[ $# -gt 0 ]]; do
-  case $1 in
+  case "$1" in
     --dry-run) DRY_RUN=true; shift ;;
-    --version) NEW_VERSION="$2"; shift 2 ;;
-    *) echo "Unknown arg: $1"; exit 1 ;;
+    --check)   CHECK=true; DRY_RUN=true; shift ;;
+    --version) NEW_VERSION="${2:-}"; [[ -n "$NEW_VERSION" ]] || { echo "ERROR: --version needs a value" >&2; exit 2; }; shift 2 ;;
+    -h|--help) sed -n '5,20p' "$0" | sed 's/^# \?//'; exit 0 ;;
+    *) echo "ERROR: unknown arg: $1" >&2; exit 2 ;;
   esac
 done
 
-REGISTRY="$Maxim/config/agent-registry.json"
-if [[ ! -f "$REGISTRY" ]]; then
-  echo "ERROR: config/agent-registry.json not found at: $REGISTRY"
-  exit 1
-fi
+REGISTRY="$MAXIM/config/agent-registry.json"
+[[ -f "$REGISTRY" ]] || { echo "ERROR: config/agent-registry.json not found at $REGISTRY" >&2; exit 2; }
 
-CURRENT=$(python3 -c "import json; print(json.load(open('$REGISTRY'))['version'])" 2>/dev/null \
-  || node -e "console.log(JSON.parse(require('fs').readFileSync('$REGISTRY','utf8')).version)" 2>/dev/null)
+# ── Pure-shell version read (the top-level "version" is the FIRST in the file) ──
+read_top_version() {
+  grep -m1 -oE '"version"[[:space:]]*:[[:space:]]*"[^"]+"' "$1" 2>/dev/null | sed -E 's/.*"([^"]+)"[[:space:]]*$/\1/'
+}
 
-if [[ -z "$CURRENT" ]]; then
-  echo "ERROR: Could not read version from agent-registry.json"
-  exit 1
-fi
+CURRENT="$(read_top_version "$REGISTRY")"
+[[ -n "$CURRENT" ]] || { echo "ERROR: could not parse top-level \"version\" from agent-registry.json" >&2; exit 2; }
 
 TARGET="${NEW_VERSION:-$CURRENT}"
 
 echo ""
-if [[ -n "$NEW_VERSION" ]]; then
+if $CHECK; then
+  echo "Maxim Version Check — registry source-of-truth = v$CURRENT"
+elif [[ -n "$NEW_VERSION" ]]; then
   echo "Maxim Version Bump — v$CURRENT -> v$TARGET"
 else
-  echo "Maxim Version Sync — propagating v$TARGET to all files"
+  echo "Maxim Version Sync — propagating v$TARGET to all surfaces"
 fi
 echo ""
+echo "  File                                       Status"
+echo "  ─────────────────────────────────────      ──────"
 
-# ── File targets ─────────────────────────────────────────────────────────
+# ── Surfaces: "relative/path|template-with-%V|note" (every version-bearing file) ──
+# %V is substituted with the version. Templates are anchored to avoid false hits.
+SURFACES=(
+  'config/agent-registry.json|"version": "%V"|source of truth'
+  '.claude-plugin/plugin.json|"version": "%V"|plugin manifest'
+  '.claude-plugin/marketplace.json|"version": "%V"|marketplace (outer + entry)'
+  'README.md|version-%V-blue|README badge'
+  'documents/ledgers/AGENT_SKILL_INVENTORY.md|**Version:** v%V|inventory stamp'
+  'documents/guides/HELP.md|Maxim v%V|HELP header'
+  'documents/guides/ABOUT.md|Maxim v%V|ABOUT header'
+  'documents/guides/GETTING_STARTED.md|Maxim v%V|getting-started'
+  'documents/reference/MXM_COMMAND_MAP.md|Maxim v%V|command-map footer'
+)
+# NOTE: bootstrap/new-project-setup.sh's "MXM_version" is intentionally NOT synced
+# here. Per the pre-release audit it is a schema/launch-line field (canonical
+# config/project-manifest.json keeps it at "1.0.0"), not the per-patch product
+# version — so it must not track releases. (It currently reads 1.3.1; reconcile
+# its semantics separately, do not auto-bump it.)
 
-UPDATED=0
-SKIPPED=0
+UPDATED=0; OK=0; DRIFT=0; MISSING=0
+fmt() { printf "%-42s" "$1"; }
 
-sync_file() {
-  local file="$1"
-  local old_pattern="$2"
-  local new_pattern="$3"
-  local note="$4"
-  local filepath="$Maxim/$file"
-  local display=$(printf "%-35s" "$file")
+for entry in "${SURFACES[@]}"; do
+  file="${entry%%|*}"; rest="${entry#*|}"; tmpl="${rest%%|*}"; note="${rest##*|}"
+  fp="$MAXIM/$file"
+  oldpat="${tmpl//%V/$CURRENT}"
+  newpat="${tmpl//%V/$TARGET}"
 
-  if [[ ! -f "$filepath" ]]; then
-    echo "  $display MISSING"
-    ((SKIPPED++)) || true
-    return
+  if [[ ! -f "$fp" ]]; then
+    echo "  $(fmt "$file") MISSING"; MISSING=$((MISSING+1)); continue
   fi
 
-  if ! grep -qF "$old_pattern" "$filepath" 2>/dev/null; then
-    if grep -qF "$new_pattern" "$filepath" 2>/dev/null; then
-      echo "  $display CURRENT"
+  if $CHECK; then
+    # In --check (TARGET == registry version): the surface MUST contain the target pattern.
+    # marketplace.json carries TWO version fields → require both.
+    want=1; [[ "$file" == ".claude-plugin/marketplace.json" ]] && want=2
+    have=$(grep -cF "$newpat" "$fp" 2>/dev/null); have=${have:-0}
+    if [[ "$have" -ge "$want" ]]; then
+      echo "  $(fmt "$file") OK (v$TARGET)"; OK=$((OK+1))
     else
-      echo "  $display NOT FOUND ($note)"
+      echo "  $(fmt "$file") DRIFT — expected v$TARGET ($note)"; DRIFT=$((DRIFT+1))
     fi
-    ((SKIPPED++)) || true
-    return
+    continue
   fi
 
-  if $DRY_RUN; then
-    echo "  $display WOULD UPDATE ($note)"
+  if grep -qF "$oldpat" "$fp" 2>/dev/null && [[ "$CURRENT" != "$TARGET" ]]; then
+    if $DRY_RUN; then echo "  $(fmt "$file") WOULD UPDATE -> v$TARGET ($note)"
+    else
+      esc_old=$(printf '%s' "$oldpat" | sed 's/[&/\]/\\&/g')
+      esc_new=$(printf '%s' "$newpat" | sed 's/[&/\]/\\&/g')
+      sed -i "s/$esc_old/$esc_new/g" "$fp"
+      echo "  $(fmt "$file") UPDATED -> v$TARGET ($note)"
+    fi
+    UPDATED=$((UPDATED+1))
+  elif grep -qF "$newpat" "$fp" 2>/dev/null; then
+    echo "  $(fmt "$file") CURRENT (v$TARGET)"; OK=$((OK+1))
   else
-    sed -i "s|$(echo "$old_pattern" | sed 's/[&/\]/\\&/g')|$(echo "$new_pattern" | sed 's/[&/\]/\\&/g')|g" "$filepath"
-    echo "  $display UPDATED ($note)"
+    echo "  $(fmt "$file") NOT FOUND ($note)"; MISSING=$((MISSING+1))
   fi
-  ((UPDATED++)) || true
-}
+done
 
-echo "  File                              Status"
-echo "  ──────────────────────────────    ──────"
-
-sync_file "config/agent-registry.json" \
-  "\"version\": \"$CURRENT\"" \
-  "\"version\": \"$TARGET\"" \
-  "Source of truth"
-
-sync_file "README.md" \
-  "version-$CURRENT-blue" \
-  "version-$TARGET-blue" \
-  "Badge"
-
-sync_file "documents/guides/HELP.md" \
-  "Maxim v$CURRENT" \
-  "Maxim v$TARGET" \
-  "Header + footer"
-
-sync_file "documents/reference/MXM_COMMAND_MAP.md" \
-  "Maxim v$CURRENT" \
-  "Maxim v$TARGET" \
-  "Footer"
-
-sync_file "documents/reference/SKILLS_MAP.md" \
-  "v$CURRENT" \
-  "v$TARGET" \
-  "Source of truth line"
-
-sync_file "bootstrap/new-project-setup.sh" \
-  "\"MXM_version\": \"$CURRENT\"" \
-  "\"MXM_version\": \"$TARGET\"" \
-  "Generated manifest"
-
-sync_file ".claude-plugin/plugin.json" \
-  "\"version\": \"$CURRENT\"" \
-  "\"version\": \"$TARGET\"" \
-  "Plugin manifest (installed version)"
-
-sync_file "documents/guides/GETTING_STARTED.md" \
-  "v$CURRENT" \
-  "v$TARGET" \
-  "Version refs"
-
-# ── Update last_updated in registry ──────────────────────────────────────
-
+# ── Bump registry last_updated (pure sed — no python) ──
 if [[ -n "$NEW_VERSION" && "$NEW_VERSION" != "$CURRENT" && "$DRY_RUN" == "false" ]]; then
-  TODAY=$(date +%Y-%m-%d)
-  if command -v python3 &>/dev/null; then
-    python3 -c "
-import json
-r = json.load(open('$REGISTRY'))
-r['last_updated'] = '$TODAY'
-json.dump(r, open('$REGISTRY','w'), indent=2)
-print('  Registry last_updated set to $TODAY')
-"
-  fi
+  TODAY="$(date +%Y-%m-%d)"
+  sed -i "s/\"last_updated\": \"[^\"]*\"/\"last_updated\": \"$TODAY\"/" "$REGISTRY"
+  echo "  $(fmt "registry last_updated") -> $TODAY"
 fi
-
-# ── Summary ──────────────────────────────────────────────────────────────
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "  Version: v$TARGET"
-echo "  Updated: $UPDATED file(s)"
-echo "  Skipped: $SKIPPED file(s)"
-if $DRY_RUN; then
-  echo "  Mode: DRY RUN — no files changed"
+echo "  Version: v$TARGET   (source of truth: config/agent-registry.json)"
+if $CHECK; then
+  echo "  In sync: $OK · Drift: $DRIFT · Missing: $MISSING"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; echo ""
+  [[ "$DRIFT" -eq 0 ]] || { echo "CHECK FAILED — $DRIFT surface(s) disagree with the registry. Run: bash bootstrap/sync-version.sh" >&2; exit 1; }
+  exit 0
 fi
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo ""
+echo "  Updated: $UPDATED · Already current: $OK · Not found: $MISSING"
+$DRY_RUN && echo "  Mode: DRY RUN — no files changed"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; echo ""
+exit 0

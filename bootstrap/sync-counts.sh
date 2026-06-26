@@ -95,6 +95,10 @@ MCP_TOOLS=$(perl -ne   'if (/^##\s+Section 4.*?(\d+)\s+tools?\)/) { print $1; ex
 HOOKS=$(parse_section_count 'Section 5.*Hooks')
 FRAMEWORKS=$(parse_section_count 'Section 6.*Behavioral Frameworks')
 COMPLIANCE=$(parse_section_count 'Section 7.*Compliance Frameworks')
+# ADR counts (Section 9 prose, not a "## Section N (count)" heading): "**Total ADRs: 21.**"
+# and "(Count = 17 public + 4 confidential ...)".
+ADR_TOTAL=$(perl -ne 'if (/\*\*Total ADRs:\s*(\d+)/) { print $1; exit 0 }' "$INVENTORY")
+ADR_PUBLIC=$(perl -ne 'if (/(\d+)\s+public\s+\+\s+\d+\s+confidential/) { print $1; exit 0 }' "$INVENTORY")
 
 [[ -z "$AGENTS" ]]   && { echo "FATAL: could not parse Section 1 (Specialist Agents)" >&2; exit 2; }
 [[ -z "$SKILLS" ]]   && { echo "FATAL: could not parse Section 2 (Domain Skills)" >&2; exit 2; }
@@ -151,7 +155,7 @@ is_excluded() {
 # Plugin-repo glob list — markdown + JSON
 collect_plugin_repo_surfaces() {
   cd "$REPO_ROOT"
-  find . -type f \( -name "*.md" -o -path "*/config/agent-registry.json" -o -path "*/.claude-plugin/plugin.json" \) \
+  find . -type f \( -name "*.md" -o -path "*/config/agent-registry.json" -o -path "*/.claude-plugin/plugin.json" -o -path "*/.claude-plugin/marketplace.json" \) \
     -not -path "./node_modules/*" \
     -not -path "./.git/*" \
     -not -path "./mcp/*/node_modules/*" \
@@ -198,6 +202,20 @@ ANCHORS=()
 [[ -n "${FRAMEWORKS:-}" ]]  && ANCHORS+=("behavioral frameworks|$FRAMEWORKS")
 [[ -n "${COMPLIANCE:-}" ]]  && ANCHORS+=("compliance frameworks|$COMPLIANCE")
 
+# "List" nouns — synced ONLY when adjacent to a middot "·" (the capability-summary
+# signature: "... · 52 skills · 49 commands · 78 frameworks ..."), NEVER a standalone
+# breakdown. "agents" is DELIBERATELY EXCLUDED: office rosters use the identical
+# "16 agents · lead:" middot syntax, so a bare/middot match would corrupt every
+# per-office count to the global total (91). Agents stay on the adjective form
+# ("91 specialist agents") above; bare "91 agents" summaries are left for manual edit.
+LIST_ANCHORS=()
+[[ -n "${SKILLS:-}" ]]    && LIST_ANCHORS+=("skills|$SKILLS")
+[[ -n "${COMMANDS:-}" ]]  && LIST_ANCHORS+=("commands|$COMMANDS")
+# "frameworks" is EXCLUDED too: "78 behavioral" vs "14 compliance" vs "top-3 frameworks"
+# (a per-agent qualifier) all share the "N frameworks ·" shape — a bare/middot match
+# corrupts all three. The compound "behavioral frameworks" / "compliance frameworks"
+# anchors above handle frameworks unambiguously.
+
 # Build a single Perl regex pipeline that handles all anchors in one pass.
 # Pre-flight: build alternation of escaped anchor keywords for grep filtering.
 ANCHOR_GREP_PATTERN=""
@@ -209,6 +227,9 @@ for entry in "${ANCHORS[@]}"; do
     ANCHOR_GREP_PATTERN="$ANCHOR_GREP_PATTERN|$anchor"
   fi
 done
+# Bare nouns + ADR phrases not already covered by a compound anchor, so the
+# cheap pre-filter (grep) doesn't skip files that only carry a bare-form count.
+ANCHOR_GREP_PATTERN="$ANCHOR_GREP_PATTERN|skills|ADRs|architectural decisions|Architecture Decision Records"
 
 # Build Perl substitution chain (one expression per anchor, joined with `s/.../.../gi;`).
 # Run as a SINGLE perl invocation per file (vs. 8 — Windows perf fix).
@@ -234,6 +255,30 @@ build_perl_script() {
       script+="s/\\b\\d{1,4}(\\s+)$anchor\\b/${count}\$1$anchor/gi;"
     fi
   done
+  # ── Capability-summary "list" nouns: require an adjacent middot "·" (UTF-8
+  #    \xc2\xb7) — the summary signature — so standalone breakdowns like
+  #    "(26 commands)" or "Office — 16 agents" are NEVER touched. ──
+  for entry in "${LIST_ANCHORS[@]}"; do
+    local n="${entry%|*}"
+    local c="${entry##*|}"
+    script+="s/\\b\\d{1,4}(\\s+$n\\s*\\xc2\\xb7)/${c}\$1/gi;"         # "N noun ·"  (start/mid of list)
+    script+="s/(\\xc2\\xb7\\s*)\\d{1,4}(\\s+$n\\b)/\${1}${c}\$2/gi;"   # "· N noun"  (mid/end of list)
+  done
+  # ADRs have no office/sub-category breakdown → a simple bare form is safe.
+  [[ -n "${ADR_TOTAL:-}" ]] && script+="s/\\b\\d{1,4}(\\s+ADRs\\b)/${ADR_TOTAL}\$1/gi;"
+  # ── ADR-specific forms (avoid bare "public"/"total" — too ambiguous) ──
+  if [[ -n "${ADR_PUBLIC:-}" ]]; then
+    # "17 public · 4 confidential" — keep the confidential count; [^0-9\n]{0,8} spans " · "
+    script+="s/\\b\\d{1,4}(\\s+public\\b[^0-9\\n]{0,8}\\d+\\s+confidential)/${ADR_PUBLIC}\$1/gi;"
+    script+="s/(Public ADRs \\()\\d{1,4}(\\))/\${1}${ADR_PUBLIC}\$2/gi;"          # "Public ADRs (17)"
+    script+="s/\\b\\d{1,4}(\\s+public\\s+(?:ADRs?|ones)\\b)/${ADR_PUBLIC}\$1/gi;"  # "17 public ADRs / ones"
+  fi
+  if [[ -n "${ADR_TOTAL:-}" ]]; then
+    script+="s/\\b\\d{1,4}(\\s+[Aa]rchitectural decisions)/${ADR_TOTAL}\$1/gi;"
+    script+="s/\\b\\d{1,4}(\\s+Architecture Decision Records)/${ADR_TOTAL}\$1/gi;"
+    script+="s/\\b\\d{1,4}(\\s+total\\s+\\(\\s*\\d+\\s+public)/${ADR_TOTAL}\$1/gi;"  # "21 total (17 public"
+    script+="s/\\*\\*\\d{1,4}\\*\\*(\\s*\\|\\s*ADRs\\b)/**${ADR_TOTAL}**\$1/gi;"      # "**21** | ADRs" (table cell)
+  fi
   printf '%s' "$script"
 }
 

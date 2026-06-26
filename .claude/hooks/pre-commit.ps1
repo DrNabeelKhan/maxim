@@ -142,4 +142,28 @@ if (Test-Path $moatDrift) {
     }
 }
 
+# v1.3.8.1: count/version drift gate (fail-closed; blocks ONLY on exit 1 = drift,
+# never on exit 2 = environment/parse error). Mirrors pre-commit.sh.
+$syncDir = Join-Path $ProjectRoot 'bootstrap'
+$syncVer = Join-Path $syncDir 'sync-version.ps1'
+if (Test-Path $syncVer) {
+    & pwsh -NoProfile -File $syncVer -Check *> $null
+    if ($LASTEXITCODE -eq 1) {
+        [Console]::Error.WriteLine('[BLOCKED] version drift - a surface disagrees with config/agent-registry.json.')
+        [Console]::Error.WriteLine('   Fix: pwsh -File bootstrap/sync-version.ps1   then re-stage and commit.')
+        exit 1
+    }
+}
+if ($stagedFiles -match 'AGENT_SKILL_INVENTORY\.md') {
+    $syncCnt = Join-Path $syncDir 'sync-counts.ps1'
+    if (Test-Path $syncCnt) {
+        & pwsh -NoProfile -File $syncCnt -Check *> $null
+        if ($LASTEXITCODE -eq 1) {
+            [Console]::Error.WriteLine('[BLOCKED] capability-count drift - a surface disagrees with AGENT_SKILL_INVENTORY.md.')
+            [Console]::Error.WriteLine('   Fix: pwsh -File bootstrap/sync-counts.ps1   then re-stage and commit.')
+            exit 1
+        }
+    }
+}
+
 exit 0

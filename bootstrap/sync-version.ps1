@@ -2,181 +2,129 @@
 # SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years per ADR-005)
 
 # sync-version.ps1 — Maxim Version Sync Tool
-# Version: 1.0.0
+# Version: 2.0.0
 #
 # Reads the version from config/agent-registry.json (single source of truth)
-# and propagates it to ALL files that contain version strings.
+# and propagates it to EVERY version-bearing surface via TARGETED string
+# replacement (no ConvertFrom/ConvertTo-Json round-trip — that reformatted the
+# whole registry in v1.x). Parity with bootstrap/sync-version.sh.
 #
 # Usage:
-#   cd maxim
-#   .\bootstrap\sync-version.ps1              # apply changes
-#   .\bootstrap\sync-version.ps1 -WhatIf      # preview only
-#   .\bootstrap\sync-version.ps1 -NewVersion "5.3.0"  # bump + sync
+#   .\bootstrap\sync-version.ps1                      # propagate the registry version
+#   .\bootstrap\sync-version.ps1 -NewVersion "X.Y.Z"  # bump the registry + propagate
+#   .\bootstrap\sync-version.ps1 -WhatIf              # preview, no writes
+#   .\bootstrap\sync-version.ps1 -Check               # exit 1 if any surface disagrees (CI / pre-commit)
 #
-# Cross-platform: PowerShell 7+ (Windows, macOS, Linux)
+# Exit: 0 = ok / in sync · 1 = drift remains (-Check) · 2 = environment/parse error
 # ─────────────────────────────────────────────────────────────────────────
 
 [CmdletBinding(SupportsShouldProcess)]
 param(
-    [Parameter(Mandatory = $false)]
-    [string]$NewVersion = ""
+    [string]$NewVersion = "",
+    [switch]$Check
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-# ── Resolve Maxim repo root ───────────────────────────────────────────────
 $Maxim = Split-Path $MyInvocation.MyCommand.Path -Parent | Split-Path -Parent
-
 $registryPath = [IO.Path]::Combine($Maxim, "config", "agent-registry.json")
 if (-not (Test-Path $registryPath)) {
     Write-Host "ERROR: config/agent-registry.json not found at: $registryPath" -ForegroundColor Red
-    exit 1
+    exit 2
 }
 
-$registry = Get-Content $registryPath -Raw -Encoding UTF8 | ConvertFrom-Json
-$currentVersion = $registry.version
-
-if ([string]::IsNullOrWhiteSpace($NewVersion)) {
-    $targetVersion = $currentVersion
-    Write-Host ""
-    Write-Host "Maxim Version Sync — propagating v$targetVersion to all files" -ForegroundColor Cyan
+# ── Pure string version read (FIRST "version" = top-level; no JSON round-trip) ──
+$registryRaw = Get-Content $registryPath -Raw -Encoding UTF8
+if ($registryRaw -match '"version"\s*:\s*"([^"]+)"') {
+    $currentVersion = $Matches[1]
 } else {
-    $targetVersion = $NewVersion
-    Write-Host ""
-    Write-Host "Maxim Version Bump — v$currentVersion -> v$targetVersion" -ForegroundColor Cyan
+    Write-Host "ERROR: could not parse top-level version from agent-registry.json" -ForegroundColor Red
+    exit 2
 }
+$targetVersion = if ([string]::IsNullOrWhiteSpace($NewVersion)) { $currentVersion } else { $NewVersion }
 
-# ── Define all files + patterns that contain version strings ─────────────
+Write-Host ""
+if ($Check) {
+    Write-Host "Maxim Version Check — registry source-of-truth = v$currentVersion" -ForegroundColor Cyan
+} elseif ($NewVersion) {
+    Write-Host "Maxim Version Bump — v$currentVersion -> v$targetVersion" -ForegroundColor Cyan
+} else {
+    Write-Host "Maxim Version Sync — propagating v$targetVersion to all surfaces" -ForegroundColor Cyan
+}
+Write-Host ""
+Write-Host "  File                                       Status" -ForegroundColor White
+Write-Host "  ─────────────────────────────────────      ──────" -ForegroundColor DarkGray
 
-$versionTargets = @(
-    @{
-        File    = "config/agent-registry.json"
-        Pattern = '"version": "{OLD}"'
-        Replace = '"version": "{NEW}"'
-        Note    = "Source of truth"
-    },
-    @{
-        File    = "README.md"
-        Pattern = "version-{OLD}-blue"
-        Replace = "version-{NEW}-blue"
-        Note    = "Badge"
-    },
-    @{
-        File    = "documents/guides/HELP.md"
-        Pattern = "Maxim v{OLD}"
-        Replace = "Maxim v{NEW}"
-        Note    = "Header + footer"
-    },
-    @{
-        File    = "documents/reference/MXM_COMMAND_MAP.md"
-        Pattern = "Maxim v{OLD}"
-        Replace = "Maxim v{NEW}"
-        Note    = "Footer"
-    },
-    @{
-        File    = "documents/reference/SKILLS_MAP.md"
-        Pattern = "v{OLD}"
-        Replace = "v{NEW}"
-        Note    = "Source of truth line"
-    },
-    @{
-        File    = "documents/guides/GETTING_STARTED.md"
-        Pattern = "v{OLD}"
-        Replace = "v{NEW}"
-        Note    = "Version refs"
-    },
-    @{
-        File    = "bootstrap/new-project-setup.sh"
-        Pattern = '"MXM_version": "{OLD}"'
-        Replace = '"MXM_version": "{NEW}"'
-        Note    = "Generated manifest version"
-    },
-    @{
-        File    = ".claude-plugin/plugin.json"
-        Pattern = '"version": "{OLD}"'
-        Replace = '"version": "{NEW}"'
-        Note    = "Plugin manifest (installed version)"
-    }
+# Every version-bearing surface. {V} is substituted with the version.
+# NOTE: bootstrap/new-project-setup.sh "MXM_version" is intentionally NOT here —
+# it is a schema/launch-line field (canonical project-manifest keeps it 1.0.0),
+# not the per-patch product version. Do not auto-bump it.
+$surfaces = @(
+    @{ File = "config/agent-registry.json";                    Tmpl = '"version": "{V}"';   Note = "source of truth";       Want = 1 }
+    @{ File = ".claude-plugin/plugin.json";                    Tmpl = '"version": "{V}"';   Note = "plugin manifest";       Want = 1 }
+    @{ File = ".claude-plugin/marketplace.json";               Tmpl = '"version": "{V}"';   Note = "marketplace outer+entry"; Want = 2 }
+    @{ File = "README.md";                                     Tmpl = "version-{V}-blue";   Note = "README badge";          Want = 1 }
+    @{ File = "documents/ledgers/AGENT_SKILL_INVENTORY.md";    Tmpl = "**Version:** v{V}";  Note = "inventory stamp";       Want = 1 }
+    @{ File = "documents/guides/HELP.md";                      Tmpl = "Maxim v{V}";         Note = "HELP header";           Want = 1 }
+    @{ File = "documents/guides/ABOUT.md";                     Tmpl = "Maxim v{V}";         Note = "ABOUT header";          Want = 1 }
+    @{ File = "documents/guides/GETTING_STARTED.md";           Tmpl = "Maxim v{V}";         Note = "getting-started";       Want = 1 }
+    @{ File = "documents/reference/MXM_COMMAND_MAP.md";        Tmpl = "Maxim v{V}";         Note = "command-map footer";    Want = 1 }
 )
 
-# ── Process each target ──────────────────────────────────────────────────
+$updated = 0; $okCount = 0; $drift = 0; $missing = 0
 
-$updated = 0
-$skipped = 0
-$errors = 0
+foreach ($s in $surfaces) {
+    $fp = [IO.Path]::Combine($Maxim, $s.File)
+    $disp = $s.File.PadRight(42)
+    if (-not (Test-Path $fp)) { Write-Host "  $disp MISSING" -ForegroundColor Yellow; $missing++; continue }
 
-Write-Host ""
-Write-Host "  File                              Status" -ForegroundColor White
-Write-Host "  ──────────────────────────────    ──────" -ForegroundColor DarkGray
+    $content = Get-Content $fp -Raw -Encoding UTF8
+    $oldLit = $s.Tmpl -replace '\{V\}', $currentVersion
+    $newLit = $s.Tmpl -replace '\{V\}', $targetVersion
 
-foreach ($target in $versionTargets) {
-    $filePath = [IO.Path]::Combine($Maxim, $target.File)
-    $displayName = $target.File.PadRight(35)
-
-    if (-not (Test-Path $filePath)) {
-        Write-Host "  $displayName MISSING" -ForegroundColor Yellow
-        $skipped++
+    if ($Check) {
+        $have = ([regex]::Matches($content, [regex]::Escape($newLit))).Count
+        if ($have -ge $s.Want) { Write-Host "  $disp OK (v$targetVersion)" -ForegroundColor DarkGreen; $okCount++ }
+        else { Write-Host "  $disp DRIFT — expected v$targetVersion ($($s.Note))" -ForegroundColor Red; $drift++ }
         continue
     }
 
-    $content = Get-Content $filePath -Raw -Encoding UTF8
-    $oldPattern = $target.Pattern -replace '\{OLD\}', [regex]::Escape($currentVersion)
-    $newPattern = $target.Replace -replace '\{NEW\}', $targetVersion
-    $searchLiteral = $target.Pattern -replace '\{OLD\}', $currentVersion
-
-    if ($content -notmatch [regex]::Escape($searchLiteral)) {
-        # Try: maybe already at target version
-        $alreadyPattern = $target.Pattern -replace '\{OLD\}', $targetVersion
-        if ($content -match [regex]::Escape($alreadyPattern)) {
-            Write-Host "  $displayName CURRENT" -ForegroundColor DarkGreen
+    if (($currentVersion -ne $targetVersion) -and ($content -match [regex]::Escape($oldLit))) {
+        if ($WhatIfPreference) {
+            Write-Host "  $disp WOULD UPDATE -> v$targetVersion ($($s.Note))" -ForegroundColor Cyan
         } else {
-            Write-Host "  $displayName NOT FOUND ($($target.Note))" -ForegroundColor Yellow
+            $new = $content -replace [regex]::Escape($oldLit), $newLit
+            Set-Content $fp $new -Encoding UTF8 -NoNewline
+            Write-Host "  $disp UPDATED -> v$targetVersion ($($s.Note))" -ForegroundColor Green
         }
-        $skipped++
-        continue
-    }
-
-    if ($WhatIfPreference) {
-        Write-Host "  $displayName WOULD UPDATE ($($target.Note))" -ForegroundColor Cyan
         $updated++
+    } elseif ($content -match [regex]::Escape($newLit)) {
+        Write-Host "  $disp CURRENT (v$targetVersion)" -ForegroundColor DarkGreen; $okCount++
     } else {
-        try {
-            $newContent = $content -replace [regex]::Escape($searchLiteral), ($target.Replace -replace '\{NEW\}', $targetVersion)
-            Set-Content $filePath $newContent -Encoding UTF8 -NoNewline
-            Write-Host "  $displayName UPDATED ($($target.Note))" -ForegroundColor Green
-            $updated++
-        } catch {
-            Write-Host "  $displayName ERROR: $_" -ForegroundColor Red
-            $errors++
-        }
+        Write-Host "  $disp NOT FOUND ($($s.Note))" -ForegroundColor Yellow; $missing++
     }
 }
 
-# ── Update registry version if bumping ───────────────────────────────────
-
-if ($NewVersion -ne "" -and $NewVersion -ne $currentVersion -and -not $WhatIfPreference) {
-    # Add changelog entry to registry
-    $registry.version = $targetVersion
-    $registry.last_updated = (Get-Date -Format "yyyy-MM-dd")
-    $registryJson = $registry | ConvertTo-Json -Depth 10
-    Set-Content $registryPath $registryJson -Encoding UTF8
+# ── Bump registry last_updated (targeted replace — no JSON round-trip) ──
+if ($NewVersion -and ($NewVersion -ne $currentVersion) -and -not $WhatIfPreference -and -not $Check) {
+    $today = (Get-Date -Format "yyyy-MM-dd")
+    $reg = Get-Content $registryPath -Raw -Encoding UTF8
+    $reg = $reg -replace '"last_updated"\s*:\s*"[^"]*"', ('"last_updated": "' + $today + '"')
+    Set-Content $registryPath $reg -Encoding UTF8 -NoNewline
+    Write-Host "  $("registry last_updated".PadRight(42)) -> $today" -ForegroundColor Green
 }
-
-# ── Summary ──────────────────────────────────────────────────────────────
 
 Write-Host ""
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
-Write-Host "  Version: v$targetVersion" -ForegroundColor White
-Write-Host "  Updated: $updated file(s)" -ForegroundColor $(if ($updated -gt 0) { "Green" } else { "DarkGray" })
-Write-Host "  Skipped: $skipped file(s)" -ForegroundColor DarkGray
-if ($errors -gt 0) {
-    Write-Host "  Errors:  $errors file(s)" -ForegroundColor Red
+Write-Host "  Version: v$targetVersion   (source of truth: config/agent-registry.json)" -ForegroundColor White
+if ($Check) {
+    Write-Host "  In sync: $okCount · Drift: $drift · Missing: $missing" -ForegroundColor DarkGray
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan; Write-Host ""
+    if ($drift -gt 0) { Write-Host "CHECK FAILED — $drift surface(s) disagree with the registry. Run: .\bootstrap\sync-version.ps1" -ForegroundColor Red; exit 1 }
+    exit 0
 }
-if ($WhatIfPreference) {
-    Write-Host "  Mode: DRY RUN — no files changed" -ForegroundColor Yellow
-}
-Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
-Write-Host ""
-
-if ($errors -gt 0) { exit 1 }
+Write-Host "  Updated: $updated · Already current: $okCount · Not found: $missing" -ForegroundColor DarkGray
+if ($WhatIfPreference) { Write-Host "  Mode: DRY RUN — no files changed" -ForegroundColor Yellow }
+Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan; Write-Host ""
+exit 0

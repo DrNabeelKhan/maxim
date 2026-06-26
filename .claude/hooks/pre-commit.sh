@@ -143,4 +143,27 @@ if [ -x "$HOOK_DIR/behavioral-moat-drift.sh" ]; then
   fi
 fi
 
+# ----- v1.3.8.1: count/version drift gate (fail-closed; blocks ONLY on exit 1 = drift,
+# never on exit 2 = environment/parse error). Keeps the capability-count-propagation
+# problem out of the repo's DNA instead of catching it post-ship. -----
+SYNC_DIR="$PROJECT_ROOT/bootstrap"
+# Version drift — fast (greps ~9 surfaces) → check on every commit.
+if [ -f "$SYNC_DIR/sync-version.sh" ]; then
+  bash "$SYNC_DIR/sync-version.sh" --check >/dev/null 2>&1
+  [ "$?" -eq 1 ] && {
+    echo "🔴 Commit BLOCKED: version drift — a surface disagrees with config/agent-registry.json." >&2
+    echo "   Fix: bash bootstrap/sync-version.sh   then re-stage and commit." >&2
+    exit 1
+  }
+fi
+# Count drift — slower (scans surface files) → only when the inventory (source of truth) is staged.
+if echo "$STAGED_FILES" | grep -q 'AGENT_SKILL_INVENTORY.md' && [ -f "$SYNC_DIR/sync-counts.sh" ]; then
+  bash "$SYNC_DIR/sync-counts.sh" --check >/dev/null 2>&1
+  [ "$?" -eq 1 ] && {
+    echo "🔴 Commit BLOCKED: capability-count drift — a surface disagrees with AGENT_SKILL_INVENTORY.md." >&2
+    echo "   Fix: bash bootstrap/sync-counts.sh   then re-stage and commit." >&2
+    exit 1
+  }
+fi
+
 exit 0
