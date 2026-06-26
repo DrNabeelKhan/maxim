@@ -5,13 +5,13 @@
 /**
  * mxm-commands — MCP Server (v1.2.0)
  *
- * Slash-command dispatcher. Exposes Maxim's 48 /mxm-* slash commands as a
+ * Slash-command dispatcher. Exposes Maxim's 49 /mxm-* slash commands as a
  * callable MCP tool surface. Provides command parity in Claude Desktop /
  * Claude.ai Web where native slash commands don't exist.
  *
  * 2 tools:
  *   - mxm_command(command, args?)  Look up routing decision for a slash command
- *   - list_commands()              List all 48 commands grouped by tier
+ *   - list_commands()              List all 49 commands grouped by tier
  *
  * This server is INFORMATIONAL — it returns the routing decision (which office,
  * which agents, which framework, which behavioral overlay) so the calling LLM
@@ -26,7 +26,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 
 // ──────────────────────────────────────────────────────────────────────────────
-// Command routing table — 48 commands per AGENT_SKILL_INVENTORY v1.2.0
+// Command routing table — 49 commands per AGENT_SKILL_INVENTORY v1.3.8
 // ──────────────────────────────────────────────────────────────────────────────
 
 const COMMANDS = {
@@ -200,6 +200,7 @@ const COMMANDS = {
   "mxm-voice": { tier: "domain", intent: "Voice-driven office routing (Whisper STT + Kokoro TTS)", primary_office: "Router", lead_agent: "mxm-voice MCP", note: "Requires mbailey/voicemode plugin" },
   "mxm-watch": { tier: "domain", intent: "Proactive Watch (13 drift classes)", primary_office: "Router", lead_agent: "proactive-watch skill" },
   "mxm-wiki": { tier: "domain", intent: "Cross-project knowledge layer (MemPalace-backed)", primary_office: "Memory", lead_agent: "wiki-ingest + wiki-query + wiki-lint + wiki-explore skills" },
+  "mxm-workflow": { tier: "domain", intent: "Autonomous workflow orchestration (ADR-022 Autonomous Workflow Standard)", primary_office: "Orchestrators", lead_agent: "orchestrator skill + orchestrator/engine.mjs", note: "Bounded autonomous multi-step runs — BudgetGuard hard-kill + StateStore + dead-letter + dry-run default" },
 };
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -233,7 +234,7 @@ server.tool(
             text: JSON.stringify(
               {
                 error: `Unknown Maxim command: ${command}`,
-                hint: "Use list_commands to see all 48 commands.",
+                hint: "Use list_commands to see all 49 commands.",
                 did_you_mean: suggestions.length > 0 ? suggestions : undefined,
               },
               null,
@@ -282,7 +283,7 @@ server.tool(
 
 server.tool(
   "list_commands",
-  "List all 48 Maxim slash commands grouped by tier (TIER 1 verb-first · TIER 2 office shortcuts · TIER 3 persona dispatchers · Domain & workflow). Returns each command's intent and primary office.",
+  "List all 49 Maxim slash commands grouped by tier (TIER 1 verb-first · TIER 2 office shortcuts · TIER 3 persona dispatchers · Domain & workflow). Returns each command's intent and primary office.",
   {
     tier: z.enum(["1", "2", "3", "domain", "all"]).optional().describe("Filter by tier. Default: 'all'."),
   },
@@ -314,7 +315,11 @@ server.tool(
           type: "text",
           text: JSON.stringify(
             {
-              total: 48,
+              total:
+                grouped.tier_1.length +
+                grouped.tier_2.length +
+                grouped.tier_3.length +
+                grouped.domain.length,
               tier_1_verb_first: grouped.tier_1.length,
               tier_2_office: grouped.tier_2.length,
               tier_3_persona: grouped.tier_3.length,
