@@ -280,7 +280,7 @@ Acknowledge the "why not multi-LLM?" question upfront; turn it into positioning.
 ## 🟠 Why Claude-Native?
 
 Maxim is Claude-exclusive by design, not accident. The depth comes from Claude-specific
-integrations: CLAUDE.md, Agent Skills, MCP, 10 executable hooks, cross-surface packaging
+integrations: CLAUDE.md, Agent Skills, MCP, 16 executable hooks, cross-surface packaging
 across Claude Code / Desktop / CLI / Dispatch / Cowork / Web Projects.
 
 Abstracting the LLM layer would dilute that depth without opening any buyer segment that

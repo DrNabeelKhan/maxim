@@ -84,7 +84,9 @@ emit_drift() {
 # we extract the parenthesized number as the truth.
 parse_section_count() {
   local section_pattern="$1"
-  perl -ne 'if (/^##\s+'"$section_pattern"'.*?\((\d+)\)/) { print $1; exit 0 }' "$INVENTORY"
+  # \((\d+) not \((\d+)\) — Section 5's heading is "(16 scripts, 8 hooks × 2 platforms)",
+  # so the count is not immediately before the close paren. Match the first number after "(".
+  perl -ne 'if (/^##\s+'"$section_pattern"'.*?\((\d+)/) { print $1; exit 0 }' "$INVENTORY"
 }
 
 AGENTS=$(parse_section_count 'Section 1.*Specialist Agents')
@@ -249,7 +251,7 @@ build_perl_script() {
     #                                       historical changelog entries).
     # Class 11 detection still flags edge cases for human review.
     script+="s/\\b\\d{1,4}\\+(\\s+)$anchor\\b/${count}+\$1$anchor/gi;"
-    script+="s/\\b\\d{1,4}(\\s+(?:specialist|governed|peer-reviewed|Maxim|slash)\\s+)$anchor\\b/${count}\$1$anchor/gi;"
+    script+="s/\\b\\d{1,4}(\\s+(?:specialist|governed|peer-reviewed|executable|Maxim|slash)\\s+)$anchor\\b/${count}\$1$anchor/gi;"
     # Compound keyword detection: anchor contains a whitespace character.
     if [[ "$anchor" == *" "* ]]; then
       script+="s/\\b\\d{1,4}(\\s+)$anchor\\b/${count}\$1$anchor/gi;"
@@ -295,9 +297,11 @@ sync_file() {
   fi
 
   local before after
-  before=$(<"$file")
-  # Single perl invocation for all 8 anchors.
-  after=$(printf '%s' "$before" | perl -pe "$PERL_SCRIPT")
+  # Preserve trailing newline(s): $(...) command substitution strips them, so append a
+  # sentinel "x" inside the subshell and strip it back off — keeps the file's EOF byte intact.
+  before=$(cat "$file"; printf x); before=${before%x}
+  # Single perl invocation for all anchors (same sentinel guard on the perl output).
+  after=$(printf '%s' "$before" | perl -pe "$PERL_SCRIPT"; printf x); after=${after%x}
 
   if [[ "$before" == "$after" ]]; then
     return 1  # unchanged

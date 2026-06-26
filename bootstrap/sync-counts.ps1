@@ -74,8 +74,9 @@ function Emit-Drift($class, $file, $anchor, $claimed, $canonical) {
 # =====================================================================
 
 function Parse-SectionCount($pattern) {
-    Get-Content $Inventory | Where-Object { $_ -match "^##\s+$pattern.*?\((\d+)\)" } | ForEach-Object {
-        if ($_ -match '\((\d+)\)') { return [int]$Matches[1] }
+    # \((\d+) not \((\d+)\) — Section 5 heading is "(16 scripts, 8 hooks × 2 platforms)".
+    Get-Content $Inventory | Where-Object { $_ -match "^##\s+$pattern.*?\((\d+)" } | ForEach-Object {
+        if ($_ -match '\((\d+)') { return [int]$Matches[1] }
     } | Select-Object -First 1
 }
 
@@ -216,7 +217,7 @@ function Sync-File($filePath) {
         #                                       Compounds are specific enough to avoid the false-positive
         #                                       classes single-word bare-matches would hit.
         $patternPlus = "\b\d{1,4}\+(\s+)$kwEsc\b"
-        $patternAdj  = "\b\d{1,4}(\s+(?:specialist|governed|peer-reviewed|Maxim|slash)\s+)$kwEsc\b"
+        $patternAdj  = "\b\d{1,4}(\s+(?:specialist|governed|peer-reviewed|executable|Maxim|slash)\s+)$kwEsc\b"
         $after = [regex]::Replace($after, $patternPlus, "$($a.count)+`$1$($a.keyword)", 'IgnoreCase')
         $after = [regex]::Replace($after, $patternAdj,  "$($a.count)`$1$($a.keyword)",  'IgnoreCase')
         # Compound keyword detection: anchor contains a whitespace character.
