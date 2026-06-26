@@ -8,6 +8,40 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.8 — 2026-06-26 — Autonomous Workflow Standard + 14 everyday skills + router hardening
+
+Pre-release-audit dispatched before tag. Counts changed: 91 agents · **52 skills** (37 domain + 14 everyday + 1 orchestrator; was 37) · **49 commands** (+`/mxm-workflow`; was 48) · 9 MCPs/95 tools · 78 frameworks · 16 hooks · **21 ADRs/17 public** (+ADR-022; was 20/16). Features are grouped below for traceability; each group is a separate commit under tag `v1.3.8`.
+
+### Group 1 — Added: Autonomous Workflow Standard (ADR-022) + `mxm-orchestrator`
+
+The governed home of **unattended** automation — the distinction the `loops` skill deliberately left open: a loop assumes you're watching (no invented budgets); a **workflow** assumes you're away, so budgets, a separate verification gate, and dry-run-default are mandatory.
+
+- **[ADR-022](documents/ADRs/ADR-022-autonomous-workflow-standard.md)** ratified (`accepted`) — the three-layer shape (Trigger→Agent→**Verify**), the `Workflow` contract, mandatory per-run guards, and the central orchestrator. Public ADR #17.
+- **`mxm-orchestrator` engine** (`orchestrator/engine.mjs`, pure Node, zero deps): `BudgetGuard` (hard-kill on `max_tokens`/`max_tool_calls`/`max_runtime_s`/`max_cost_usd`), `StateStore` (+ idempotency), unified `RunLog` (`.mxm-skills/runlog.jsonl`), `Registry`, dead-letter, **dry-run default ON**.
+- **Guard-breach acceptance test** (`orchestrator/acceptance-test.mjs`): **29/29 PASS** — a workflow told to overspend hard-stops (`exhausted` + dead-letter + log) before anything reaches the outside world; dry-run skips side-effects; idempotent re-fire is a clean no-op.
+- **`/mxm-workflow`** command + **`orchestrator`** skill (the authoring contract + 10-section template).
+- **2 reference workflows**, both dry-run-proven: `inbox-triage` and `competitor-watch` (read-only, Workflow #2).
+
+### Group 2 — Added: 14 everyday skills (the "30 everyday skills" menu, made true)
+
+Benefit-first consumer-surface skills (`everyday_skill: true`), each a thin layer over existing depth carrying the Maxim overlay (framework citation per ADR-007 + confidence tag per ADR-010) — real triggerable skills, not re-labels: `quote-engine` · `repurpose-engine` · `hook-lab` · `post-analyzer` · `lead-qualifier` · `proposal-writer` · `scope-guard` · `invoice-builder` · `company-teardown` · `logo-concepts` · `source-checker` · `daily-digest` · `competitor-watch` · `inbox-triage`. Maps the 30-skill marketing menu: **24 of 30 now have a dedicated surface**, 4 served by existing surfaces (`/mxm-ship`, `api-integrator`, `changelog-writer`, `/mxm-ceo-morning`), 2 off-brand (skipped). All 28 on-brand covered, 0 gaps.
+
+### Group 3 — Added: connector-native integration (ADR-018 applied — "consume, don't rebuild")
+
+`inbox-triage`, `daily-digest`, and `competitor-watch` **CONSUME** existing connectors (Gmail/Workspace, news/web) rather than reimplementing them — Maxim adds the brain (triage/filter logic + frameworks), the privacy gate (CSO auto-loop; email = PII), and the brakes (dry-run workflow). Verified against primary docs (2026-06-26): the Gmail connector is **GA, all users, and draft-only — it cannot send** (platform-enforced, on top of Maxim's dry-run). Positioning: *Maxim governs your connectors; it doesn't replace them.*
+
+### Group 4 — Fixed: ADR-021 router hardening (the previously-held fixes)
+
+The default-on intent router used substring keyword matching (`min_keyword_hits=1`), causing false routes (`code`⊂codex, `plan`⊂explanation). Now: **word-boundary matching** (`\b<kw>(?:s|es)?\b`) + a **`weak_keywords`** gate (a lone weak noun no longer routes) + content additions (`reel`/`instagram`/`ig`/`carousel`/`hashtag`). Tested before/after (0 regressions); previously live-patched into the install, **now shipped**. (`.claude/hooks/user-prompt-router.{sh,ps1}` · `config/routing-table.json`.)
+
+### Group 5 — Added: marketing assets
+
+`documents/marketing/one-pagers/everyday-skills-workflows-loops.md` (the *"30 everyday skills · 50 autonomous workflows · bounded loops"* one-pager) + `documents/marketing/series/maxim-by-use-case.md` (the 7-episode content series plan).
+
+### Version → 1.3.8 (`config/agent-registry.json` → plugin.json · marketplace.json outer+entry · README badge · inventory stamp) + `bootstrap/sync-counts` propagation (37→52 skills, 48→49 commands across declared surfaces).
+
+---
+
 ## v1.3.7 — 2026-06-20 — Invisible MCP deps on update (+ cross-surface doc coherence)
 
 Pre-release-audit dispatched before tag. No capability-count changes (91 agents · 37 skills · 48 commands · 9 MCPs/95 tools · 78 frameworks · 16 hooks · 20 ADRs unchanged).

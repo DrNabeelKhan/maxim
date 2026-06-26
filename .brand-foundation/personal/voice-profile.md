@@ -30,7 +30,7 @@ see_also:
 
 **Maxim. The Behavioral Intelligence Layer.**
 
-Behind every AI agent Maxim ships, peer-reviewed behavioral science: 78 frameworks from Fogg, Cialdini, Kahneman, Ryan and Deci, Thaler, 73 more. Behind every output, a specialist from one of 7 executive offices: CEO, CTO, CMO, CSO, CPO, COO, CINO. 91 agents. 37 skill domains. 9 MCPs / 95 tools. One open-source core under BSL 1.1. 14 commercial packs across 3 tiers (6 L1 capability + 4 L2 vertical + 4 L3 industry) for teams that need the moat.
+Behind every AI agent Maxim ships, peer-reviewed behavioral science: 78 frameworks from Fogg, Cialdini, Kahneman, Ryan and Deci, Thaler, 73 more. Behind every output, a specialist from one of 7 executive offices: CEO, CTO, CMO, CSO, CPO, COO, CINO. 91 agents. 52 skill domains. 9 MCPs / 95 tools. One open-source core under BSL 1.1. 14 commercial packs across 3 tiers (6 L1 capability + 4 L2 vertical + 4 L3 industry) for teams that need the moat.
 
 Not a prompt library. Not a chatbot. Not a model wrapper. The distinction matters: Maxim sits at the layer most tools never reach. Behavioral science baked into dispatch. Governance as architecture, not afterthought. Agent coordination as competitive moat.
 

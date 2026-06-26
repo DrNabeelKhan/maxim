@@ -1,6 +1,6 @@
 # Maxim — Claude Code Plugin Distribution
 
-**Version:** 6.4.4
+**Version:** 1.3.8
 **License:** BSL 1.1 (4-year Apache 2.0 conversion per ADR-005)
 **Namespace:** `maxim`
 
@@ -40,8 +40,8 @@ After installation, `/plugin list` confirms the plugin is active. The plugin loa
 ### Free tier (shipped with plugin)
 
 - 91 Maxim agents across 7 offices (24 dispatchable + 67 specialist catalog via mxm-catalog MCP per ADR-017)
-- 37 skill domains (core behavioral + office domains + notebooklm-py + voice-routing)
-- 48 slash commands
+- 52 skill domains (core behavioral + office domains + notebooklm-py + voice-routing)
+- 49 slash commands
 - 13 Proactive Watch drift classes (4 free at Core severity, 9 gated severity-block at Pro+)
 - 9 MCP servers, 95 tools
 - Full CSO auto-loop governance

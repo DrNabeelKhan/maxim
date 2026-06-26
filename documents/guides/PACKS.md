@@ -7,7 +7,7 @@
 
 ## Situation · Complication · Question · Answer
 
-**Situation.** Maxim ships a behavioral-intelligence operating system: 91 specialist agents, 37 skill domains, 48 slash commands, 9 MCPs / 95 tools, 78 peer-reviewed frameworks, 14 compliance frameworks, 13 drift classes. The Core is free forever (Apache 2.0 in four years per ADR-005). The structural moats — audit trail, drift detection, voice lock, compliance enforcement — ship as gated packs.
+**Situation.** Maxim ships a behavioral-intelligence operating system: 91 specialist agents, 52 skill domains, 49 slash commands, 9 MCPs / 95 tools, 78 peer-reviewed frameworks, 14 compliance frameworks, 13 drift classes. The Core is free forever (Apache 2.0 in four years per ADR-005). The structural moats — audit trail, drift detection, voice lock, compliance enforcement — ship as gated packs.
 
 **Complication.** Most plugins publish a flat capability list. A buyer can't tell what they'd *use* versus what they'd *own and ignore*. Picking a tier without seeing the moat work on real work is a Prospect Theory bet against loss aversion: every operator overweights the risk of paying for something they won't use.
 
@@ -31,7 +31,7 @@ Maxim Core is the complete governance substrate. It is **not crippleware** — p
 | Compliance advisory | 14 frameworks surface relevant requirements (paid tier enforces; Core advises) |
 | Hooks | 16 executable hooks across session lifecycle · git hygiene · pre-commit secret scan |
 | Drift classes | All 13 Proactive Watch classes scan on session start (paid tier adds severity gating) |
-| ADRs | 20 ADRs · 16 public describing Maxim's commitments to operators |
+| ADRs | 21 ADRs · 17 public describing Maxim's commitments to operators |
 
 License: Business Source License 1.1. Use it internally, with clients, fork it, ship it inside your own product. The only restriction (per ADR-005) is you cannot resell a competing commercial pack catalog. Apache 2.0 conversion in four years regardless.
 
@@ -80,7 +80,7 @@ All 14 packs unlocked. 90 days. No card. Cancel anytime.
 
 Best for: solo operators evaluating Maxim. Hobbyists. Learners.
 
-**What you keep (Core, free forever):** 91 agents · 37 skills · 48 commands · 9 MCPs / 95 tools · 78 frameworks · advisory-mode compliance · 13-class drift detection without severity gating.
+**What you keep (Core, free forever):** 91 agents · 52 skills · 49 commands · 9 MCPs / 95 tools · 78 frameworks · advisory-mode compliance · 13-class drift detection without severity gating.
 
 **What stays gated until upgrade:**
 - Audit trail on every AI decision (L1.1 AI Governance · Prospect Theory loss-framing)
@@ -194,7 +194,7 @@ Per ADR-019, prices live at `maxim.isystematic.com/pricing`. The wizard intentio
 
 | Tier | Monthly | Annual (2 months free) | Composes |
 |---|---:|---:|---|
-| Core (Solo) | **$0** | $0 | 91 agents · 37 skills · 48 commands · 9 MCPs · 95 tools · 78 frameworks · advisory compliance · 13-class drift |
+| Core (Solo) | **$0** | $0 | 91 agents · 52 skills · 49 commands · 9 MCPs · 95 tools · 78 frameworks · advisory compliance · 13-class drift |
 | Pro | **$19.99/mo** | $200/yr | Core + 6 L1 capability packs |
 | Pro + Compliance | **$39/mo** | $390/yr | Pro + L1.4 Compliance Shield with full 14-framework enforcement at MCP layer |
 | Professional | **$99/mo** | $990/yr | Pro + L1.5 Brand & Design Pro unlimited + unlimited voice + priority support |

@@ -455,7 +455,7 @@ The cache file is gitignored — it's per-operator-per-machine, not part of the 
 This file references count claims that must match `documents/ledgers/AGENT_SKILL_INVENTORY.md`. The `bootstrap/sync-counts.{sh,ps1}` tool propagates updates here automatically when INVENTORY changes. If you see a count mismatch in this output, run sync-counts.
 
 Current authoritative counts (v1.3.2 · verified against AGENT_SKILL_INVENTORY.md):
-- 91 agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP) · 37 skill domains · 48 slash commands · 9 MCP servers · 95 MCP tools
+- 91 agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP) · 52 skill domains · 49 slash commands · 9 MCP servers · 95 MCP tools
 - 16 hook scripts · 78 frameworks · 14 compliance frameworks · 20 ADRs · 13 drift classes
 
 ---

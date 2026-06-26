@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.7 · **Last verified:** 2026-06-20 (v1.3.7 invisible-MCP-deps-on-update ship)
+**Version:** v1.3.8 · **Last verified:** 2026-06-26 (v1.3.8 Autonomous Workflow Standard + 14 everyday skills ship)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -26,17 +26,17 @@ Single source of truth for Maxim's capability counts. On every commit that touch
 
 ---
 
-## Section 2 — Domain Skills (37)
+## Section 2 — Domain Skills (52)
 
 Skills live under `.claude/skills/<domain>/SKILL.md`. Domain list authoritative in `documents/reference/SKILLS_MAP.md` and `CLAUDE.d/dispatch.md`.
 
-Categories: AI media, banner design, behavioral science, brand, CEO automation, compliance, content, design (dispatcher + sub-domains), design resources, design system, engineering, enterprise architecture, junction guard, marketing, memory-palace, operator profile, proactive watch, product, product development research, project management, search visibility, security, session memory, slides, studio operations, testing, UI styling, UI/UX Pro Max, usage-aware scheduler, voice, **voice-routing**, **loops**, wiki (ingest/query/lint/explore).
+Categories: AI media, banner design, behavioral science, brand, CEO automation, compliance, content, design (dispatcher + sub-domains), design resources, design system, engineering, enterprise architecture, junction guard, marketing, memory-palace, operator profile, proactive watch, product, product development research, project management, search visibility, security, session memory, slides, studio operations, testing, UI styling, UI/UX Pro Max, usage-aware scheduler, voice, **voice-routing**, **loops**, **orchestrator**, wiki (ingest/query/lint/explore), **+ 14 everyday skills** (`quote-engine`, `scope-guard`, `invoice-builder`, `repurpose-engine`, `hook-lab`, `post-analyzer`, `lead-qualifier`, `proposal-writer`, `company-teardown`, `inbox-triage`, `logo-concepts`, `source-checker`, `daily-digest`, `competitor-watch`).
 
-**Total domain skills: 37.** Net delta (36 → 37): `loops` added 2026-06-19 (v1.3.3) — bounded agent-loop orchestration skill; the 31-loop catalog mapped to Maxim offices + 10 native gap-loops + the Maxim behavioral overlay (confidence tagging, framework citation, CSO auto-loop, no-fabrication). Prior art loop-library + autonomy-loop, cited per ADR-007. Prior delta from v1.1.1 (34 → 36): `voice-routing` added 2026-05-19 per ADR-016 — callable lookup wrapper around `myVoiceDNA/VOICE_SELECTION.md`; consumed by `nk-writer` agent and per-startup brand-writer instances. `notebooklm-py` added 2026-05-20 per ADR-018 — Maxim-flavored skill wrapping the upstream `teng-lin/notebooklm-py` MIT skill; layered with ADR-007 framework citations (Diátaxis · Diffusion of Innovations · Dual Coding Theory) and CSO compliance-orchestrator auto-loop on source uploads.
+**Total skills: 52** — 37 domain + **14 everyday skills** + **1 orchestrator**. The 14 everyday skills (v1.3.8, `everyday_skill: true`) are benefit-first consumer-surface skills over existing depth — each carries the Maxim behavioral overlay (framework citation per ADR-007 + confidence tag per ADR-010), so they are real triggerable skills, not re-labels: `quote-engine` · `scope-guard` · `invoice-builder` · `repurpose-engine` · `hook-lab` · `post-analyzer` · `lead-qualifier` · `proposal-writer` · `company-teardown` · `inbox-triage` · `logo-concepts` · `source-checker` · `daily-digest` · `competitor-watch`. `inbox-triage`/`daily-digest`/`competitor-watch` CONSUME connectors (Gmail/news/web) per ADR-018 — Maxim governs them, doesn't rebuild them — and ship unattended dry-run workflows under `orchestrator/workflows/`. They map to **24 of the 30 "everyday skills" marketing menu given a dedicated surface; the other 4 on-brand are served by existing surfaces (`/mxm-ship`, `api-integrator`, `changelog-writer`, `/mxm-ceo-morning`); 2 are off-brand (skipped).** `orchestrator` (v1.3.8) is the ADR-022 Autonomous Workflow Standard skill (`mxm-orchestrator` engine + `/mxm-workflow`). Net delta (36 → 37): `loops` added 2026-06-19 (v1.3.3) — bounded agent-loop orchestration skill; the 31-loop catalog mapped to Maxim offices + 10 native gap-loops + the Maxim behavioral overlay (confidence tagging, framework citation, CSO auto-loop, no-fabrication). Prior art loop-library + autonomy-loop, cited per ADR-007. Prior delta from v1.1.1 (34 → 36): `voice-routing` added 2026-05-19 per ADR-016 — callable lookup wrapper around `myVoiceDNA/VOICE_SELECTION.md`; consumed by `nk-writer` agent and per-startup brand-writer instances. `notebooklm-py` added 2026-05-20 per ADR-018 — Maxim-flavored skill wrapping the upstream `teng-lin/notebooklm-py` MIT skill; layered with ADR-007 framework citations (Diátaxis · Diffusion of Innovations · Dual Coding Theory) and CSO compliance-orchestrator auto-loop on source uploads.
 
 ---
 
-## Section 3 — Slash Commands (48)
+## Section 3 — Slash Commands (49)
 
 All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/reference/MXM_COMMAND_MAP.md`.
 
@@ -48,7 +48,7 @@ All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/ref
 
 **Domain and workflow (26):** `/mxm-behavior`, `/mxm-brand-voice`, `/mxm-compliance`, `/mxm-context`, `/mxm-design`, `/mxm-health`, `/mxm-implement`, `/mxm-new-project`, `/mxm-organize`, `/mxm-portfolio`, `/mxm-recall`, `/mxm-release`, `/mxm-remember`, `/mxm-route`, `/mxm-security`, `/mxm-self-update`, `/mxm-seo`, `/mxm-session-end`, `/mxm-status`, `/mxm-superpowers`, `/mxm-tasks`, `/mxm-test`, `/mxm-update`, `/mxm-voice`, `/mxm-watch`, `/mxm-wiki`.
 
-**Total commands: 48.** Net delta from v1.1.1 (39 → 48): 4 NEW in WS2 v1.2.0-alpha.2 (`/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-explain`) + 5 NEW in WS3 v1.2.0-alpha.4 TIER 3 persona dispatchers (`/mxm-legal`, `/mxm-arch`, `/mxm-secure`, `/mxm-founder`, `/mxm-pm`) = 9 new. Plus 3 existing commands upgraded for surface alignment: `/mxm-plan` and `/mxm-review` (WS2 — Fogg B=MAP, Coverage Matrix, conditional auto-loops, ADR-007 enforcement) and `/mxm-help` (WS4 — 9-mode dispatcher with persona auto-detect from project-manifest, cache at `.mxm-skills/operator-persona.txt`).
+**Total commands: 49.** Net delta (48 → 49): `/mxm-workflow` added v1.3.8 — the surface for the `orchestrator` skill (ADR-022 Autonomous Workflow Standard): author/list/run/dry-run/go-live/logs for unattended workflows. Prior net delta from v1.1.1 (39 → 48): 4 NEW in WS2 v1.2.0-alpha.2 (`/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-explain`) + 5 NEW in WS3 v1.2.0-alpha.4 TIER 3 persona dispatchers (`/mxm-legal`, `/mxm-arch`, `/mxm-secure`, `/mxm-founder`, `/mxm-pm`) = 9 new. Plus 3 existing commands upgraded for surface alignment: `/mxm-plan` and `/mxm-review` (WS2 — Fogg B=MAP, Coverage Matrix, conditional auto-loops, ADR-007 enforcement) and `/mxm-help` (WS4 — 9-mode dispatcher with persona auto-detect from project-manifest, cache at `.mxm-skills/operator-persona.txt`).
 
 ---
 
@@ -155,8 +155,9 @@ All ADRs at `documents/ADRs/ADR-NNN-*.md`. Index: `documents/ADRs/INDEX.md`. Tem
 | 018 | External Tool Integration Pattern (three-layer: community pack + Maxim skill + MCP wrapper) | accepted |
 | 019 | Multi-Tenant Readiness (tier wizard · operator-writer template · public docs rewrite) | accepted |
 | 021 | Maxim Default-On (Always-On Intent Router) | accepted |
+| 022 | Autonomous Workflow Standard (unattended Workflow contract + mxm-orchestrator) | accepted |
 
-**Total ADRs: 20.** Net delta (19 → 20): +ADR-021 (v1.3.5 — the always-on intent router that makes Maxim default-on). Prior (16 → 19): +ADR-017 (v1.2.0.4) +ADR-018 (v1.2.1.0) +ADR-019 (v1.3.0), Session 21. (Count = 16 public + 4 confidential foundational ADRs.)
+**Total ADRs: 21.** Net delta (20 → 21): +ADR-022 (v1.3.8 — Autonomous Workflow Standard; the unattended Workflow contract + `mxm-orchestrator`). Prior (19 → 20): +ADR-021 (v1.3.5 — the always-on intent router that makes Maxim default-on). Prior (16 → 19): +ADR-017 (v1.2.0.4) +ADR-018 (v1.2.1.0) +ADR-019 (v1.3.0), Session 21. (Count = 17 public + 4 confidential foundational ADRs.)
 
 ---
 
