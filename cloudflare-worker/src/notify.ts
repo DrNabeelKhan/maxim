@@ -19,7 +19,8 @@ export type NotifyEvent =
     | "subscription-cancelled"
     | "payment-failed"
     | "refund-issued"
-    | "worker-error";
+    | "worker-error"
+    | "early-adopter-submission";
 
 export type NotifyPayload = {
     event: NotifyEvent;
