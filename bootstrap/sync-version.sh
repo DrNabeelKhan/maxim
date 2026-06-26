@@ -76,6 +76,10 @@ SURFACES=(
   'documents/guides/ABOUT.md|Maxim v%V|ABOUT header'
   'documents/guides/GETTING_STARTED.md|Maxim v%V|getting-started'
   'documents/reference/MXM_COMMAND_MAP.md|Maxim v%V|command-map footer'
+  'documents/guides/ABOUT.md|> **v%V ·|ABOUT tagline (line 3 — distinct from the "Maxim v" header)'
+  'distributions/claude-plugin/DISTRIBUTION.md|**Version:** %V|distribution version'
+  'distributions/claude-plugin/MARKETPLACE_SUBMISSION.md|**Submission version:** %V|submission version'
+  'distributions/claude-plugin/MARKETPLACE_SUBMISSION.md|**Tag:** `v%V`|submission tag'
 )
 # NOTE: bootstrap/new-project-setup.sh's "MXM_version" is intentionally NOT synced
 # here. Per the pre-release audit it is a schema/launch-line field (canonical
@@ -112,9 +116,11 @@ for entry in "${SURFACES[@]}"; do
   if grep -qF "$oldpat" "$fp" 2>/dev/null && [[ "$CURRENT" != "$TARGET" ]]; then
     if $DRY_RUN; then echo "  $(fmt "$file") WOULD UPDATE -> v$TARGET ($note)"
     else
-      esc_old=$(printf '%s' "$oldpat" | sed 's/[&/\]/\\&/g')
-      esc_new=$(printf '%s' "$newpat" | sed 's/[&/\]/\\&/g')
-      sed -i "s/$esc_old/$esc_new/g" "$fp"
+      # Robust LITERAL replace — oldpat may contain regex metachars (e.g. the inventory
+      # stamp "**Version:** v…" has ** and .). perl \Q…\E quotes the search literally;
+      # $ENV{NEWP} is inserted verbatim (no backref/var re-interpretation). sed's BRE
+      # mishandled ** and silently skipped that surface.
+      OLDP="$oldpat" NEWP="$newpat" perl -i -pe 's/\Q$ENV{OLDP}\E/$ENV{NEWP}/g' "$fp"
       echo "  $(fmt "$file") UPDATED -> v$TARGET ($note)"
     fi
     UPDATED=$((UPDATED+1))

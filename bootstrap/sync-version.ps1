@@ -70,6 +70,10 @@ $surfaces = @(
     @{ File = "documents/guides/ABOUT.md";                     Tmpl = "Maxim v{V}";         Note = "ABOUT header";          Want = 1 }
     @{ File = "documents/guides/GETTING_STARTED.md";           Tmpl = "Maxim v{V}";         Note = "getting-started";       Want = 1 }
     @{ File = "documents/reference/MXM_COMMAND_MAP.md";        Tmpl = "Maxim v{V}";         Note = "command-map footer";    Want = 1 }
+    @{ File = "documents/guides/ABOUT.md";                     Tmpl = "> **v{V} ·";         Note = "ABOUT tagline (line 3)"; Want = 1 }
+    @{ File = "distributions/claude-plugin/DISTRIBUTION.md";   Tmpl = "**Version:** {V}";   Note = "distribution version";  Want = 1 }
+    @{ File = "distributions/claude-plugin/MARKETPLACE_SUBMISSION.md"; Tmpl = "**Submission version:** {V}"; Note = "submission version"; Want = 1 }
+    @{ File = "distributions/claude-plugin/MARKETPLACE_SUBMISSION.md"; Tmpl = '**Tag:** `v{V}`'; Note = "submission tag";    Want = 1 }
 )
 
 $updated = 0; $okCount = 0; $drift = 0; $missing = 0

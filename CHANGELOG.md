@@ -8,6 +8,30 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.8.1 — 2026-06-26 — Count/version propagation tooling repaired (the count-drift root cause)
+
+Patch. Repairs the two tools that caused every release's manual count/version "whack-a-mole", adds a fail-closed pre-commit gate so drift can't ship again, and corrects 3 residual stale claims the now-complete tools surfaced. Capability counts unchanged (91 agents · 52 skills · 49 commands · 9 MCPs/95 tools · 78 frameworks · 16 hooks · 21 ADRs/17 public).
+
+### Fixed — `bootstrap/sync-version.{sh,ps1}` silently bumped nothing (PATTERN-01 #7)
+
+The version read used `node`/`python` on an MSYS path (`/e/Projects/…`) that Windows-native interpreters can't resolve → empty → `set -e` killed the script **before its error message** (DEBUGGING_PLAYBOOK §7). Now a **pure-shell grep/sed read** (no interpreter, no `set -e`), the surface list expanded to ALL version-bearing files (it was missing **marketplace.json ×2** + the inventory stamp), and a `--check` mode. Also fixes `config/agent-registry.json`'s chronically-stale top-level version (frozen at 1.3.1 while the product was 1.3.7), and a literal-escape bug (now perl `\Q…\E`) so version templates containing regex metacharacters — like the `**Version:**` inventory stamp — are replaced correctly (the old sed mishandled `**` and silently skipped that surface). **The new `--check` gate + the pre-release-audit caught 4 version surfaces the tool hadn't yet anchored — the inventory stamp, the `ABOUT.md` tagline (line 3, distinct from its header), and both distribution docs (`DISTRIBUTION.md` + `MARKETPLACE_SUBMISSION.md`) — all now in the surface list; the gate verifies 13 surfaces clean at 1.3.8.1.**
+
+### Fixed — `bootstrap/sync-counts.{sh,ps1}` missed bare-form counts, marketplace.json, and ADR counts
+
+Added `.claude-plugin/marketplace.json` to the scan (its live listing shipped "64 behavioral frameworks" stale — never scanned before), **ADR-count** forms, and **bare-form** summary counts **guarded by middot-`·` adjacency** so per-office breakdowns (`16 agents · lead:`, `(26 commands)`, `top-3 frameworks`) are never corrupted — `agents`/`frameworks` stay compound-only. Validated across 3 false-positive test rounds + a full 828-file scan (0 false positives). Section-5 **hooks** count now parses (its heading carries text after the number). `.ps1` braces group refs (`${1}` — .NET reads `$1`+digits as group `$152`); `.sh` no longer strips trailing newlines on write.
+
+### Added — fail-closed drift gate in `pre-commit.{sh,ps1}`
+
+Every commit runs `sync-version --check`; commits that stage the inventory also run `sync-counts --check`. Either reporting drift (exit 1) **blocks the commit**. Capability-count propagation is now in the repo's DNA, not a post-ship manual sweep.
+
+### Fixed — 3 residual stale counts the now-complete tools caught
+
+`marketplace.json` 64→78 behavioral frameworks · `mxm-help.md` + `maxim-one-pager.md` ADR table **20**/16 → **21**/17 · `repo-page-design-spec.md` 10→16 executable hooks. Plus `new-project-setup.sh` `MXM_version` 1.3.1→1.0.0 (it's the launch-baseline marker, not the per-patch product version).
+
+### Version → 1.3.8.1 (propagated by the repaired `sync-version` itself).
+
+---
+
 ## v1.3.8 — 2026-06-26 — Autonomous Workflow Standard + 14 everyday skills + router hardening
 
 Pre-release-audit dispatched before tag. Counts changed: 91 agents · **52 skills** (37 domain + 14 everyday + 1 orchestrator; was 37) · **49 commands** (+`/mxm-workflow`; was 48) · 9 MCPs/95 tools · 78 frameworks · 16 hooks · **21 ADRs/17 public** (+ADR-022; was 20/16). Features are grouped below for traceability; each group is a separate commit under tag `v1.3.8`.
