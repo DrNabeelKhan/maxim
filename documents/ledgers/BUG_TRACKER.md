@@ -158,6 +158,18 @@ Surfaced in operator feedback after v1.3.2.2 ship: every Claude Code restart pay
 | **Verification** | Manual round-trip in Session 22 confirmed registry now updates correctly when path resolves natively (operator-side manual `Path.home()` test). v1.3.2.2 will be operator-tested on next `mxm-self-update` invocation by Mr. Khan; CI step on `windows-latest` to assert registry-SHA matches `git rev-parse HEAD` is a v1.3.3 candidate. |
 | **Regression guard** | Hard-fail exits 1 (not silent exit 0) on every error path in the registry-update block. Buried WARN promoted to hard-fail ERROR. Self-test round-trip verification after write. PATTERN-01 (cross-platform structural assumptions) added to the Recurring-Pattern registry section above; mitigation: any new script that touches user-home paths via heredoc/sub-process MUST use Python-native or platform-native path resolution, NOT bash interpolation across the bash→python boundary. Candidate ADR-022 for v1.3.3+ governing this discipline. |
 
+### BUG-010 · L1/L2/L3 commercial packs fail to load on Claude Code 2.1.136 ("Path escapes plugin directory: ./")
+
+| Field | Value |
+|---|---|
+| **Reported** | 2026-06-26 (Session 25 — after the v1.3.8.1 update + Desktop restart; operator: "no mxm command, paid packs failed to load"). |
+| **Severity** | P1 — all 14 commercial packs showed `✘ failed to load`; the paid product surface was dead on the operator's install (and on any Claude Code older than the `["./"]` path fix). The maxim host plugin itself was unaffected (it uses a subdirectory skills path). |
+| **Status** | RESOLVED v1.3.8.2 (2026-06-26). |
+| **Root cause** | Each pack shipped `SKILL.md` at the pack root and declared `"skills": ["./"]`. Claude Code **2.1.136** rejects `./` because it normalizes to the plugin root *exactly*, not strictly-inside, so the path-escape guard fires. Current docs say `["./"]` is valid and v2.1.142+ auto-discovers a root `SKILL.md` — but 2.1.136 predates both. PATTERN-01-adjacent: version-gated plugin-loader behavior. |
+| **Fix** | Restructured all 14 packs to `skills/<slug>/SKILL.md` + `"skills": "./skills/"` (the maxim plugin's proven pattern) and bumped packs `1.0.0`→`1.0.1`. Applied to the 6 live cache packs (operator's install) + 14 source packs. Commit `397a45a`; shipped v1.3.8.2. |
+| **Verification** | `claude plugin list` re-evaluated → all 6 installed L1 packs `✔ enabled`. NOTE: `claude plugin validate` does NOT catch this (schema-only — the broken pack passes validate yet fails at load); verify via `plugin list` / reload only. |
+| **Regression guard** | DEBUGGING_PLAYBOOK §8. Ship packs with the explicit `skills/<name>/` layout, never the terse `["./"]`; test any manifest change against the operator's actual `claude --version`, not the docs' "latest". |
+
 ---
 
 ## WontFix
