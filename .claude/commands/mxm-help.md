@@ -455,8 +455,8 @@ The cache file is gitignored — it's per-operator-per-machine, not part of the 
 This file references count claims that must match `documents/ledgers/AGENT_SKILL_INVENTORY.md`. The `bootstrap/sync-counts.{sh,ps1}` tool propagates updates here automatically when INVENTORY changes. If you see a count mismatch in this output, run sync-counts.
 
 Current authoritative counts (v1.3.2 · verified against AGENT_SKILL_INVENTORY.md):
-- 91 agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP) · 52 skill domains · 49 slash commands · 9 MCP servers · 95 MCP tools
-- 16 hook scripts · 78 frameworks · 14 compliance frameworks · 21 ADRs · 13 drift classes
+- 91 agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP) · 52 skill domains · 50 slash commands · 9 MCP servers · 95 MCP tools
+- 16 hook scripts · 78 frameworks · 14 compliance frameworks · 22 ADRs · 13 drift classes
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. 9-mode rebuild shipped in WS4 of v1.2.0 sprint (2026-05-19) per AGENT_ROSTER_v1.2_PROPOSAL.md § Comprehensive /mxm-help system._

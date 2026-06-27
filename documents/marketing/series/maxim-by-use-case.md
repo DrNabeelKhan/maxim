@@ -64,7 +64,7 @@ Not a persona: the *why*. Show the guard-breach test live: a workflow told to ov
 ### Ep 8 · Enterprise architect: "The artifacts, not the advice" → `/mxm-arch`
 - **Frameworks:** TOGAF · C4 Model · ArchiMate · Wardley Mapping · Tech Radar · ADR authoring.
 - **Workflow:** architecture-drift watch flags when the code diverges from the documented target architecture.
-- **Aha:** a target architecture, C4 diagrams, a Wardley map, and the ADRs, authored, not summarized. Maxim ran this discipline on itself: 21 ADRs.
+- **Aha:** a target architecture, C4 diagrams, a Wardley map, and the ADRs, authored, not summarized. Maxim ran this discipline on itself: 22 ADRs.
 
 ### Ep 9 · Data leader: "Govern the data, by the book" → `/mxm-arch` (data-architect)
 - **Frameworks:** DMBOK (DAMA) knowledge areas · Zachman · master & reference data · data quality.

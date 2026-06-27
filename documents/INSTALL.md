@@ -68,7 +68,7 @@ The first session after install will auto-install the 9 MCP servers' Node depend
 ### What you get free (Core tier, forever)
 
 - All 91 agents (24 dispatchable + 67 specialist catalog via mxm-catalog MCP)
-- All 49 slash commands
+- All 50 slash commands
 - All 78 frameworks (advisory mode)
 - Full executive routing
 - Local MemPalace memory

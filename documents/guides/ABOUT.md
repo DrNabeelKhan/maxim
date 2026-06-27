@@ -1,6 +1,6 @@
 # Maxim: The Operating System for AI-Assisted Work
 
-> **v1.3.8.3.2 · autonomous workflow standard + 14 everyday skills.** 91 governed agents · 52 skill domains · 49 slash commands · 9 MCPs (95 tools) · 78 peer-reviewed behavioral frameworks · 14 compliance frameworks · 16 executable hooks · 13 Proactive Watch drift classes · 21 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
+> **v1.3.8.4 · autonomous workflow standard + 14 everyday skills.** 91 governed agents · 52 skill domains · 50 slash commands · 9 MCPs (95 tools) · 78 peer-reviewed behavioral frameworks · 14 compliance frameworks · 16 executable hooks · 13 Proactive Watch drift classes · 22 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
 
 ---
 
@@ -119,8 +119,8 @@ Maxim is installed once. Every project links to it:
 
 ```
 ~/.claude/CLAUDE.md  → maxim/CLAUDE.md       (one file, all projects)
-~/.claude/commands/  → maxim/.claude/commands/ (49 commands, all projects)
-~/.claude/skills/    → maxim/.claude/skills/   (36 domains, all projects)
+~/.claude/commands/  → maxim/.claude/commands/ (50 commands, all projects)
+~/.claude/skills/    → maxim/.claude/skills/   (52 domains, all projects)
 ~/.claude/agents/    → maxim/agents/           (91 agents, all projects)
 ```
 
@@ -148,7 +148,7 @@ Plus 10 cross-office orchestrators + 1 executive-router = **91 agents total**. A
 ### 52 skill domains (100% with root dispatchers)
 Every domain has a SKILL.md (orchestrator), Maxim-WRAPPER.md (behavioral layer), and sub-skills that route to specialist agents. Marketing alone has a hub-and-spoke architecture with dedicated sub-skills. The `wiki` family (ingest, query, lint, explore), `voice`, `voice-routing`, `notebooklm-py`, `junction-guard`, `usage-aware-scheduler`, and `proactive-watch` domains complete the 36-domain inventory.
 
-### 49 Slash commands
+### 50 Slash commands
 All prefixed with `/mxm-` for uniform discovery. Product cycle chain: `/mxm-plan` → `/mxm-implement` → `/mxm-review` → `/mxm-test` → `/mxm-release`. `/mxm-watch` runs drift detection. `/mxm-session-end` runs the 9-document closure bundle. `/mxm-brand-voice` manages the 3-layer .brand-foundation load.
 
 ### 9 MCP servers (95 tools)
@@ -213,7 +213,7 @@ Maxim gives you all of them. governed, tireless, and improving with every sessio
 /plugin install maxim@anthropic-official
 ```
 
-One command installs the full framework. 91+ agents, 52 skill domains, 49 slash commands, 9 MCP servers, 95 tools, 16 executable hooks, 78 behavioral frameworks. Free tier fully functional on install.
+One command installs the full framework. 91+ agents, 52 skill domains, 50 slash commands, 9 MCP servers, 95 tools, 16 executable hooks, 78 behavioral frameworks. Free tier fully functional on install.
 
 ```
 /plugin marketplace add https://github.com/DrNabeelKhan/maxim
@@ -227,9 +227,9 @@ For source-level integration or non-Claude-Code IDE work, see [documents/guides/
 
 ---
 
-**Maxim v1.3.8.3.2:**
+**Maxim v1.3.8.4:**
 
-91 agents (100% Grade A DNA · 24 dispatchable + 67 specialist catalog via mxm-catalog). 52 skill domains. 49 commands. 9 MCP servers (95 tools). 78 frameworks. 16 executable hooks. 13 Proactive Watch drift classes. 21 ADRs ratified (17 public + 4 confidential). 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
+91 agents (100% Grade A DNA · 24 dispatchable + 67 specialist catalog via mxm-catalog). 52 skill domains. 50 commands. 9 MCP servers (95 tools). 78 frameworks. 16 executable hooks. 13 Proactive Watch drift classes. 22 ADRs ratified (18 public + 4 confidential). 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
 
 **License:** BSL 1.1 core with 4-year Apache 2.0 conversion per ADR-005. Commercial packs licensed separately via LemonSqueezy.
 

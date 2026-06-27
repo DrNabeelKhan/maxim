@@ -5,7 +5,7 @@
 
 **Introduced:** v1.0.0 · **Last updated:** v1.2.0.2 · **Source:** [maxim repo](https://github.com/DrNabeelKhan/maxim) · **Governed by:** ADR-002 (Executable Contracts)
 
-> **v1.2.0+ updates:** Desktop fidelity 60% → ~95% via NEW `mxm-commands` MCP (8th server, exposes 49 slash commands as MCP tools) + NEW `bootstrap/mxm-desktop-config.{sh,ps1}` one-command setup helper for Mac/Linux/Windows. Web fidelity 60% → ~85% via Slash Command Aliases section in `maxim-project-instructions.md` v1.2.0. See v1.2.0.2 fidelity matrix at the bottom of this file (the original v1.0.0 matrix above is preserved for historical accuracy).
+> **v1.2.0+ updates:** Desktop fidelity 60% → ~95% via NEW `mxm-commands` MCP (8th server, exposes 50 slash commands as MCP tools) + NEW `bootstrap/mxm-desktop-config.{sh,ps1}` one-command setup helper for Mac/Linux/Windows. Web fidelity 60% → ~85% via Slash Command Aliases section in `maxim-project-instructions.md` v1.2.0. See v1.2.0.2 fidelity matrix at the bottom of this file (the original v1.0.0 matrix above is preserved for historical accuracy).
 
 ---
 

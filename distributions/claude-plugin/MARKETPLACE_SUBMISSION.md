@@ -5,8 +5,8 @@
 
 **Target:** Anthropic Official Claude Code Plugin Marketplace
 **Plugin namespace:** `maxim`
-**Submission version:** 1.3.8.3.2
-**Tag:** `v1.3.8.3.2` (commit SHA recorded in git tag annotation at tag-creation time)
+**Submission version:** 1.3.8.4
+**Tag:** `v1.3.8.4` (commit SHA recorded in git tag annotation at tag-creation time)
 **Submitter:** Dr. Nabeel Khan / iSystematic
 **Contact:** https://maxim.isystematic.com/contact
 
@@ -26,9 +26,9 @@ Live since 2026-04-21 (v1.0.0 launch). Currently at v1.3.8. Used by 21+ projects
 
 | Artifact | Path | Status |
 |---|---|---|
-| Plugin manifest | `.claude-plugin/plugin.json` | v1.3.8.1 — declares 91 agents · 52 skills · 49 commands · 78 frameworks · 14 compliance · 9 MCPs (95 tools) · 90-day Trial of 14 packs default |
+| Plugin manifest | `.claude-plugin/plugin.json` | v1.3.8.1 — declares 91 agents · 52 skills · 50 commands · 78 frameworks · 14 compliance · 9 MCPs (95 tools) · 90-day Trial of 14 packs default |
 | Marketplace manifest | `.claude-plugin/marketplace.json` | v1.3.8.1 — pack catalog (Maxim base plugin + 14 paid packs across L1 · L2 · L3 tiers) · outer metadata.version + plugin entry version both at 1.3.8.1 (per v1.3.2.1 Bucket 1 amendment) |
-| README | `README.md` (root) | v1.3.8.1 with 9-MCP/95-tool table, 6 use cases, ADR index (17 public · 4 confidential) |
+| README | `README.md` (root) | v1.3.8.1 with 9-MCP/95-tool table, 6 use cases, ADR index (18 public · 4 confidential) |
 | LICENSE | `LICENSE` (root) | BSL 1.1 — converts to Apache 2.0 after 4 years per ADR-005 |
 | Version | `1.3.8.1` consistent across plugin.json + marketplace.json (outer + plugin entry) + README badge + this submission doc | Verified against plugin.json (1.3.8.1) + marketplace.json outer metadata.version + plugin entry (both 1.3.8.1) + README badge (1.3.8.1); Bucket 1 version-consistency check per the v1.3.2.1 amendment that catches outer catalog metadata.version drift |
 
@@ -48,7 +48,7 @@ Live since 2026-04-21 (v1.0.0 launch). Currently at v1.3.8. Used by 21+ projects
 | Output styles | `distributions/claude-plugin/output-styles/mxm-mode.md` | 1 (`mxm-mode`) |
 | Statusline | `.claude/hooks/mxm-statusline.{sh,ps1}` | 2 (bash + PowerShell) |
 | Binary | `mxm-pack-engine` | Cross-platform (linux/amd64 · darwin/arm64 · darwin/amd64 · windows/amd64) |
-| Architecture Decision Records | `documents/ADRs/ADR-001..ADR-022` | 21 total (17 public · 4 confidential) |
+| Architecture Decision Records | `documents/ADRs/ADR-001..ADR-022` | 22 total (18 public · 4 confidential) |
 | Architecture Decision Records — public list | INDEX.md | ADR-002 · 004 · 007 · 008 · 009 · 010 · 011 · 012 · 013 · 014 · 015 · 016 · 017 · 018 · 019 · 021 |
 
 ### Supporting documentation (quality signal for reviewers)
@@ -89,9 +89,9 @@ Pre-commit hook (Claude Code CLI) scans for secrets · PII · regulated content 
 
 ### 4. ADR coverage (architecture as contract)
 
-21 Architecture Decision Records. ADR-002 ratifies "Documents as Executable Contracts" — five canonical ledgers (`CHANGELOG` · `MOAT_TRACKER` · `BUG_TRACKER` · `DEBUGGING_PLAYBOOK` · `AGENT_SKILL_INVENTORY`) are read by the pre-commit hook (Claude Code CLI) as live state. Drift between claim and reality blocks the commit.
+22 Architecture Decision Records. ADR-002 ratifies "Documents as Executable Contracts" — five canonical ledgers (`CHANGELOG` · `MOAT_TRACKER` · `BUG_TRACKER` · `DEBUGGING_PLAYBOOK` · `AGENT_SKILL_INVENTORY`) are read by the pre-commit hook (Claude Code CLI) as live state. Drift between claim and reality blocks the commit.
 
-**Public ADRs (17):** ADR-002 (Executable Contracts) · ADR-004 (Free Tier Contract) · ADR-007 (Behavioral Moat Framing) · ADR-008 (Community Pack System) · ADR-009 (Pack Architecture: 6 L1 + 4 L2 + 4 L3) · ADR-010 (Confidence Tag Rubric) · ADR-011 (Stripe Payment) · ADR-012 (Maxim Overlay Engine MOE) · ADR-013 (Multi-Project Memory Inheritance) · ADR-014 (Maxim Studio AGPL) · ADR-015 (Studio v0.2+ Roadmap) · ADR-016 (Voice Writing Agent Architecture) · ADR-017 (Office-as-Dispatch-Boundary + MCP-Catalog Specialist Surface) · ADR-018 (External Tool Integration Pattern) · ADR-019 (Multi-Tenant Readiness) · ADR-021 (Maxim Default-On — always-on intent router) · ADR-022 (Autonomous Workflow Standard — unattended Workflow contract + mxm-orchestrator).
+**Public ADRs (18):** ADR-002 (Executable Contracts) · ADR-004 (Free Tier Contract) · ADR-007 (Behavioral Moat Framing) · ADR-008 (Community Pack System) · ADR-009 (Pack Architecture: 6 L1 + 4 L2 + 4 L3) · ADR-010 (Confidence Tag Rubric) · ADR-011 (Stripe Payment) · ADR-012 (Maxim Overlay Engine MOE) · ADR-013 (Multi-Project Memory Inheritance) · ADR-014 (Maxim Studio AGPL) · ADR-015 (Studio v0.2+ Roadmap) · ADR-016 (Voice Writing Agent Architecture) · ADR-017 (Office-as-Dispatch-Boundary + MCP-Catalog Specialist Surface) · ADR-018 (External Tool Integration Pattern) · ADR-019 (Multi-Tenant Readiness) · ADR-021 (Maxim Default-On — always-on intent router) · ADR-022 (Autonomous Workflow Standard — unattended Workflow contract + mxm-orchestrator).
 
 **Confidential (4):** ADR-001 (agent dispatch baseline) · ADR-003 (Cloudflare Worker JWT issuance) · ADR-005 (IP Protection: 5-layer architecture) · ADR-006 (External Content Boundary).
 
@@ -134,7 +134,7 @@ The Anthropic Claude Code plugin marketplace ingestion process **is not codified
 | Plugin name | `maxim` |
 | Display name | Maxim |
 | Version | `1.3.8.1` |
-| Description | The behavioral intelligence layer for Claude. 91 specialist agents across 7 executive offices, 52 skill domains, 49 slash commands, 78 peer-reviewed behavioral frameworks, 14 compliance frameworks, 9 MCPs (95 tools) including NotebookLM research synthesis, license-gated MCP middleware, 13-class proactive drift detection. 90-day Trial of all 14 packs default at install. BSL 1.1 licensed. |
+| Description | The behavioral intelligence layer for Claude. 91 specialist agents across 7 executive offices, 52 skill domains, 50 slash commands, 78 peer-reviewed behavioral frameworks, 14 compliance frameworks, 9 MCPs (95 tools) including NotebookLM research synthesis, license-gated MCP middleware, 13-class proactive drift detection. 90-day Trial of all 14 packs default at install. BSL 1.1 licensed. |
 | Author | Dr. Nabeel Khan / iSystematic Inc. |
 | Author email | nabeel@nabeelkhan.com |
 | License | BSL 1.1 (Apache 2.0 conversion on 2030-04-21 per ADR-005) |

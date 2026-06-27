@@ -309,4 +309,4 @@ SPECIALISTS (any time)
 
 ---
 
-*Maxim v1.3.8.3.2 · [github.com/DrNabeelKhan/maxim](https://github.com/DrNabeelKhan/maxim)*
+*Maxim v1.3.8.4 · [github.com/DrNabeelKhan/maxim](https://github.com/DrNabeelKhan/maxim)*
