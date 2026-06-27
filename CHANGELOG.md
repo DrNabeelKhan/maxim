@@ -8,6 +8,12 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.8.3.1 — 2026-06-27 — Portfolio sync: recursive scan depth (catch deeply-nested projects)
+
+Patch-of-patch on v1.3.8.3. The portfolio sync scanned only **2 folder levels** under `MXM_PROJECTS_ROOT`, so it caught `nabeelkhan/VAZIR` (depth 2) but **missed** a manifest at `nabeelkhan/myBooks/The Prey` (depth 3). The scan is now **recursive to `MXM_SCAN_DEPTH` folder levels** (default 3, env-configurable), pruning heavy dirs (`node_modules`, `dist`, `build`, `venv`, `vendor`, `community-packs`, …) and skipping dot-dirs. Still a safe no-op when the cache is absent, still never throws, and stays fast (~0.4s on a 10-project tree). Applied to both `bootstrap/mxm-sync-portfolio.mjs` (shipped) and the operator's local `.mxm-global/sync-portfolio.mjs`. No capability count change.
+
+---
+
 ## v1.3.8.3 — 2026-06-27 — Portfolio auto-sync on session-end (the `.mxm-global` refresh, deterministic)
 
 Patch. The session-end hook *claimed* to refresh the portfolio cache "if available" but never did — a shell hook can't call an MCP tool, so `.mxm-global` only updated when the model remembered to invoke `mxm-portfolio.sync_portfolio`. This closes that gap with a deterministic refresh. No capability count change.

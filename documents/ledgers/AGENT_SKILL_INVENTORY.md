@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.8.3 · **Last verified:** 2026-06-27 (v1.3.8.3 portfolio auto-sync on session-end)
+**Version:** v1.3.8.3.1 · **Last verified:** 2026-06-27 (v1.3.8.3.1 recursive portfolio scan depth)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 

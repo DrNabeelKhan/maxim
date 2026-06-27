@@ -4,7 +4,8 @@
 //
 // bootstrap/mxm-sync-portfolio.mjs — deterministic portfolio sync.
 //
-// Scans MXM_PROJECTS_ROOT for config/project-manifest.json (2 levels deep, so
+// Scans MXM_PROJECTS_ROOT for config/project-manifest.json recursively to
+// MXM_SCAN_DEPTH folder levels (default 3, so deeply-nested + umbrella sub-projects
 // umbrella sub-projects are caught) + merges <global>/portfolio-registry/
 // manual-includes.json, then rewrites <global>/PORTFOLIO-METRICS.md with the
 // live matrix. The curated tree in portfolio-registry/project_state.md is NOT
@@ -54,24 +55,25 @@ async function lastActivity(dir) {
 async function main() {
   if (!(await exists(MXM_GLOBAL)) || !(await exists(PROJECTS_ROOT))) process.exit(0);
 
+  // Recursive scan to MXM_SCAN_DEPTH folder levels (default 3) so deeply-nested
+  // projects are caught — e.g. nabeelkhan/myBooks/The Prey at depth 3, not just
+  // nabeelkhan/VAZIR at depth 2. Heavy/irrelevant dirs are pruned; dot-dirs skipped.
+  const MAX_DEPTH = Number(process.env.MXM_SCAN_DEPTH) || 3;
+  const PRUNE = new Set(["node_modules", "dist", "build", "out", "target", "venv", "env", "__pycache__", "coverage", "vendor", "archive", "community-packs", ".git"]);
   const rows = [];
-  let top = [];
-  try { top = await readdir(PROJECTS_ROOT, { withFileTypes: true }); } catch { process.exit(0); }
 
-  for (const d of top) {
-    if (!d.isDirectory() || d.name.startsWith(".")) continue;
-    const dp = join(PROJECTS_ROOT, d.name);
-    const m = await readManifest(dp);
-    if (m) rows.push({ folder: d.name, ...m, last: await lastActivity(dp) });
-    let subs = [];
-    try { subs = await readdir(dp, { withFileTypes: true }); } catch { /* skip */ }
-    for (const s of subs) {
-      if (!s.isDirectory() || s.name.startsWith(".") || s.name === "node_modules") continue;
-      const sp = join(dp, s.name);
-      const sm = await readManifest(sp);
-      if (sm) rows.push({ folder: `${d.name}/${s.name}`, ...sm, last: await lastActivity(sp) });
+  async function collect(dir, rel, depth) {
+    const m = await readManifest(dir);
+    if (m && rel) rows.push({ folder: rel, ...m, last: await lastActivity(dir) });
+    if (depth >= MAX_DEPTH) return;
+    let entries;
+    try { entries = await readdir(dir, { withFileTypes: true }); } catch { return; }
+    for (const e of entries) {
+      if (!e.isDirectory() || e.name.startsWith(".") || PRUNE.has(e.name)) continue;
+      await collect(join(dir, e.name), rel ? `${rel}/${e.name}` : e.name, depth + 1);
     }
   }
+  try { await collect(PROJECTS_ROOT, "", 0); } catch { /* defensive — never throw */ }
 
   // manifest-less active projects (kept in manual-includes.json)
   try {
