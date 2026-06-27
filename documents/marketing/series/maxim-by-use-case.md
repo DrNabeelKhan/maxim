@@ -1,7 +1,7 @@
 # Series — "Maxim by Use Case" (Skills × Loops × Workflows)
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
-> **Status:** draft content plan · aligned to v1.3.8
+> **Status:** draft content plan · aligned to v1.3.8.2
 > **Premise:** every episode shows ONE persona's real day, combining a few **skills**, one **loop**, and one **workflow** — so viewers learn the 3-layer model by watching it solve their problem, not by reading a feature list.
 
 ---
@@ -49,6 +49,44 @@ The whole series in one frame: skill vs loop vs workflow, one example each. Hook
 
 ### Ep 6 — The closer: "Autonomy you can trust" (the moat)
 Not a persona — the *why*. Show the guard-breach test live: a workflow told to overspend gets **hard-stopped before anything ships**, dry-run shows-don't-does, every step logged. Hook: *"The scary part of an AI that works while you sleep is the part nobody shows you."* CTA: for teams on real/regulated data.
+
+---
+
+## Professional personas — the `/mxm-*` command surface
+
+> The episodes above lead with an everyday **skill**. These lead with a **command** — one word in your role's vocabulary that routes to the specialist who owns it, loads the named frameworks, and can run the workflow unattended. Same 3-layer spine (skill · loop · workflow); deeper buyer. Each names the frameworks on screen, so the viewer sees the *mechanism*, not a feature bullet.
+
+### Ep 7 — Founder: "Out-position, then price it" → `/mxm-founder`
+- **Frameworks:** Duarte Sparkline · Minto Pyramid · AARRR · Prospect Theory · Van Westendorp · Strategyzer BMC.
+- **Workflow:** competitor-monitor — real moves only, teardown pre-written, dry-run first.
+- **Aha:** a pitch that survives a skeptical investor — narrative, pricing, and moat in one pass.
+
+### Ep 8 — Enterprise architect: "The artifacts, not the advice" → `/mxm-arch`
+- **Frameworks:** TOGAF · C4 Model · ArchiMate · Wardley Mapping · Tech Radar · ADR authoring.
+- **Workflow:** architecture-drift watch — flags when the code diverges from the documented target architecture.
+- **Aha:** a target architecture, C4 diagrams, a Wardley map, and the ADRs — authored, not summarized. Maxim ran this discipline on itself: 21 ADRs.
+
+### Ep 9 — Data leader: "Govern the data, by the book" → `/mxm-arch` (data-architect)
+- **Frameworks:** DMBOK (DAMA) knowledge areas · Zachman · master & reference data · data quality.
+- **Workflow:** data-governance audit under the CSO compliance gate.
+- **Aha:** a DMBOK-grounded data-governance plan — knowledge areas, not a generic best-practices list.
+
+### Ep 10 — Counsel / GRC: "Cite the clause, not a summary" → `/mxm-legal`
+- **Frameworks:** 14 compliance frameworks (GDPR · HIPAA · PCI-DSS · SOC 2 · EU AI Act · +9), jurisdiction-aware.
+- **Workflow:** ROPA + DPIA drafting; PII scanned before anything leaves the session.
+- **Aha:** the exact clause, the exact jurisdiction — a review you can hand to an auditor.
+
+### Ep 11 — CISO / AppSec: "Threat-model while you sleep" → `/mxm-secure`
+- **Frameworks:** triple-OWASP (Top 10 + LLM + API) · STRIDE / PASTA / LINDDUN · NIST CSF + AI RMF · MITRE ATLAS · SBOM / AIBOM.
+- **Workflow:** overnight security sweep — opens a PR with findings for review, never merges itself.
+- **Aha:** a threat model and a bill of materials, generated — not a checklist someone forgot to run.
+
+### Ep 12 — Product manager: "Outcomes, not feature lists" → `/mxm-pm`
+- **Frameworks:** Jobs-to-be-Done (Jobs Atlas) · OKR (leading + lagging) · RICE · INVEST.
+- **Workflow:** user-feedback sweep — clusters raw signals into JTBD outcomes, surfaces the highest-RICE next bet.
+- **Aha:** a PRD grounded in method — the next bet defensible, not a hunch.
+
+> **Site tie-in:** these six map 1:1 to the persona cards on the new `/features` page. An episode is the *motion* version of a card; the card is the *scannable* version of the episode.
 
 ---
 
