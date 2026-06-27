@@ -170,6 +170,17 @@ Surfaced in operator feedback after v1.3.2.2 ship: every Claude Code restart pay
 | **Verification** | `claude plugin list` re-evaluated → all 6 installed L1 packs `✔ enabled`. NOTE: `claude plugin validate` does NOT catch this (schema-only — the broken pack passes validate yet fails at load); verify via `plugin list` / reload only. |
 | **Regression guard** | DEBUGGING_PLAYBOOK §8. Ship packs with the explicit `skills/<name>/` layout, never the terse `["./"]`; test any manifest change against the operator's actual `claude --version`, not the docs' "latest". |
 
+### BUG-011 · `sync_portfolio` MCP crashes on a manifest without `mxm_version` ("Cannot read properties of undefined (reading 'localeCompare')")
+
+| Field | Value |
+|---|---|
+| **Reported** | 2026-06-27 (Session 25 — operator ran the `mxm-portfolio.sync_portfolio` MCP tool). |
+| **Severity** | P2 — the MCP sync tool crashed for any project whose manifest lacks `mxm_version`, so `.mxm-global` could not be refreshed via the MCP. The deterministic SessionEnd hook + standalone `bootstrap/mxm-sync-portfolio.mjs` (v1.3.8.3) were unaffected and already correct. |
+| **Status** | RESOLVED v1.3.8.3.2 (2026-06-27). |
+| **Root cause** | `mcp/mxm-portfolio/server.js` `sync_portfolio`: `manifestVersion = manifest.mxm_version \|\| entry.version` left `manifestVersion` **undefined** when the manifest had no `mxm_version` (and `entry.version` is *always* undefined — `projectEntries` carry only `folder`+`fullPath`). The next line called `manifestVersion.localeCompare(...)` → threw. Latent companion bug: a verbose `mxm_version` (ARIA stuffs a multi-line status blob there) would break the metrics markdown table. |
+| **Fix** | Added `cleanVer()` (default `—`, strip newlines/pipes, cap 24 chars) at both assignment sites; the latest-version compare is now guarded `/\d/.test(manifestVersion) && …` so non-version values are skipped. Runtime-verified: undefined/null → no crash; blob → sanitized; real versions still compared. Commit `500a5e9`, v1.3.8.3.2. |
+| **Regression guard** | The standalone `bootstrap/mxm-sync-portfolio.mjs` already used the same `clean()` pattern — the MCP now matches it. **Candidate DRY-refactor:** have the MCP `sync_portfolio` delegate to the standalone sync so the two writers of `PORTFOLIO-METRICS.md` can't diverge again. |
+
 ---
 
 ## WontFix
