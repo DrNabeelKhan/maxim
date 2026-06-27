@@ -16,13 +16,13 @@ v1.3.6 · BSL 1.1 (core) + Proprietary packs · Built in Canada · Apache 2.0 in
 
 ## What Maxim is · SCQA
 
-**Situation.** AI-assisted work needs governance, framework grounding, and cross-session memory: not just chat. Most Claude plugins ship templates or prompts.
+**Situation.** AI-assisted work needs governance, framework grounding, and cross-session memory, not just chat. Most Claude plugins ship templates or prompts.
 
 **Complication.** A capability list doesn't tell a buyer what they'd actually *use* on real work. Picking a tier without seeing the moat work fails Prospect Theory's loss-aversion bar.
 
 **Question.** How does a senior operator evaluate a behavioral-intelligence layer before committing?
 
-**Answer.** Maxim defaults to a 90-day Trial of all 14 packs. Run real work through it. By day 80 the upgrade-or-downgrade decision is anchored on capability experienced: not capability promised.
+**Answer.** Maxim defaults to a 90-day Trial of all 14 packs. Run real work through it. By day 80 the upgrade-or-downgrade decision is anchored on capability experienced, not capability promised.
 
 ---
 
