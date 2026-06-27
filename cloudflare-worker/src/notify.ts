@@ -34,8 +34,15 @@ export type NotifyPayload = {
  * Fail-soft: any error is logged; never throws to caller.
  */
 export async function notifySales(payload: NotifyPayload, env: { SALES_NOTIFY_EMAIL?: string; FROM_EMAIL?: string }): Promise<void> {
-    const to = env.SALES_NOTIFY_EMAIL || "sales@isystematic.com";
+    // Sales routing address is configuration, not code: it MUST come from the
+    // SALES_NOTIFY_EMAIL secret/var (set via `wrangler secret put` or env). No
+    // hardcoded fallback — fail-soft skip if unset (the function never throws).
+    const to = env.SALES_NOTIFY_EMAIL;
     const from = env.FROM_EMAIL || "noreply@isystematic.com";
+    if (!to) {
+        console.error("notify: SALES_NOTIFY_EMAIL not configured — skipping send", { event: payload.event });
+        return;
+    }
     try {
         const metadataBlock = payload.metadata
             ? "\n\n---\nMetadata:\n" + JSON.stringify(payload.metadata, null, 2)

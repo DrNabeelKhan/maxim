@@ -24,11 +24,15 @@ JWT_ISSUER = "https://license.isystematic.com"
 JWT_AUDIENCE = "mxm-pack-engine"
 JWT_TTL_SECONDS = "31536000"  # 12 months
 ENVIRONMENT = "production"
-# Notification routing (contact form submissions + Stripe sale/refund/cancel events)
-SALES_NOTIFY_EMAIL = "sales@isystematic.com"
+# Notification routing: SALES_NOTIFY_EMAIL (the destination inbox) is set
+# out-of-band as a secret/var — `wrangler secret put SALES_NOTIFY_EMAIL` or the
+# dashboard — so the routing address is not committed. notify.ts fail-soft-skips
+# if it is unset. FROM_EMAIL is a generic non-routing sender, kept here.
 FROM_EMAIL = "noreply@isystematic.com"
 
 # ── Secrets (set via `wrangler secret put <NAME>`, NEVER committed) ──────────
+# Notification routing:
+# SALES_NOTIFY_EMAIL            — destination inbox for contact-form + Stripe event emails (notify.ts skips send if unset)
 # Stripe (primary processor per D-037):
 # STRIPE_API_KEY                — Stripe secret or restricted key (sk_test_ / sk_live_ / rk_live_)
 # STRIPE_WEBHOOK_SECRET         — Stripe webhook signing secret (whsec_...)

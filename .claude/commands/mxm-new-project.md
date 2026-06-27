@@ -1,5 +1,5 @@
 ---
-description: Bootstrap a new project with ARIA scaffolding — project-manifest, watch-profile, brand-foundation, session-memory, operator-profile.
+description: Bootstrap a new project with Maxim scaffolding — project-manifest, watch-profile, brand-foundation, session-memory, operator-profile.
 ---
 
 # /mxm-new-project

@@ -197,7 +197,7 @@ After setup, the `mxm-notebooklm` MCP server in Maxim picks up authentication au
 
 ### Workflow 1 — Research synthesis for a startup pitch
 ```
-1. notebook_create("ARIA Series A Research")
+1. notebook_create("Maxim Series A Research")
 2. source_add_url × N (competitor sites · industry reports · regulatory filings)
 3. research_web("competitive landscape for AI-assisted clinical decision support 2026")
 4. research_wait → returns synthesized report

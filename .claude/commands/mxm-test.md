@@ -1,5 +1,5 @@
 ---
-description: Testing mode — dispatches to tester agent with TDD discipline, ARIA frameworks (FIRST principles), and coverage requirements.
+description: Testing mode — dispatches to tester agent with TDD discipline, Maxim frameworks (FIRST principles), and coverage requirements.
 ---
 
 # /mxm-test
