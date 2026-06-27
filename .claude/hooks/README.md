@@ -11,7 +11,7 @@
 | Event | Bash | PowerShell | Purpose | Since |
 |---|---|---|---|---|
 | **SessionStart** | `session-start.sh` | `session-start.ps1` | Detects project root, ensures runtime dirs, surfaces handoff state + skill gaps + pending review count + **Proactive Watch LIGHT drift count** | v1.0.0 (watch added v1.0.0) |
-| **SessionEnd** | `session-end.sh` | `session-end.ps1` | Writes session-YYYY-MM-DD.md placeholder, touches handoff.md last_seen, appends to background log | v1.0.0 |
+| **SessionEnd** | `session-end.sh` | `session-end.ps1` | Writes session-YYYY-MM-DD.md placeholder, touches handoff.md last_seen, appends to background log, child→parent topology rollup, **and refreshes the `.mxm-global` portfolio cache via `bootstrap/mxm-sync-portfolio.mjs`** (non-blocking, no-op if absent) | v1.0.0 (portfolio sync v1.3.8.3) |
 | **PreCommit** | `pre-commit.sh` | `pre-commit.ps1` | Blocks commits with hardcoded secrets (9 patterns); warns on PII patterns (3 patterns); appends every scan to `.mxm-skills/compliance-audit.jsonl` | v1.0.0 |
 | **Git Hygiene Preamble** | `git-hygiene-preamble.sh` | `git-hygiene-preamble.ps1` | GH1 (clean tree) + GH2 (expected branch) + GH3 (up-to-date with origin). Run at start of any bundled task / sprint. | v1.0.0 |
 | **Git Hygiene Postamble** | `git-hygiene-postamble.sh` | `git-hygiene-postamble.ps1` | GHN1 (clean tree) + GHN2 (pushed to origin). Run at end of any bundled task / sprint. | v1.0.0 |
@@ -116,7 +116,7 @@ The hook handles deterministic checks; the skill-level protocol handles judgment
 7. Update `MEMORY.md` index
 8. Append new gaps to `.mxm-skills/agents-skill-gaps.log`
 9. Run auto-inventory scan
-10. Run staleness prevention protocol (`sync_portfolio` MCP tool)
+10. Run staleness prevention protocol — the SessionEnd hook deterministically refreshes `.mxm-global` via `bootstrap/mxm-sync-portfolio.mjs` (Claude Code CLI); the `sync_portfolio` MCP tool refreshes it on Desktop/Web (v1.3.8.3)
 
 ---
 

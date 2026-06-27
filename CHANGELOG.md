@@ -8,6 +8,20 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.8.3 — 2026-06-27 — Portfolio auto-sync on session-end (the `.mxm-global` refresh, deterministic)
+
+Patch. The session-end hook *claimed* to refresh the portfolio cache "if available" but never did — a shell hook can't call an MCP tool, so `.mxm-global` only updated when the model remembered to invoke `mxm-portfolio.sync_portfolio`. This closes that gap with a deterministic refresh. No capability count change.
+
+### Added — `bootstrap/mxm-sync-portfolio.mjs` + SessionEnd wiring
+
+A standalone, dependency-free sync that scans `MXM_PROJECTS_ROOT` for `config/project-manifest.json` (2 levels deep, so **umbrella sub-projects** are caught), merges `portfolio-registry/manual-includes.json` (active projects without a manifest), and rewrites `PORTFOLIO-METRICS.md`. Wired into `.claude/hooks/session-end.{sh,ps1}` so the portfolio cache refreshes after **every** Claude Code CLI session-end. **Safe by construction:** a no-op when no `.mxm-global` exists (the common case), never throws, always exits 0 — it cannot block a session from ending. The curated `portfolio-registry/project_state.md` tree is left untouched (hand-maintained). The bash hook converts an MSYS `$CLAUDE_PLUGIN_ROOT` (`/c/…`) to Windows form before invoking node (PATTERN-01).
+
+### Fixed — the stale "calls sync_portfolio if available" hook comment
+
+`session-end.sh` advertised a sync it never performed. The comment now reflects the real mechanism (it runs the standalone script). Hooks remain CLI-only; Desktop/Web refresh the cache via the `mxm-portfolio.sync_portfolio` MCP or the paste-in sync prompt.
+
+---
+
 ## v1.3.8.2 — 2026-06-26 — L1/L2/L3 pack loading fix + `mxm-commands` command parity (the 49th command)
 
 Patch. Two fixes surfaced when v1.3.8.1 landed on a **Claude Code 2.1.136** install: the commercial packs failed to load, and the cross-surface command-parity MCP was a command short. No capability change (91 agents · 52 skills · 49 commands · 9 MCPs/95 tools · 78 frameworks · 16 hooks · 21 ADRs/17 public). The 14 packs bump independently to **1.0.1**.

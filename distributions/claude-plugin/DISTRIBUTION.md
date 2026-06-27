@@ -1,6 +1,6 @@
 # Maxim — Claude Code Plugin Distribution
 
-**Version:** 1.3.8.2
+**Version:** 1.3.8.3
 **License:** BSL 1.1 (4-year Apache 2.0 conversion per ADR-005)
 **Namespace:** `maxim`
 

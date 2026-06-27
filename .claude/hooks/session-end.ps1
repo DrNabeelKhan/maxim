@@ -106,5 +106,15 @@ try {
     Add-Content -Path $GapLogPath -Value "[$NowIso] [topology-rollup-warn] child->parent rollup failed: $_" -ErrorAction SilentlyContinue
 }
 
+# ----- Portfolio sync: refresh .mxm-global (non-blocking, no-op if absent) -----
+try {
+    if ($env:CLAUDE_PLUGIN_ROOT) {
+        $SyncScript = Join-Path $env:CLAUDE_PLUGIN_ROOT 'bootstrap\mxm-sync-portfolio.mjs'
+        if (Test-Path $SyncScript) {
+            & node $SyncScript *> $null
+        }
+    }
+} catch {}
+
 [Console]::Error.WriteLine("Maxim SessionEnd: $Today marker written")
 exit 0

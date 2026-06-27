@@ -9,7 +9,7 @@
 # Implements step 1, 11 of the Session End Protocol from CLAUDE.md:
 #   - Writes session-[YYYY-MM-DD].md if not already present today
 #   - Updates .claude-sessions-memory/handoff.md with last_seen timestamp
-#   - Calls mxm-portfolio.sync_portfolio if available (non-blocking)
+#   - Runs bootstrap/mxm-sync-portfolio.mjs to refresh .mxm-global (non-blocking, no-op if absent)
 #
 # Steps performed:
 #   1. Detect project root
@@ -94,6 +94,19 @@ if command -v node >/dev/null 2>&1 && [ -f "config/project-manifest.json" ]; the
         echo "[$NOW_ISO] [topology-rollup-warn] child->parent rollup write failed" >> .mxm-skills/agents-skill-gaps.log 2>/dev/null || true
     fi
   fi
+fi
+
+# ----- Portfolio sync: refresh .mxm-global (non-blocking, no-op if absent) -----
+# A shell hook cannot call an MCP tool, so the deterministic refresh runs the
+# standalone sync script. It is a safe no-op when no .mxm-global cache exists.
+if command -v node >/dev/null 2>&1 && [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
+  SYNC_SCRIPT="$CLAUDE_PLUGIN_ROOT/bootstrap/mxm-sync-portfolio.mjs"
+  # MSYS path (/c/...) -> Windows form (C:/...) so Windows-native node resolves it
+  # (PATTERN-01). No-op on Linux/macOS where the path already starts with the root.
+  case "$SYNC_SCRIPT" in
+    /[A-Za-z]/*) _drv="${SYNC_SCRIPT:1:1}"; SYNC_SCRIPT="${_drv^^}:${SYNC_SCRIPT:2}" ;;
+  esac
+  node "$SYNC_SCRIPT" >/dev/null 2>&1 || true
 fi
 
 echo "Maxim SessionEnd: ${TODAY} marker written" >&2

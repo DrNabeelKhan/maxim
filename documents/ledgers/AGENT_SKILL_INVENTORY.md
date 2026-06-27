@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.8.2 · **Last verified:** 2026-06-26 (v1.3.8.1 count/version propagation tooling repair)
+**Version:** v1.3.8.3 · **Last verified:** 2026-06-27 (v1.3.8.3 portfolio auto-sync on session-end)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -77,7 +77,7 @@ Under `.claude/hooks/`:
 | Hook | Platforms | Purpose |
 |---|---|---|
 | `session-start.{sh,ps1}` | Linux/Mac/Win | Detect project, verify memory junction, load manifest, report gaps |
-| `session-end.{sh,ps1}` | Linux/Mac/Win | Write 9-document closure bundle placeholder |
+| `session-end.{sh,ps1}` | Linux/Mac/Win | Write 9-document closure bundle placeholder + topology rollup + refresh `.mxm-global` portfolio cache (`bootstrap/mxm-sync-portfolio.mjs`, v1.3.8.3) |
 | `pre-commit.{sh,ps1}` | Linux/Mac/Win | Secret scan, PII scan, compliance audit → `.mxm-skills/compliance-audit.jsonl` |
 | `behavioral-moat-drift.{sh,ps1}` | Linux/Mac/Win | Flag pack SKILL.md claims that drift from MOAT_TRACKER rows (ADR-007) |
 | `git-hygiene-preamble.{sh,ps1}` | Linux/Mac/Win | Pre-stage hygiene: staleness banners, junction check |

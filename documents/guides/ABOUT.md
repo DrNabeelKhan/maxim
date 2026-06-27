@@ -1,6 +1,6 @@
 # Maxim: The Operating System for AI-Assisted Work
 
-> **v1.3.8.2 · autonomous workflow standard + 14 everyday skills.** 91 governed agents · 52 skill domains · 49 slash commands · 9 MCPs (95 tools) · 78 peer-reviewed behavioral frameworks · 14 compliance frameworks · 16 executable hooks · 13 Proactive Watch drift classes · 21 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
+> **v1.3.8.3 · autonomous workflow standard + 14 everyday skills.** 91 governed agents · 52 skill domains · 49 slash commands · 9 MCPs (95 tools) · 78 peer-reviewed behavioral frameworks · 14 compliance frameworks · 16 executable hooks · 13 Proactive Watch drift classes · 21 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
 
 ---
 
@@ -227,7 +227,7 @@ For source-level integration or non-Claude-Code IDE work, see [documents/guides/
 
 ---
 
-**Maxim v1.3.8.2:**
+**Maxim v1.3.8.3:**
 
 91 agents (100% Grade A DNA · 24 dispatchable + 67 specialist catalog via mxm-catalog). 52 skill domains. 49 commands. 9 MCP servers (95 tools). 78 frameworks. 16 executable hooks. 13 Proactive Watch drift classes. 21 ADRs ratified (17 public + 4 confidential). 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
 
