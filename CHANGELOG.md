@@ -8,6 +8,12 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.8.3.2 — 2026-06-27 — Fix: `sync_portfolio` MCP crash on manifests without `mxm_version`
+
+Patch. `mxm-portfolio.sync_portfolio` threw **"Cannot read properties of undefined (reading 'localeCompare')"** for any project whose manifest lacks `mxm_version` — `manifestVersion` was left `undefined`, then `.localeCompare()` was called on it. Added a `cleanVer()` guard: the version is never `undefined` (defaults to `—`), newlines/pipes are neutralized and the value is capped (so a verbose `mxm_version` status blob can't break the metrics table either), and the latest-version comparison only runs on a real version string (a value containing a digit). Runtime-verified: `undefined`/`null` → no crash; blob → sanitized; real versions still compared. No capability count change.
+
+---
+
 ## v1.3.8.3.1 — 2026-06-27 — Portfolio sync: recursive scan depth (catch deeply-nested projects)
 
 Patch-of-patch on v1.3.8.3. The portfolio sync scanned only **2 folder levels** under `MXM_PROJECTS_ROOT`, so it caught `nabeelkhan/VAZIR` (depth 2) but **missed** a manifest at `nabeelkhan/myBooks/The Prey` (depth 3). The scan is now **recursive to `MXM_SCAN_DEPTH` folder levels** (default 3, env-configurable), pruning heavy dirs (`node_modules`, `dist`, `build`, `venv`, `vendor`, `community-packs`, …) and skipping dot-dirs. Still a safe no-op when the cache is absent, still never throws, and stays fast (~0.4s on a 10-project tree). Applied to both `bootstrap/mxm-sync-portfolio.mjs` (shipped) and the operator's local `.mxm-global/sync-portfolio.mjs`. No capability count change.

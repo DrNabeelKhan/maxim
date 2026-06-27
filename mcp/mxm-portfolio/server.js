@@ -216,11 +216,16 @@ server.tool(
     let withCompliance = 0;
     let latestariaVersion = "0.0.0";
 
+    // Sanitize a version for display + comparison: never undefined (the
+    // `.localeCompare` crash guard), newlines/pipes neutralized, capped (some
+    // manifests stuff a status blob into mxm_version).
+    const cleanVer = (v) => (String(v ?? "—").replace(/[\r\n]+/g, " ").replace(/\|/g, "/").trim().slice(0, 24) || "—");
+
     for (const entry of projectEntries) {
       totalProjects++;
       const manifestPath = join(entry.fullPath, "config/project-manifest.json");
       let manifest = null;
-      let manifestVersion = entry.version;
+      let manifestVersion = cleanVer(entry.version);
       let stage = "unknown";
       let compliance = "—";
       let lastActivity = today;
@@ -230,7 +235,7 @@ server.tool(
         await stat(manifestPath);
         const raw = await readFile(manifestPath, "utf-8");
         manifest = JSON.parse(raw);
-        manifestVersion = manifest.mxm_version || entry.version;
+        manifestVersion = cleanVer(manifest.mxm_version || entry.version);
         stage = manifest.project?.stage || "unknown";
 
         // Extract compliance
@@ -252,8 +257,9 @@ server.tool(
         // No handoff file — use today as fallback
       }
 
-      // Track latest Maxim version
-      if (manifestVersion.localeCompare(latestariaVersion, undefined, { numeric: true }) > 0) {
+      // Track latest Maxim version — only real version strings (a value with a
+      // digit); "—" / non-version values are skipped so they can't win or crash.
+      if (/\d/.test(manifestVersion) && manifestVersion.localeCompare(latestariaVersion, undefined, { numeric: true }) > 0) {
         latestariaVersion = manifestVersion;
       }
       if (manifestVersion === latestariaVersion || entry.version === latestariaVersion) {
