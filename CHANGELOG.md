@@ -8,6 +8,37 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.8.4 — 2026-06-27 — Continuation Handoff Prompt (ADR-023) — resume in a fresh window without hallucinating
+
+Minor. Adds a **verify-first continuation handoff prompt**: a paste-into-a-new-window block that lets a fresh session (any surface) resume with zero context loss and a structural guard against hallucinating from stale prose. Counts move: **commands 49 → 50** (`/mxm-handoff`), **ADRs 21 → 22** (ADR-023; **public 17 → 18**). All other counts unchanged (91 agents · 52 skills · 9 MCPs/95 tools · 78 frameworks · 16 hooks).
+
+### Why
+
+A long session ends — or context fills — and work has to continue in a fresh window. Improvised handoffs **embed facts that have already gone stale** (a git HEAD, a capability count, "what's done"); the next window trusts the prose and confidently builds on a wrong premise. That is the exact failure mode Maxim exists to prevent. (Proof it bites: this very release session resumed from such a prompt whose quoted HEAD was already one closure stale — caught in the first 30 seconds *only because* the prompt said "verify before acting.")
+
+### Added — `/mxm-handoff` (50th command) + ADR-023
+
+- **The anti-hallucination contract (ADR-023).** The generated prompt **points to source-of-truth and forces verification** — it never substitutes for them. Every prompt carries, in order: a READ-FIRST list of the three bridges; a VERIFY-STATE block of runnable git/version commands whose *output overrides the prompt* ("**where this prompt and the files disagree, the files win**"); a short *unverified* SNAPSHOT; the operator's open DECISIONS verbatim (flagged do-not-decide-for-him); the load-bearing RULES; and a FIRST-RESPONSE CONTRACT (confirm-read + verify + summarize-back *before* any work). Capability counts/rosters/long file bodies are **referenced at their source path, never inlined** — those are exactly the values a paste gets wrong.
+- **Template** `templates/continuation-prompt.template.md` — the fill-in template; renders to `.claude-sessions-memory/CONTINUATION-PROMPT.md` (runtime-local, gitignored) **and** prints inline for paste.
+- **`/mxm-handoff` command** — generate on demand anytime, mid-session.
+- **`mxm-commands` MCP** registers `mxm-handoff` (cross-surface parity for Desktop/Web; total recomputed to 50).
+
+### Added — `/mxm-session-end` Phase 4 + `session-memory` skill step 7
+
+Session-end now **always asks** "Generate a continuation handoff prompt? (y/n)" and **proactively recommends YES** when the assistant self-assesses context is heavy (long transcript · high tool-call volume · compaction already fired · many files touched).
+
+### Honest caveat — no fabricated "85%" gauge
+
+The operator's intent was "at ~85% context, offer a handoff." **No tool exposes a real context percentage from inside a skill** — hard-coding an 85% gate would mean inventing an unmeasurable number, which violates the never-hallucinate rule. So the trigger is **self-assess + always-ask**: an always-on offer plus an evidence-based recommendation, phrased as judgement, never as a false percentage. A CLI-only transcript-size proxy was considered and **deferred** (hooks are CLI-only; it would split the trigger path) — addable later as a pure enhancement. This is a *cousin* of `auto-compact.md` (which resumes the **same** conversation across in-place compaction); `/mxm-handoff` resumes a **fresh** window.
+
+### Fixed (folded in — caught by the pre-release audit)
+
+- **Brand drift (ARIA → Maxim) in user-facing surfaces.** Stale old-product-name references in three slash-command descriptions (`/mxm-new-project`, `/mxm-test`, `/mxm-brand-voice` — shown in the command picker) and one `notebooklm-py` example. Corrected to Maxim.
+- **Bare-form count stragglers** the conservative `sync-counts` anchors don't catch: `ABOUT.md` (`50 commands`, plus a pre-existing `36 → 52` skills drift), `PACKS.md` (`18 public`), `HELP.md` (`52 domains`).
+- **Security — sales routing address removed from code.** `SALES_NOTIFY_EMAIL` was a hardcoded `sales@isystematic.com` fallback in `cloudflare-worker/src/notify.ts` + a committed `[vars]` value in `wrangler.toml`. It now comes **only** from a secret/var (fail-soft skip if unset) — no address in tracked files. **Operator action required for the Worker:** `wrangler secret put SALES_NOTIFY_EMAIL` (or set the dashboard var) then redeploy, or sales notifications skip. Plugin distribution is unaffected.
+
+---
+
 ## v1.3.8.3.2 — 2026-06-27 — Fix: `sync_portfolio` MCP crash on manifests without `mxm_version`
 
 Patch. `mxm-portfolio.sync_portfolio` threw **"Cannot read properties of undefined (reading 'localeCompare')"** for any project whose manifest lacks `mxm_version` — `manifestVersion` was left `undefined`, then `.localeCompare()` was called on it. Added a `cleanVer()` guard: the version is never `undefined` (defaults to `—`), newlines/pipes are neutralized and the value is capped (so a verbose `mxm_version` status blob can't break the metrics table either), and the latest-version comparison only runs on a real version string (a value containing a digit). Runtime-verified: `undefined`/`null` → no crash; blob → sanitized; real versions still compared. No capability count change.
