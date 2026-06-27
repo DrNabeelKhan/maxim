@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Status:** 7 rows at v1.0.0 (6 L1 pack moats + MOAT-07 vertical-operator moat, added 2026-04-21 post community-pack audit). New rows land as L2 bundles, L3 verticals, and community packs ship, each pairing a pack's SKILL.md with the behavioral framework it applies per ADR-007.
+**Status:** 15 rows (MOAT-01…15; latest: **MOAT-14 Autonomous Workflow Standard** + **MOAT-15 default-on router**, added 2026-06-26 / v1.3.8). New rows land as L2 bundles, L3 verticals, and community packs ship, each pairing a pack's SKILL.md with the behavioral framework it applies per ADR-007.
 
 ---
 
@@ -87,9 +87,9 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 
 | Field | Value |
 |---|---|
-| **Positioning claim** | 74 peer-reviewed behavioral frameworks applied to every Maxim output. Mechanism named, anti-pattern registered, citation provided. The replication barrier is not the framework count — it is the registry that makes each framework enforceable. |
+| **Positioning claim** | 78 peer-reviewed behavioral frameworks applied to every Maxim output. Mechanism named, anti-pattern registered, citation provided. The replication barrier is not the framework count — it is the registry that makes each framework enforceable. |
 | **Mechanism** | Fogg Behavior Model B=MAP as the composition root — every output must have Motivation lever (why the reader acts), protected Ability lever (no friction), and timed Prompt lever (placed at the trigger moment). Every other framework plugs into one of the three levers. |
-| **Anti-pattern** | Generic LLM lists frameworks when asked, applies none when not asked. Competitors can also list 64 frameworks; they cannot replicate the enforcement, because enforcement lives in the pack-engine audit hook that scans every external-facing paragraph. |
+| **Anti-pattern** | Generic LLM lists frameworks when asked, applies none when not asked. Competitors can also list 78 frameworks; they cannot replicate the enforcement, because enforcement lives in the pack-engine audit hook that scans every external-facing paragraph. |
 | **Pack(s)** | L1.6 Behavioral Intelligence (flagship) · plus every other L1 cites this pack's framework registry |
 | **Primary framework** | Fogg Behavior Model / B=MAP (Fogg, 2009) · see `FRAMEWORKS_MASTER.md` §51. Supporting: Cialdini §50, Hook Model §53, EAST §55, Nudge Theory §52, TTM §59, SDT §60. |
 | **Proof** | [`packs/pack-l1-6-behavioral-intelligence/SKILL.md`](../../packs/pack-l1-6-behavioral-intelligence/SKILL.md) · [`documents/reference/FRAMEWORKS_MASTER.md`](../reference/FRAMEWORKS_MASTER.md) |
@@ -137,8 +137,8 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 
 | Field | Value |
 |---|---|
-| **Positioning claim** | Maxim is the only Claude Code plugin with a dedicated open-source desktop GUI (AGPL-3.0). Studio renders the 90-agent roster, 64-framework library, 11 Proactive Watch drift classes, and license tier in a visual chrome that non-developers can evaluate without reading documentation. Pack catalog updates dynamically when new packs ship — zero Studio code change required. |
-| **Mechanism** | Endowment Effect (Kahneman & Knetsch, 1991) — a visual face the user can see and touch increases perceived ownership before purchase. The Studio makes Maxim's moat tangible: operators who open the Executive Dispatch sidebar and see 90 agents mapped across 7 offices experience the product differently than those who read about it in a TUI banner. Tangible = higher willingness to upgrade. Supporting: Cialdini Social Proof (21.8k-star opcode upstream = credibility transfer). |
+| **Positioning claim** | Maxim is the only Claude Code plugin with a dedicated open-source desktop GUI (AGPL-3.0). Studio renders the 91-agent roster, 78-framework library, 13 Proactive Watch drift classes, and license tier in a visual chrome that non-developers can evaluate without reading documentation. Pack catalog updates dynamically when new packs ship — zero Studio code change required. |
+| **Mechanism** | Endowment Effect (Kahneman & Knetsch, 1991) — a visual face the user can see and touch increases perceived ownership before purchase. The Studio makes Maxim's moat tangible: operators who open the Executive Dispatch sidebar and see 91 agents mapped across 7 offices experience the product differently than those who read about it in a TUI banner. Tangible = higher willingness to upgrade. Supporting: Cialdini Social Proof (21.8k-star opcode upstream = credibility transfer). |
 | **Anti-pattern** | CLI-only plugins that assume all users are developers who read documentation. Maxim's moat is invisible to non-developers without a visual surface. Studio removes that barrier. |
 | **Pack(s)** | Studio is free (AGPL-3.0). Revenue flows through the BSL plugin + Cloudflare Worker. Studio is the acquisition gateway for all paid packs, not a revenue source itself. |
 | **Primary framework** | Endowment Effect (Kahneman & Knetsch, 1991). ADR-014 ratified 2026-05-13. |
@@ -150,7 +150,7 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 
 | Field | Value |
 |---|---|
-| **Positioning claim** | Maxim is the only Claude plugin with 91 reachable agents that ships a **structurally enforced two-layer dispatch**: 19 office-routing subagents at the dispatch tier + 91-agent specialist catalog reached programmatically via `mxm-catalog` MCP. Cross-surface parity by construction — same specialist tier on Claude Code AND Claude Desktop AND Claude.ai Web (via MCP). |
+| **Positioning claim** | Maxim is the only Claude plugin with 91 reachable agents that ships a **structurally enforced two-layer dispatch**: 24 office-routing subagents at the dispatch tier + 91-agent specialist catalog reached programmatically via `mxm-catalog` MCP. Cross-surface parity by construction — same specialist tier on Claude Code AND Claude Desktop AND Claude.ai Web (via MCP). |
 | **Mechanism** | Office-as-Dispatch-Boundary architecture (ADR-017). Each office agent is a thin internal router that calls `mxm-catalog.route_task()` + `get_agent_dna()` to embody the right specialist for a given task. Specialist tier is MCP-native, not subagent-native — so the same routing path works on every Claude surface that has the MCP. The 91-agent claim becomes structurally true rather than aspirational. |
 | **Anti-pattern** | Other plugins with 100+ agents either (a) promote them all to the subagent registry — registry bloat + 5–6-hop dispatch chains, OR (b) ship them as filesystem documents only — unreachable from the dispatch surface (the v1.2.0.3 KFAS WhatsApp failure mode). Neither pattern scales cross-surface; both force operators to discover which agents are "real" and which are aspirational. |
 | **Pack(s)** | Free tier (architecture-level moat). Every paid pack benefits — Pack 6 Behavioral Intelligence in particular, because specialist routing is what makes the 78 frameworks dispatchable per task. |
@@ -182,6 +182,32 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Pack(s)** | Free tier (the wizard + template ship in Core). The wizard enables tier selection that activates paid packs L1.1 through L3.4 via JWT. |
 | **Primary framework** | Prospect Theory (Kahneman & Tversky 1979) — loss aversion ~2× over gain. Default Effect (Thaler & Sunstein 2008) — defaults frame as recommended path. Endowment Effect (Kahneman & Knetsch 1991) — possession increases valuation. ADR-019 ratified 2026-05-20. |
 | **Proof** | [ADR-019](../ADRs/ADR-019-multi-tenant-readiness.md). v1.3.0 commits. `bootstrap/install-tier-packs.{sh,ps1}` (358 lines). `agents/MXM/cmo/_template-operator-writer.md` (template, 170 lines). `cmo-office.md` operator-id lookup logic. Public docs rewrites in README · MXM_RUNDOWN · ABOUT · INSTALL · GETTING_STARTED. |
+
+---
+
+### MOAT-14 · Autonomous Workflow Standard — autonomy that cannot run away · ADR-022 SHIPPED v1.3.8
+
+| Field | Value |
+|---|---|
+| **Positioning claim** | Maxim is the only Claude-native plugin that ships an **Autonomous Workflow Standard**: unattended multi-step workflows where a **budget guard hard-kills** on token / tool-call / runtime / cost breach, a **verification gate runs separately from generation**, every run is **idempotent**, and **dry-run is ON by default**. Autonomy you can actually let run, because it is structurally incapable of running away. |
+| **Mechanism** | Bounded Agent Loop (Explicit Stopping Conditions) + Independent Verification (Generation–Approval Separation) — the two loop-derived frameworks codified in v1.3.3. The `mxm-orchestrator` separates the agent that *does* the work from the gate that *approves* it, and every workflow declares its budget ceiling before the first step runs. See `FRAMEWORKS_MASTER.md` loop-derived frameworks. |
+| **Anti-pattern** | Generic agent loops run until they finish or exhaust the budget — no hard ceiling, no separate verifier, no idempotency marker, no dry-run gate. A runaway loop spends real money and ships unverified output. Maxim's orchestrator cannot exceed its declared budget and will not go live without a passing verification gate. |
+| **Pack(s)** | Free tier (architecture-level moat). Every paid pack benefits — autonomous workflows can dispatch any office's specialist under the same budget + verification contract. |
+| **Primary framework** | Bounded Agent Loop / Explicit Stopping Conditions + Independent Verification / Generation–Approval Separation (v1.3.3 loop-derived). ADR-022 ratified 2026-06-26. |
+| **Proof** | [ADR-022](../ADRs/ADR-022-autonomous-workflow-standard.md). v1.3.8 commits. `orchestrator/engine.mjs` (BudgetGuard hard-kill · StateStore + idempotency · unified RunLog · dead-letter · dry-run default). Acceptance test 29/29 in `orchestrator/acceptance-test.mjs`. `/mxm-workflow` command + `orchestrator` skill + 2 reference workflows under `orchestrator/workflows/`. |
+
+---
+
+### MOAT-15 · Default-on governance — the behavioral layer fires whether or not you ask · ADR-021 SHIPPED v1.3.5
+
+| Field | Value |
+|---|---|
+| **Positioning claim** | Maxim is the only Claude plugin that **routes every prompt to the right executive office automatically** — you never have to remember which command to type. A prompt-submit hook classifies intent, names the skills + frameworks to apply, and shows the routing token cost up front. Governance is the *default path*, not an opt-in the operator forgets after the demo. |
+| **Mechanism** | EAST (Easy · Attractive · Social · Timely) — removing the "which command do I use?" friction makes the governed path the *default* path. The router fires at prompt submit, before the model answers, so the correct office + frameworks load without the operator choosing. Friction is the enemy of a behavioral layer; the router removes it. |
+| **Anti-pattern** | Plugins where you must remember the right slash command or the governance layer never engages — friction means it gets used in the demo and forgotten in daily work. Maxim's router makes the behavioral layer engage on every prompt, asked for or not. |
+| **Pack(s)** | Free tier. Claude Code CLI surface (hooks are CLI-native; Desktop/Web reach the same offices via the `mxm-commands` + `mxm-catalog` MCP). |
+| **Primary framework** | EAST (Behavioural Insights Team, 2014) · see `FRAMEWORKS_MASTER.md`. ADR-021 ratified 2026-05-20. |
+| **Proof** | [ADR-021](../ADRs/ADR-021-maxim-default-on.md). v1.3.5 commits. `.claude/hooks/user-prompt-router.{sh,ps1}` + `config/routing-table.json` (word-boundary matching + weak-keyword gate, hardened v1.3.8). Routing token-cost banner + opt-out. |
 
 ---
 

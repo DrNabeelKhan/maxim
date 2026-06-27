@@ -40,15 +40,17 @@ v1.3.6 · BSL 1.1 (core) + Proprietary packs · Built in Canada · Apache 2.0 in
 
 **Two-layer dispatch with cross-surface parity (ADR-017).** 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP. Same routing surface on Claude Code, Desktop, Web, Cowork. The "91 agents" claim is structurally true, not aspirational.
 
+**Autonomous Workflow Standard (ADR-022).** Unattended multi-step workflows under `mxm-orchestrator` — a budget guard hard-kills on token / tool-call / runtime / cost breach, a verification gate runs separately from generation, every run is idempotent, and dry-run is on by default. Autonomy you can let run, because it cannot run away. Paired with 14 everyday skills (benefit-first surfaces over existing depth) and the default-on router (ADR-021) that routes every prompt to the right office automatically.
+
 ---
 
-## By the numbers (v1.3.6 inventory · audited 2026-06-19)
+## By the numbers (v1.3.8 inventory · audited 2026-06-26)
 
 |  |  |
 |---|---|
 | **91** | Specialist agents across 7 executive offices · 100% Grade A bilateral DNA |
-| **37** | Skill domains with dispatcher + behavioral wrapper + sub-skills |
-| **48** | Slash commands · 7 TIER 1 verb-first · 10 TIER 2 office · 5 TIER 3 persona · 26 domain/workflow |
+| **52** | Skills — 37 domain + 14 everyday (benefit-first) + 1 orchestrator, each with the behavioral wrapper |
+| **49** | Slash commands · 7 TIER 1 verb-first · 10 TIER 2 office · 5 TIER 3 persona · 27 domain/workflow |
 | **9 / 95** | MCP servers / tools · behavioral · compliance · memory · portfolio · voice · context · catalog · commands · notebooklm |
 | **78** | Behavioral science frameworks (Fogg · COM-B · EAST · Hook · SCARF · Prospect Theory · 72 more) |
 | **14** | Compliance frameworks (GDPR · PIPEDA · UAE-PDPL · HIPAA · PCI-DSS · SOC2 · ISO 27001/13485/14971 · NIST CSF · EU AI Act · CASL · FINTRAC · WCAG 2.1) |
