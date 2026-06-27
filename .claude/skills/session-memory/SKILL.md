@@ -108,6 +108,7 @@ Before ending ANY session, execute in order:
 4. **Append to feedback files** if any errors or lessons occurred during the session
 5. **Update MEMORY.md index** if new files were created this session
 6. **Write `.claude-sessions-memory/session-[YYYY-MM-DD].md`** with full session summary
+7. **Offer a continuation handoff prompt (ADR-023)** — ALWAYS ask "Generate a continuation handoff prompt for a fresh window? (y/n)". Proactively recommend YES when you self-assess context is heavy (long transcript · high tool-call volume · compaction already fired · many files touched) — phrase it as judgement, NEVER a fabricated context percentage. If yes → run `/mxm-handoff`: fill `templates/continuation-prompt.template.md` from VERIFIED state only, write `.claude-sessions-memory/CONTINUATION-PROMPT.md`, and print it inline. The prompt points to source-of-truth + forces verification (the files win); it never embeds stale counts/HEADs. This is the *portable* (fresh-window) cousin of `auto-compact.md` (same-conversation compaction).
 
 Session file format:
 ```markdown

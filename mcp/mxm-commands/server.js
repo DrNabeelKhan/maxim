@@ -5,13 +5,13 @@
 /**
  * mxm-commands — MCP Server (v1.2.0)
  *
- * Slash-command dispatcher. Exposes Maxim's 49 /mxm-* slash commands as a
+ * Slash-command dispatcher. Exposes Maxim's 50 /mxm-* slash commands as a
  * callable MCP tool surface. Provides command parity in Claude Desktop /
  * Claude.ai Web where native slash commands don't exist.
  *
  * 2 tools:
  *   - mxm_command(command, args?)  Look up routing decision for a slash command
- *   - list_commands()              List all 49 commands grouped by tier
+ *   - list_commands()              List all 50 commands grouped by tier
  *
  * This server is INFORMATIONAL — it returns the routing decision (which office,
  * which agents, which framework, which behavioral overlay) so the calling LLM
@@ -26,7 +26,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 
 // ──────────────────────────────────────────────────────────────────────────────
-// Command routing table — 49 commands per AGENT_SKILL_INVENTORY v1.3.8
+// Command routing table — 50 commands per AGENT_SKILL_INVENTORY v1.3.8.4
 // ──────────────────────────────────────────────────────────────────────────────
 
 const COMMANDS = {
@@ -191,7 +191,8 @@ const COMMANDS = {
   "mxm-security": { tier: "domain", intent: "Security audit (threat modeling + CSO auto-loop)", primary_office: "CSO", lead_agent: "security-analyst" },
   "mxm-self-update": { tier: "domain", intent: "Pull latest plugin version", primary_office: "Bootstrap", lead_agent: "bootstrap/mxm-self-update.{sh,ps1}" },
   "mxm-seo": { tier: "domain", intent: "Search visibility (Google + AI answers)", primary_office: "CMO", lead_agent: "seo-specialist" },
-  "mxm-session-end": { tier: "domain", intent: "Named 9-document closure bundle", primary_office: "Orchestrators", lead_agent: "planner (COO)", note: "ADR-002 ratified ritual" },
+  "mxm-session-end": { tier: "domain", intent: "Named 9-document closure bundle", primary_office: "Orchestrators", lead_agent: "planner (COO)", note: "ADR-002 ratified ritual; offers /mxm-handoff at Phase 4" },
+  "mxm-handoff": { tier: "domain", intent: "Generate a verify-first continuation handoff prompt (ADR-023)", primary_office: "COO", lead_agent: "planner (session-memory skill)", note: "Paste-into-a-fresh-window prompt; points to source-of-truth + forces verification (the files win) — never embeds stale counts/HEADs. Also Phase 4 of /mxm-session-end." },
   "mxm-status": { tier: "domain", intent: "Current session status (handoff + skill gaps + drift)", primary_office: "Router", lead_agent: "executive-router" },
   "mxm-superpowers": { tier: "domain", intent: "Advanced workflows (TDD + parallel agents + debugging)", primary_office: "Router", lead_agent: "superpowers community pack" },
   "mxm-tasks": { tier: "domain", intent: "Usage-aware scheduled tasks", primary_office: "COO", lead_agent: "planner", note: "Respects Claude usage limits per config/scheduler-thresholds.json" },
@@ -234,7 +235,7 @@ server.tool(
             text: JSON.stringify(
               {
                 error: `Unknown Maxim command: ${command}`,
-                hint: "Use list_commands to see all 49 commands.",
+                hint: "Use list_commands to see all 50 commands.",
                 did_you_mean: suggestions.length > 0 ? suggestions : undefined,
               },
               null,
@@ -283,7 +284,7 @@ server.tool(
 
 server.tool(
   "list_commands",
-  "List all 49 Maxim slash commands grouped by tier (TIER 1 verb-first · TIER 2 office shortcuts · TIER 3 persona dispatchers · Domain & workflow). Returns each command's intent and primary office.",
+  "List all 50 Maxim slash commands grouped by tier (TIER 1 verb-first · TIER 2 office shortcuts · TIER 3 persona dispatchers · Domain & workflow). Returns each command's intent and primary office.",
   {
     tier: z.enum(["1", "2", "3", "domain", "all"]).optional().describe("Filter by tier. Default: 'all'."),
   },

@@ -78,6 +78,7 @@ documents/architecture/
 !documents/ADRs/ADR-019-multi-tenant-readiness.md
 !documents/ADRs/ADR-021-maxim-default-on-router.md
 !documents/ADRs/ADR-022-autonomous-workflow-standard.md
+!documents/ADRs/ADR-023-continuation-handoff-prompt.md
 
 # ── Maxim ledger state (session-local, never committed) ──────────────────
 # documents/ledgers/ holds the canonical Executable Contract ledgers.

@@ -25,7 +25,7 @@ Ratified by ADR-002 (Documents as Executable Contracts) and Learning #4 from the
 |---|---|
 | End of any session with non-trivial work | **MANDATORY** |
 | End of a sprint / feature / bugfix | run before `/mxm-release` |
-| Context window nearing exhaustion | run first, then summarize |
+| Context window nearing exhaustion | run first, then summarize — and accept the Phase-4 continuation handoff prompt (ADR-023) to resume in a fresh window |
 | Before switching projects | run to lock this project's state |
 | Mechanical "I only read code" session | skip (no state changed) |
 
@@ -80,6 +80,17 @@ Phase 3 — Verify
 Phase 4 — Hand-off
   • Update .mxm-skills/agents-handoff.md with next-session-startup block
   • Mark session-YYYY-MM-DD.md CLOSED
+  • Continuation handoff prompt (ADR-023) — ALWAYS ASK:
+      "Generate a continuation handoff prompt for a fresh window? (y/n)"
+    – Proactively RECOMMEND yes when you self-assess context is heavy
+      (long transcript · high tool-call volume · compaction already fired ·
+       many files touched). Phrase it as a judgement — NEVER a fabricated
+       context percentage (no tool exposes a real %; inventing one violates
+       the never-hallucinate rule).
+    – If yes → run /mxm-handoff: fills templates/continuation-prompt.template.md
+      from VERIFIED state only, writes .claude-sessions-memory/CONTINUATION-PROMPT.md,
+      and prints it inline for paste. The prompt points to source-of-truth + forces
+      verification ("the files win") — it never embeds stale counts/HEADs.
   • If portfolio project: call mxm-portfolio.sync_portfolio MCP
 ```
 
@@ -127,6 +138,7 @@ Maxim SESSION END ▸ Running closure bundle…
   [9/9] MEMORY.md                   ✓ index refreshed
 
   Handoff: agents-handoff.md        ✓ written
+  Continuation prompt (ADR-023):    ? asked — context heavy, recommended → written CONTINUATION-PROMPT.md
   Watch (light):                    ✓ drift=0 errors=0
   Portfolio sync:                   ○ non-portfolio project — skipped
 
@@ -167,6 +179,8 @@ Custom per-project closure hooks can be added by editing:
 - `/mxm-watch` — LIGHT scan run at end of bundle
 - `/mxm-update` — narrower capability-inventory sync
 - `/mxm-release` — wraps session-end + version bump
+- `/mxm-handoff` — Phase-4 continuation prompt (ADR-023); also runnable standalone anytime
+- ADR-023 — Continuation Handoff Prompt Standard
 
 ---
 
