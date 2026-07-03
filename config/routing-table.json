@@ -2,8 +2,8 @@
   "_doc": "Maxim Default-On Router (ADR-021). The UserPromptSubmit hook (user-prompt-router.{sh,ps1}) reads this to classify intent and inject a routing directive. Edit freely: add keywords, reorder, retune. Set enabled=false (or create .mxm-skills/router-off) to disable. A prompt matching no route passes through silently (vanilla Claude).",
   "enabled": true,
   "min_keyword_hits": 1,
-  "weak_keywords": ["plan", "content", "story", "loop", "operations", "delivery", "workflow"],
-  "_weak_doc": "Generic nouns that double as conversational words. A route firing on ONLY a single weak keyword (e.g. 'plan' in 'back to our plan') is NOT confident -> passthrough. Needs >=1 strong (non-weak) hit OR >=2 total hits. Add/remove freely.",
+  "weak_keywords": ["plan", "content", "story", "loop", "operations", "delivery", "workflow", "design"],
+  "_weak_doc": "Generic nouns that double as conversational words. A route firing on ONLY a single weak keyword (e.g. 'plan' in 'back to our plan', or 'design' in 'stack design' / 'system design') is NOT confident -> passthrough. Needs >=1 strong (non-weak) hit OR >=2 total hits. Add/remove freely. NOTE (BUG-012): 'design' is weak because it collides with architecture terms ('stack/system/API/routing design'); UI-design routing needs a co-signal (ui/ux/css/layout/figma/brand/banner/etc.).",
   "show_token_cost": true,
   "log": ".mxm-skills/routing-log.jsonl",
   "routes": [
@@ -16,7 +16,7 @@
     },
     {
       "id": "content",
-      "keywords": ["write", "post", "social media", "linkedin", "twitter", "tweet", "blog", "article", "copy", "email", "newsletter", "caption", "headline", "content", "story", "announce", "marketing", "campaign", "seo", "reel", "instagram", "ig", "carousel", "hashtag"],
+      "keywords": ["write", "reply", "respond", "message", "dm", "post", "social media", "linkedin", "twitter", "tweet", "blog", "article", "copy", "email", "newsletter", "caption", "headline", "content", "story", "announce", "marketing", "campaign", "seo", "reel", "instagram", "ig", "carousel", "hashtag"],
       "office": "CMO",
       "skills": ["content-creation", "marketing", "brand", "search-visibility", "behavior-science-persuasion"],
       "frameworks": ["AIDA", "Hook Model", "Cialdini's 6 Principles", "Fogg Behavior Model (FBM)", "Prospect Theory"]
