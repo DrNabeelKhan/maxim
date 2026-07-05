@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Status:** 12 entries logged — BUG-010 RESOLVED (L1 pack-load `Path escapes plugin directory`, v1.3.8.2) · BUG-011 RESOLVED (`sync_portfolio` localeCompare crash, v1.3.8.3.2) · **BUG-012 RESOLVED core symptom / fix committed local (2026-07-03)** — Default-On router (ADR-021) misclassification: `design` collided with "stack design" + missing comms verbs + array-order tie-break; pure-data fix in `config/routing-table.json`, broader hardening + banner-confidence deferred (PATTERN-04). — BUG-001..005 RESOLVED v1.0.0 launch install bug-bash (2026-04-21..2026-04-27) · BUG-006 RESOLVED Session 15 plugin MCP path fix (2026-04-27) · BUG-007 RESOLVED v1.1.0.2/.3 plugin-upgrade node_modules absence + spawn-with-deps wrapper · **BUG-008 RESOLVED v1.3.2.2 (2026-05-20) mxm-self-update.sh Python heredoc Windows MSYS path bug fixed via pathlib.Path.home() + hard-fail registry-write verification** · **BUG-009 OPEN v1.3.2.2 (2026-05-20) mxm-notebooklm MCP wrapper has 12+ CLI-shape mismatches against current notebooklm-py CLI; partial fix shipped (3 subcommand renames + 2 --topic positional + 1 audio enum); full wrapper audit candidate v1.3.3**. PATTERN-01 (cross-platform structural assumptions) struck again with BUG-008 (resolved); BUG-009 is a NEW pattern (PATTERN-02 candidate: external-tool wrapper drift against upstream CLI shape — ADR-018 fragility risk realized). See DEBUGGING_PLAYBOOK.md §1, §3.
+**Status:** 13 entries logged — **BUG-013 OPEN (2026-07-03)** MCP servers fail to attach on the first restart after a native `claude plugin update` (deps-sentinel spawn race; servers healthy, 2nd restart fixes it) — batch fix candidate. — BUG-010 RESOLVED (L1 pack-load `Path escapes plugin directory`, v1.3.8.2) · BUG-011 RESOLVED (`sync_portfolio` localeCompare crash, v1.3.8.3.2) · **BUG-012 RESOLVED core symptom / fix committed local (2026-07-03)** — Default-On router (ADR-021) misclassification: `design` collided with "stack design" + missing comms verbs + array-order tie-break; pure-data fix in `config/routing-table.json`, broader hardening + banner-confidence deferred (PATTERN-04). — BUG-001..005 RESOLVED v1.0.0 launch install bug-bash (2026-04-21..2026-04-27) · BUG-006 RESOLVED Session 15 plugin MCP path fix (2026-04-27) · BUG-007 RESOLVED v1.1.0.2/.3 plugin-upgrade node_modules absence + spawn-with-deps wrapper · **BUG-008 RESOLVED v1.3.2.2 (2026-05-20) mxm-self-update.sh Python heredoc Windows MSYS path bug fixed via pathlib.Path.home() + hard-fail registry-write verification** · **BUG-009 OPEN v1.3.2.2 (2026-05-20) mxm-notebooklm MCP wrapper has 12+ CLI-shape mismatches against current notebooklm-py CLI; partial fix shipped (3 subcommand renames + 2 --topic positional + 1 audio enum); full wrapper audit candidate v1.3.3**. PATTERN-01 (cross-platform structural assumptions) struck again with BUG-008 (resolved); BUG-009 is a NEW pattern (PATTERN-02 candidate: external-tool wrapper drift against upstream CLI shape — ADR-018 fragility risk realized). See DEBUGGING_PLAYBOOK.md §1, §3.
 
 ---
 
@@ -48,6 +48,20 @@ The ADR-021 router (`user-prompt-router.{sh,ps1}` + `config/routing-table.json`)
 ---
 
 ## Open Bugs
+
+### BUG-013 · MCP servers fail to attach on the FIRST restart after a native plugin update (deps-sentinel spawn race)
+
+| Field | Value |
+|---|---|
+| **Reported** | 2026-07-03 (operator — after `claude plugin update maxim@maxim-packs` 1.3.8.1→1.3.8.4 + restart, all 8 Maxim node MCP servers showed disconnected in the session). |
+| **Severity** | P2 — degraded; the whole MCP surface is down until a second restart. Breaks the v1.3.7 "invisible / single-restart update" promise (BUG-007 lineage). |
+| **Status** | OPEN — root cause identified + operator mitigation given; code fix is a batch candidate. |
+| **Root cause** | `mcp/_shared/spawn-with-deps.mjs` gates its fast-path on a `.mcp-deps-installed` sentinel + a file-lock. The native `claude plugin update` stages the new version dir and (via donor-reuse) can copy `node_modules`, but the **sentinel is only written on first spawn**, not at update time. On the first post-update restart Claude Code spawns all 8 servers **concurrently** with no sentinel present → they race on the install-lock (`LOCK_TIMEOUT_MS=120_000`); losers block past Claude Code's MCP attach/handshake window → every server reports "not running." Once one spawn writes the sentinel, later restarts fast-path and attach normally. Compounded by the native update **not re-applying `.mcp-disabled`** (only `/mxm-self-update` does), so the heavy Python `mxm-notebooklm` MCP silently re-enabled and added to the concurrent cold-spawn load. |
+| **Verification** | 1.3.8.4 install checked: all 8 `mcp/mxm-*/node_modules` present · `.mcp-deps-installed` sentinel present · no stale `.mcp-install-lock` · `.mcp-disabled` empty. Manual `CLAUDE_PLUGIN_ROOT=… node mcp/_shared/spawn-with-deps.mjs mcp/mxm-catalog/server.js` starts clean (exit 0 on stdin-EOF, no error). So the servers are healthy — it was a one-time first-restart race. |
+| **Mitigation (operator)** | Fully quit + relaunch Claude Code once more (sentinel now present → fast-path attach). If still down, run `/mcp` for per-server errors. Optionally re-disable heavy MCPs: `bash bootstrap/mxm-toggle-mcp.sh disable mxm-notebooklm`. |
+| **Proposed fix (batch)** | (a) Write `.mcp-deps-installed` at install/donor-reuse time (or fast-path purely on `node_modules` presence when all servers have them, skipping the lock), so the first restart never races. (b) Make native `claude plugin update` re-apply `.mcp-disabled` (or document that only `/mxm-self-update` preserves it). Ties to the known "cold-attach handshake window too short with 9+ concurrent MCPs" backlog item. |
+
+---
 
 ### BUG-012 · Default-On router misclassifies comms/architecture prompts (keyword collision + missing verbs + tie-break-by-order)
 
