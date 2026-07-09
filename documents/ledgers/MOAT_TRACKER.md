@@ -26,18 +26,18 @@ Each row MUST include:
 
 ## Moat Rows
 
-Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by section number. The mechanism column states what the framework does when applied correctly; the anti-pattern column describes what a generic LLM produces without the framework applied.
+Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by name. The mechanism column states what the framework does when applied correctly; the anti-pattern column describes what a generic LLM produces without the framework applied.
 
 ### MOAT-01 · AI Governance anchor
 
 | Field | Value |
 |---|---|
 | **Positioning claim** | Every AI decision your operator produces carries an audit trail with loss-framed risk weighting, not confident prose. |
-| **Mechanism** | Prospect Theory — losses weighted ~2× gains, so outputs flag downside risk explicitly (failed audit, wrong framework, compliance drift) rather than presenting upside only. See `FRAMEWORKS_MASTER.md` §56 Cognitive Biases · Prospect Theory. |
+| **Mechanism** | Prospect Theory — losses weighted ~2× gains, so outputs flag downside risk explicitly (failed audit, wrong framework, compliance drift) rather than presenting upside only. See `FRAMEWORKS_MASTER.md` → Cognitive Biases · Prospect Theory. |
 | **Anti-pattern** | Generic LLM produces confident recommendations with no loss framing. Operator reads, ships, discovers the cost of the loss after it's realized. |
 | **Pack(s)** | L1.1 AI Governance |
 | **Primary framework** | Prospect Theory (Kahneman & Tversky, 1979) |
-| **Proof** | [`packs/pack-l1-1-ai-governance/SKILL.md`](../../packs/pack-l1-1-ai-governance/SKILL.md) |
+| **Proof** | [`packs/pack-l1-1-ai-governance/skills/ai-governance/SKILL.md`](../../packs/pack-l1-1-ai-governance/skills/ai-governance/SKILL.md) |
 
 ### MOAT-02 · MemPalace Pro anchor
 
@@ -48,18 +48,18 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Anti-pattern** | Generic LLM re-reads every doc on every session, overwhelming context window, dropping mid-session memory, answering recent questions without historical context. |
 | **Pack(s)** | L1.2 MemPalace Pro |
 | **Primary framework** | Cognitive Load Theory (Sweller, 1988) + Miller's Law (Miller, 1956) |
-| **Proof** | [`packs/pack-l1-2-mempalace-pro/SKILL.md`](../../packs/pack-l1-2-mempalace-pro/SKILL.md) |
+| **Proof** | [`packs/pack-l1-2-mempalace-pro/skills/mempalace-pro/SKILL.md`](../../packs/pack-l1-2-mempalace-pro/skills/mempalace-pro/SKILL.md) |
 
 ### MOAT-03 · Proactive Watch anchor
 
 | Field | Value |
 |---|---|
-| **Positioning claim** | Ten drift classes scan on every session start — docs vs code, counts vs filesystem, moat claims vs this ledger, compliance trail integrity. Silent regressions surface before ship, not after. |
+| **Positioning claim** | 13 drift classes scan on every session start — docs vs code, counts vs filesystem, moat claims vs this ledger, compliance trail integrity. Silent regressions surface before ship, not after. |
 | **Mechanism** | Signal Detection Theory — explicit threshold tuning per drift class, with severity 1–5 scoring so high-severity drift blocks session continuation and low-severity drift logs to review queue. |
 | **Anti-pattern** | Generic LLM has no drift awareness across sessions. Docs lie about what code does, counts in README don't match reality, nobody catches it until a customer or auditor does. |
 | **Pack(s)** | L1.3 Proactive Watch |
 | **Primary framework** | Signal Detection Theory (Green & Swets, 1966) |
-| **Proof** | [`packs/pack-l1-3-proactive-watch/SKILL.md`](../../packs/pack-l1-3-proactive-watch/SKILL.md) · [`composable-skills/frameworks/proactive-watch.md`](../../composable-skills/frameworks/proactive-watch.md) |
+| **Proof** | [`packs/pack-l1-3-proactive-watch/skills/proactive-watch/SKILL.md`](../../packs/pack-l1-3-proactive-watch/skills/proactive-watch/SKILL.md) · [`composable-skills/frameworks/proactive-watch.md`](../../composable-skills/frameworks/proactive-watch.md) |
 
 ### MOAT-04 · Compliance Shield anchor
 
@@ -69,8 +69,8 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Mechanism** | COM-B applied to compliance behavior — operator Capability (know the rule), Opportunity (frameworks loaded into context automatically), Motivation (compliance gate blocks bad output) must all fire for a Behavior change. Removes "I forgot which framework applies" from the equation. |
 | **Anti-pattern** | Generic LLM mentions compliance when asked, skips it when not asked. Post-hoc review finds violations. Operator rewrites. Cost compounds. |
 | **Pack(s)** | L1.4 Compliance Shield · L3.1 Healthcare · L3.2 Legal · L3.3 Fintech · L3.4 GovTech |
-| **Primary framework** | COM-B (Michie, van Stralen & West, 2011) · see `FRAMEWORKS_MASTER.md` §54 |
-| **Proof** | [`packs/pack-l1-4-compliance-shield/SKILL.md`](../../packs/pack-l1-4-compliance-shield/SKILL.md) · `mcp/mxm-compliance/` |
+| **Primary framework** | COM-B (Michie, van Stralen & West, 2011) · see `FRAMEWORKS_MASTER.md` → COM-B Model |
+| **Proof** | [`packs/pack-l1-4-compliance-shield/skills/compliance-shield/SKILL.md`](../../packs/pack-l1-4-compliance-shield/skills/compliance-shield/SKILL.md) · `mcp/mxm-compliance/` |
 
 ### MOAT-05 · Brand & Design Pro anchor
 
@@ -80,19 +80,19 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Mechanism** | Dual Process Theory — System 1 fast recognition tuned by consistent voice overlay, System 2 reflection reserved for evaluating substance. Brand drift breaks System 1 recognition; Maxim's three-layer voice overlay prevents drift on every session. |
 | **Anti-pattern** | Generic LLM produces on-brand copy on Monday, off-brand copy on Friday. Each session starts blind to prior voice decisions. Your Twitter thread and your pricing page read like two different companies. |
 | **Pack(s)** | L1.5 Brand & Design Pro |
-| **Primary framework** | Dual Process Theory (Kahneman, 2011) · see `FRAMEWORKS_MASTER.md` §61 |
-| **Proof** | [`packs/pack-l1-5-brand-design-pro/SKILL.md`](../../packs/pack-l1-5-brand-design-pro/SKILL.md) · [`.brand-foundation/personal/voice-profile.md`](../../.brand-foundation/personal/voice-profile.md) |
+| **Primary framework** | Dual Process Theory (Kahneman, 2011) · see `FRAMEWORKS_MASTER.md` → Dual Process Theory |
+| **Proof** | [`packs/pack-l1-5-brand-design-pro/skills/brand-design-pro/SKILL.md`](../../packs/pack-l1-5-brand-design-pro/skills/brand-design-pro/SKILL.md) · [`.brand-foundation/personal/voice-profile.md`](../../.brand-foundation/personal/voice-profile.md) |
 
 ### MOAT-06 · Behavioral Intelligence flagship
 
 | Field | Value |
 |---|---|
-| **Positioning claim** | 78 peer-reviewed behavioral frameworks applied to every Maxim output. Mechanism named, anti-pattern registered, citation provided. The replication barrier is not the framework count — it is the registry that makes each framework enforceable. |
+| **Positioning claim** | 86 peer-reviewed frameworks (behavioral science at the core, extended with security · compliance · enterprise-architecture · engineering) applied to every Maxim output. Mechanism named, anti-pattern registered, citation provided. The replication barrier is not the framework count — it is the registry that makes each framework enforceable. |
 | **Mechanism** | Fogg Behavior Model B=MAP as the composition root — every output must have Motivation lever (why the reader acts), protected Ability lever (no friction), and timed Prompt lever (placed at the trigger moment). Every other framework plugs into one of the three levers. |
-| **Anti-pattern** | Generic LLM lists frameworks when asked, applies none when not asked. Competitors can also list 78 frameworks; they cannot replicate the enforcement, because enforcement lives in the pack-engine audit hook that scans every external-facing paragraph. |
+| **Anti-pattern** | Generic LLM lists frameworks when asked, applies none when not asked. Competitors can also list 86 frameworks; they cannot replicate the enforcement, because enforcement lives in the process discipline — ADR-007 framework-citation at output time, the commit-time SKILL.md structure check (`behavioral-moat-drift`, CLI hook), and the pre-release-audit gate — not in a marketing claim. |
 | **Pack(s)** | L1.6 Behavioral Intelligence (flagship) · plus every other L1 cites this pack's framework registry |
-| **Primary framework** | Fogg Behavior Model / B=MAP (Fogg, 2009) · see `FRAMEWORKS_MASTER.md` §51. Supporting: Cialdini §50, Hook Model §53, EAST §55, Nudge Theory §52, TTM §59, SDT §60. |
-| **Proof** | [`packs/pack-l1-6-behavioral-intelligence/SKILL.md`](../../packs/pack-l1-6-behavioral-intelligence/SKILL.md) · [`documents/reference/FRAMEWORKS_MASTER.md`](../reference/FRAMEWORKS_MASTER.md) |
+| **Primary framework** | Fogg Behavior Model / B=MAP (Fogg, 2009) · see `FRAMEWORKS_MASTER.md` → Fogg Behavior Model (FBM). Supporting: Cialdini's 6 Principles, Hook Model, EAST, Nudge Theory, TTM, SDT. |
+| **Proof** | [`packs/pack-l1-6-behavioral-intelligence/skills/behavioral-intelligence/SKILL.md`](../../packs/pack-l1-6-behavioral-intelligence/skills/behavioral-intelligence/SKILL.md) · [`documents/reference/FRAMEWORKS_MASTER.md`](../reference/FRAMEWORKS_MASTER.md) |
 
 ---
 
@@ -101,10 +101,10 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | Field | Value |
 |---|---|
 | **Positioning claim** | Maxim ships the only Claude-native operator roster that goes beyond compliance *awareness* to compliance *authorship* — FDA submissions, MDR technical files, CAPA workflows, PCI-grade payment flows written by specialist agents who cite the exact clause. |
-| **Mechanism** | Social Learning Theory — regulator-facing documents follow strict genre conventions (tone, evidence format, citation discipline) that specialist agents replicate by modeling observed regulator-approved submissions, not by generating from compliance-rule abstractions. See `FRAMEWORKS_MASTER.md` §64 Social Learning Theory (Bandura) — roadmap v1.2. Supporting: Prospect Theory §56 for risk-weighted language; Constitutional AI for audit-trail alignment (roadmap v1.3). |
+| **Mechanism** | Social Learning Theory — regulator-facing documents follow strict genre conventions (tone, evidence format, citation discipline) that specialist agents replicate by modeling observed regulator-approved submissions, not by generating from compliance-rule abstractions. See `FRAMEWORKS_MASTER.md` → Social Learning Theory (Bandura) — roadmap v1.2. Supporting: Prospect Theory for risk-weighted language; Constitutional AI for audit-trail alignment (roadmap v1.3). |
 | **Anti-pattern** | Generic LLM knows what HIPAA / MDR / PCI-DSS *require* but produces text that reads like a summary, not a submission. Regulator rejects; operator rewrites; Maxim's value didn't reach the artifact. |
 | **Pack(s)** | L3 Healthcare overlay · L3 Fintech overlay · L3 Legal overlay · L3 GovTech overlay — all four get operator rosters starting v1.4 |
-| **Primary framework** | Social Learning Theory (Bandura, 1977) · roadmap v1.2 §64 |
+| **Primary framework** | Social Learning Theory (Bandura, 1977) · roadmap v1.2 |
 | **Proof** | [`documents/reference/FRAMEWORK_ROADMAP.md`](../reference/FRAMEWORK_ROADMAP.md) — CRO operator roster + Fintech specialist domain scheduled v1.4. |
 
 ### MOAT-08 · Runtime tier enforcement (license middleware) · v1.1.0 SHIPPED
@@ -112,15 +112,15 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | Field | Value |
 |---|---|
 | **Positioning claim** | Maxim is the only Claude-native plugin where paid features are enforced at the MCP layer, not on the honor system — every tool call hits a tier gate locally (cache-file fast path, no network on hot path), with grant verification, JWT signature check, daily heartbeat for revocation propagation, and a Worker-issued JWT that ties tier to the machine fingerprint. Open-source code; gated runtime. |
-| **Mechanism** | Operant Conditioning + Loss Aversion — paid tiers receive features that are demonstrably absent on Starter (not "limited" — *absent*, with `GRANTS_INSUFFICIENT` errors that name the tier upgrade path). Loss-frame language at the gate ("compliance-14 grant not present in your starter tier") drives upgrade conversion harder than gain-framed marketing copy. See `FRAMEWORKS_MASTER.md` §X Prospect Theory + §Y Operant Conditioning — both shipped v1.0.0. |
+| **Mechanism** | Operant Conditioning + Loss Aversion — paid tiers receive features that are demonstrably absent on Starter (not "limited" — *absent*, with `GRANTS_INSUFFICIENT` errors that name the tier upgrade path). Loss-frame language at the gate ("compliance-14 grant not present in your starter tier") drives upgrade conversion harder than gain-framed marketing copy. See `FRAMEWORKS_MASTER.md` → Prospect Theory + Operant Conditioning — both shipped v1.0.0. |
 | **Anti-pattern** | Open-source plugins that gate paid features by trust ("please upgrade to use this") — easily bypassed; doesn't scale; no audit trail. Or commercial plugins that gate by code obfuscation — public-source contradiction. Maxim's pattern: public source, runtime gate, transparent grant catalog (`cloudflare-worker/grants.json`). |
 | **Pack(s)** | All paid tiers (Solo $19.99 / Pro $39 / Professional $99 / Team $249) + 4 vertical overlays (Healthcare $249 / Legal $199 / Fintech $199 / GovTech $149). Tier-specific grants documented in `cloudflare-worker/grants.json` (54-grant catalog). |
-| **Primary framework** | Prospect Theory (Kahneman & Tversky 1979) — loss-frame at the gate · roadmap §66. Supporting: Operant Conditioning §65 for tier-progression behavior shaping. |
+| **Primary framework** | Prospect Theory (Kahneman & Tversky 1979) — loss-frame at the gate. Supporting: Operant Conditioning for tier-progression behavior shaping. |
 | **Proof** | v1.1.0 SHIPPED 2026-04-27. `mcp/_shared/license-gate.mjs` (419 lines) + `cloudflare-worker/src/v11a-license.ts` (361 lines) + 9/9 E2E tests passing in `mcp/_shared/license-gate.test.mjs`. All 7 MCP servers gated. CHANGELOG.md v1.1.0 entry. Locked design captured at `~/.claude/projects/E--Projects-Maxim/memory/project_v1.1.A_locked_design.md` (G1–G7). ADR-013 pending in v1.1.1 sprint. |
 
 ---
 
-### MOAT-10 · Voice-faithful writing agents — operator + per-startup · ADR-016 PLANNED v1.2.0
+### MOAT-10 · Voice-faithful writing agents — operator + per-startup · ADR-016 SHIPPED v1.2.0
 
 | Field | Value |
 |---|---|
@@ -129,7 +129,7 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Anti-pattern** | AI tools that produce content "in your voice" by prompt-engineering ("write like X") — fragile, drifts within a single conversation, requires re-priming each session. Or systems that hardcode a voice spec into the model — locks voice to model weights, can't update without retraining. Maxim's pattern: voice files are operator-owned, agent reads them at task time, routing table is the canonical authority. |
 | **Pack(s)** | Voice agents ship in the base plugin v1.2.0. Per-startup brand writers (template-instantiated) are part of the L1.6 Behavioral Intelligence pack value (operator-customized writers powered by behavioral framework stack). |
 | **Primary framework** | Operant Conditioning (Skinner, 1938) + Self-Determination Theory (Deci & Ryan, 1985). ADR-016 ratified 2026-05-15. |
-| **Proof** | PLANNED v1.2.0. ADR-016 at `documents/ADRs/ADR-016-voice-writing-agent-architecture.md`. Source-of-truth file: `E:/Projects/nabeelkhan/myVoiceDNA/VOICE_SELECTION.md` (v1.0, 22 content types, last_updated 2026-05-19). Components: `nk-writer` agent (CMO), `voice-routing` skill, `_template-brand-writer.md` template. Sprint estimate: ~3 dev-days within the v1.2 sprint. |
+| **Proof** | SHIPPED v1.2.0. ADR-016 at `documents/ADRs/ADR-016-voice-writing-agent-architecture.md`. Source-of-truth file: `E:/Projects/nabeelkhan/myVoiceDNA/VOICE_SELECTION.md` (v1.0, 22 content types, last_updated 2026-05-19). Components: `nk-writer` agent (CMO, `agents/MXM/cmo/nk-writer.md`), `voice-routing` skill, `_template-brand-writer.md` template. |
 
 ---
 
@@ -137,7 +137,7 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 
 | Field | Value |
 |---|---|
-| **Positioning claim** | Maxim is the only Claude Code plugin with a dedicated open-source desktop GUI (AGPL-3.0). Studio renders the 91-agent roster, 78-framework library, 13 Proactive Watch drift classes, and license tier in a visual chrome that non-developers can evaluate without reading documentation. Pack catalog updates dynamically when new packs ship — zero Studio code change required. |
+| **Positioning claim** | Maxim is the only Claude Code plugin with a dedicated open-source desktop GUI (AGPL-3.0). Studio renders the 91-agent roster, 86-framework library, 13 Proactive Watch drift classes, and license tier in a visual chrome that non-developers can evaluate without reading documentation. Pack catalog updates dynamically when new packs ship — zero Studio code change required. |
 | **Mechanism** | Endowment Effect (Kahneman & Knetsch, 1991) — a visual face the user can see and touch increases perceived ownership before purchase. The Studio makes Maxim's moat tangible: operators who open the Executive Dispatch sidebar and see 91 agents mapped across 7 offices experience the product differently than those who read about it in a TUI banner. Tangible = higher willingness to upgrade. Supporting: Cialdini Social Proof (21.8k-star opcode upstream = credibility transfer). |
 | **Anti-pattern** | CLI-only plugins that assume all users are developers who read documentation. Maxim's moat is invisible to non-developers without a visual surface. Studio removes that barrier. |
 | **Pack(s)** | Studio is free (AGPL-3.0). Revenue flows through the BSL plugin + Cloudflare Worker. Studio is the acquisition gateway for all paid packs, not a revenue source itself. |
@@ -153,7 +153,7 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Positioning claim** | Maxim is the only Claude plugin with 91 reachable agents that ships a **structurally enforced two-layer dispatch**: 24 office-routing subagents at the dispatch tier + 91-agent specialist catalog reached programmatically via `mxm-catalog` MCP. Cross-surface parity by construction — same specialist tier on Claude Code AND Claude Desktop AND Claude.ai Web (via MCP). |
 | **Mechanism** | Office-as-Dispatch-Boundary architecture (ADR-017). Each office agent is a thin internal router that calls `mxm-catalog.route_task()` + `get_agent_dna()` to embody the right specialist for a given task. Specialist tier is MCP-native, not subagent-native — so the same routing path works on every Claude surface that has the MCP. The 91-agent claim becomes structurally true rather than aspirational. |
 | **Anti-pattern** | Other plugins with 100+ agents either (a) promote them all to the subagent registry — registry bloat + 5–6-hop dispatch chains, OR (b) ship them as filesystem documents only — unreachable from the dispatch surface (the v1.2.0.3 KFAS WhatsApp failure mode). Neither pattern scales cross-surface; both force operators to discover which agents are "real" and which are aspirational. |
-| **Pack(s)** | Free tier (architecture-level moat). Every paid pack benefits — Pack 6 Behavioral Intelligence in particular, because specialist routing is what makes the 78 frameworks dispatchable per task. |
+| **Pack(s)** | Free tier (architecture-level moat). Every paid pack benefits — Pack 6 Behavioral Intelligence in particular, because specialist routing is what makes the 86 frameworks dispatchable per task. |
 | **Primary framework** | Hierarchical Dispatch + Programmatic Catalog (pattern documented in ADR-017). Cites the same architectural lineage as Anthropic's `claude-skills-library` (~536 SKILL.md, handful plugin-discoverable). Maxim's contribution: pairing it with a structured MCP catalog instead of filesystem-only. |
 | **Proof** | [ADR-017](../ADRs/ADR-017-office-as-dispatch-boundary.md). v1.2.0.4 commit. 7 office agents + 5 governance orchestrators net-new in `.claude/agents/`. 91-agent catalog routed via `mxm-catalog` MCP (8 tools). Same routing surface on Desktop via MCP. Telemetry path opens via `mxm-catalog.get_agent_dna` call logging. |
 
@@ -206,8 +206,8 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by s
 | **Mechanism** | EAST (Easy · Attractive · Social · Timely) — removing the "which command do I use?" friction makes the governed path the *default* path. The router fires at prompt submit, before the model answers, so the correct office + frameworks load without the operator choosing. Friction is the enemy of a behavioral layer; the router removes it. |
 | **Anti-pattern** | Plugins where you must remember the right slash command or the governance layer never engages — friction means it gets used in the demo and forgotten in daily work. Maxim's router makes the behavioral layer engage on every prompt, asked for or not. |
 | **Pack(s)** | Free tier. Claude Code CLI surface (hooks are CLI-native; Desktop/Web reach the same offices via the `mxm-commands` + `mxm-catalog` MCP). |
-| **Primary framework** | EAST (Behavioural Insights Team, 2014) · see `FRAMEWORKS_MASTER.md`. ADR-021 ratified 2026-05-20. |
-| **Proof** | [ADR-021](../ADRs/ADR-021-maxim-default-on.md). v1.3.5 commits. `.claude/hooks/user-prompt-router.{sh,ps1}` + `config/routing-table.json` (word-boundary matching + weak-keyword gate, hardened v1.3.8). Routing token-cost banner + opt-out. |
+| **Primary framework** | EAST (Behavioural Insights Team, 2014) · see `FRAMEWORKS_MASTER.md`. ADR-021 ratified 2026-06-19. |
+| **Proof** | [ADR-021](../ADRs/ADR-021-maxim-default-on-router.md). v1.3.5 commits. `.claude/hooks/user-prompt-router.{sh,ps1}` + `config/routing-table.json` (word-boundary matching + weak-keyword gate, hardened v1.3.8). Routing token-cost banner + opt-out. |
 
 ---
 
