@@ -445,3 +445,4 @@ When any threshold is exceeded, scheduled tasks sleep until `resets_at`. Usage i
 | `community-packs/higgsfield-*/` | 40 video/cinematic prompt skills |
 | `community-packs/design-templates/` | 59 brand DESIGN.md templates |
 | `community-packs/awesome-agent-skills/` | VoltAgent 1000+ skill index — STEP-1-miss fallback registry (search via `bootstrap/mxm-find-skill.sh`); v1.3.4+ |
+| `community-packs/awesome-gpt-image-2/` | GPT-Image-2 prompt library (MIT, freestylefly) — 21 industrial templates + atomic schema + 500+ cases; consumed + overlaid by `ai-media-generation` per ADR-018 (image generation) |

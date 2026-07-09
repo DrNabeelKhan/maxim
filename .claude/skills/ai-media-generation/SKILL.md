@@ -92,6 +92,23 @@ License: MIT (O-Side Media). Technical reference vocabulary — no behavioral-mo
 
 Entry point: `community-packs/higgsfield-ai-prompts/SKILL.md`
 
+### External: awesome-gpt-image-2 (GPT-Image-2 structured prompt library) — MIT vendored
+Path: `community-packs/awesome-gpt-image-2/`
+Coverage: 21 industrial fill-in-the-blank prompt templates + a structured **atomic schema** (subject/task · composition/layout · style/materials · lighting · info-hierarchy) + 500+ reverse-engineered GPT-Image-2 cases across UI · charts/infographics · posters · brand · product · character · scene · document images.
+License: MIT (freestylefly). Templates + galleries stay upstream (referenced, not mirrored — see the pack's `MAXIM_INTEGRATION.md`). Prompt-engineering reference — no behavioral-moat framing on its own.
+Entry point: `community-packs/awesome-gpt-image-2/MAXIM_INTEGRATION.md`
+
+### Maxim Overlay — Image Generation (GPT-Image-2) 🟢 (the moat on top)
+When an image-generation task activates (triggers: image generation · GPT Image · poster · infographic · UI mockup · product image · brand image), do NOT emit a raw template. Compose through the overlay:
+
+1. **Atomic schema (controllability — from the pack):** fill subject/task · composition/layout · style/materials · lighting · info-hierarchy · output-spec (ratio · resolution · text legibility). Structured beats prose for batch + reuse.
+2. **Behavioral framing (ADR-007 — cite the framework):** apply the visual-behavior framework that fits the goal — **pre-attentive attributes** (colour/size/orientation for what must be seen first), **visual hierarchy** + **Gestalt** (grouping, single focal point), **Color Psychology** (palette → intended emotion/action), **Fitts' Law** + **Nielsen heuristics** for UI mockups, **AIDA / Peak-End** for ad creative. State which framework drove the composition.
+3. **Brand-foundation voice (three-layer):** load `.brand-foundation/personal/` (+ operator + startup overlays); the palette, type, tone, and any embedded copy must pass the brand + `ai-tells` checks — on-brand, not generic-AI-look.
+4. **Compliance / ethics:** CSO auto-loop on regulated / person-likeness / third-party-logo content; no deepfake-class person swap without consent.
+5. **Confidence tag (ADR-010):** 🟢 only when schema + framework + brand all applied; 🔴 Maxim-UNENHANCED if a raw upstream template is used verbatim.
+
+**Generation (Layer 3 — future, gated):** to produce pixels, a `mxm-image` MCP would call the image API (OpenAI images or an aggregator) — Maxim is model-agnostic (`Maxim_MODEL_PROVIDER=openai`), API key in Doppler. Not built today; this skill writes the governed prompt and the operator generates via their tool (or a connected higgsfield/image MCP).
+
 ---
 
 ## Sub-Skill Routing

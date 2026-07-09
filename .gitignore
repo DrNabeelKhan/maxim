@@ -128,6 +128,7 @@ entities.json
 community-packs/*
 !community-packs/notebooklm-py
 !community-packs/awesome-agent-skills
+!community-packs/awesome-gpt-image-2
 
 # ── Operator overlay for brand foundation (personal identity, never commit) ──
 .brand-foundation/personal.local/
