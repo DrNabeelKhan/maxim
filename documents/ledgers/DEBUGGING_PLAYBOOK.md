@@ -303,6 +303,18 @@ Applied to all **14 source packs** (`packs/pack-l{1,2,3}-*`, uncommitted) **and*
 
 **Cross-links.** [[project_v1.3.8_shipped]] memory (L1-packs note → now RESOLVED) · `packs/pack-l*/.claude-plugin/plugin.json` · plugins-reference doc (skills field, lines on `["./"]` validity + v2.1.142 auto-discovery) · §6 (the corrupt-install incident this was initially conflated with).
 
+## §9 — 2026-07-08 — "MCP server errors after restart" traced to the slow Python `mempalace` MCP, not Maxim (BUG-013 corrected)
+
+**Symptom.** After a plugin update + restart, the operator saw "MCP server errors / servers did not start" — twice. Initial (wrong) hypothesis: a Maxim `spawn-with-deps.mjs` deps-sentinel spawn race dropping all Maxim servers on the first restart.
+
+**What actually happened.** `claude mcp list` (the authoritative health check) showed **all 9 `plugin:maxim:mxm-*` servers ✔ Connected**; only **`mempalace`** (a SEPARATE, non-Maxim Python MCP, `~/.mempalace-env/Scripts/python.exe -m mempalace.mcp_server`, v3.1.0) was **✘ Failed to connect**. A live MCP `initialize` handshake to `mxm-catalog` returned a valid result. `mempalace` imports fine and, with **stdin held open**, returns a valid `initialize` after a few seconds while logging `MemPalace MCP Server starting…` — so it works, it just cold-starts (Python + DB/embedding) slower than Claude Code's connection/handshake window allows, especially with ~10 servers spawning concurrently at restart.
+
+**Lesson — diagnose MCP failures from the health check, not from in-session tool churn.** Claude Code shows a single aggregate "MCP server errors" banner for ANY failing configured server, including non-Maxim ones; and a coding session's deferred-tool list churns independently of server health. The `/dev/null` manual-spawn test is inconclusive (stdio servers exit 0 cleanly on stdin EOF) — **send a real `initialize` with stdin held open** to prove liveness. My first BUG-013 root cause inferred server death from the in-session tool churn; the health check refuted it.
+
+**Fix (operator-env, no Maxim code).** Raise `MCP_TIMEOUT` (ms) before launching Claude Code (`setx MCP_TIMEOUT 60000`, relaunch; 120000 if still slow) so slow Python servers finish the handshake; and reduce concurrent cold-spawn load (`bash bootstrap/mxm-toggle-mcp.sh disable mxm-notebooklm`; note native `claude plugin update` does NOT re-apply `.mcp-disabled` — only `/mxm-self-update` does). Documented in `mcp/README.md` § Troubleshooting + BUG-013.
+
+**Cross-links.** BUG-013 (corrected) · `mcp/README.md` § Troubleshooting · PATTERN-03 (heavy-MCP cold-spawn tax).
+
 ---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
 Licensed under Business Source License 1.1 (converts to Apache 2.0 after 4 years per ADR-005).

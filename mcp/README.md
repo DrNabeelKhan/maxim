@@ -146,6 +146,19 @@ Each server has its own `README.md` with the tool list, data sources, and run in
 - YAML frontmatter parsing for skill metadata
 - All tools are read-only except `update_task` (portfolio), `store_memory` (memory), and voice tools
 
+## Troubleshooting — "MCP server errors" / servers not connecting after a restart
+
+Claude Code shows a single aggregate "MCP server errors" banner if **any** configured MCP server fails to connect — including servers that are **not** part of Maxim (e.g. `mempalace`, `vazir`, or other user-level Python MCPs). A red ✘ on one server can read as "everything is down" when the Maxim servers are actually fine.
+
+**First, check which server actually failed** — run `/mcp` (interactive) or `claude mcp list`. All `plugin:maxim:mxm-*` servers are fast Node processes and connect near-instantly.
+
+**Slow Python MCPs (`mempalace`, `vazir`, `mxm-notebooklm`) can miss the connection timeout.** A Python server with a DB / embedding / model cold-start takes several seconds, and when ~10 servers spawn concurrently at restart they can exceed Claude Code's default MCP handshake window → `✘ Failed to connect` (even though the server works — it just answered too late). Two fixes:
+
+1. **Raise the MCP startup timeout.** Set the `MCP_TIMEOUT` env var (milliseconds) before launching Claude Code — Windows: `setx MCP_TIMEOUT 60000`, then fully relaunch (bump to `120000` if a server still straggles). This gives slow Python servers time to complete the handshake.
+2. **Reduce concurrent cold-spawn load.** Disable heavy MCPs you don't need every session: `bash bootstrap/mxm-toggle-mcp.sh disable mxm-notebooklm`. Note: the native `claude plugin update` does **not** re-apply `.mcp-disabled` (only `/mxm-self-update` does), so a heavy MCP you previously disabled may silently re-enable after a plugin update — re-run the toggle if so.
+
+The Maxim Node servers themselves need no tuning. See BUG-013 in `documents/ledgers/BUG_TRACKER.md` and `DEBUGGING_PLAYBOOK.md` §9.
+
 ## License
 
 Apache 2.0 (see repository root). Brand templates retain original licenses (typically Apache 2.0/MIT per VoltAgent's distribution).
