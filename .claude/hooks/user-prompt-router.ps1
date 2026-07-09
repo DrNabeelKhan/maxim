@@ -20,6 +20,22 @@ $prompt = "$($data.prompt)".Trim()
 if (-not $prompt) { exit 0 }
 $plow = $prompt.ToLower()
 
+# --- Pre-filters (v1.3.9, ADR-021): never route on non-intent content --------
+# (a) Explicit-command bypass — the operator already named a /mxm-* command.
+if ([Regex]::IsMatch($plow, '/mxm-[a-z][a-z-]*')) { exit 0 }
+# (b) Structural-lead skip — harness-injected blocks (<system-reminder>,
+#     <task-notification>, tool results), fenced code, or a leading blockquote.
+$lead = $plow.TrimStart()
+if ($lead.StartsWith('<') -or $lead.StartsWith('```') -or $lead.StartsWith('~~~') -or $lead.StartsWith('>')) { exit 0 }
+# (c) De-weight embedded content — strip fenced code, tagged blocks, blockquotes.
+$pmatch = $plow
+$pmatch = [Regex]::Replace($pmatch, '```.*?```', ' ', 'Singleline')
+$pmatch = [Regex]::Replace($pmatch, '~~~.*?~~~', ' ', 'Singleline')
+$pmatch = [Regex]::Replace($pmatch, '<([a-zA-Z][\w-]*)\b[^>]*>.*?</\1>', ' ', 'Singleline')
+$pmatch = [Regex]::Replace($pmatch, '<[^>]+>', ' ')
+$pmatch = [Regex]::Replace($pmatch, '(?m)^\s*>.*$', ' ')
+if (-not $pmatch.Trim()) { exit 0 }
+
 $root = if ($env:CLAUDE_PLUGIN_ROOT) { $env:CLAUDE_PLUGIN_ROOT } else { (Resolve-Path "$PSScriptRoot\..\..").Path }
 $tablePath = Join-Path $root 'config\routing-table.json'
 if (-not (Test-Path $tablePath)) { exit 0 }
@@ -32,18 +48,19 @@ if (Test-Path (Join-Path $cwd '.mxm-skills\router-off')) { exit 0 }
 $minhits = if ($table.min_keyword_hits) { [int]$table.min_keyword_hits } else { 1 }
 $weak = @{}; foreach ($w in $table.weak_keywords) { $weak["$w".ToLower()] = $true }
 # Instruction zone: the operator's directive usually LEADS; pasted/quoted content
-# trails. A route that only matches on deep-pasted words scores lower (BUG-012).
-$zone = if ($plow.Length -gt 160) { $plow.Substring(0,160) } else { $plow }
+# trails. Matching runs on the noise-stripped text ($pmatch).
+$zone = if ($pmatch.Length -gt 160) { $pmatch.Substring(0,160) } else { $pmatch }
 $margin = if ($table.confidence_margin) { [int]$table.confidence_margin } else { 1 }
 $floor  = if ($table.confidence_floor)  { [int]$table.confidence_floor }  else { 2 }
-$best = $null; $bestScore = 0; $bestHits = 0; $secondScore = 0
+$longChars = if ($table.long_prompt_chars) { [int]$table.long_prompt_chars } else { 1200 }
+$best = $null; $bestScore = 0; $bestHits = 0; $bestZone = 0; $secondScore = 0
 foreach ($r in $table.routes) {
   $hits = 0; $strong = 0; $zoneBonus = 0
   foreach ($k in $r.keywords) {
     # Word-boundary match (allow simple plural) — avoids substring false routes
     # like "code"->codex, "api"->therapist, "plan"->explanation, "feature"->features.
     $pat = '\b' + [Regex]::Escape("$k".ToLower()) + '(?:s|es)?\b'
-    if ([Regex]::IsMatch($plow, $pat)) {
+    if ([Regex]::IsMatch($pmatch, $pat)) {
       $hits++
       if (-not $weak.ContainsKey("$k".ToLower())) { $strong++; if ([Regex]::IsMatch($zone, $pat)) { $zoneBonus = 1 } }
     }
@@ -51,12 +68,14 @@ foreach ($r in $table.routes) {
   # A single weak-only keyword is not a confident route: need >=1 strong OR >=2 total.
   if (($hits -eq 0) -or (($strong -eq 0) -and ($hits -lt 2))) { continue }
   $score = $strong + $zoneBonus
-  if ($score -gt $bestScore) { $secondScore = $bestScore; $best = $r; $bestScore = $score; $bestHits = $hits }
+  if ($score -gt $bestScore) { $secondScore = $bestScore; $best = $r; $bestScore = $score; $bestHits = $hits; $bestZone = $zoneBonus }
   elseif ($score -gt $secondScore) { $secondScore = $score }
 }
 # Confident only if it clears the floor AND beats the runner-up by the margin;
 # else pass through silently (array order no longer breaks ties).
 if ((-not $best) -or ($bestScore -lt $floor) -or (($bestScore - $secondScore) -lt $margin)) { exit 0 }
+# Long-paste guard (v1.3.9): big paste with no instruction-zone signal is not intent.
+if (($prompt.Length -gt $longChars) -and ($bestZone -eq 0)) { exit 0 }
 
 $skills = ($best.skills -join ', '); $fw = ($best.frameworks -join ', ')
 $short  = (($best.skills | Select-Object -First 3) -join ' · ')

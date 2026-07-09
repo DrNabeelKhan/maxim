@@ -7,6 +7,8 @@
   "confidence_floor": 2,
   "confidence_margin": 1,
   "_confidence_doc": "BUG-012/PATTERN-04 hardening. Each route scores = (strong keyword hits) + (1 if a strong keyword appears in the first 160 chars — the operator's instruction zone, so incidental keywords deep in a pasted/quoted block score lower). A route fires ONLY if best_score >= confidence_floor AND it beats the runner-up by >= confidence_margin; otherwise the router passes through SILENTLY (no low-confidence banner). This replaced the old 'most raw hits, ties broken by array order' rule. Raise the floor to be more conservative; raise the margin to demand a clearer winner.",
+  "long_prompt_chars": 1200,
+  "_prefilter_doc": "v1.3.9 pre-filters (ADR-021): (a) a prompt naming a /mxm-* command bypasses the router (operator already routed); (b) a prompt LEADING with a structural block (<tag>, fenced code, or a > blockquote — e.g. harness-injected <system-reminder>/<task-notification>) passes through; (c) fenced/tagged/quoted regions are stripped before keyword scoring; (d) a prompt longer than long_prompt_chars with NO strong keyword in the first 160 chars is treated as a pasted document, not intent -> passthrough. Raise long_prompt_chars to be less aggressive on long instructions.",
   "show_token_cost": true,
   "log": ".mxm-skills/routing-log.jsonl",
   "routes": [

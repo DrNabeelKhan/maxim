@@ -38,6 +38,29 @@ if not prompt:
     out_nothing()
 plow = prompt.lower()
 
+# --- Pre-filters (v1.3.9, ADR-021): never route on non-intent content --------
+# (a) Explicit-command bypass — the operator already named a /mxm-* command.
+if re.search(r"/mxm-[a-z][a-z-]*", plow):
+    out_nothing()
+# (b) Structural-lead skip — harness-injected blocks (<system-reminder>,
+#     <task-notification>, tool results), fenced code, or a leading blockquote
+#     are not the operator's instruction.
+_lead = plow.lstrip()
+if _lead.startswith(("<", "```", "~~~", ">")):
+    out_nothing()
+# (c) De-weight embedded content — strip fenced code, XML/HTML-tagged blocks,
+#     and blockquote lines so keywords pasted/quoted inside them do not score.
+def _strip_noise(t):
+    t = re.sub(r"```.*?```", " ", t, flags=re.DOTALL)
+    t = re.sub(r"~~~.*?~~~", " ", t, flags=re.DOTALL)
+    t = re.sub(r"<([a-zA-Z][\w-]*)\b[^>]*>.*?</\1>", " ", t, flags=re.DOTALL)
+    t = re.sub(r"<[^>]+>", " ", t)
+    t = re.sub(r"(?m)^\s*>.*$", " ", t)
+    return t
+pmatch = _strip_noise(plow)
+if not pmatch.strip():
+    out_nothing()
+
 root = Path(os.environ.get("MXM_PLUGIN_ROOT") or ".")
 table_path = root / "config" / "routing-table.json"
 if not table_path.is_file():
@@ -64,15 +87,15 @@ def _kw_hit(k, text):
     return re.search(r"\b" + re.escape(k.lower()) + r"(?:s|es)?\b", text) is not None
 
 # Instruction zone: the operator's own directive usually LEADS the prompt; pasted
-# or quoted content trails. A route that only matches on deep-pasted words scores
-# lower, so incidental keywords in a paste no longer win (BUG-012 / PATTERN-04).
-zone = plow[:160]
+# or quoted content trails. Matching runs on the noise-stripped text (pmatch).
+zone = pmatch[:160]
 margin = int(table.get("confidence_margin", 1))
 floor = int(table.get("confidence_floor", 2))
+long_chars = int(table.get("long_prompt_chars", 1200))
 
-best, best_score, best_hits, second_score = None, 0, 0, 0
+best, best_score, best_hits, best_zone, second_score = None, 0, 0, 0, 0
 for r in table.get("routes", []):
-    matched = [k for k in r.get("keywords", []) if _kw_hit(k, plow)]
+    matched = [k for k in r.get("keywords", []) if _kw_hit(k, pmatch)]
     hits = len(matched)
     strong = sum(1 for k in matched if k.lower() not in weak)
     # A single weak-only keyword (e.g. "plan" in "back to our plan") is not a
@@ -84,7 +107,7 @@ for r in table.get("routes", []):
     score = strong + zone_bonus
     if score > best_score:
         second_score = best_score
-        best, best_score, best_hits = r, score, hits
+        best, best_score, best_hits, best_zone = r, score, hits, zone_bonus
     elif score > second_score:
         second_score = score
 # Confident ONLY if it clears the floor AND beats the runner-up by the margin;
@@ -92,6 +115,11 @@ for r in table.get("routes", []):
 # longer breaks ties — a genuine tie is not confident.
 if not best or best_score < floor or (best_score - second_score) < margin:
     out_nothing()  # no confident route → vanilla passthrough
+# Long-paste guard (v1.3.9): a big pasted document (handoff, spec, log) piles up
+# body keywords without expressing intent. If the winner has NO instruction-zone
+# signal and the prompt is long, treat it as a paste, not a command.
+if len(prompt) > long_chars and best_zone == 0:
+    out_nothing()
 
 office = best["office"]; rid = best["id"]
 skills = best.get("skills", []); fw = best.get("frameworks", [])
