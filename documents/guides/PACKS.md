@@ -24,13 +24,13 @@ Maxim Core is the complete governance substrate. It is **not crippleware** — p
 | Capability | What you get at $0 |
 |---|---|
 | Specialist agents | 91 agents across 7 executive offices (CEO · CTO · CMO · CSO · CPO · COO · CINO) |
-| Skill domains | 36 dispatcher + sub-skill domains |
-| Slash commands | 48 `/mxm-*` commands · 7 verb-first (TIER 1) · 10 office shortcuts (TIER 2) · 5 persona dispatchers (TIER 3) |
-| Behavioral frameworks | 86 frameworks cited on every output (Fogg · COM-B · EAST · Cialdini · Prospect Theory · 81 more) |
+| Skill domains | 52 skill domains (dispatchers + everyday + orchestrator) |
+| Slash commands | 50 `/mxm-*` commands · 7 verb-first (TIER 1) · 10 office shortcuts (TIER 2) · 5 persona dispatchers (TIER 3) |
+| Behavioral frameworks | 86 frameworks, cited when applied (Fogg · COM-B · EAST · Cialdini · Prospect Theory · 81 more) |
 | MCP servers | 9 servers · 95 tools across portfolio / context / catalog / compliance / behavioral / memory / voice / commands / notebooklm |
 | Compliance advisory | 14 frameworks surface relevant requirements (paid tier enforces; Core advises) |
 | Hooks | 16 executable hooks across session lifecycle · git hygiene · pre-commit secret scan |
-| Drift classes | All 13 Proactive Watch classes scan on session start (paid tier adds severity gating) |
+| Drift classes | All 13 Proactive Watch classes scan at session start on the Claude Code CLI (paid tier adds severity gating; `/mxm-watch` runs anywhere) |
 | ADRs | 22 ADRs · 18 public describing Maxim's commitments to operators |
 
 License: Business Source License 1.1. Use it internally, with clients, fork it, ship it inside your own product. The only restriction (per ADR-005) is you cannot resell a competing commercial pack catalog. Apache 2.0 conversion in four years regardless.
@@ -105,7 +105,7 @@ Best for: serious operators on 1-2 projects. Founders running both sides. Senior
 | L1.3 Proactive Watch | Signal Detection Theory (Green & Swets 1966) | 13 drift classes with severity 1-5 scoring · auto-block on P1 drift (MOAT-03) |
 | L1.4 Compliance Shield | COM-B (Michie et al. 2011) | 14 frameworks enforced at MCP layer · regulated outputs blocked at generation (MOAT-04) |
 | L1.5 Brand & Design Pro | Dual Process Theory (Kahneman 2011) | Three-layer voice overlay locks System 1 brand recognition (MOAT-05) |
-| L1.6 Behavioral Intelligence | Fogg Behavior Model B=MAP (Fogg 2009) | 74-framework dispatch with enforcement audit hook (MOAT-06) |
+| L1.6 Behavioral Intelligence | Fogg Behavior Model B=MAP (Fogg 2009) | 86-framework dispatch with citation enforcement per ADR-007 (MOAT-06) |
 
 **Loss-frame language at the gate** (per MOAT-08 · runtime tier enforcement): when a Solo operator triggers a paid capability, the error names what they're missing in terms of their work, not abstract feature absence. "Compliance-14 grant not present in your Core tier — your output touched PII / regulated data."
 

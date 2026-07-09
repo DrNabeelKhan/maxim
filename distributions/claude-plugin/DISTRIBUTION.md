@@ -1,6 +1,6 @@
 # Maxim — Claude Code Plugin Distribution
 
-**Version:** 1.3.8.4
+**Version:** 1.3.9
 **License:** BSL 1.1 (4-year Apache 2.0 conversion per ADR-005)
 **Namespace:** `maxim`
 
@@ -12,7 +12,7 @@ Maxim packaged as a Claude Code plugin. Installs the full behavioral intelligenc
 /plugin install maxim@anthropic-official
 ```
 
-After installation, `/plugin list` confirms the plugin is active. The plugin loads the Maxim dispatch sequence, adds 37+ slash commands, and activates the `executive-router` agent for every new conversation.
+After installation, `/plugin list` confirms the plugin is active. The plugin loads the Maxim dispatch sequence, adds 50 slash commands, and activates the `executive-router` agent for every new conversation.
 
 ## Prerequisites
 
@@ -27,7 +27,7 @@ After installation, `/plugin list` confirms the plugin is active. The plugin loa
 |---|---|---|
 | Skills | 34+ domains | `skills/` (mirrored from canonical `.claude/skills/`) |
 | Agents | 90+ | `agents/` (mirrored from canonical `agents/`) |
-| Commands | 48 | `commands/` (mirrored from canonical `.claude/commands/`) |
+| Commands | 50 | `commands/` (mirrored from canonical `.claude/commands/`) |
 | Hooks | 14 (7 hooks × 2 platforms) | `hooks/hooks.json` |
 | Monitors | 13 drift classes (4 free at Core severity, 9 gated at Pro+) | `monitors/monitors.json` |
 | Output styles | 1 (`mxm-mode`) | `output-styles/mxm-mode.md` |

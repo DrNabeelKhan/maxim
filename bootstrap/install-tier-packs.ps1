@@ -48,8 +48,8 @@ function Show-Wizard {
   Write-Host ""
   Write-Host "Maxim Core (already installed · free forever):" -ForegroundColor White
   Write-Host "  - 91 specialist agents across 7 executive offices"
-  Write-Host "  - 37 skill domains · 48 slash commands"
-  Write-Host "  - 78 behavioral frameworks active by default"
+  Write-Host "  - 52 skill domains · 50 slash commands"
+  Write-Host "  - 86 frameworks active by default"
   Write-Host "  - 14 compliance frameworks enforced at MCP layer"
   Write-Host "  - 9 MCPs · 95 tools including NotebookLM research synthesis"
   Write-Host ""
@@ -60,7 +60,7 @@ function Show-Wizard {
   Write-Host "  L1.3  Proactive Watch       - drift caught BEFORE you ship"
   Write-Host "  L1.4  Compliance Shield     - 14 frameworks enforced on every output"
   Write-Host "  L1.5  Brand & Design Pro    - your voice locked across AI outputs"
-  Write-Host "  L1.6  Behavioral Intel      - the flagship moat (78 frameworks dispatched)"
+  Write-Host "  L1.6  Behavioral Intel      - the flagship moat (86 frameworks dispatched)"
   Write-Host ""
   Write-Host "  L2 vertical bundles for founders · growth · professional · agency"
   Write-Host "  L3 industry packs for healthcare · legal · fintech · govtech"
@@ -175,7 +175,7 @@ function Do-Solo {
   Write-Host "  Solo · Core ready" -ForegroundColor Green
   Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Green
   Write-Host ""
-  Write-Host "Maxim Core is fully active. 78 behavioral frameworks dispatch on"
+  Write-Host "Maxim Core is fully active. 86 frameworks dispatch on"
   Write-Host "every output. 14 compliance frameworks check every regulated task."
   Write-Host ""
   Write-Host "What stays gated until you upgrade:" -ForegroundColor Yellow
@@ -184,7 +184,7 @@ function Do-Solo {
   Write-Host "  - 13-class drift detection (L1.3 Proactive Watch)"
   Write-Host "  - 14-framework compliance enforcement (L1.4 Compliance Shield)"
   Write-Host "  - Voice lock across all outputs (L1.5 Brand & Design Pro)"
-  Write-Host "  - 74-framework behavioral dispatch (L1.6 Behavioral Intel)"
+  Write-Host "  - 86-framework behavioral dispatch (L1.6 Behavioral Intel)"
   Write-Host ""
   Write-Host "Try them free for 90 days:" -NoNewline -ForegroundColor Cyan
   Write-Host ".\bootstrap\install-tier-packs.ps1 trial" -ForegroundColor White
@@ -206,7 +206,7 @@ function Do-Pro {
   Write-Host "  v  Proactive Watch 13-class drift detection"
   Write-Host "  v  Compliance Shield 14-framework enforcement"
   Write-Host "  v  Brand & Design Pro voice lock"
-  Write-Host "  v  Behavioral Intelligence 74-framework dispatch"
+  Write-Host "  v  Behavioral Intelligence 86-framework dispatch"
   Write-Host ""
   Write-Host "Activate your license JWT: mxm-pack-engine activate --license <JWT>"
   Write-Host ""

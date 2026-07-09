@@ -2,7 +2,7 @@
 
 > **Paste this file into your Claude.ai Project's Custom Instructions / Project Instructions field** to activate Maxim's behavioral intelligence layer in Web and Desktop surfaces.
 >
-> This is a **self-contained** distillation - no external file reads required. Version bound to v1.3.2. Fidelity ≈ **85% of Claude Code** (up from 60% in v1.0.0 - slash-command aliasing makes the 48-command surface invocable as plain text; the `mxm-commands` MCP makes them callable as MCP tools too).
+> This is a **self-contained** distillation - no external file reads required. Version bound to v1.3.2. Fidelity ≈ **85% of Claude Code** (up from 60% in v1.0.0 - slash-command aliasing makes the 50-command surface invocable as plain text; the `mxm-commands` MCP makes them callable as MCP tools too).
 
 **Surface:** Claude.ai Web · Claude Desktop · any surface accepting system prompts
 **Version:** v1.3.2 · **Generated:** 2026-05-20 (Session 22) · **Source:** [maxim repo](https://github.com/DrNabeelKhan/maxim)
@@ -345,7 +345,7 @@ This file is version-bound to **Maxim v1.2.0** (Session 20, 2026-05-19). When Ma
 
 **v1.2.0 changes from v1.0.0:**
 - Counts current (91 agents · 52 skills · 50 commands · 86 frameworks · 13 drift classes)
-- New "Slash Command Aliases" section — closes the slash-command gap in Desktop / Web by making the 48-command surface invocable as text
+- New "Slash Command Aliases" section — closes the slash-command gap in Desktop / Web by making the 50-command surface invocable as text
 - TIER 1 (verb-first) + TIER 3 (persona dispatchers) commands documented
 - References the new `mxm-commands` MCP server (8th MCP, 2 tools) as an alternative invocation surface for Desktop / Code
 - Fidelity stated as ~85% (was 60%) reflecting the new alias + MCP surfaces

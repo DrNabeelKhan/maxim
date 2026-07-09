@@ -5,8 +5,8 @@
 
 **Target:** Anthropic Official Claude Code Plugin Marketplace
 **Plugin namespace:** `maxim`
-**Submission version:** 1.3.8.4
-**Tag:** `v1.3.8.4` (commit SHA recorded in git tag annotation at tag-creation time)
+**Submission version:** 1.3.9
+**Tag:** `v1.3.9` (commit SHA recorded in git tag annotation at tag-creation time)
 **Submitter:** Dr. Nabeel Khan / iSystematic
 **Contact:** https://maxim.isystematic.com/contact
 
@@ -38,9 +38,9 @@ Live since 2026-04-21 (v1.0.0 launch). Currently at v1.3.8. Used by 21+ projects
 |---|---|---|
 | Specialist agents | `agents/MXM/` | 91 (80 office specialists + 10 cross-office orchestrators + 1 executive-router) |
 | Dispatchable subagents | `.claude/agents/` (declared in `plugin.json` agents[]) | 24 (7 office + 10 orchestrators + 7 utility/lead-compat) |
-| Skill domains | `.claude/skills/` | 37 (incl. voice-routing · notebooklm-py · loops) |
-| Slash commands | `.claude/commands/` | 48 (7 TIER 1 verb-first · 10 TIER 2 office · 5 TIER 3 persona · 26 domain/workflow) |
-| Behavioral frameworks | `composable-skills/frameworks/` + `documents/reference/FRAMEWORKS_MASTER.md` | 78 |
+| Skill domains | `.claude/skills/` | 52 (incl. voice-routing · notebooklm-py · loops · everyday · orchestrator) |
+| Slash commands | `.claude/commands/` | 50 (7 TIER 1 verb-first · 10 TIER 2 office · 5 TIER 3 persona · 28 domain/workflow) |
+| Behavioral frameworks | `composable-skills/frameworks/` + `documents/reference/FRAMEWORKS_MASTER.md` | 86 |
 | Compliance frameworks | enforced by `mxm-compliance` MCP + `.claude/skills/compliance/SKILL.md` | 14 (GDPR · PIPEDA · UAE-PDPL · HIPAA · PCI-DSS · SOC2 · ISO 27001/13485/14971 · NIST CSF · EU AI Act · CASL · FINTRAC · WCAG 2.1) |
 | MCP servers | `mcp/mxm-*/server.js` | 9 servers · 95 tools (portfolio 9 · context 15 · catalog 9 · compliance 5 · behavioral 7 · memory 6 · voice 4 · commands 2 · notebooklm 38) |
 | Hooks | `.claude/hooks/` | 16 scripts (8 hooks × 2 platforms — session lifecycle · git hygiene · pre-commit · junction guard · behavioral-moat drift · default-on router). **Claude Code CLI only** (hooks don't run on Desktop/Web/Cowork — [#45514](https://github.com/anthropics/claude-code/issues/45514)) |

@@ -14,7 +14,7 @@ Structural enforcement of ADR-007 Behavioral Moat Framing Doctrine. Every output
 ## Behavior
 
 1. Receive the outbound content from the calling office (pre-emission).
-2. Scan for framework citations — explicit names from `documents/reference/FRAMEWORKS_MASTER.md` (Fogg · COM-B · EAST · Cialdini · Prospect Theory · Hook · etc., 74 total).
+2. Scan for framework citations — explicit names from `documents/reference/FRAMEWORKS_MASTER.md` (Fogg · COM-B · EAST · Cialdini · Prospect Theory · Hook · etc., 86 total).
 3. If at least one framework is cited per output: PASS.
 4. If zero frameworks cited: select the most-applicable framework(s) based on content type + task signal. Loop back to calling office with citation requirement.
 5. For framework-light content types (status reports · ledger entries · audit trails): document the exemption in `composable-skills/frameworks/proactive-watch.md` Class 12 surface-claims-drift exclusions.

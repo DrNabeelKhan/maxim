@@ -1,6 +1,6 @@
 # Maxim: The Operating System for AI-Assisted Work
 
-> **v1.3.8.4 · autonomous workflow standard + 14 everyday skills.** 91 governed agents · 52 skill domains · 50 slash commands · 9 MCPs (95 tools) · 86 peer-reviewed behavioral frameworks · 14 compliance frameworks · 16 executable hooks · 13 Proactive Watch drift classes · 22 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
+> **v1.3.9 · autonomous workflow standard + 14 everyday skills.** 91 governed agents · 52 skill domains · 50 slash commands · 9 MCPs (95 tools) · 86 peer-reviewed behavioral frameworks · 14 compliance frameworks · 16 executable hooks · 13 Proactive Watch drift classes · 22 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
 
 ---
 
@@ -78,7 +78,7 @@ Every skill domain declares which behavioral frameworks apply. The `behavioral-d
 
 These are not suggestions. They are the dispatch logic. When you run `/mxm-cmo write a launch campaign`, Maxim doesn't just write copy. It applies AIDA structure, COM-B analysis (does the audience have Capability, Opportunity, and Motivation?), EAST framework (is it Easy, Attractive, Social, and Timely?), and Fogg Behavior Model triggers.
 
-86 frameworks. Applied automatically. Not on request. Drift detection runs at every session start via the `proactive-watch` framework.
+86 frameworks. Applied automatically. Not on request. Drift detection runs at every session start on the Claude Code CLI (and on demand anywhere via `/mxm-watch`) via the `proactive-watch` framework.
 
 ### 3. The 5-Layer Dispatch Sequence (deterministic, not hallucinated)
 
@@ -146,7 +146,7 @@ Per-project, only identity files are created: `project-manifest.json`, `CLAUDE.p
 Plus 10 cross-office orchestrators + 1 executive-router = **91 agents total**. All 91 carry Grade A DNA (Triggers + bilateral Collaboration Matrix). Of these, **24 are dispatchable subagents** (declared in `plugin.json` agents[]) and the full **91-agent catalog** is reachable via `mxm-catalog` MCP per ADR-017 two-layer dispatch.
 
 ### 52 skill domains (100% with root dispatchers)
-Every domain has a SKILL.md (orchestrator), Maxim-WRAPPER.md (behavioral layer), and sub-skills that route to specialist agents. Marketing alone has a hub-and-spoke architecture with dedicated sub-skills. The `wiki` family (ingest, query, lint, explore), `voice`, `voice-routing`, `notebooklm-py`, `junction-guard`, `usage-aware-scheduler`, and `proactive-watch` domains complete the 36-domain inventory.
+Every domain has a SKILL.md (orchestrator), Maxim-WRAPPER.md (behavioral layer), and sub-skills that route to specialist agents. Marketing alone has a hub-and-spoke architecture with dedicated sub-skills. The `wiki` family (ingest, query, lint, explore), `voice`, `voice-routing`, `notebooklm-py`, `junction-guard`, `usage-aware-scheduler`, and `proactive-watch` domains complete the 52-domain inventory.
 
 ### 50 Slash commands
 All prefixed with `/mxm-` for uniform discovery. Product cycle chain: `/mxm-plan` → `/mxm-implement` → `/mxm-review` → `/mxm-test` → `/mxm-release`. `/mxm-watch` runs drift detection. `/mxm-session-end` runs the 9-document closure bundle. `/mxm-brand-voice` manages the 3-layer .brand-foundation load.
@@ -198,7 +198,7 @@ If you are managing a portfolio of projects across multiple verticals with compl
 - 86 behavioral frameworks applied structurally, not on request
 - Portfolio-wide awareness across tasks, metrics, and synergies for 22 projects
 - 90+ specialist agents (100% Grade A DNA) with governed handoff chains and bilateral Collaboration Matrix
-- One `git pull` updates everything. zero drift, zero maintenance (Proactive Watch catches drift at session start)
+- One `git pull` updates everything. zero drift, zero maintenance (Proactive Watch catches drift at session start on the Claude Code CLI)
 
 ### The Math
 A human chief of staff costs $150K-250K/year. A compliance officer costs $120K-180K/year. A behavioral scientist costs $130K-200K/year. A marketing team of 15 specialists costs $1.5M+/year.
@@ -227,7 +227,7 @@ For source-level integration or non-Claude-Code IDE work, see [documents/guides/
 
 ---
 
-**Maxim v1.3.8.4:**
+**Maxim v1.3.9:**
 
 91 agents (100% Grade A DNA · 24 dispatchable + 67 specialist catalog via mxm-catalog). 52 skill domains. 50 commands. 9 MCP servers (95 tools). 86 frameworks. 16 executable hooks. 13 Proactive Watch drift classes. 22 ADRs ratified (18 public + 4 confidential). 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
 

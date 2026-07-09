@@ -199,7 +199,7 @@ Pull from `documents/ledgers/AGENT_SKILL_INVENTORY.md`. Stable numbers.
 |---|---:|---|
 | Specialist Agents | 90 (100% Grade A DNA) | [`agents/MXM/`](agents/MXM/) |
 | Skill Domains | 34 | [`.claude/skills/`](.claude/skills/) |
-| Slash Commands | 37 | [`.claude/commands/`](.claude/commands/) |
+| Slash Commands | 50 | [`.claude/commands/`](.claude/commands/) |
 | MCP Servers | 7 (47 tools) | [`mcp/`](mcp/) |
 | Behavioral Frameworks | 64 | [`composable-skills/frameworks/`](composable-skills/frameworks/) |
 | Compliance Frameworks | 14 | [`mcp/mxm-compliance/`](mcp/mxm-compliance/) |

@@ -139,7 +139,7 @@ Add these 8 entries to the `mcpServers` object (replace `<HOME>` with your actua
 }
 ```
 
-The `mxm-commands` MCP (added v1.2.0.1) is what gives Desktop **command parity** — it exposes all 48 `/mxm-*` slash commands as MCP tools, since Desktop doesn't have a native slash-command processor. After restart you can ask Claude Desktop *"use mxm-commands.mxm_command for build hello-world"* and it routes the same way Claude Code's `/mxm-build hello-world` does.
+The `mxm-commands` MCP (added v1.2.0.1) is what gives Desktop **command parity** — it exposes all 50 `/mxm-*` slash commands as MCP tools, since Desktop doesn't have a native slash-command processor. After restart you can ask Claude Desktop *"use mxm-commands.mxm_command for build hello-world"* and it routes the same way Claude Code's `/mxm-build hello-world` does.
 
 ### Activate behavioral layer in Claude Desktop Projects (optional, recommended)
 

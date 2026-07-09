@@ -1,12 +1,12 @@
 # Maxim — the behavioral intelligence layer for Claude
 
-> The structural moat behind every Claude output. 91 specialist agents · 86 peer-reviewed behavioral frameworks · 14 compliance frameworks · 9 MCPs · 95 tools. Framework citation enforced on every output. Drift detected before you ship. Voice locked across every surface.
+> The structural moat behind every Claude output. 91 specialist agents · 86 peer-reviewed frameworks (behavioral core + security · compliance · enterprise-architecture · engineering) · 14 compliance frameworks · 9 MCPs · 95 tools. Framework citation on every output. Drift caught before you ship. Voice locked across every surface.
 
-![Version](https://img.shields.io/badge/version-1.3.8.4-blue)
+![Version](https://img.shields.io/badge/version-1.3.9-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-86-orange)
-![Skills](https://img.shields.io/badge/skill_domains-37-purple)
-![Commands](https://img.shields.io/badge/commands-48-yellow)
+![Skills](https://img.shields.io/badge/skill_domains-52-purple)
+![Commands](https://img.shields.io/badge/commands-50-yellow)
 ![MCP](https://img.shields.io/badge/MCP_servers-9-teal)
 ![Tools](https://img.shields.io/badge/MCP_tools-95-teal)
 ![Hooks](https://img.shields.io/badge/hooks-16-gray)
@@ -39,12 +39,12 @@ The wizard pre-selects Trial because **a moat is hard to evaluate when you can't
 
 Most "AI plugins" give you templates. Some give you a chat wrapper. Maxim gives you a **governed multi-agent operating system** with structural enforcement of:
 
-1. **Framework citation on every output** — every Maxim emission names the behavioral science framework that justifies it (Fogg · Cialdini · Prospect Theory · OWASP · NIST · 70 more). Outputs without citation get rejected pre-emit by `behavioral-overlay-orchestrator` (ADR-007). The "looks good" generic LLM output is structurally impossible to ship through Maxim.
+1. **Framework citation on every output** — every Maxim emission names the behavioral science framework that justifies it (Fogg · Cialdini · Prospect Theory · OWASP · NIST · 70 more). The `behavioral-overlay-orchestrator` applies the ADR-007 citation discipline, and on the Claude Code CLI a commit-time gate rejects uncited pack output. The "looks good" generic LLM output is what Maxim is built to keep out.
 2. **Confidence tag on every output** — every emission carries 🟢 HIGH / 🟡 MEDIUM / 🔴 LOW per ADR-010's Technical Educator rubric. You see grounding depth, not just an answer.
-3. **Compliance overlay that cannot be bypassed silently** — 14 jurisdictional frameworks (GDPR · PIPEDA · UAE-PDPL · HIPAA · PCI-DSS · SOC2 · ISO 27001/13485/14971 · NIST CSF · EU AI Act · CASL · FINTRAC · WCAG 2.1) fire automatically on every regulated-data signal. CSO auto-loop is structural — even super-user mode doesn't disable it for compliance work.
+3. **Compliance overlay you don't have to remember** — 14 jurisdictional frameworks (GDPR · PIPEDA · UAE-PDPL · HIPAA · PCI-DSS · SOC2 · ISO 27001/13485/14971 · NIST CSF · EU AI Act · CASL · FINTRAC · WCAG 2.1) engage on regulated-data signals. The CSO auto-loop is a standing dispatch rule — reinforced by the default-on router on the Claude Code CLI — that even super-user mode keeps on for compliance work.
 4. **Voice routing as a property of agent invocation** — your voice loads when a writing agent dispatches, not when you remember to invoke `/mxm-brand-voice` first. Per ADR-016. Per operator via the v1.3.0 template pattern (ADR-019).
-5. **Proactive Watch drift detection** — 13 universal drift classes scan every session start. Stale docs · broken refs · secret leaks · surface-claims drift · behavioral-moat drift. AI-coded projects rot fast; Watch is the rot detector.
-6. **Documents as Executable Contracts (ADR-002)** — CHANGELOG · MOAT_TRACKER · BUG_TRACKER · AGENT_SKILL_INVENTORY are read by the pre-commit hook as live state. Drift between claim and reality blocks the commit.
+5. **Proactive Watch drift detection** — 13 universal drift classes scan at session start on the Claude Code CLI, and on demand anywhere via `/mxm-watch`. Stale docs · broken refs · secret leaks · surface-claims drift · behavioral-moat drift. AI-coded projects rot fast; Watch is the rot detector.
+6. **Documents as Executable Contracts (ADR-002)** — CHANGELOG · MOAT_TRACKER · BUG_TRACKER · AGENT_SKILL_INVENTORY are read by the pre-commit hook as live state on the Claude Code CLI. Drift between claim and reality blocks the commit.
 
 **None of the external sources** (alirezarezvani · ui-ux-pro-max · superpowers · VoltAgent · planning-with-files) do any of this structurally. Maxim is the only layer that does. The community-pack system (ADR-008) composes Maxim's behavioral layer on top of their craft.
 

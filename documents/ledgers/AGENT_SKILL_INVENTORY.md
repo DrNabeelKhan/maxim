@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.8.4 · **Last verified:** 2026-06-27 (v1.3.8.4 continuation handoff prompt — ADR-023, `/mxm-handoff`)
+**Version:** v1.3.9 · **Last verified:** 2026-06-27 (v1.3.8.4 continuation handoff prompt — ADR-023, `/mxm-handoff`)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -46,7 +46,7 @@ All commands live under `.claude/commands/mxm-*.md`. Command map: `documents/ref
 
 **TIER 2 — Executive office shortcuts (10):** `/mxm-ceo`, `/mxm-cto`, `/mxm-cmo`, `/mxm-cso`, `/mxm-cpo`, `/mxm-coo`, `/mxm-cino`, `/mxm-ceo-morning`, `/mxm-ceo-overnight`, `/mxm-ceo-setup`.
 
-**Domain and workflow (27):** `/mxm-behavior`, `/mxm-brand-voice`, `/mxm-compliance`, `/mxm-context`, `/mxm-design`, `/mxm-handoff`, `/mxm-health`, `/mxm-implement`, `/mxm-new-project`, `/mxm-organize`, `/mxm-portfolio`, `/mxm-recall`, `/mxm-release`, `/mxm-remember`, `/mxm-route`, `/mxm-security`, `/mxm-self-update`, `/mxm-seo`, `/mxm-session-end`, `/mxm-status`, `/mxm-superpowers`, `/mxm-tasks`, `/mxm-test`, `/mxm-update`, `/mxm-voice`, `/mxm-watch`, `/mxm-wiki`.
+**Domain and workflow (28):** `/mxm-behavior`, `/mxm-brand-voice`, `/mxm-compliance`, `/mxm-context`, `/mxm-design`, `/mxm-handoff`, `/mxm-health`, `/mxm-implement`, `/mxm-new-project`, `/mxm-organize`, `/mxm-portfolio`, `/mxm-recall`, `/mxm-release`, `/mxm-remember`, `/mxm-route`, `/mxm-security`, `/mxm-self-update`, `/mxm-seo`, `/mxm-session-end`, `/mxm-status`, `/mxm-superpowers`, `/mxm-tasks`, `/mxm-test`, `/mxm-update`, `/mxm-voice`, `/mxm-watch`, `/mxm-wiki`, `/mxm-workflow`.
 
 **Total commands: 50.** Net delta (49 → 50): `/mxm-handoff` added v1.3.8.4 (ADR-023 Continuation Handoff Prompt Standard) — generates a verify-first, paste-into-a-fresh-window continuation prompt; also runs as Phase 4 of `/mxm-session-end`. Prior (48 → 49): `/mxm-workflow` added v1.3.8 — the surface for the `orchestrator` skill (ADR-022 Autonomous Workflow Standard): author/list/run/dry-run/go-live/logs for unattended workflows. Prior net delta from v1.1.1 (39 → 48): 4 NEW in WS2 v1.2.0-alpha.2 (`/mxm-build`, `/mxm-fix`, `/mxm-ship`, `/mxm-explain`) + 5 NEW in WS3 v1.2.0-alpha.4 TIER 3 persona dispatchers (`/mxm-legal`, `/mxm-arch`, `/mxm-secure`, `/mxm-founder`, `/mxm-pm`) = 9 new. Plus 3 existing commands upgraded for surface alignment: `/mxm-plan` and `/mxm-review` (WS2 — Fogg B=MAP, Coverage Matrix, conditional auto-loops, ADR-007 enforcement) and `/mxm-help` (WS4 — 9-mode dispatcher with persona auto-detect from project-manifest, cache at `.mxm-skills/operator-persona.txt`).
 
