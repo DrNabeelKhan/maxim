@@ -8,6 +8,78 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.9 — 2026-07-09 — All-in framework reconciliation (86) + Fable-audit triage: router pre-filters, honest cross-surface claims, the gate that was never installed
+
+Minor. Ships the **78 → 86 all-in framework reconciliation** and the first execution pass on the **Fable architecture audit** (2026-07-06). Counts move: **frameworks 78 → 86** (all-in: behavioral core + security/compliance + enterprise-architecture + engineering + Maxim-native). All other counts unchanged (91 agents · 52 skills · 50 commands · 9 MCPs/95 tools · 16 hooks · 22 ADRs/18 public). Fable did audit + architecture only; execution is here.
+
+### Why
+
+Two forces converged. (1) The framework catalog had a **#16–24 numbering collision** and drifted counts (74/78/81/86 depending on the surface you read). (2) The Fable audit named the disease behind that: **counts are propagated by hand, not derived** — so every release burns audit cycles on coherence, and this session proved it by finding a regression the batch itself introduced. This release fixes the concrete defects and hardens the router; the *structural* fix (a derived registry) is scoped, sequenced, and deferred to v1.4 — see "Deferred (with intent)."
+
+### Frameworks → 86 · and the §N-citation regression the renumber introduced (caught + fixed)
+
+- **Catalog renumbered to a clean 1..86** (fixes the #16–24 collision), **+5 entries** (ArchiMate · Cloud Architecture · DevSecOps · SANS Incident Response · Proactive Watch), **+12 backfilled definition dirs**. `FRAMEWORKS_MASTER.md` catalog == `AGENT_SKILL_INVENTORY.md` §6 == definition files == **86**. The `behavioral-frameworks-78` JWT grant key is **retained** (renaming would invalidate issued tokens).
+- **Regression caught this session (Fable P2-1, confirmed):** the renumber **silently broke the load-bearing `§N` citations** — `MOAT_TRACKER.md` cited `§51 = Fogg`, `§54 = COM-B`, `§64 = Social Learning`, but post-renumber those numbers point to User Journey Mapping / Atomic Design / EAST. **Fix: migrated MOAT citations from `§N` to slug/name identity** (`see FRAMEWORKS_MASTER.md → Fogg Behavior Model`), which never breaks on a renumber. `grep §[0-9]` in MOAT_TRACKER is now clean. ADR-007 and the agent roster carried **zero** `§N` framework citations (verified) — nothing else to migrate.
+
+### Router — pre-filters so it stops firing on pasted / harness-injected content (Fable P1-2 subset)
+
+The default-on router (ADR-021) already had v1.3.8 scorer hardening (margin tie-break · instruction-zone weighting · low-confidence silent passthrough). This adds four **pre-filters** to both hook twins (`.sh` + `.ps1`, parity-verified), targeting the exact class that misfired on *this release session's* pasted handoff (→ a confident CTO/build banner):
+
+1. **Explicit `/mxm-*` bypass** — a prompt naming a command has already routed itself.
+2. **Structural-lead skip** — a prompt LEADING with `<tag>` / fenced code / `>` quote (e.g. harness-injected `<system-reminder>` / `<task-notification>`) passes through.
+3. **Embedded-content stripping** — fenced / tagged / quoted regions are removed before keyword scoring.
+4. **Long-paste guard** — a prompt over `long_prompt_chars` (1200) with **no** strong keyword in the first 160 chars is treated as a pasted document → passthrough.
+
+Verified via a **7-case battery** (short-build → CTO · LinkedIn-reply → CMO · `/mxm` mention → passthrough · `<task-notification>` → passthrough · short-design → CPO · stack-design collision → passthrough · long-paste → passthrough). **No ADR-021 banner-contract change** — when it fires, the banner is unchanged; it just fires less on non-intent. **Residual ceiling** (a short instruction immediately followed by a keyword-dense sub-threshold paste) is the keyword-classifier limit → the semantic classifier (Fable P1-2) is **deferred** to a dedicated router release.
+
+### The pre-commit gate that was never installed (Fable P1-4 / P3-4)
+
+`.claude/hooks/pre-commit.{sh,ps1}` (secret/PII/junction scan + audit trail) has existed for releases but **was never wired into `.git/hooks/`** — so the "commit blocks on drift" claim was inert. Added **`bootstrap/install-git-hooks.{sh,ps1}`** (a delegating copy-shim, not a symlink — symlinks are fragile on Windows), **installed it**, and added a **session-start nudge** that flags an absent gate (the exact way it silently un-installed). Git runs `.git/hooks/*` through its bundled sh on every platform, so the POSIX shim is correct regardless of the operator's shell.
+
+### Cross-surface honesty — CLI-only claims qualified (Fable P2-2)
+
+Governance hooks are **Claude Code CLI-only** (they don't run on Desktop/Web — [#45514](https://github.com/anthropics/claude-code/issues/45514)), but several public claims presented that enforcement as universal. Surgically qualified the HIGH over-claims in `README.md` (framework-citation, CSO auto-loop, session-start drift scan, executable-contract gate) and `PACKS.md` (drift-classes, cited-when-applied) with "on the Claude Code CLI" / "runs anywhere via `/mxm-watch`" — false universality removed, marketing energy kept. Also corrected the imprecise "**86 behavioral** frameworks" to "86 frameworks (behavioral core + …)" since 86 is all-in, not all behavioral. Landing-page (separate repo) honesty pass is **deferred** to the website cycle.
+
+### MOAT_TRACKER integrity (Fable P2-3)
+
+- Broken link `ADR-021-maxim-default-on.md` → `…-default-on-router.md`; wrong date `2026-05-20` → **2026-06-19** (from the ADR file).
+- `MOAT-08` literal `§X / §Y` placeholders → named frameworks. `MOAT-03` "Ten drift classes" → **13**. `MOAT-10` PLANNED → **SHIPPED v1.2.0** (`nk-writer` agent verified present). `MOAT-06` phantom "pack-engine audit hook that scans every external-facing paragraph" (no such hook) → reworded to the **real** mechanism (ADR-007 citation discipline + commit-time SKILL.md structure check + pre-release-audit).
+- Stale counts `74/78 → 86` across MOAT rows + `.mcp.json` behavioral description + agent instruction + one-pager + DISTRIBUTION + repo-page-spec + MARKETPLACE_SUBMISSION.
+
+### Bug ledger — status taxonomy + honest relabel (Fable P1-1)
+
+- New **status lifecycle** in `BUG_TRACKER.md`: `FIXED-LOCAL → SHIPPED → DEPLOYED`; **RESOLVED is earned, not claimed at commit time**. Names the recurring skew family: restart ≠ update · update ≠ configured · commit ≠ install.
+- **BUG-012** relabeled `FIXED-LOCAL` (was "RESOLVED" while the operator's install still ran the old router — Fable P1-1). → SHIPPED at this tag; → DEPLOYED after the operator's `claude plugin update`.
+- **BUG-013** diagnosis stays CORRECTED (not a Maxim bug — all 9 Maxim MCPs connect; the lone failure is the separate Python `mempalace` MCP missing `MCP_TIMEOUT` on slow cold-start). Guidance added to `mcp/README.md` + `DEBUGGING_PLAYBOOK.md` §9.
+
+### Added — GPT-Image-2 pack (Layers 1+2)
+
+`community-packs/awesome-gpt-image-2/` (MIT, freestylefly — 21 industrial templates + atomic schema + 500+ cases referenced upstream) + an Image-Generation overlay on the `ai-media-generation` skill (atomic schema + ADR-007 framing + brand voice + CSO auto-loop + confidence tag). The generation MCP (Layer 3) is deferred/gated. No count change (community pack).
+
+### Caught by the pre-release audit (fixed before tag — not self-claimed)
+
+`maxim:pre-release-audit` ran the 8-bucket pass and returned **BLOCKERS: 2**, both fixed before this entry finalized:
+1. **`bootstrap/install-tier-packs.{sh,ps1}`** — the live customer install path printed stale + self-contradictory counts (`37 skill domains · 48 slash commands` and both `78` and `74` frameworks). `sync-counts` never covered it. → 52 / 50 / 86.
+2. **`MOAT_TRACKER.md` — all 6 L1-pack "Proof" links 404'd** (files moved to `…/skills/<slug>/SKILL.md` in the v1.3.8.2 pack restructure; the §N pass fixed rows but missed the links). → paths corrected, all 6 verified on disk.
+
+Plus audit NITs folded in: CLI-surface qualifiers on `ABOUT.md` + one-pager (consistency with the README/PACKS pass); `marketplace.json` "86 behavioral" → "86 (behavioral core + governance)"; `CLAUDE.md` `63+`→86 frameworks and `44`→95 tools; MOAT_TRACKER intro "cites … by section number" → "by name" (post-migration). Also caught + fixed while dogfooding the newly-installed gate: **`pre-commit.sh` private-key detection never worked** (grep read the leading `-----` as options → `grep -qE -e`), and a `timeout` guard so the slow `sync-counts --check` can't hang a commit.
+
+### Deferred (with intent — flagged, not silently dropped)
+
+- **The derived-counts registry (Fable P1-4)** — the real fix for count drift (`config/registry/` + generators + `generate --check`). This release used propagate-then-audit; the registry is scoped for **v1.4** and is the natural forcing function for making framework identity slug-native end-to-end.
+- **Full router rewrite → single node `.mjs` + semantic classifier (Fable P1-2)** and **banner tiering** (ADR-021 amendment) — dedicated router release.
+- **MCP `spawn-with-deps` per-server redesign (Fable P1-3)** — no longer urgent (BUG-013's real cause was `MCP_TIMEOUT`, not the spawn race); tech-debt release.
+- **No CI anywhere (Fable completeness critic)** — the single biggest unnamed risk; every regression guard is still a human ritual. Its own decision.
+- **Drift-class count coherence (10 / 11 / 13)** across `mxm-watch.md` · `mxm-health.md` · `mcp/mxm-commands/server.js` · `proactive-watch` skill · `CLAUDE.md` — **not a number swap**: `mxm-watch.md`'s table only *enumerates* 11 classes (Class 12 behavioral-moat-drift is commit-time; Class 13 third-party-plugin-drift is defined-but-no-runtime-until-v1.1.2), so runtime is ~11 vs **13 declared**. The 13 count stays canonical on the badge/inventory/MOAT (defined classes); the surface reconciliation (add Class 12/13 rows or clarify declared-vs-runtime) is registry-bound (P1-4). Left untouched this release rather than assert 13 on an incomplete table.
+- **Out-of-band / operator-owned:** `cloudflare-worker/scripts/setup-stripe-products.mjs` "78" → 86 needs a Stripe product re-sync (the `behavioral-frameworks-78` grant key is retained); `config/project-manifest.json` `last_activity` is bumped at session-end.
+- **Snapshot/frozen surfaces:** `MARKETPLACE_SUBMISSION.md` counts synced but its version header needs a full refresh before actual submission; `packaging/cowork/` frozen at v1.2.0; `documents/marketing/catalogues/*-v1.0.0.md` superseded-not-patched (Priority 7); landing-page honesty pass (separate repo).
+
+### Operator actions after ship
+
+`claude plugin update maxim@maxim-packs` (loads the new router + gate; **the live install still runs the old router until then** — Fable P1-1) · `setx MCP_TIMEOUT 60000` + re-disable `mxm-notebooklm` (BUG-013) · run `bash bootstrap/install-git-hooks.sh` in any working clone to activate the pre-commit gate.
+
+---
+
 ## v1.3.8.4 — 2026-06-27 — Continuation Handoff Prompt (ADR-023) — resume in a fresh window without hallucinating
 
 Minor. Adds a **verify-first continuation handoff prompt**: a paste-into-a-new-window block that lets a fresh session (any surface) resume with zero context loss and a structural guard against hallucinating from stale prose. Counts move: **commands 49 → 50** (`/mxm-handoff`), **ADRs 21 → 22** (ADR-023; **public 17 → 18**). All other counts unchanged (91 agents · 52 skills · 9 MCPs/95 tools · 78 frameworks · 16 hooks).
