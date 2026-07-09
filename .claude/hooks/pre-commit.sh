@@ -88,7 +88,7 @@ while IFS= read -r file; do
 
   # Check secrets (always blocking)
   for pattern in "${SECRET_PATTERNS[@]}"; do
-    if echo "$CONTENT" | grep -qE "$pattern"; then
+    if echo "$CONTENT" | grep -qE -e "$pattern"; then
       VIOLATIONS=$((VIOLATIONS + 1))
       MATCHED_PATTERN_DESC="$(echo "$pattern" | head -c 30)..."
       REPORT="${REPORT}🔴 BLOCK: ${file} — secret pattern detected (${MATCHED_PATTERN_DESC})\n"
@@ -101,7 +101,7 @@ while IFS= read -r file; do
     *.env.example|*README*|documents/*|tests/*|*test*|*fixture*) ;;
     *)
       for pattern in "${PII_PATTERNS[@]}"; do
-        if echo "$CONTENT" | grep -qE "$pattern"; then
+        if echo "$CONTENT" | grep -qE -e "$pattern"; then
           WARNINGS=$((WARNINGS + 1))
           REPORT="${REPORT}🟡 WARN: ${file} — possible PII pattern\n"
           echo "{\"timestamp\":\"$NOW_ISO\",\"file\":\"$file\",\"violation\":\"pii_pattern\",\"action\":\"warned\"}" >> "$AUDIT_LOG"
@@ -158,7 +158,14 @@ if [ -f "$SYNC_DIR/sync-version.sh" ]; then
 fi
 # Count drift — slower (scans surface files) → only when the inventory (source of truth) is staged.
 if echo "$STAGED_FILES" | grep -q 'AGENT_SKILL_INVENTORY.md' && [ -f "$SYNC_DIR/sync-counts.sh" ]; then
-  bash "$SYNC_DIR/sync-counts.sh" --check >/dev/null 2>&1
+  # Timeout guard: sync-counts scans hundreds of files and can be slow — a hang
+  # must never block a commit forever. Timeout exit (124) != 1, so it fails OPEN,
+  # consistent with the "block only on exit 1 = drift" policy above.
+  if command -v timeout >/dev/null 2>&1; then
+    timeout 150 bash "$SYNC_DIR/sync-counts.sh" --check >/dev/null 2>&1
+  else
+    bash "$SYNC_DIR/sync-counts.sh" --check >/dev/null 2>&1
+  fi
   [ "$?" -eq 1 ] && {
     echo "🔴 Commit BLOCKED: capability-count drift — a surface disagrees with AGENT_SKILL_INVENTORY.md." >&2
     echo "   Fix: bash bootstrap/sync-counts.sh   then re-stage and commit." >&2

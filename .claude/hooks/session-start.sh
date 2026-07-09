@@ -165,6 +165,12 @@ if [ -f ".mxm-skills/review-queue.md" ]; then
   PENDING_COUNT="$(grep -cE '^\| PENDING' .mxm-skills/review-queue.md 2>/dev/null || echo 0)"
 fi
 
+# ----- Pre-commit gate presence (v1.3.9 — P3-4: don't let the gate silently un-install) -----
+GATE_NUDGE=""
+if [ -d ".git" ] && [ -f ".claude/hooks/pre-commit.sh" ] && [ ! -f ".git/hooks/pre-commit" ]; then
+  GATE_NUDGE="run: bash bootstrap/install-git-hooks.sh"
+fi
+
 # ----- Run Proactive Watch LIGHT (v1.0.0+) -----
 # Best-effort: fail-open if watch skill missing or errors
 WATCH_DRIFT=0
@@ -213,6 +219,7 @@ fi
   echo "  Handoff   : ${HANDOFF_STATE:-none}"
   echo "  Open gaps : ${GAP_COUNT}"
   echo "  Pending review: ${PENDING_COUNT}"
+  [ -n "$GATE_NUDGE" ] && echo "  Gate      : pre-commit not installed — ${GATE_NUDGE}"
   if [ "$WATCH_DRIFT" -gt 0 ] || [ "$WATCH_ERRORS" -gt 0 ]; then
     echo "  Drift     : ${WATCH_DRIFT} (run /mxm-watch for details)"
     [ "$WATCH_ERRORS" -gt 0 ] && echo "  Watch errs: ${WATCH_ERRORS}"
