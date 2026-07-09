@@ -31,20 +31,32 @@ if (Test-Path (Join-Path $cwd '.mxm-skills\router-off')) { exit 0 }
 
 $minhits = if ($table.min_keyword_hits) { [int]$table.min_keyword_hits } else { 1 }
 $weak = @{}; foreach ($w in $table.weak_keywords) { $weak["$w".ToLower()] = $true }
-$best = $null; $bestHits = 0
+# Instruction zone: the operator's directive usually LEADS; pasted/quoted content
+# trails. A route that only matches on deep-pasted words scores lower (BUG-012).
+$zone = if ($plow.Length -gt 160) { $plow.Substring(0,160) } else { $plow }
+$margin = if ($table.confidence_margin) { [int]$table.confidence_margin } else { 1 }
+$floor  = if ($table.confidence_floor)  { [int]$table.confidence_floor }  else { 2 }
+$best = $null; $bestScore = 0; $bestHits = 0; $secondScore = 0
 foreach ($r in $table.routes) {
-  $hits = 0; $strong = 0
+  $hits = 0; $strong = 0; $zoneBonus = 0
   foreach ($k in $r.keywords) {
     # Word-boundary match (allow simple plural) — avoids substring false routes
     # like "code"->codex, "api"->therapist, "plan"->explanation, "feature"->features.
     $pat = '\b' + [Regex]::Escape("$k".ToLower()) + '(?:s|es)?\b'
-    if ([Regex]::IsMatch($plow, $pat)) { $hits++; if (-not $weak.ContainsKey("$k".ToLower())) { $strong++ } }
+    if ([Regex]::IsMatch($plow, $pat)) {
+      $hits++
+      if (-not $weak.ContainsKey("$k".ToLower())) { $strong++; if ([Regex]::IsMatch($zone, $pat)) { $zoneBonus = 1 } }
+    }
   }
   # A single weak-only keyword is not a confident route: need >=1 strong OR >=2 total.
   if (($hits -eq 0) -or (($strong -eq 0) -and ($hits -lt 2))) { continue }
-  if ($hits -gt $bestHits) { $best = $r; $bestHits = $hits }
+  $score = $strong + $zoneBonus
+  if ($score -gt $bestScore) { $secondScore = $bestScore; $best = $r; $bestScore = $score; $bestHits = $hits }
+  elseif ($score -gt $secondScore) { $secondScore = $score }
 }
-if ((-not $best) -or ($bestHits -lt $minhits)) { exit 0 }  # no confident route -> passthrough
+# Confident only if it clears the floor AND beats the runner-up by the margin;
+# else pass through silently (array order no longer breaks ties).
+if ((-not $best) -or ($bestScore -lt $floor) -or (($bestScore - $secondScore) -lt $margin)) { exit 0 }
 
 $skills = ($best.skills -join ', '); $fw = ($best.frameworks -join ', ')
 $short  = (($best.skills | Select-Object -First 3) -join ' · ')

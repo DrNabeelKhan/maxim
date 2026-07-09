@@ -63,7 +63,14 @@ def _kw_hit(k, text):
     # "feature"->features. \b anchors each keyword to whole words.
     return re.search(r"\b" + re.escape(k.lower()) + r"(?:s|es)?\b", text) is not None
 
-best, best_hits = None, 0
+# Instruction zone: the operator's own directive usually LEADS the prompt; pasted
+# or quoted content trails. A route that only matches on deep-pasted words scores
+# lower, so incidental keywords in a paste no longer win (BUG-012 / PATTERN-04).
+zone = plow[:160]
+margin = int(table.get("confidence_margin", 1))
+floor = int(table.get("confidence_floor", 2))
+
+best, best_score, best_hits, second_score = None, 0, 0, 0
 for r in table.get("routes", []):
     matched = [k for k in r.get("keywords", []) if _kw_hit(k, plow)]
     hits = len(matched)
@@ -72,9 +79,18 @@ for r in table.get("routes", []):
     # confident route: require >=1 strong hit OR >=2 total hits.
     if hits == 0 or (strong == 0 and hits < 2):
         continue
-    if hits > best_hits:
-        best, best_hits = r, hits
-if not best or best_hits < minhits:
+    # +1 confidence when a STRONG keyword appears in the instruction zone.
+    zone_bonus = 1 if any(_kw_hit(k, zone) for k in matched if k.lower() not in weak) else 0
+    score = strong + zone_bonus
+    if score > best_score:
+        second_score = best_score
+        best, best_score, best_hits = r, score, hits
+    elif score > second_score:
+        second_score = score
+# Confident ONLY if it clears the floor AND beats the runner-up by the margin;
+# otherwise pass through silently (no low-confidence banner). Array order no
+# longer breaks ties — a genuine tie is not confident.
+if not best or best_score < floor or (best_score - second_score) < margin:
     out_nothing()  # no confident route → vanilla passthrough
 
 office = best["office"]; rid = best["id"]
