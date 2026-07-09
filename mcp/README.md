@@ -31,7 +31,7 @@ cd mcp && for dir in maxim-*/; do (cd "$dir" && npm install); done
 | 2 | [`mxm-context`](mxm-context/README.md) | P1 | **15** | Per-project intelligence + design refs + drift detection (13 classes) |
 | 3 | [`mxm-catalog`](mxm-catalog/README.md) | P2 | **9** | Agent routing + L2 specialist descent + skill/command catalog |
 | 4 | [`mxm-compliance`](mxm-compliance/README.md) | P2 | 5 | Compliance checking (14 frameworks) |
-| 5 | [`mxm-behavioral`](mxm-behavioral/README.md) | P2 | **7** | Behavioral science engine (78 frameworks + Proactive Watch) |
+| 5 | [`mxm-behavioral`](mxm-behavioral/README.md) | P2 | **7** | Behavioral science engine (86 frameworks + Proactive Watch) |
 | 6 | [`mxm-memory`](mxm-memory/README.md) | P3 | **6** | Unified memory search across session files |
 | 7 | [`mxm-voice`](mxm-voice/README.md) | P3 | 4 | Voice-driven office routing (wraps mbailey/voicemode) |
 | 8 | `mxm-commands` | P3 | 2 | Slash-command dispatcher (cross-surface parity, v1.2.0.1+) |

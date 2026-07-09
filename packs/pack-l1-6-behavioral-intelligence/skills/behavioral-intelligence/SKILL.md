@@ -1,7 +1,7 @@
 ---
 name: L1.6 Behavioral Intelligence
-description: "78 peer-reviewed behavioral frameworks applied to every Maxim output. The flagship moat."
-business_outcome: "Applies 78 peer-reviewed behavioral frameworks to every output; mechanism tracked in documents/ledgers/MOAT_TRACKER.md § MOAT-06."
+description: "86 peer-reviewed behavioral frameworks applied to every Maxim output. The flagship moat."
+business_outcome: "Applies 86 peer-reviewed behavioral frameworks to every output; mechanism tracked in documents/ledgers/MOAT_TRACKER.md § MOAT-06."
 primary_framework: "Fogg Behavior Model (B=MAP)"
 product_id: L1.6
 lemonsqueezy_variant_id: 1551379

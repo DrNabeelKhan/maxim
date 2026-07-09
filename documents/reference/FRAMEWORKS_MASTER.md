@@ -6,11 +6,11 @@
 
 | Version                     | 6.0                    |
 | --------------------------- | ---------------------- |
-| Frameworks active (v1.3.3)  | **78** — source of truth: [AGENT_SKILL_INVENTORY.md](../ledgers/AGENT_SKILL_INVENTORY.md) §6 |
-| Evolution                   | 64 (v1.0.0) → 74 (v1.2.0) → 78 (v1.3.3) |
+| Frameworks active           | **86** — source of truth: [AGENT_SKILL_INVENTORY.md](../ledgers/AGENT_SKILL_INVENTORY.md) §6 |
+| Evolution                   | 64 (v1.0.0) → 74 (v1.2.0) → 78 (v1.3.3) → 86 (all-in reconciliation) |
 | Categories                  | 9                      |
 | Agents Using Frameworks     | 91 (all)               |
-| New in v1.3.3               | 🆕 4 loop-derived (§69–72): Bounded Loop · Independent Verification · Champion–Challenger · No-Fabrication |
+| Latest additions            | 5 all-in reconciliation entries (§82–86): ArchiMate · Cloud Architecture · DevSecOps · SANS Incident Response · Proactive Watch. Loop-derived governance frameworks now at §78–81. Catalog renumbered to a clean 1..86 (fixed a prior #16–24 numbering collision). |
 | Deferred to roadmap         | see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md) |
 | Last Updated                | 2026-06-19             |
 
@@ -520,7 +520,7 @@
 ---
 
 
-### 🆕 16. CCPA / CPRA (California Consumer Privacy Act / Rights Act)
+### 16. CCPA / CPRA (California Consumer Privacy Act / Rights Act)
 
 | Attribute         | Details                                                                       |
 | ----------------- | ----------------------------------------------------------------------------- |
@@ -552,7 +552,7 @@
 
 ---
 
-### 🆕 17. EU AI Act
+### 17. EU AI Act
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -594,7 +594,7 @@
 
 ---
 
-### 🆕 18. ISO 42001 (AI Management System)
+### 18. ISO 42001 (AI Management System)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -627,7 +627,7 @@
 
 ---
 
-### 🆕 19. SOX (Sarbanes-Oxley Act)
+### 19. SOX (Sarbanes-Oxley Act)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -666,7 +666,7 @@
 
 ---
 
-### 🆕 20. CIS Controls (Center for Internet Security)
+### 20. CIS Controls (Center for Internet Security)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -704,7 +704,7 @@
 
 ---
 
-### 🆕 21. DORA (Digital Operational Resilience Act)
+### 21. DORA (Digital Operational Resilience Act)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -735,7 +735,7 @@
 
 ---
 
-### 🆕 22. NIST SP 800-53 (Security and Privacy Controls)
+### 22. NIST SP 800-53 (Security and Privacy Controls)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -767,7 +767,7 @@
 
 ---
 
-### 🆕 23. FedRAMP (Federal Risk and Authorization Management Program)
+### 23. FedRAMP (Federal Risk and Authorization Management Program)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -803,7 +803,7 @@
 
 ---
 
-### 🆕 24. LGPD (Lei Geral de Proteção de Dados — Brazil)
+### 24. LGPD (Lei Geral de Proteção de Dados — Brazil)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -836,7 +836,7 @@
 
 ## 🏛️ Enterprise Architecture Frameworks
 
-### 16. TOGAF (The Open Group Architecture Framework)
+### 25. TOGAF (The Open Group Architecture Framework)
 
 | Attribute         | Details                                                |
 | ----------------- | ------------------------------------------------------ |
@@ -871,7 +871,7 @@
 
 ---
 
-### 17. DMBOK (Data Management Body of Knowledge)
+### 26. DMBOK (Data Management Body of Knowledge)
 
 | Attribute         | Details                           |
 | ----------------- | --------------------------------- |
@@ -907,7 +907,7 @@
 
 ---
 
-### 18. Zachman Framework
+### 27. Zachman Framework
 
 | Attribute         | Details                                |
 | ----------------- | -------------------------------------- |
@@ -937,7 +937,7 @@
 
 ---
 
-### 19. COBIT
+### 28. COBIT
 
 | Attribute         | Details                                        |
 | ----------------- | ---------------------------------------------- |
@@ -967,7 +967,7 @@
 
 ---
 
-### 20. ITIL (Information Technology Infrastructure Library)
+### 29. ITIL (Information Technology Infrastructure Library)
 
 | Attribute         | Details                                                                          |
 | ----------------- | -------------------------------------------------------------------------------- |
@@ -997,7 +997,7 @@
 
 ---
 
-### 21. BIZBOK (Business Architecture Body of Knowledge)
+### 30. BIZBOK (Business Architecture Body of Knowledge)
 
 | Attribute         | Details                                                                     |
 | ----------------- | --------------------------------------------------------------------------- |
@@ -1030,7 +1030,7 @@
 
 ---
 
-### 22. FEAF (Federal Enterprise Architecture Framework)
+### 31. FEAF (Federal Enterprise Architecture Framework)
 
 | Attribute         | Details                                                           |
 | ----------------- | ----------------------------------------------------------------- |
@@ -1063,7 +1063,7 @@
 
 ## 📦 Product & Research Frameworks
 
-### 23. Design Thinking
+### 32. Design Thinking
 
 | Attribute         | Details                                               |
 | ----------------- | ----------------------------------------------------- |
@@ -1094,7 +1094,7 @@
 
 ---
 
-### 24. Lean Startup
+### 33. Lean Startup
 
 | Attribute         | Details                                           |
 | ----------------- | ------------------------------------------------- |
@@ -1123,7 +1123,7 @@
 
 ---
 
-### 25. Agile / Scrum
+### 34. Agile / Scrum
 
 | Attribute         | Details                                                                                |
 | ----------------- | -------------------------------------------------------------------------------------- |
@@ -1155,7 +1155,7 @@
 
 ---
 
-### 26. OKRs (Objectives and Key Results)
+### 35. OKRs (Objectives and Key Results)
 
 | Attribute         | Details                                         |
 | ----------------- | ----------------------------------------------- |
@@ -1183,7 +1183,7 @@
 
 ---
 
-### 27. TAM/SAM/SOM
+### 36. TAM/SAM/SOM
 
 | Attribute         | Details                 |
 | ----------------- | ----------------------- |
@@ -1211,7 +1211,7 @@
 
 ---
 
-### 28. Porter's Five Forces
+### 37. Porter's Five Forces
 
 | Attribute         | Details                                  |
 | ----------------- | ---------------------------------------- |
@@ -1241,7 +1241,7 @@
 
 ---
 
-### 29. SWOT Analysis
+### 38. SWOT Analysis
 
 | Attribute         | Details                             |
 | ----------------- | ----------------------------------- |
@@ -1270,7 +1270,7 @@
 
 ---
 
-### 30. Nielsen Heuristics
+### 39. Nielsen Heuristics
 
 | Attribute         | Details                                                                                                     |
 | ----------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -1307,7 +1307,7 @@
 
 ## 📚 Content & Marketing Frameworks
 
-### 31. AIDA
+### 40. AIDA
 
 | Attribute         | Details                               |
 | ----------------- | ------------------------------------- |
@@ -1336,7 +1336,7 @@
 
 ---
 
-### 32. Content Calendar
+### 41. Content Calendar
 
 | Attribute         | Details                         |
 | ----------------- | ------------------------------- |
@@ -1366,7 +1366,7 @@
 
 ---
 
-### 33. Growth Hacking
+### 42. Growth Hacking
 
 | Attribute         | Details                        |
 | ----------------- | ------------------------------ |
@@ -1396,7 +1396,7 @@
 
 ---
 
-### 34. ASO (App Store Optimization)
+### 43. ASO (App Store Optimization)
 
 | Attribute         | Details                              |
 | ----------------- | ------------------------------------ |
@@ -1427,7 +1427,7 @@
 
 ---
 
-### 35. Brand Guidelines
+### 44. Brand Guidelines
 
 | Attribute         | Details                     |
 | ----------------- | --------------------------- |
@@ -1458,7 +1458,7 @@
 
 ---
 
-### 36. Platform-Specific Writing
+### 45. Platform-Specific Writing
 
 | Attribute         | Details                            |
 | ----------------- | ---------------------------------- |
@@ -1490,7 +1490,7 @@
 
 ## 💻 Engineering & DevOps Frameworks
 
-### 37. CI/CD
+### 46. CI/CD
 
 | Attribute         | Details                               |
 | ----------------- | ------------------------------------- |
@@ -1521,7 +1521,7 @@
 
 ---
 
-### 38. Infrastructure as Code (IaC)
+### 47. Infrastructure as Code (IaC)
 
 | Attribute         | Details                            |
 | ----------------- | ---------------------------------- |
@@ -1552,7 +1552,7 @@
 
 ---
 
-### 39. Microservices Architecture
+### 48. Microservices Architecture
 
 | Attribute         | Details                              |
 | ----------------- | ------------------------------------ |
@@ -1582,7 +1582,7 @@
 
 ---
 
-### 40. API Design (REST/GraphQL)
+### 49. API Design (REST/GraphQL)
 
 | Attribute         | Details                      |
 | ----------------- | ---------------------------- |
@@ -1614,7 +1614,7 @@
 
 ## 🎨 Design & UX Frameworks
 
-### 41. Design Systems
+### 50. Design Systems
 
 | Attribute         | Details                       |
 | ----------------- | ----------------------------- |
@@ -1644,7 +1644,7 @@
 
 ---
 
-### 42. User Journey Mapping
+### 51. User Journey Mapping
 
 | Attribute         | Details                   |
 | ----------------- | ------------------------- |
@@ -1676,7 +1676,7 @@
 
 ---
 
-### 43. Accessibility (WCAG)
+### 52. Accessibility (WCAG)
 
 | Attribute         | Details                                         |
 | ----------------- | ----------------------------------------------- |
@@ -1705,7 +1705,7 @@
 
 ---
 
-### 44. SUS (System Usability Scale)
+### 53. SUS (System Usability Scale)
 
 | Attribute         | Details               |
 | ----------------- | --------------------- |
@@ -1734,7 +1734,7 @@
 
 ---
 
-### 45. Atomic Design
+### 54. Atomic Design
 
 | Attribute         | Details                                                           |
 | ----------------- | ----------------------------------------------------------------- |
@@ -1765,7 +1765,7 @@
 
 ## 📋 Project Management Frameworks
 
-### 46. Kanban
+### 55. Kanban
 
 | Attribute         | Details                             |
 | ----------------- | ----------------------------------- |
@@ -1795,7 +1795,7 @@
 
 ---
 
-### 47. Stage-Gate
+### 56. Stage-Gate
 
 | Attribute         | Details                     |
 | ----------------- | --------------------------- |
@@ -1825,7 +1825,7 @@
 
 ---
 
-### 48. A/B Testing
+### 57. A/B Testing
 
 | Attribute         | Details                   |
 | ----------------- | ------------------------- |
@@ -1856,7 +1856,7 @@
 
 ---
 
-### 49. RACI Matrix
+### 58. RACI Matrix
 
 | Attribute         | Details                   |
 | ----------------- | ------------------------- |
@@ -1886,7 +1886,7 @@
 
 ## 🧠 Behavior Science & Persuasion Frameworks
 
-### 50. Cialdini's 6 Principles of Persuasion
+### 59. Cialdini's 6 Principles of Persuasion
 
 | Attribute         | Details                                                              |
 | ----------------- | -------------------------------------------------------------------- |
@@ -1925,7 +1925,7 @@
 
 ---
 
-### 51. Fogg Behavior Model (FBM)
+### 60. Fogg Behavior Model (FBM)
 
 | Attribute         | Details                                                         |
 | ----------------- | --------------------------------------------------------------- |
@@ -1964,7 +1964,7 @@ Behavior = Motivation × Ability × Prompt
 
 ---
 
-### 52. Nudge Theory
+### 61. Nudge Theory
 
 | Attribute         | Details                                                                                       |
 | ----------------- | --------------------------------------------------------------------------------------------- |
@@ -2010,7 +2010,7 @@ Behavior = Motivation × Ability × Prompt
 
 ---
 
-### 53. Hook Model
+### 62. Hook Model
 
 | Attribute         | Details                                                                          |
 | ----------------- | -------------------------------------------------------------------------------- |
@@ -2055,7 +2055,7 @@ Behavior = Motivation × Ability × Prompt
 
 ---
 
-### 54. COM-B Model
+### 63. COM-B Model
 
 | Attribute         | Details                                                         |
 | ----------------- | --------------------------------------------------------------- |
@@ -2100,7 +2100,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 55. EAST Framework
+### 64. EAST Framework
 
 | Attribute         | Details                                                   |
 | ----------------- | --------------------------------------------------------- |
@@ -2139,7 +2139,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 56. Cognitive Biases (Key Selection)
+### 65. Cognitive Biases (Key Selection)
 
 | Attribute         | Details                                                                                             |
 | ----------------- | --------------------------------------------------------------------------------------------------- |
@@ -2180,7 +2180,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 57. Jobs-to-be-Done (JTBD)
+### 66. Jobs-to-be-Done (JTBD)
 
 | Attribute         | Details                                                 |
 | ----------------- | ------------------------------------------------------- |
@@ -2219,7 +2219,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 58. Elaboration Likelihood Model (ELM)
+### 67. Elaboration Likelihood Model (ELM)
 
 | Attribute         | Details                      |
 | ----------------- | ---------------------------- |
@@ -2246,7 +2246,7 @@ Behavior = Capability × Opportunity × Motivation
 ---
 
 
-### 🆕 59. Transtheoretical Model (TTM / Stages of Change)
+### 68. Transtheoretical Model (TTM / Stages of Change)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2284,7 +2284,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 60. Self-Determination Theory (SDT)
+### 69. Self-Determination Theory (SDT)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2323,7 +2323,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 61. Dual Process Theory (System 1 & System 2)
+### 70. Dual Process Theory (System 1 & System 2)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2360,7 +2360,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 62. SCARF Model
+### 71. SCARF Model
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2391,7 +2391,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 63. Theory of Planned Behavior (TPB)
+### 72. Theory of Planned Behavior (TPB)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2422,7 +2422,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 64. Social Learning Theory (Bandura)
+### 73. Social Learning Theory (Bandura)
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2453,7 +2453,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 65. Operant Conditioning / Reinforcement Theory
+### 74. Operant Conditioning / Reinforcement Theory
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2498,7 +2498,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 66. Prospect Theory
+### 75. Prospect Theory
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2537,7 +2537,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 67. Diffusion of Innovations
+### 76. Diffusion of Innovations
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2578,7 +2578,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 68. Emotional Design Model
+### 77. Emotional Design Model
 
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
@@ -2615,7 +2615,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 69. Bounded Agent Loop (Explicit Stopping Conditions)
+### 78. Bounded Agent Loop (Explicit Stopping Conditions)
 
 | Attribute         | Details                                                                          |
 | ----------------- | -------------------------------------------------------------------------------- |
@@ -2643,7 +2643,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 70. Independent Verification (Generation–Approval Separation)
+### 79. Independent Verification (Generation–Approval Separation)
 
 | Attribute         | Details                                                                          |
 | ----------------- | -------------------------------------------------------------------------------- |
@@ -2671,7 +2671,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 71. Champion–Challenger with Holdout (Goodhart-Resistance)
+### 80. Champion–Challenger with Holdout (Goodhart-Resistance)
 
 | Attribute         | Details                                                                          |
 | ----------------- | -------------------------------------------------------------------------------- |
@@ -2700,7 +2700,7 @@ Behavior = Capability × Opportunity × Motivation
 
 ---
 
-### 🆕 72. No-Fabrication (Evidence-Bound Claims)
+### 81. No-Fabrication (Evidence-Bound Claims)
 
 | Attribute         | Details                                                                          |
 | ----------------- | -------------------------------------------------------------------------------- |
@@ -2724,6 +2724,163 @@ Behavior = Capability × Opportunity × Motivation
 | Confidence Tagger| Confidence rubric (ADR-010) enforcement   |
 | Reviewer         | Rejects unsupported claims                 |
 | Security Analyst | Evidence-bound compliance assertions       |
+
+---
+
+### 82. ArchiMate
+
+| Attribute         | Details                                                              |
+| ----------------- | ------------------------------------------------------------------- |
+| **Owner**         | The Open Group                                                       |
+| **Purpose**       | Enterprise architecture modeling language                           |
+| **Official Docs** | [opengroup.org/archimate-forum](https://www.opengroup.org/archimate-forum) |
+| **Maturity**      | Established (2004)                                                   |
+
+#### Core Layers
+
+| Layer                       | Description                                       |
+| --------------------------- | ------------------------------------------------ |
+| Business                    | Actors, roles, processes, services, products     |
+| Application                 | Application components, services, and data        |
+| Technology                  | Infrastructure, nodes, system software, networks |
+| Motivation                  | Stakeholders, drivers, goals, requirements        |
+| Implementation & Migration  | Work packages, deliverables, transition states    |
+
+#### Agents Using This Framework
+
+| Agent                 | Application                       |
+| --------------------- | -------------------------------- |
+| Enterprise Architect  | Cross-domain architecture modeling |
+| Solution Architect    | Solution design and integration   |
+| Business Architect    | Business-layer capability mapping  |
+
+---
+
+### 83. Cloud Architecture
+
+| Attribute         | Details                                                                     |
+| ----------------- | -------------------------------------------------------------------------- |
+| **Owner**         | Cloud providers (AWS / Azure / GCP)                                        |
+| **Purpose**       | Scalable, reliable cloud system design                                     |
+| **Official Docs** | [AWS / Azure / GCP architecture centers](https://aws.amazon.com/architecture/well-architected/) |
+| **Maturity**      | Established                                                                 |
+
+#### Design Dimensions
+
+| Dimension               | Description                                    |
+| ----------------------- | --------------------------------------------- |
+| Scalability             | Elastic capacity to meet demand               |
+| Reliability             | Fault tolerance and recovery                  |
+| Security                | Identity, encryption, network controls        |
+| Cost Optimization       | Right-sizing and spend efficiency             |
+| Performance Efficiency  | Latency, throughput, resource selection       |
+| Operational Excellence  | Automation, observability, run discipline     |
+
+#### Agents Using This Framework
+
+| Agent                    | Application                        |
+| ------------------------ | --------------------------------- |
+| Solution Architect       | Cloud solution design             |
+| Backend Architect        | Service and data-tier design      |
+| DevOps Automator         | Provisioning and CI/CD pipelines  |
+| Infrastructure Maintainer| Operations and reliability        |
+
+---
+
+### 84. DevSecOps
+
+| Attribute         | Details                                                                       |
+| ----------------- | ---------------------------------------------------------------------------- |
+| **Owner**         | Industry standard                                                            |
+| **Purpose**       | Integrate security into development and operations                           |
+| **Official Docs** | [owasp.org/www-project-devsecops-guideline](https://owasp.org/www-project-devsecops-guideline/) |
+| **Maturity**      | Established (2010s)                                                          |
+
+#### Core Practices
+
+| Practice                | Description                                       |
+| ----------------------- | ------------------------------------------------ |
+| Shift-Left Security     | Move security checks earlier in the lifecycle     |
+| Pipeline Security       | Automated scanning in CI/CD (SAST, DAST, SCA)     |
+| Infrastructure as Code  | Policy-as-code and IaC scanning                   |
+| Continuous Monitoring   | Runtime detection and telemetry                   |
+| Shared Responsibility   | Security owned across Dev, Sec, and Ops           |
+
+#### Agents Using This Framework
+
+| Agent                    | Application                        |
+| ------------------------ | --------------------------------- |
+| DevOps Automator         | Secure pipeline automation        |
+| Security Architect       | Control design and threat modeling|
+| Security Auditor         | Pipeline and posture assessment   |
+| Infrastructure Maintainer| Runtime hardening and monitoring  |
+
+---
+
+### 85. SANS Incident Response
+
+| Attribute         | Details                                                        |
+| ----------------- | ------------------------------------------------------------- |
+| **Owner**         | SANS Institute                                                |
+| **Purpose**       | Structured incident response methodology                      |
+| **Official Docs** | [sans.org/incident-response](https://www.sans.org/incident-response/) |
+| **Maturity**      | Established                                                    |
+
+#### Response Phases (PICERL)
+
+| Phase           | Description                                     |
+| --------------- | ---------------------------------------------- |
+| Preparation     | Readiness, tooling, and playbooks              |
+| Identification  | Detect and confirm the incident                |
+| Containment     | Limit scope and prevent spread                 |
+| Eradication     | Remove the root cause and artifacts            |
+| Recovery        | Restore systems to normal operation            |
+| Lessons Learned | Post-incident review and improvement           |
+
+#### Agents Using This Framework
+
+| Agent               | Application                       |
+| ------------------- | -------------------------------- |
+| Incident Responder  | Containment and recovery execution |
+| Threat Analyst      | Identification and analysis       |
+| Security Auditor    | Post-incident review              |
+
+---
+
+### 86. Proactive Watch
+
+| Attribute         | Details                                                                        |
+| ----------------- | ----------------------------------------------------------------------------- |
+| **Owner**         | iSystematic Inc. (Maxim-native)                                               |
+| **Purpose**       | Drift detection for AI-coded, multi-document projects                         |
+| **Official Docs** | [composable-skills/frameworks/proactive-watch.md](../../composable-skills/frameworks/proactive-watch.md) |
+| **Maturity**      | Maxim-native (v1.0.0, 2026); ratified by ADR-002                              |
+
+#### Universal Drift Classes
+
+| Class                 | Typical Example                                        | Triage |
+| --------------------- | ----------------------------------------------------- | ------ |
+| inventory-drift       | Declared capability count != filesystem reality       | COO    |
+| version-drift         | Version string mismatch across surfaces               | COO    |
+| contract-drift        | Behavior violates an ACCEPTED ADR                     | CEO    |
+| cross-doc drift       | CHANGELOG claims a feature docs omit                  | COO    |
+| orphan-refs           | Commands/hooks point to missing files                 | CTO    |
+| dependency-drift      | Outdated packages, missing MCP deps                   | CTO    |
+| git-hygiene           | Uncommitted/unpushed beyond threshold                 | CTO    |
+| junction-drift        | Broken symlinks / wrong junction targets              | CTO    |
+| stale-handoff         | Handoff older than N days                             | COO    |
+| compliance-drift      | Secret committed, PII leaked, license mismatch        | CSO    |
+| surface-claims-drift  | Marketing/docs hard-code a count that drifted         | COO    |
+| behavioral-moat-drift | SKILL.md stops citing its justifying framework        | CMO    |
+
+#### Agents Using This Framework
+
+| Agent               | Application                                |
+| ------------------- | ----------------------------------------- |
+| Proactive Watch     | Drift scanning at SessionStart + on-demand |
+| Planner (COO)       | Inventory/version/cross-doc triage         |
+| Security Analyst (CSO) | Compliance-drift triage                  |
+| Enterprise Architect (CEO) | Contract-drift triage               |
 
 ---
 
@@ -2870,7 +3027,7 @@ Behavior = Capability × Opportunity × Motivation
 **Last Updated:** 2026-06-19
 **Version:** 6.0
 **Maintained By:** Maxim framework library maintainers
-**Current (v1.3.3):** 78 active behavioral frameworks. Source of truth: [AGENT_SKILL_INVENTORY.md](../ledgers/AGENT_SKILL_INVENTORY.md) §6.
+**Current:** 86 active frameworks (all-in: behavioral + security/compliance + enterprise-architecture + engineering + Maxim-native). Source of truth: [AGENT_SKILL_INVENTORY.md](../ledgers/AGENT_SKILL_INVENTORY.md) §6.
 **Historical (v1.0.0 launch):** 64 frameworks (63 SKILL.md + 1 proactive-watch.md); 18 then-deferred — see [FRAMEWORK_ROADMAP.md](./FRAMEWORK_ROADMAP.md). Evolution: 64 (v1.0.0) → 74 (v1.2.0) → 78 (v1.3.3).
 
 ---

@@ -91,7 +91,7 @@ Under `.claude/hooks/`:
 
 ---
 
-## Section 6 — Behavioral Frameworks (78)
+## Section 6 — Behavioral Frameworks (86)
 
 Cataloged in `documents/reference/FRAMEWORKS_MASTER.md`. Core families include Fogg Behavior Model, COM-B, EAST, Cialdini Persuasion, Cognitive Load Theory, Behavioral Moat Framing Doctrine (ADR-007), Technical Educator Rubric (ADR-010), and the meta-framework Proactive Watch (ADR-002). v1.2.0 added 10 frameworks across WS6a+WS6b at full ADR-007 7-section depth:
 
@@ -99,7 +99,7 @@ Cataloged in `documents/reference/FRAMEWORKS_MASTER.md`. Core families include F
 
 **WS6b (6 MED-priority):** `scarf` (David Rock — Status/Certainty/Autonomy/Relatedness/Fairness), `theory-of-planned-behavior` (Ajzen — Attitudes + Subjective Norms + Perceived Behavioral Control), `social-learning-theory` (Bandura — modeling + self-efficacy), `operant-conditioning` (Skinner — reinforcement schedules with ethics gating on variable-ratio), `diffusion-of-innovations` (Rogers — 5 adopter categories + Moore's chasm), `emotional-design` (Norman — visceral/behavioral/reflective).
 
-**Total frameworks: 78.** Net delta (74 → 78): +4 loop-derived behavioral frameworks in v1.3.3 — Bounded Agent Loop (Explicit Stopping Conditions) · Independent Verification (Generation–Approval Separation) · Champion–Challenger with Holdout (Goodhart-Resistance) · No-Fabrication (Evidence-Bound Claims). Codified from the `loops` skill adoption; prior art loop-library + autonomy-loop, cited per ADR-007. Prior delta from v1.1.1 (64 → 74): +4 WS6a + +6 WS6b in v1.2.0.
+**Total frameworks: 86.** "All-in" count — behavioral + security/compliance + enterprise-architecture + engineering + Maxim-native. Each has a `### N.` entry in `FRAMEWORKS_MASTER.md` (renumbered to a clean 1..86) AND a definition dir under `composable-skills/frameworks/<slug>/SKILL.md` (or a loose `.md`); `ttm-stage-detection.md` is a TTM operational helper and is NOT counted. Net delta (78 → 86): the all-in reconciliation added **5 frameworks that had definition dirs but were missing from the catalog** — ArchiMate, Cloud Architecture, DevSecOps, SANS Incident Response, Proactive Watch (§82–86) — and **backfilled definition dirs for 12 catalogued frameworks that lacked them** (EU AI Act, ISO 42001, SOX, CIS Controls, DORA, NIST SP 800-53, LGPD, Elaboration Likelihood Model, and the 4 loop frameworks §78–81). Also fixed a `FRAMEWORKS_MASTER.md` numbering collision (#16–24 were used twice) via a full 1..86 renumber. SEO/AEO/GEO (§4–6) are defined by the `search-intent-mapping` / `google-search-central` / `llm-visibility` dirs (name aliases, count-neutral). Prior delta (74 → 78): +4 loop-derived (v1.3.3); prior (64 → 74): +4 WS6a + +6 WS6b (v1.2.0).
 
 ### Proactive Watch drift classes (13)
 

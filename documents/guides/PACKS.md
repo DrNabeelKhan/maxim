@@ -7,7 +7,7 @@
 
 ## Situation · Complication · Question · Answer
 
-**Situation.** Maxim ships a behavioral-intelligence operating system: 91 specialist agents, 52 skill domains, 50 slash commands, 9 MCPs / 95 tools, 78 peer-reviewed frameworks, 14 compliance frameworks, 13 drift classes. The Core is free forever (Apache 2.0 in four years per ADR-005). The structural moats — audit trail, drift detection, voice lock, compliance enforcement — ship as gated packs.
+**Situation.** Maxim ships a behavioral-intelligence operating system: 91 specialist agents, 52 skill domains, 50 slash commands, 9 MCPs / 95 tools, 86 peer-reviewed frameworks, 14 compliance frameworks, 13 drift classes. The Core is free forever (Apache 2.0 in four years per ADR-005). The structural moats — audit trail, drift detection, voice lock, compliance enforcement — ship as gated packs.
 
 **Complication.** Most plugins publish a flat capability list. A buyer can't tell what they'd *use* versus what they'd *own and ignore*. Picking a tier without seeing the moat work on real work is a Prospect Theory bet against loss aversion: every operator overweights the risk of paying for something they won't use.
 
@@ -26,7 +26,7 @@ Maxim Core is the complete governance substrate. It is **not crippleware** — p
 | Specialist agents | 91 agents across 7 executive offices (CEO · CTO · CMO · CSO · CPO · COO · CINO) |
 | Skill domains | 36 dispatcher + sub-skill domains |
 | Slash commands | 48 `/mxm-*` commands · 7 verb-first (TIER 1) · 10 office shortcuts (TIER 2) · 5 persona dispatchers (TIER 3) |
-| Behavioral frameworks | 78 frameworks cited on every output (Fogg · COM-B · EAST · Cialdini · Prospect Theory · 73 more) |
+| Behavioral frameworks | 86 frameworks cited on every output (Fogg · COM-B · EAST · Cialdini · Prospect Theory · 81 more) |
 | MCP servers | 9 servers · 95 tools across portfolio / context / catalog / compliance / behavioral / memory / voice / commands / notebooklm |
 | Compliance advisory | 14 frameworks surface relevant requirements (paid tier enforces; Core advises) |
 | Hooks | 16 executable hooks across session lifecycle · git hygiene · pre-commit secret scan |
@@ -80,7 +80,7 @@ All 14 packs unlocked. 90 days. No card. Cancel anytime.
 
 Best for: solo operators evaluating Maxim. Hobbyists. Learners.
 
-**What you keep (Core, free forever):** 91 agents · 52 skills · 50 commands · 9 MCPs / 95 tools · 78 frameworks · advisory-mode compliance · 13-class drift detection without severity gating.
+**What you keep (Core, free forever):** 91 agents · 52 skills · 50 commands · 9 MCPs / 95 tools · 86 frameworks · advisory-mode compliance · 13-class drift detection without severity gating.
 
 **What stays gated until upgrade:**
 - Audit trail on every AI decision (L1.1 AI Governance · Prospect Theory loss-framing)
@@ -88,7 +88,7 @@ Best for: solo operators evaluating Maxim. Hobbyists. Learners.
 - Drift severity gating + auto-block (L1.3 Proactive Watch · Signal Detection Theory)
 - 14-framework compliance enforcement at MCP layer (L1.4 Compliance Shield · COM-B)
 - Voice lock across all outputs (L1.5 Brand & Design Pro · Dual Process Theory)
-- 74-framework behavioral dispatch with enforcement registry (L1.6 Behavioral Intelligence · Fogg B=MAP)
+- 86-framework behavioral dispatch with enforcement registry (L1.6 Behavioral Intelligence · Fogg B=MAP)
 
 ---
 
@@ -194,7 +194,7 @@ Per ADR-019, prices live at `maxim.isystematic.com/pricing`. The wizard intentio
 
 | Tier | Monthly | Annual (2 months free) | Composes |
 |---|---:|---:|---|
-| Core (Solo) | **$0** | $0 | 91 agents · 52 skills · 50 commands · 9 MCPs · 95 tools · 78 frameworks · advisory compliance · 13-class drift |
+| Core (Solo) | **$0** | $0 | 91 agents · 52 skills · 50 commands · 9 MCPs · 95 tools · 86 frameworks · advisory compliance · 13-class drift |
 | Pro | **$19.99/mo** | $200/yr | Core + 6 L1 capability packs |
 | Pro + Compliance | **$39/mo** | $390/yr | Pro + L1.4 Compliance Shield with full 14-framework enforcement at MCP layer |
 | Professional | **$99/mo** | $990/yr | Pro + L1.5 Brand & Design Pro unlimited + unlimited voice + priority support |

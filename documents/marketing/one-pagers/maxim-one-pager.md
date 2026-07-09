@@ -98,7 +98,7 @@ Full catalog + pricing: [`maxim.isystematic.com/pricing`](https://maxim.isystema
 
 **Without Maxim:** every Claude session starts cold. Compliance is manual. No framework citation. Every project independent. Generic agents. Capability claims drift across surfaces. Voice drifts across outputs.
 
-**With Maxim:** sessions resume full context (MemPalace). Compliance automatic (14 frameworks at MCP layer). 78 frameworks applied structurally. Portfolio-wide awareness. 91 governed specialists. Drift detected before ship (13 Watch classes). Voice locked across surfaces (ADR-019 operator-writer template).
+**With Maxim:** sessions resume full context (MemPalace). Compliance automatic (14 frameworks at MCP layer). 86 frameworks applied structurally. Portfolio-wide awareness. 91 governed specialists. Drift detected before ship (13 Watch classes). Voice locked across surfaces (ADR-019 operator-writer template).
 
 **The math:** a human chief of staff costs $200K. A compliance officer costs $150K. A behavioral scientist costs $160K. A 15-person marketing team costs $1.5M+. Maxim replaces structural layers of all of them (governed, tireless, deepening with every session) for the cost of a Claude subscription + pack licenses.
 

@@ -111,7 +111,7 @@ vs. previous flow (~2 min, 2 restarts).
 
 **Theme:** Shift Maxim from "a plugin among many" to **the governance layer that applies to every installed Claude Code plugin**. Architectural decision ratified in [ADR-012](../ADRs/ADR-012-overlay-engine-architecture.md).
 
-**Problem.** Maxim v1.0.0 ships 78 behavioral frameworks, 14 compliance frameworks, the confidence-tagging rubric (ADR-010), MOAT-row citation doctrine (ADR-007), and Proactive Watch drift detection. None of this applies to outputs produced by other plugins the user has installed — autocomplete tools, testing harnesses, doc generators, third-party MCP servers. Maxim's moat layer covers only Maxim-originated work, which is the wrong coverage surface for a *governance* product.
+**Problem.** Maxim v1.0.0 ships 86 behavioral frameworks, 14 compliance frameworks, the confidence-tagging rubric (ADR-010), MOAT-row citation doctrine (ADR-007), and Proactive Watch drift detection. None of this applies to outputs produced by other plugins the user has installed — autocomplete tools, testing harnesses, doc generators, third-party MCP servers. Maxim's moat layer covers only Maxim-originated work, which is the wrong coverage surface for a *governance* product.
 
 **Shipped capability.**
 
@@ -169,7 +169,7 @@ Four interception points implemented via Claude Code's existing hook API. No coo
 
 **Locked design (Session 14, 2026-04-27):** Full proposal in [`AGENT_ROSTER_v1.2_PROPOSAL.md`](./AGENT_ROSTER_v1.2_PROPOSAL.md).
 
-**Scope split (locked Session 20, 2026-05-19):** Original v1.2 plan bundled 78 behavioral frameworks (30–40 dev-days, ~50% of total budget) + Class 13 drift detection into a single 55–78-day release. Pre-sprint audit re-estimated WS5 roster reorganization at 10–15 days (consolidation + new, not count-neutral renames) and surfaced WS7's hard dependency on v1.1.2 MOE shipping first. To bring v1.2.0 GA into a defensible 6–9 week cadence, the work is split:
+**Scope split (locked Session 20, 2026-05-19):** Original v1.2 plan bundled 86 behavioral frameworks (30–40 dev-days, ~50% of total budget) + Class 13 drift detection into a single 55–78-day release. Pre-sprint audit re-estimated WS5 roster reorganization at 10–15 days (consolidation + new, not count-neutral renames) and surfaced WS7's hard dependency on v1.1.2 MOE shipping first. To bring v1.2.0 GA into a defensible 6–9 week cadence, the work is split:
 
 - **v1.2.0 GA** (~30–43 dev-days): WS1–WS5 + WS6a (4 HIGH-priority behavioral frameworks)
 - **v1.2.1 follow-up** (~21–29 dev-days, after v1.1.2 MOE ships): WS6b (6 MED-priority behavioral frameworks) + WS7 (Class 13 drift)

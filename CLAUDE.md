@@ -413,7 +413,7 @@ When any threshold is exceeded, scheduled tasks sleep until `resets_at`. Usage i
 | `documents/ADRs/README.md` | ADR rules: numbering, lifecycle, when to write |
 | `documents/ADRs/TEMPLATE.md` | ADR template with 4 mandatory sections |
 | `documents/ADRs/INDEX.md` | All ADRs with current status |
-| `documents/reference/FRAMEWORKS_MASTER.md` | 78 behavioral frameworks |
+| `documents/reference/FRAMEWORKS_MASTER.md` | 86 behavioral frameworks |
 | `documents/governance/ETHICAL_GUIDELINES.md` | Governance boundaries |
 | `documents/ledgers/SESSION_CONTINUITY.md` | Session memory bridge |
 | `CLAUDE.project.md` | Project-specific overrides |

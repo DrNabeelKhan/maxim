@@ -26,7 +26,7 @@ Live since 2026-04-21 (v1.0.0 launch). Currently at v1.3.8. Used by 21+ projects
 
 | Artifact | Path | Status |
 |---|---|---|
-| Plugin manifest | `.claude-plugin/plugin.json` | v1.3.8.1 — declares 91 agents · 52 skills · 50 commands · 78 frameworks · 14 compliance · 9 MCPs (95 tools) · 90-day Trial of 14 packs default |
+| Plugin manifest | `.claude-plugin/plugin.json` | v1.3.8.1 — declares 91 agents · 52 skills · 50 commands · 86 frameworks · 14 compliance · 9 MCPs (95 tools) · 90-day Trial of 14 packs default |
 | Marketplace manifest | `.claude-plugin/marketplace.json` | v1.3.8.1 — pack catalog (Maxim base plugin + 14 paid packs across L1 · L2 · L3 tiers) · outer metadata.version + plugin entry version both at 1.3.8.1 (per v1.3.2.1 Bucket 1 amendment) |
 | README | `README.md` (root) | v1.3.8.1 with 9-MCP/95-tool table, 6 use cases, ADR index (18 public · 4 confidential) |
 | LICENSE | `LICENSE` (root) | BSL 1.1 — converts to Apache 2.0 after 4 years per ADR-005 |
@@ -56,7 +56,7 @@ Live since 2026-04-21 (v1.0.0 launch). Currently at v1.3.8. Used by 21+ projects
 | Document | Path | Purpose |
 |---|---|---|
 | Agent + skill inventory | `documents/ledgers/AGENT_SKILL_INVENTORY.md` | Single source-of-truth for capability counts. Verified per release against `server.tool()` grep + filesystem. |
-| Frameworks master | `documents/reference/FRAMEWORKS_MASTER.md` | 78 peer-reviewed behavioral frameworks with author/year citations + mechanism statements |
+| Frameworks master | `documents/reference/FRAMEWORKS_MASTER.md` | 86 peer-reviewed behavioral frameworks with author/year citations + mechanism statements |
 | Ethical guidelines | `documents/governance/ETHICAL_GUIDELINES.md` | Governance boundaries · CSO auto-loop triggers · ethics gate triggers per ADR-007 |
 | MOAT tracker | `documents/ledgers/MOAT_TRACKER.md` | 13 defensibility claims with mechanism + framework citation + anti-pattern (Executable Contract per ADR-002) |
 | Bug ledger | `documents/ledgers/BUG_TRACKER.md` | 9 entries (8 RESOLVED · 1 OPEN) + PATTERN-01/02/03 recurring-pattern registry |
@@ -73,7 +73,7 @@ Live since 2026-04-21 (v1.0.0 launch). Currently at v1.3.8. Used by 21+ projects
 
 Every Maxim emission names the behavioral science framework that justifies it. Generic LLM "looks good" output is structurally impossible to ship — `behavioral-overlay-orchestrator` rejects pre-emit any output that does not cite at least one named framework with mechanism stated.
 
-78 frameworks cataloged in `FRAMEWORKS_MASTER.md`. Each pack's SKILL.md cites a primary framework (Prospect Theory · Cognitive Load Theory · Signal Detection Theory · COM-B · Dual Process Theory · Fogg B=MAP). Frameworks are the moat — not the count of agents.
+86 frameworks cataloged in `FRAMEWORKS_MASTER.md`. Each pack's SKILL.md cites a primary framework (Prospect Theory · Cognitive Load Theory · Signal Detection Theory · COM-B · Dual Process Theory · Fogg B=MAP). Frameworks are the moat — not the count of agents.
 
 ### 2. Governance as enforcement, not documentation
 
@@ -134,7 +134,7 @@ The Anthropic Claude Code plugin marketplace ingestion process **is not codified
 | Plugin name | `maxim` |
 | Display name | Maxim |
 | Version | `1.3.8.1` |
-| Description | The behavioral intelligence layer for Claude. 91 specialist agents across 7 executive offices, 52 skill domains, 50 slash commands, 78 peer-reviewed behavioral frameworks, 14 compliance frameworks, 9 MCPs (95 tools) including NotebookLM research synthesis, license-gated MCP middleware, 13-class proactive drift detection. 90-day Trial of all 14 packs default at install. BSL 1.1 licensed. |
+| Description | The behavioral intelligence layer for Claude. 91 specialist agents across 7 executive offices, 52 skill domains, 50 slash commands, 86 peer-reviewed behavioral frameworks, 14 compliance frameworks, 9 MCPs (95 tools) including NotebookLM research synthesis, license-gated MCP middleware, 13-class proactive drift detection. 90-day Trial of all 14 packs default at install. BSL 1.1 licensed. |
 | Author | Dr. Nabeel Khan / iSystematic Inc. |
 | Author email | nabeel@nabeelkhan.com |
 | License | BSL 1.1 (Apache 2.0 conversion on 2030-04-21 per ADR-005) |

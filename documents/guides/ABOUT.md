@@ -1,6 +1,6 @@
 # Maxim: The Operating System for AI-Assisted Work
 
-> **v1.3.8.4 · autonomous workflow standard + 14 everyday skills.** 91 governed agents · 52 skill domains · 50 slash commands · 9 MCPs (95 tools) · 78 peer-reviewed behavioral frameworks · 14 compliance frameworks · 16 executable hooks · 13 Proactive Watch drift classes · 22 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
+> **v1.3.8.4 · autonomous workflow standard + 14 everyday skills.** 91 governed agents · 52 skill domains · 50 slash commands · 9 MCPs (95 tools) · 86 peer-reviewed behavioral frameworks · 14 compliance frameworks · 16 executable hooks · 13 Proactive Watch drift classes · 22 ADRs ratified · 24 dispatchable subagents + 91-agent specialist catalog via `mxm-catalog` MCP · Documents as Executable Contracts. **90-day Trial of all 14 packs default at install.** One `/plugin install maxim@maxim-packs` powers every project you build.
 
 ---
 
@@ -40,7 +40,7 @@ Maxim didn't compete with these repos. It consumed their best ideas and elevated
 |---|---|---|---|---|
 | Specialist agents | 0 | 1 (self) | 0 | **90+ (100% Grade A DNA)** |
 | Skill domains | 1 (marketing) | 26 (categories) | 1 (design) | **34** |
-| Behavioral science frameworks | 0 | 0 | 0 | **79** |
+| Behavioral science frameworks | 0 | 0 | 0 | **86** |
 | Compliance enforcement | None | None | None | **GDPR, PIPEDA, SOC2, PCI-DSS, HIPAA, UAE-PDPL, FINTRAC, 14 frameworks total** |
 | Inter-agent handoff | None | None | None | **Structured handoff chain with BLOCK/PARTIAL/READY status + bilateral Collaboration Matrix on every agent** |
 | Session memory | None | FTS5 search | None | **3-tier file memory + MemPalace + claude-mem** |
@@ -70,7 +70,7 @@ Every Maxim output passes through a governance chain that no other framework has
 
 This is not a feature you bolt on. It is architecture. Replicating it requires understanding multi-jurisdiction regulatory compliance AND building it into the dispatch sequence at every layer.
 
-### 2. Behavioral Science Depth (79 frameworks, structurally applied)
+### 2. Behavioral Science Depth (86 frameworks, structurally applied)
 
 Most AI systems treat behavioral science as a prompt add-on: "use persuasion principles." Maxim makes it structural.
 
@@ -78,7 +78,7 @@ Every skill domain declares which behavioral frameworks apply. The `behavioral-d
 
 These are not suggestions. They are the dispatch logic. When you run `/mxm-cmo write a launch campaign`, Maxim doesn't just write copy. It applies AIDA structure, COM-B analysis (does the audience have Capability, Opportunity, and Motivation?), EAST framework (is it Easy, Attractive, Social, and Timely?), and Fogg Behavior Model triggers.
 
-79 frameworks. Applied automatically. Not on request. Drift detection runs at every session start via the `proactive-watch` framework.
+86 frameworks. Applied automatically. Not on request. Drift detection runs at every session start via the `proactive-watch` framework.
 
 ### 3. The 5-Layer Dispatch Sequence (deterministic, not hallucinated)
 
@@ -195,7 +195,7 @@ If you are managing a portfolio of projects across multiple verticals with compl
 ### With Maxim
 - Every session resumes with full context. decisions, preferences, skill gaps, operator profile
 - Compliance is automatic. CSO auto-loop, jurisdiction-specific pre-enforcement
-- 78 behavioral frameworks applied structurally, not on request
+- 86 behavioral frameworks applied structurally, not on request
 - Portfolio-wide awareness across tasks, metrics, and synergies for 22 projects
 - 90+ specialist agents (100% Grade A DNA) with governed handoff chains and bilateral Collaboration Matrix
 - One `git pull` updates everything. zero drift, zero maintenance (Proactive Watch catches drift at session start)
@@ -213,7 +213,7 @@ Maxim gives you all of them. governed, tireless, and improving with every sessio
 /plugin install maxim@anthropic-official
 ```
 
-One command installs the full framework. 91+ agents, 52 skill domains, 50 slash commands, 9 MCP servers, 95 tools, 16 executable hooks, 78 behavioral frameworks. Free tier fully functional on install.
+One command installs the full framework. 91+ agents, 52 skill domains, 50 slash commands, 9 MCP servers, 95 tools, 16 executable hooks, 86 behavioral frameworks. Free tier fully functional on install.
 
 ```
 /plugin marketplace add https://github.com/DrNabeelKhan/maxim
@@ -229,7 +229,7 @@ For source-level integration or non-Claude-Code IDE work, see [documents/guides/
 
 **Maxim v1.3.8.4:**
 
-91 agents (100% Grade A DNA · 24 dispatchable + 67 specialist catalog via mxm-catalog). 52 skill domains. 50 commands. 9 MCP servers (95 tools). 78 frameworks. 16 executable hooks. 13 Proactive Watch drift classes. 22 ADRs ratified (18 public + 4 confidential). 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
+91 agents (100% Grade A DNA · 24 dispatchable + 67 specialist catalog via mxm-catalog). 52 skill domains. 50 commands. 9 MCP servers (95 tools). 86 frameworks. 16 executable hooks. 13 Proactive Watch drift classes. 22 ADRs ratified (18 public + 4 confidential). 5 canonical ledgers. Voice-driven. RAG-backed. Usage-aware. Drift-aware. Plugin-distributed.
 
 **License:** BSL 1.1 core with 4-year Apache 2.0 conversion per ADR-005. Commercial packs licensed separately via LemonSqueezy.
 
