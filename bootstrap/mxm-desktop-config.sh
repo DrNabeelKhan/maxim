@@ -97,13 +97,18 @@ else
   echo '{"mcpServers":{}}' > "$CONFIG_FILE"
 fi
 
-# ─── Build the 8 MCP entries ──────────────────────────────────────────────────
-build_mcp_entry() {
-  local name=$1
-  cat <<EOF
-{"command":"node","args":["$WRAPPER","$PLUGIN_ROOT/mcp/$name/server.js"],"env":{}}
-EOF
-}
+# ─── Install the stable Desktop launcher (BUG-015 durable fix) ────────────────
+# A version-independent launcher at a fixed user path resolves the LATEST
+# installed version at spawn time, so native `claude plugin update` never
+# orphans this config again (no version dir in the server paths below).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LAUNCHER_SRC="$SCRIPT_DIR/mxm-desktop-launcher.mjs"
+[[ -f "$LAUNCHER_SRC" ]] || fail "mxm-desktop-launcher.mjs not found next to this script ($LAUNCHER_SRC)."
+LAUNCHER_DIR="$HOME/.claude/.mxm"
+LAUNCHER_PATH="$LAUNCHER_DIR/desktop-launcher.mjs"
+mkdir -p "$LAUNCHER_DIR"
+cp "$LAUNCHER_SRC" "$LAUNCHER_PATH"
+ok "Stable launcher installed -> $LAUNCHER_PATH"
 
 # ─── Merge with existing config using node ───────────────────────────────────
 if ! command -v node >/dev/null 2>&1; then
@@ -112,9 +117,9 @@ fi
 
 info "Merging 9 Maxim MCP entries into mcpServers (preserving existing entries)..."
 
-node - "$CONFIG_FILE" "$WRAPPER" "$PLUGIN_ROOT" <<'NODESCRIPT'
+node - "$CONFIG_FILE" "$LAUNCHER_PATH" <<'NODESCRIPT'
 const fs = require('fs');
-const [, , configFile, wrapper, pluginRoot] = process.argv;
+const [, , configFile, launcher] = process.argv;
 const config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
 config.mcpServers = config.mcpServers || {};
 
@@ -123,13 +128,13 @@ const servers = ['mxm-portfolio','mxm-context','mxm-catalog','mxm-compliance','m
 for (const name of servers) {
   config.mcpServers[name] = {
     command: 'node',
-    args: [wrapper, `${pluginRoot}/mcp/${name}/server.js`],
+    args: [launcher, name],
     env: {}
   };
 }
 
 fs.writeFileSync(configFile, JSON.stringify(config, null, 2) + '\n');
-console.log(`Wrote ${Object.keys(config.mcpServers).length} mcpServers entries total (8 Maxim + ${Object.keys(config.mcpServers).length - 8} preserved).`);
+console.log(`Wrote ${Object.keys(config.mcpServers).length} mcpServers entries total (9 Maxim + ${Object.keys(config.mcpServers).length - 9} preserved).`);
 NODESCRIPT
 
 # ─── Validate the result ──────────────────────────────────────────────────────

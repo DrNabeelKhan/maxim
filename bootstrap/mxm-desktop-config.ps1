@@ -90,7 +90,20 @@ if (-not $Config.mcpServers) {
     $Config.mcpServers = @{}
 }
 
-# ─── Build + merge 8 MCP entries ──────────────────────────────────────────────
+# ─── Install the stable Desktop launcher (BUG-015 durable fix) ────────────────
+# A version-independent launcher at a fixed user path resolves the LATEST
+# installed version at spawn time, so native `claude plugin update` never
+# orphans this config again (no version dir in the paths below).
+$LauncherDir  = Join-Path $HOME ".claude/.mxm"
+$LauncherPath = Join-Path $LauncherDir "desktop-launcher.mjs"
+$LauncherSrc  = Join-Path $PSScriptRoot "mxm-desktop-launcher.mjs"
+if (-not (Test-Path $LauncherSrc)) { Write-Fail "mxm-desktop-launcher.mjs not found next to this script ($LauncherSrc)." }
+New-Item -ItemType Directory -Force $LauncherDir | Out-Null
+Copy-Item $LauncherSrc $LauncherPath -Force
+$LauncherJson = $LauncherPath.Replace('\', '/')
+Write-Ok "Stable launcher installed -> $LauncherPath"
+
+# ─── Build + merge 9 MCP entries (version-independent, via the launcher) ──────
 $MaximServers = @(
     'mxm-portfolio', 'mxm-context', 'mxm-catalog', 'mxm-compliance',
     'mxm-behavioral', 'mxm-memory', 'mxm-voice', 'mxm-commands',
@@ -102,7 +115,7 @@ Write-Info "Merging 9 Maxim MCP entries into mcpServers (preserving existing ent
 foreach ($name in $MaximServers) {
     $Config.mcpServers[$name] = @{
         command = 'node'
-        args    = @($Wrapper, "$PluginRoot/mcp/$name/server.js")
+        args    = @($LauncherJson, $name)
         env     = @{}
     }
 }
