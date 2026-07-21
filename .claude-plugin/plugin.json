@@ -1,6 +1,6 @@
 {
   "name": "maxim",
-  "version": "1.3.9",
+  "version": "1.3.9.1",
   "description": "The behavioral intelligence layer for Claude. 91 specialist agents across 7 executive offices, 52 skill domains, 50 slash commands, 86 peer-reviewed behavioral frameworks, 14 compliance frameworks, drift detection, license-gated MCP middleware, 9 MCPs (95 tools) including NotebookLM research synthesis. Start at $19.99/mo with Pro. 90-day Trial of all 14 packs default at install. BSL 1.1 licensed.",
   "author": {
     "name": "Dr. Nabeel Khan",

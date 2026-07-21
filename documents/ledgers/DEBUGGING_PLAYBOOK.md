@@ -316,5 +316,23 @@ Applied to all **14 source packs** (`packs/pack-l{1,2,3}-*`, uncommitted) **and*
 **Cross-links.** BUG-013 (corrected) · `mcp/README.md` § Troubleshooting · PATTERN-03 (heavy-MCP cold-spawn tax).
 
 ---
+
+## §10 — 2026-07-10 — Desktop MCPs "failed": a TRUNCATED node_modules that passed the presence check + a config hard-coded to an orphaned version dir (BUG-014 + BUG-015)
+
+**Symptom.** After updating to v1.3.9, Claude Desktop → Developer → Local MCP servers showed **every `mxm-*` server "failed / Server disconnected."** Two distinct bugs stacked.
+
+**Layer 1 — dead path (BUG-015).** The config's server args pointed to `…/maxim/**1.1.0**/mcp/…` — a dir native `claude plugin update` had emptied (updates create *versioned* dirs `1.3.7 / 1.3.8.4 / 1.3.9`; the old cosmetic `1.1.0` dir the Desktop config was pinned to no longer had files). `claude_desktop_config.json` is not managed by plugin updates, so a hard-coded version orphans on every update.
+
+**Layer 2 — truncated deps (BUG-014).** Even after repointing to `1.3.9`, a manual smoke test (`node <spawn-with-deps> <server.js>` with a real `initialize` piped) surfaced `ERR_MODULE_NOT_FOUND: '…/@modelcontextprotocol/sdk/server/mcp.js'`. The `node_modules` **dir existed** but was **incomplete** (missing `zod` entirely; the SDK present without `server/mcp.js`). `spawn-with-deps` checked only `existsSync(node_modules)`, so it skipped the rebuild — and `findDonorNodeModules` had **copied the broken tree forward across every version dir** via `cpSync` without validating it. Deleting the broken `node_modules` made the wrapper repopulate it correctly.
+
+**Lesson — presence ≠ completeness; and a stable path beats a re-pointed one.** (1) A dependency check must verify more than "the dir exists" — a whole dep can be missing (`zod`) while the dir is present — and a donor must be validated before it is copied, or one bad install propagates forever. (2) Any config outside the updater's control (Desktop MCP config) must point at a **version-independent** path that resolves the latest at runtime, not a version dir that updates orphan. Same "restart ≠ update ≠ **configured**" skew family as §6 / BUG-013.
+
+**Second lesson — "completeness" is dependency-presence, NOT entry-file resolution (the pre-release audit's catch).** The first fix attempt verified each dep's `package.json` *entry file* (the `.` export target). The **pre-release audit reproduced it false-positiving every valid install**: the real `@modelcontextprotocol/sdk@1.29.0` declares `"." → ./dist/esm/index.js` but **doesn't publish that file** (consumers import subpaths like `./server/mcp.js`), so an entry-file check flags a working tree "incomplete" → deletes + reinstalls it **every spawn** → permanent Desktop timeout + a regressed donor-reuse. The corrected check is **dependency-presence** (a readable `package.json` per declared dep): it never false-positives, and it catches the operator's real failure (a whole missing `zod`). It also corrected my own bad diagnostic — the "SDK `server/mcp.js` missing" I first cited resolves via `exports` into `dist/`, not a root path, so a literal `existsSync('…/server/mcp.js')` is meaningless. *(Where the audit found what the tests missed: no fixture modeled a shipped-package with a non-shipped `.` target.)*
+
+**Fix (v1.3.9.1).** `spawn-with-deps.mjs` gains `depsComplete()`/`depInstalled()` (every declared dependency has a readable `package.json`) wired into the gate, install loop (rm-incomplete-then-rebuild), donor selection (skip broken donors), and post-copy/post-install validation — `spawn-with-deps.test.mjs` (9/9, incl. the audit's false-positive shape as a regression test). New `bootstrap/mxm-desktop-launcher.mjs` resolves the latest version at spawn from a stable user path; `mxm-desktop-config.{sh,ps1}` install it and write version-free entries. Operator's live Desktop config migrated to the launcher.
+
+**Cross-links.** BUG-014 · BUG-015 · §6 (donor-reuse) · Fable P1-3 (MCP attach reliability — this is the "presence-not-completeness" gap it named).
+
+---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
 Licensed under Business Source License 1.1 (converts to Apache 2.0 after 4 years per ADR-005).

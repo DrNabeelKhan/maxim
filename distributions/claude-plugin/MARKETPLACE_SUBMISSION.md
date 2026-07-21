@@ -5,8 +5,8 @@
 
 **Target:** Anthropic Official Claude Code Plugin Marketplace
 **Plugin namespace:** `maxim`
-**Submission version:** 1.3.9
-**Tag:** `v1.3.9` (commit SHA recorded in git tag annotation at tag-creation time)
+**Submission version:** 1.3.9.1
+**Tag:** `v1.3.9.1` (commit SHA recorded in git tag annotation at tag-creation time)
 **Submitter:** Dr. Nabeel Khan / iSystematic
 **Contact:** https://maxim.isystematic.com/contact
 

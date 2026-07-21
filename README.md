@@ -2,7 +2,7 @@
 
 > The structural moat behind every Claude output. 91 specialist agents · 86 peer-reviewed frameworks (behavioral core + security · compliance · enterprise-architecture · engineering) · 14 compliance frameworks · 9 MCPs · 95 tools. Framework citation on every output. Drift caught before you ship. Voice locked across every surface.
 
-![Version](https://img.shields.io/badge/version-1.3.9-blue)
+![Version](https://img.shields.io/badge/version-1.3.9.1-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-86-orange)
 ![Skills](https://img.shields.io/badge/skill_domains-52-purple)

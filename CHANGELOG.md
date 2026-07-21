@@ -8,6 +8,35 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.9.1 — 2026-07-21 — MCP reliability: complete-not-just-present dep check + version-independent Desktop launcher
+
+Patch. Fixes two stacked bugs that took **every `mxm-*` MCP server down in Claude Desktop** on the operator's machine after a plugin update (BUG-014 + BUG-015). No capability-count change (91 · 52 · 50 · 9/95 · 16 · 22).
+
+### Why
+
+Updating to v1.3.9 left Claude Desktop showing all `mxm-*` servers "failed / Server disconnected." Diagnosis on the live machine found **two independent faults stacked** — a dependency check that trusted presence over completeness, and a Desktop config pinned to a version dir that native updates orphan. Both are the "restart ≠ update ≠ **configured**" skew family this project keeps meeting (cf. BUG-013, §6). This is exactly the MCP-attach-reliability gap Fable's audit named (P1-3).
+
+### Fixed — `spawn-with-deps` now checks node_modules is COMPLETE, not just present (BUG-014)
+
+`mcp/_shared/spawn-with-deps.mjs` checked only that each server's `node_modules/` **directory exists**. A tree with a **whole dependency dir missing** (`zod` absent, after a partial/interrupted install or a truncated donor-copy) passed the check, the rebuild was skipped, and the server crashed on import with `ERR_MODULE_NOT_FOUND`. Worse, `findDonorNodeModules` **copied the broken tree forward across every version dir** without validating it.
+
+- New `depsComplete()` / `depInstalled()` — every declared dependency must be **installed** (a readable `package.json`). This catches a whole dep dir missing (the operator's `zod`) and every interrupted install **without false-positiving** a package whose `.` export targets a file it doesn't publish (the real MCP SDK's `.` → `./dist/esm/index.js`; consumers import subpaths) — a shape the pre-release audit caught the first attempt (an entry-file check) getting wrong. Pure, exported, unit-tested.
+- Wired into all four decision points: the fast-path gate; the install loop (**delete an incomplete tree, then rebuild**); **donor selection** (skip a donor that isn't complete — stops broken-donor propagation); and **post-copy + post-install validation** (a "green" npm exit that's still incomplete counts as failed, so the sentinel isn't written).
+- **`mcp/_shared/spawn-with-deps.test.mjs` (NEW) — 9 tests, 9/9 pass** (`node --test`), covering the missing-dep and truncated-entry shapes.
+
+### Fixed — version-independent Desktop launcher so updates never orphan the config (BUG-015)
+
+`claude_desktop_config.json` isn't managed by `claude plugin update`; the desktop-config helper wrote each server path with an embedded **version dir**, so every native update orphaned it (the operator's config was pinned to an emptied `…/maxim/1.1.0/` dir).
+
+- **`bootstrap/mxm-desktop-launcher.mjs` (NEW)** — a version-independent launcher installed at a **stable user path** (`~/.claude/.mxm/desktop-launcher.mjs`) that resolves the **latest installed version at spawn time** (skipping orphaned/empty dirs) and delegates to its `spawn-with-deps`. Composes with the BUG-014 fix.
+- `bootstrap/mxm-desktop-config.{sh,ps1}` now install the launcher and write each entry as `["<launcher>", "<server-name>"]` — **no version in the path**. Future updates are picked up automatically; the Desktop config never needs re-pointing again.
+
+### Operator actions
+
+`claude plugin update maxim@maxim-packs` to load the completeness-checked wrapper (the operator's live Desktop was already mitigated: node_modules rebuilt + config migrated to the launcher on 2026-07-10). Full detail in `DEBUGGING_PLAYBOOK` §10 + BUG-014 / BUG-015.
+
+---
+
 ## v1.3.9 — 2026-07-09 — All-in framework reconciliation (86) + Fable-audit triage: router pre-filters, honest cross-surface claims, the gate that was never installed
 
 Minor. Ships the **78 → 86 all-in framework reconciliation** and the first execution pass on the **Fable architecture audit** (2026-07-06). Counts move: **frameworks 78 → 86** (all-in: behavioral core + security/compliance + enterprise-architecture + engineering + Maxim-native). All other counts unchanged (91 agents · 52 skills · 50 commands · 9 MCPs/95 tools · 16 hooks · 22 ADRs/18 public). Fable did audit + architecture only; execution is here.
