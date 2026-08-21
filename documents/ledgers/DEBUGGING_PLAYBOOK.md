@@ -336,3 +336,43 @@ Applied to all **14 source packs** (`packs/pack-l{1,2,3}-*`, uncommitted) **and*
 ---
 Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.
 Licensed under Business Source License 1.1 (converts to Apache 2.0 after 4 years per ADR-005).
+
+---
+
+## §11 — 2026-08-20 — A drift gate that reports CLEAN, and a canonical tag that deindexes 23 pages
+
+**Two failures, one lesson: the check that passes is not the check that matters.**
+
+### What broke
+
+An SEO/GEO audit of maxim.isystematic.com, done by **parsing served HTML** rather than reading source or trusting a summarizing fetch, surfaced two defects that every prior review had missed.
+
+1. **23 of 24 pages served `<link rel="canonical" href="https://maxim.isystematic.com">`.** Every framework, comparison, docs, pricing and legal page declared the *home page* as its canonical, instructing Google to consolidate them all into `/`. Root cause: `app/layout.tsx` set `alternates: { canonical: "/" }` in the **root layout**, and none of the 22 page files overrode it. Next.js resolves that against `metadataBase` and emits it on every descendant route. One line, sitewide, invisible in review because the home page (the page anyone spot-checks) was correct.
+2. **`bootstrap/sync-counts.sh --check` reported `landing-page: 0 of 49 surface files modified`** while the live site served `softwareVersion: "1.1.1"` against a shipped **1.3.9.1**, plus `90 agents`, `78 frameworks`, `47 tools`. See BUG-016 for the four coverage gaps.
+
+### Why it stayed hidden
+
+- **The correct sample was the unrepresentative one.** The home page canonical was right. Checking "does the site have canonicals" returns yes. Checking *each page against its own URL* returns 23 failures. Aggregate questions hide per-item defects.
+- **A gate reporting CLEAN is trusted more than no gate.** `sync-counts` existed precisely to stop stale counts shipping. Because it printed clean, nobody looked, and the stale values reached the public JSON-LD that answer engines quote.
+- **Source review could not see it.** Both defects only exist in the *served artifact*. The canonical is synthesised by the framework at render; the count drift was in files the collector never globbed. Reading the repo would never have found either.
+
+### The rule
+
+**Assert against the served artifact, per item, never in aggregate.** A gate that answers "is the site fine?" is worth less than one that answers "is *this URL* fine?" 24 times.
+
+### Second-order lesson: my own checkers produced two false findings in this session
+
+Both were caught before being reported, and they are the reason the rule above is worth writing down.
+
+- A FAQ visibility checker reported `0/8 visible` on **every** page including the home page. A uniform-zero result across a whole corpus is far more likely to be a broken checker than a uniform defect. Re-verified by a second method (strip `<script>` blocks, then grep raw) — the finding held, but only after the second method agreed.
+- A title-length checker reported one title over 60 characters. It was counting `&#x27;` as six characters. Decoded, it passed. **Measure the decoded string, not the transport encoding.**
+- A JSON-LD graph walker reported `Organization` and `WebSite` twice per page. The walker visited `@graph` once explicitly and again via `Object.values()`. The page was correct; the tool was not.
+
+This is DEBUGGING_PLAYBOOK's standing rule restated with fresh evidence: **a check you wrote reporting a failure is a hypothesis.** Three of this session's hypotheses were wrong. The discipline of confirming with an independent method before reporting is what kept them out of the audit.
+
+### Where it landed
+
+- Fixes: landing-page `65bc333` (36 files) — canonicals on 17 static pages + 2 dynamic generators, FAQ cloaking, entity contract, security headers, robots, sitemap, llms.txt
+- **Verified live after deploy: 21/21 assertions pass against production URLs**, not against the local build
+- Tooling gap: **BUG-016, OPEN** — real fix is the v1.4 derived-counts registry
+
