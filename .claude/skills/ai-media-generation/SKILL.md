@@ -1,6 +1,7 @@
 ---
 skill_id: ai-media-generation
 name: AI Media Generation
+description: "AI video and image prompt engineering — video generation, image generation, product video, social media video, cinematic direction, animation, Seedance, Higgsfield, GPT-Image-2. Applies 15 Maxim-authored cinematic styles and the atomic prompt schema."
 version: 1.0.0
 category: ai-media-generation
 office: CMO + CTO

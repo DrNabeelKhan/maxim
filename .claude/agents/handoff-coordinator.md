@@ -1,5 +1,6 @@
 ---
 name: handoff-coordinator
+description: "State machine for cross-office handoffs. Use when one office's work requires input or output from another, to own the transition, log the state, and ensure nothing falls between offices."
 path: agents/MXM/orchestrators/handoff-coordinator.md
 office: orchestrators
 role: cross-office-state-machine

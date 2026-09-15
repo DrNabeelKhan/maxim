@@ -1,6 +1,7 @@
 ---
 skill_id: company-teardown
 name: Company Teardown — model, revenue signals, weak points on a template
+description: "Tear down a company on request — \"do a teardown of\", \"break down this company\", \"analyze this competitor's business\". Fixed-template output: business model, how they make money, positioning, and where they are exposed."
 version: 1.0.0
 category: research
 office: cino

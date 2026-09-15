@@ -1,6 +1,7 @@
 ---
 skill_id: scope-guard
 name: Scope Guard — catch scope creep + draft the boundary reply
+description: "Decide whether a request is scope creep — \"is this in scope\", \"is this scope creep\", \"should I push back on this client request\", \"draft a boundary reply\". Returns in-scope, creep or grey-zone with a suggested reply."
 version: 1.0.0
 category: operational
 office: coo

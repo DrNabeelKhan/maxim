@@ -1,5 +1,6 @@
 ---
 name: cso-office
+description: "Security, compliance, privacy, ethics, risk, incidents and AI safety. Use for threat modeling, vulnerability review, regulatory questions, or anything touching PII, auth, payments or regulated data."
 office: cso
 role: office-dispatcher
 layer: office-agent

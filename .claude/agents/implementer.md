@@ -1,5 +1,6 @@
 ---
 name: implementer
+description: "CTO office execution lead. Use to write, modify or refactor production code with test-first discipline, and to coordinate multi-file implementation work."
 path: agents/MXM/orchestrators/implementer.md
 office: orchestrators
 role: execution-lead

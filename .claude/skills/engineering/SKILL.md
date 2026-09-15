@@ -1,6 +1,7 @@
 ---
 skill_id: engineering
 name: Engineering
+description: "Build and ship software — code, implement, develop, API, backend, frontend, deploy, infrastructure, CI/CD, databases, cloud, mobile, AI/ML. The CTO office's broadest execution domain, applied with TDD discipline."
 version: 1.0.0
 category: engineering
 office: CTO

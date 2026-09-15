@@ -1,6 +1,7 @@
 ---
 skill_id: product-development-research
 name: Product Development Research
+description: "Research before building — market research, user interviews, competitive landscape, concept validation, discovery, opportunity sizing. Feeds the product and innovation offices."
 version: 1.0.0
 category: product-development-research
 office: CPO + CINO

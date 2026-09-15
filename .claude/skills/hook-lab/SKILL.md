@@ -1,6 +1,7 @@
 ---
 skill_id: hook-lab
 name: Hook Lab — 10 scroll-stopping opening lines for any topic
+description: "Generate opening hooks for content — \"give me hooks for\", \"write hooks for this topic\", \"10 opening lines for\". Returns 10 distinct hooks across different psychological angles using the named 2-Second Hook framework."
 version: 1.0.0
 category: content
 office: cmo

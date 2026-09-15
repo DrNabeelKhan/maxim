@@ -1,6 +1,7 @@
 ---
 skill_id: proposal-writer
 name: Proposal Writer — brief → proposal with scope, price, timeline
+description: "Draft a client proposal — \"write a proposal for\", \"draft a proposal\", \"turn this brief into a proposal\". Produces executive summary, understanding of their problem, approach, scope, and pricing."
 version: 1.0.0
 category: operational
 office: cmo

@@ -1,5 +1,6 @@
 ---
 name: reviewer
+description: "Quality gate for implementation work. Use to review code, a pull request, a document or a skill against the applicable framework, with findings cited rather than asserted."
 path: agents/MXM/orchestrators/reviewer.md
 office: orchestrators
 role: quality-reviewer

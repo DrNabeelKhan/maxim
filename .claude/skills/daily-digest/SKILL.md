@@ -1,6 +1,7 @@
 ---
 skill_id: daily-digest
 name: Daily Digest — one filtered update on your niche
+description: "Daily briefing on a topic — \"give me today's digest on\", \"what's new in\", \"daily digest for\". Pulls from web or a connected news connector, then filters and ranks to only what matters."
 version: 1.0.0
 category: research
 office: cino

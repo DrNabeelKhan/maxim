@@ -1,6 +1,7 @@
 ---
 skill_id: design
 name: Design
+description: "UX and interaction design — UI, interface, wireframe, mockup, prototype, user experience, user journey, usability, accessibility audit, onboarding flow. The \"how users think and move through it\" domain."
 version: 1.0.0
 category: design
 office: CPO

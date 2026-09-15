@@ -1,6 +1,7 @@
 ---
 skill_id: wiki-explore
 name: Wiki Explore
+description: "Review and verify unverified wiki pages — \"review unverified pages\", \"verify wiki content\", verification pass, after a major ingest cycle, before content release. The gate that turns AI-generated knowledge into trusted knowledge."
 version: 1.0.0
 category: knowledge-management
 type: human-in-loop

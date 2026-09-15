@@ -1,5 +1,6 @@
 ---
 name: ui-ux-designer
+description: "CPO design orchestrator. Use for interface and experience design work that spans multiple design domains at once: UI styling, design systems, brand, accessibility and interaction design."
 path: agents/MXM/cpo/ui-ux-designer.md
 office: cpo
 role: design-orchestrator

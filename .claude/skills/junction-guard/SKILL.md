@@ -1,6 +1,7 @@
 ---
 skill_id: junction-guard
 name: Junction Guard
+description: "Block writes through filesystem junctions and symlinks — file write through .mxm-system or .claude junction, git commit through a junction, delete through a junction. Enforces the junction read-only rule so the real repo stays the source of truth."
 version: 1.0.0
 category: safety
 type: enforcement

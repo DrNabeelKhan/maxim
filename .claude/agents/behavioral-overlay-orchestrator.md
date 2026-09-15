@@ -1,5 +1,6 @@
 ---
 name: behavioral-overlay-orchestrator
+description: "Enforces ADR-007: every shipped output must name the behavioral framework justifying it, with author and year. Use to verify or add framework citation to work that is about to ship."
 path: agents/MXM/orchestrators/behavioral-overlay-orchestrator.md
 office: orchestrators
 role: framework-citation-enforcer

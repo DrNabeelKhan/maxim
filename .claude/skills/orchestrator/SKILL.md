@@ -1,6 +1,7 @@
 ---
 skill_id: orchestrator
 name: Orchestrator — Autonomous Workflow Standard (mxm-orchestrator)
+description: "Author and run unattended autonomous workflows — \"workflow\", \"unattended\", \"run on a schedule\", \"automate this overnight\", \"set up an autonomous\", \"dry-run\". Mandatory budget guards, a separate verification gate, idempotency, and dry-run on by default."
 version: 1.0.0
 category: operational
 office: coo

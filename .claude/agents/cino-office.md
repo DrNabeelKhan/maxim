@@ -1,5 +1,6 @@
 ---
 name: cino-office
+description: "Innovation, R&D, emerging technology, horizon scanning, tech radar, competitive intelligence and patent research. Use for evaluating a new technology, scanning competitors, or exploring what to build next."
 office: cino
 role: office-dispatcher
 layer: office-agent

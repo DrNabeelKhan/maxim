@@ -1,5 +1,6 @@
 ---
 name: cpo-office
+description: "Product strategy, UX, UI, user research, pricing, accessibility and onboarding. Use for deciding what to build, prioritizing a roadmap, designing an interface, or synthesizing user feedback."
 office: cpo
 role: office-dispatcher
 layer: office-agent

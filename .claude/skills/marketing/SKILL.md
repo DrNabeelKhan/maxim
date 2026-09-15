@@ -1,6 +1,7 @@
 ---
 skill_id: marketing
 name: Marketing & Growth
+description: "Growth marketing and go-to-market — campaign, GTM, brand awareness, conversion, growth hacking, user acquisition, funnel, social media strategy. The CMO office's full-funnel growth domain."
 version: 1.0.0
 category: marketing
 office: CMO

@@ -1,6 +1,7 @@
 ---
 skill_id: wiki-lint
 name: Wiki Lint
+description: "Audit wiki health — \"wiki health check\", \"audit the wiki\", \"find contradictions\", weekly pass, before a major content release. Catches contradictions, stale pages, orphans, duplicate concepts and broken links."
 version: 1.0.0
 category: knowledge-management
 type: audit

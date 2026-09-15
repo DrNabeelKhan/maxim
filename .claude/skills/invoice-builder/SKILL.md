@@ -1,6 +1,7 @@
 ---
 skill_id: invoice-builder
 name: Invoice Builder — itemized invoice from one line of plain text
+description: "Build a client invoice — \"make an invoice for\", \"create an invoice\", \"bill this client for\". Parses plain text into line items, computes subtotal, tax and total with the math sanity-checked."
 version: 1.0.0
 category: operational
 office: coo

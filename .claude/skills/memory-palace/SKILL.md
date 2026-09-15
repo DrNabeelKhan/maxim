@@ -1,3 +1,22 @@
+---
+skill_id: memory-palace
+name: Memory Palace
+description: "Cross-session memory — store, recall and query project knowledge across sessions. Detects whatever persistent memory is available (MemPalace, claude-mem, or file-only fallback) and uses the best one present."
+version: 1.1.0
+category: memory-palace
+office: All
+lead_agent: session-memory (built-in)
+triggers:
+  - remember this
+  - what did we decide
+  - recall
+  - cross-session memory
+  - memory palace
+collaborates_with:
+  - session-memory
+  - operator-profile
+---
+
 # MemPalace Integration — Maxim Memory Intelligence
 
 > Domain: memory-palace | Office: All (cross-office, always active)

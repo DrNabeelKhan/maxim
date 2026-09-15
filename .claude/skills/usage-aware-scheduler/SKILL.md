@@ -1,6 +1,7 @@
 ---
 skill_id: usage-aware-scheduler
 name: Usage-Aware Scheduler
+description: "Gate scheduled work on Claude usage limits — /mxm-tasks schedule, run-cycle, scheduled task fire time, background batch dispatch. Checks 5-hour and 7-day usage before firing and sleeps until reset when over threshold."
 version: 1.0.0
 category: automation
 type: scheduler

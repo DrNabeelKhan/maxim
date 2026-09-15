@@ -1,5 +1,6 @@
 ---
 name: cto-office
+description: "Engineering, infrastructure, APIs, data, AI/ML, DevOps, cloud and security architecture. Use for building, debugging, refactoring, deploying, reviewing code, or any technical implementation decision."
 office: cto
 role: office-dispatcher
 layer: office-agent

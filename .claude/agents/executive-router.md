@@ -1,5 +1,6 @@
 ---
 name: executive-router
+description: "Entry point when the right office is unclear. Classifies intent and routes to the correct executive office. Use when a task spans domains or you cannot tell whether it belongs to engineering, marketing, security, product, operations, strategy or innovation."
 path: agents/MXM/executive-router.md
 office: orchestrators
 role: meta-orchestrator

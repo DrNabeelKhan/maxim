@@ -1,6 +1,7 @@
 ---
 skill_id: design-resources
 name: Design Resources
+description: "Curated design reference library for Maxim design work — typography scales, color systems, component patterns, spacing and layout references. Consulted by the other design skills rather than invoked directly."
 version: 1.0.0
 category: design-resources
 office: CPO

@@ -1,6 +1,7 @@
 ---
 skill_id: session-memory
 name: Session Memory
+description: "Write and restore session state — session start, session end, memory write, handoff, continuation. Enforces what gets persisted so the next session resumes instead of restarting."
 version: 1.0.0
 category: session-memory
 office: All

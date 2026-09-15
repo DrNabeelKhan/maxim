@@ -1,6 +1,7 @@
 ---
 skill_id: ceo-automation
 name: CEO Automation
+description: "Founder and CEO automation — morning standup, overnight cycle, burn rate, runway, pipeline review, investor and fundraising prep, executive summary, daily digest. Operates on the .mxm-executive-summary context."
 version: 1.0.0
 category: ceo-automation
 office: CEO

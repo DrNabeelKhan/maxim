@@ -1,5 +1,6 @@
 ---
 name: compliance-orchestrator
+description: "Enforces the CSO auto-loop. Use when output touches regulated data, a jurisdictional framework, or compliance-relevant subject matter, to ensure the security analyst is looped in before it ships."
 path: agents/MXM/orchestrators/compliance-orchestrator.md
 office: orchestrators
 role: cso-auto-loop-enforcer

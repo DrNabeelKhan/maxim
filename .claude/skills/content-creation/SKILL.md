@@ -1,6 +1,7 @@
 ---
 skill_id: content-creation
 name: Content Creation
+description: "Write long-form and channel content — articles, blog posts, documentation, newsletters, whitepapers, books, copywriting. The CMO office's primary execution skill for anything written."
 version: 1.0.0
 category: content-creation
 office: CMO

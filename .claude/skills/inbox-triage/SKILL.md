@@ -1,6 +1,7 @@
 ---
 skill_id: inbox-triage
 name: Inbox Triage — sort your inbox into reply-now / later / ignore
+description: "Triage an email inbox — \"triage my inbox\", \"sort my inbox\", \"what emails need a reply\", \"clear my inbox\". Governs the Gmail or Workspace connector you already have rather than shipping its own integration."
 version: 1.0.0
 category: operational
 office: coo

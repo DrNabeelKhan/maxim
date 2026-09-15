@@ -1,6 +1,7 @@
 ---
 skill_id: compliance
 name: Compliance
+description: "Regulatory review across 14 frameworks — compliance review, privacy impact assessment, regulatory gap analysis, data subject rights, consent mechanisms, audit trail, AI ethics review, data flow mapping. Covers GDPR, PIPEDA, HIPAA, PCI-DSS, SOC2, UAE-PDPL, EU AI Act and more."
 version: 1.0.0
 category: compliance
 frameworks:

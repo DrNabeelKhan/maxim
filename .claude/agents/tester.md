@@ -1,5 +1,6 @@
 ---
 name: tester
+description: "QA orchestrator. Use to plan or write tests, classify test type, assess coverage, or route testing work to the right specialist. Applies TDD and FIRST principles."
 path: agents/MXM/orchestrators/tester.md
 office: orchestrators
 role: qa-orchestrator

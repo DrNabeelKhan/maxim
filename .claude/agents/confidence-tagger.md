@@ -1,5 +1,6 @@
 ---
 name: confidence-tagger
+description: "Enforces ADR-010: every shipped output must carry a confidence tag with the four-line Basis, Gap, Mitigation, Next rubric. Use to verify or apply confidence tagging before work ships."
 path: agents/MXM/orchestrators/confidence-tagger.md
 office: orchestrators
 role: confidence-tag-enforcer

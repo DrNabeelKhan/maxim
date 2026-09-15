@@ -1,6 +1,7 @@
 ---
 skill_id: search-visibility
 name: Search Visibility
+description: "SEO, AEO and GEO — search, keywords, ranking, visibility, answer engine optimization, generative engine optimization, voice search, organic traffic, featured snippets, technical search audit, E-E-A-T, structured data."
 version: 1.0.0
 category: search-visibility
 office: CMO

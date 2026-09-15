@@ -1,5 +1,6 @@
 ---
 name: coo-office
+description: "Operations, delivery, sprints, support, SRE, experiments and workflow optimization. Use for planning work, tracking delivery, running a sprint, or coordinating multi-step execution."
 office: coo
 role: office-dispatcher
 layer: office-agent

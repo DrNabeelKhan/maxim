@@ -1,6 +1,7 @@
 ---
 skill_id: enterprise-architecture
 name: Enterprise Architecture
+description: "Enterprise and solution architecture — system design, scalability, cloud strategy, digital transformation, data architecture, governance, technology strategy. Practitioner-level TOGAF, C4, ArchiMate, Zachman, Wardley mapping and ADR authoring."
 version: 1.0.0
 category: enterprise-architecture
 office: CEO

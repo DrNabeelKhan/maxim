@@ -1,5 +1,6 @@
 ---
 name: release-manager
+description: "Release gate. Use when cutting a version, tagging, or deciding whether work is ready to ship. Reads the full progress ledger before any release decision."
 path: agents/MXM/orchestrators/release-manager.md
 office: orchestrators
 role: release-orchestrator

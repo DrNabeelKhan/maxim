@@ -1,6 +1,7 @@
 ---
 skill_id: project-management
 name: Project Management
+description: "Plan and track delivery — plan, sprint, project, timeline, milestone, task breakdown, backlog, Kanban, RACI, changelog governance. The COO office's workflow coordination domain."
 version: 1.0.0
 category: project-management
 office: COO

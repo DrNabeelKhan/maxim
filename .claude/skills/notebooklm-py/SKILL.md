@@ -1,6 +1,7 @@
 ---
 skill_id: notebooklm-py
 name: NotebookLM Integration
+description: "Research synthesis from sources — \"summarize these URLs or papers\", \"research this topic with these sources\", \"create a podcast about\", \"audio overview\", \"mind map\", \"quiz from these sources\", \"flashcards\", \"deep research on\". Wraps Google NotebookLM via notebooklm-py."
 version: 1.0.0
 category: research-synthesis
 type: external-tool-wrapper

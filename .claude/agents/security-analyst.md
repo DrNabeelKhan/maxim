@@ -1,5 +1,6 @@
 ---
 name: security-analyst
+description: "CSO office lead. Use for security review, threat modeling, compliance assessment and incident response. Auto-loops on any task touching PII, authentication, payments, health data or regulated content."
 path: agents/MXM/cso/security-analyst.md
 office: cso
 role: cso-lead

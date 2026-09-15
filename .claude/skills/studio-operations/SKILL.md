@@ -1,6 +1,7 @@
 ---
 skill_id: studio-operations
 name: Studio Operations & Agency Ops
+description: "Agency and studio operations — operations, analytics, finance, infrastructure, support, reporting, dashboards, KPIs, budget. Multi-office domain where CTO, CEO and CSO agents converge."
 version: 1.0.0
 category: studio-operations
 office: COO

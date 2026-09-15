@@ -1,5 +1,6 @@
 ---
 name: voltagent-bridge
+description: "Routes to external VoltAgent technical specialists when no native Maxim agent covers the domain. Output is flagged Maxim-UNENHANCED because the behavioral layer does not apply."
 path: community-packs/voltagent-subagents/
 office: cto
 role: voltagent-router

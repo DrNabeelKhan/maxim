@@ -1,6 +1,7 @@
 ---
 skill_id: lead-qualifier
 name: Lead Qualifier — score an inbound → call or skip
+description: "Qualify an inbound lead — \"is this lead worth my time\", \"qualify this lead\", \"should I take this client\". Applies MEDDIC and SPIN scoring and returns a verdict with reasoning."
 version: 1.0.0
 category: operational
 office: cmo

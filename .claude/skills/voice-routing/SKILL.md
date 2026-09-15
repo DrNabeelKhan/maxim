@@ -1,6 +1,7 @@
 ---
 skill_id: voice-routing
 name: Voice Routing
+description: "Pick the right writing voice for a task — which voice playbook applies, nk-writer invocation, brand-writer invocation, /mxm-voice-route. Lookup wrapper over the operator's voice selection authority."
 version: 1.0.0
 category: content
 type: lookup

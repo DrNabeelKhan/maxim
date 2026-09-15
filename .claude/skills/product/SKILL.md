@@ -1,6 +1,7 @@
 ---
 skill_id: product
 name: Product Strategy
+description: "Decide what to build — product strategy, roadmap, feature prioritization, product-market fit, pricing model, backlog, sprint planning, product vision, RICE, JTBD, OKRs. Distinct from designing or building it."
 version: 1.0.0
 category: product
 office: CPO

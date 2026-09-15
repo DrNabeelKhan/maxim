@@ -1,6 +1,7 @@
 ---
 skill_id: testing
 name: Testing & Quality Assurance
+description: "Test and assure quality — test plan, QA, coverage, unit test, integration test, end-to-end, performance, benchmark, regression. Applies TDD and FIRST principles for the CTO office's tester."
 version: 1.0.0
 category: testing
 office: CTO

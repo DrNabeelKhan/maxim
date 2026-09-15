@@ -1,6 +1,7 @@
 ---
 skill_id: operator-profile
 name: Operator Profile
+description: "Learn and apply how the operator works — operator preference, working style, communication preference, \"remember my preference\", \"I prefer\", \"don't do that again\", \"that's not how I work\". Read at session start, updated at session end."
 version: 1.0.0
 category: operator-profile
 office: All (cross-office)

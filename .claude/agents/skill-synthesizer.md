@@ -1,5 +1,6 @@
 ---
 name: skill-synthesizer
+description: "Generates reusable SKILL.md files from completed task trajectories. Use after solving something non-trivial that is worth making repeatable."
 path: agents/MXM/cino/skill-synthesizer.md
 office: cino
 role: skill-synthesis

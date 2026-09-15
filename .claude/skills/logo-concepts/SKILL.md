@@ -1,6 +1,7 @@
 ---
 skill_id: logo-concepts
 name: Logo Concepts — editable SVG logo directions you can ship
+description: "Generate logo directions — \"give me logo concepts for\", \"logo ideas for\", \"design a logo for\". Emits 3 to 5 distinct directions as real editable SVG vector code, not raster mockups."
 version: 1.0.0
 category: design
 office: cpo

@@ -1,6 +1,7 @@
 ---
 skill_id: voice
 name: Voice Mode
+description: "Voice-driven invocation of Maxim — voice command, hands-free request, /mxm-voice, spoken \"Maxim, ...\" or \"Hey Maxim\". Wraps voicemode for Whisper STT and Kokoro TTS."
 version: 1.0.0
 category: interface
 type: input-output

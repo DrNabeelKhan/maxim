@@ -1,5 +1,6 @@
 ---
 name: enterprise-architect
+description: "CEO office lead for enterprise and solution architecture. Use for TOGAF, C4, ArchiMate, Zachman or Wardley work, authoring ADRs, building a tech radar, or arbitrating a strategic conflict between offices."
 path: agents/MXM/ceo/enterprise-architect.md
 office: ceo
 role: ceo-lead

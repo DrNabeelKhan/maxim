@@ -1,6 +1,7 @@
 ---
 skill_id: security
 name: Security & Threat Intelligence
+description: "Security review and threat work — threat modeling, vulnerability assessment, penetration test, incident response, OWASP Top 10, LLM Top 10, API Top 10, CVE triage, STRIDE, NIST CSF, SBOM. Auto-loops on any task touching PII, auth, payments or regulated data."
 version: 1.0.0
 category: security
 office: CSO

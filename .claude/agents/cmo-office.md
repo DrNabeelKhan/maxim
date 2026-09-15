@@ -1,5 +1,6 @@
 ---
 name: cmo-office
+description: "Marketing, brand, content, SEO, conversion, growth and go-to-market. Use for campaigns, copywriting, positioning, social and search visibility, or any writing that carries brand voice."
 office: cmo
 role: office-dispatcher
 layer: office-agent

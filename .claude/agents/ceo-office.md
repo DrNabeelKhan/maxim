@@ -1,5 +1,6 @@
 ---
 name: ceo-office
+description: "Strategy, vision, finance, fundraising, partnerships, enterprise architecture, governance and investor relations. Use for business-level decisions, architecture strategy, board and investor material, or conflicts between offices."
 office: ceo
 role: office-dispatcher
 layer: office-agent

@@ -1,6 +1,7 @@
 ---
 skill_id: repurpose-engine
 name: Repurpose Engine — one piece → native X / LinkedIn / short-video
+description: "Repurpose one piece of content across platforms — \"repurpose this for all platforms\", \"turn this into a thread and a LinkedIn post\", \"make platform versions of this\". Each output is written for its platform, not reformatted."
 version: 1.0.0
 category: content
 office: cmo

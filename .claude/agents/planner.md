@@ -1,5 +1,6 @@
 ---
 name: planner
+description: "Owns task planning for multi-step and multi-session work. Use to break a large task into a sequenced plan, define a sprint, or structure work that will span more than one session."
 path: agents/MXM/orchestrators/planner.md
 office: orchestrators
 role: task-planner

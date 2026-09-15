@@ -1,6 +1,7 @@
 ---
 skill_id: source-checker
 name: Source Checker — verify a claim and rate the evidence
+description: "Verify a factual claim — \"check this claim\", \"verify this\", \"is this true\", \"how solid is this\". Finds primary sources and rates the evidence as supported, mixed, unsupported or unverifiable, with citations."
 version: 1.0.0
 category: research
 office: cino

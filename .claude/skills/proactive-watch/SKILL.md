@@ -1,6 +1,7 @@
 ---
 skill_id: proactive-watch
 name: Proactive Watch — Drift Detection
+description: "Detect silent drift between what the docs claim and what the repo actually contains — drift check, health check, audit, watch, sync check, /mxm-watch. Runs 13 drift classes and reports gaps before they ship."
 version: 1.0.0
 category: operational
 office: coo

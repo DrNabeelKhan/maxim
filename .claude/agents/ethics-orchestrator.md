@@ -1,5 +1,6 @@
 ---
 name: ethics-orchestrator
+description: "Enforces the ethical guidelines gate per ADR-002. Fires on regulated-work signals across every office unless super-user mode is enabled."
 path: agents/MXM/orchestrators/ethics-orchestrator.md
 office: orchestrators
 role: ethics-gate

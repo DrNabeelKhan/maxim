@@ -1,6 +1,7 @@
 ---
 skill_id: post-analyzer
 name: Post Analyzer — why a post worked or flopped + what to change
+description: "Diagnose why a social post performed — \"analyze this post\", \"why did this post flop\", \"why did this post do well\", \"what should I change\". Scores hook strength, clarity, tension and call to action."
 version: 1.0.0
 category: content
 office: cmo

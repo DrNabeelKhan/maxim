@@ -1,6 +1,7 @@
 ---
 skill_id: wiki-ingest
 name: Wiki Ingest
+description: "Ingest raw sources into the structured wiki — \"ingest\", \"add this to my wiki\", new files in raw/, clippings, sources, ideas, nightly ingest. Produces pages with YAML frontmatter and a mandatory Counter-Arguments section."
 version: 1.0.0
 category: knowledge-management
 type: rag-pipeline

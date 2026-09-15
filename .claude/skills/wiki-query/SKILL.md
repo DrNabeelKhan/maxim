@@ -1,6 +1,7 @@
 ---
 skill_id: wiki-query
 name: Wiki Query
+description: "Answer a question from the structured wiki before searching the web — \"query the wiki\", \"what do we know about\", synthesis request, cross-project research. Returns cited synthesis with wikilinks and counter-arguments."
 version: 1.0.0
 category: knowledge-management
 type: rag-pipeline

@@ -1,6 +1,7 @@
 ---
 skill_id: behavior-science-persuasion
 name: Behavior Science & Persuasion
+description: "Apply a named behavioral science framework to any task — persuasion, nudge design, habit formation, conversion, influence, negotiation, cognitive bias, choice architecture, decision framing. The framework backbone every other Maxim skill loops into for psychological validation."
 version: 1.0.0
 category: behavior-science-persuasion
 office: CEO + CMO

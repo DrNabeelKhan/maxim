@@ -1,6 +1,7 @@
 ---
 skill_id: loops
 name: Loops — Bounded Agent Loop Orchestration
+description: "Run a bounded, governed iteration — \"loop\", \"iterate until\", \"keep going until\", \"sweep\", \"ratchet\", \"until it passes\", \"coverage to 100\". Turns an open-ended autonomous run into a finite loop with checkpoints and explicit stopping conditions."
 version: 1.0.0
 category: operational
 office: coo

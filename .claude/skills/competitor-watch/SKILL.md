@@ -1,6 +1,7 @@
 ---
 skill_id: competitor-watch
 name: Competitor Watch — track a competitor, ping on real moves
+description: "Track what a competitor actually shipped — \"watch this competitor\", \"track what they ship\", \"what changed at\". Compares against the last snapshot and reports only real moves: launches, pricing changes, positioning shifts."
 version: 1.0.0
 category: research
 office: cino

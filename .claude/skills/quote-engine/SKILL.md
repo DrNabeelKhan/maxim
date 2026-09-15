@@ -1,6 +1,7 @@
 ---
 skill_id: quote-engine
 name: Quote Engine — 5 ready-to-post quotes from any long text
+description: "Pull quotable lines from a source — \"pull quotes from this\", \"give me quotes from this interview\", \"find the quotable lines\", \"best lines from this transcript\". Reads pasted text directly or extracts from long documents."
 version: 1.0.0
 category: content
 office: cmo
