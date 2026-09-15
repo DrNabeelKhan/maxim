@@ -10,7 +10,7 @@ frameworks:
   - bjarne-stroustrup-relevance-filter
 triggers:
   - new files in raw/ not yet in wiki
-  - "ingest" command
+  - ingest command
   - "add this to my wiki"
   - file dropped into raw/clippings/
   - file dropped into raw/sources/

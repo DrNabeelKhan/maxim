@@ -1,6 +1,6 @@
 ---
-name: maxim:ui-ux-pro-max
-description: Maxim Master Design Intelligence — full-spectrum UI/UX orchestration. Activates all design sub-domain skills in parallel. Use when a task spans multiple design domains simultaneously: product design strategy, interaction design, information architecture, usability heuristics, design critique, cross-platform consistency, design leadership. The master conductor of all Maxim design agents.
+name: ui-ux-pro-max
+description: "Maxim Master Design Intelligence — full-spectrum UI/UX orchestration. Activates all design sub-domain skills in parallel. Use when a task spans multiple design domains simultaneously: product design strategy, interaction design, information architecture, usability heuristics, design critique, cross-platform consistency, design leadership. The master conductor of all Maxim design agents."
 argument-hint: "[audit|design|critique|strategy|system] [args]"
 confidence: 🟢 HIGH
 ---
