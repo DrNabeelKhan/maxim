@@ -15,6 +15,7 @@
 // CORS origin matches the landing-page domain. Rate-limit by IP to prevent abuse.
 
 import { TIER_PRICE_IDS } from "./stripe-product-map";
+import { markerParams } from "./event-ownership";
 
 type CheckoutEnv = {
     STRIPE_API_KEY: string;
@@ -74,6 +75,14 @@ export async function handleCheckoutSession(request: Request, env: CheckoutEnv):
     if (mode === "subscription") {
         params.set("subscription_data[metadata][tier_id]", tierId);
         params.set("allow_promotion_codes", "true");
+    }
+
+    // Stamp the Maxim ownership marker. The Stripe account is SHARED with
+    // nabeelkhan.com, and Stripe filters webhooks by event type only, so the
+    // license Worker sees every sale in the account. Without this marker a book
+    // sale looks like a malformed Maxim purchase. See src/event-ownership.ts.
+    for (const [key, value] of markerParams(mode)) {
+        params.set(key, value);
     }
 
     try {

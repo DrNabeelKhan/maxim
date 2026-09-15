@@ -35,6 +35,7 @@
 // Prior import pattern was incorrect (used jose-library identifiers); BUG-002 fixed 2026-04-21.
 import jwt from "@tsndr/cloudflare-worker-jwt";
 import { STRIPE_PRODUCT_MAP } from "./stripe-product-map";
+import { classifyOwnership } from "./event-ownership";
 import { handleContact, handleContactPreflight } from "./contact";
 import { handleCheckoutSession, handleCheckoutPreflight } from "./checkout";
 import { notifySales, fmtMoney } from "./notify";
@@ -224,6 +225,18 @@ async function stripeWebhook(request: Request, env: Env): Promise<Response> {
 
     const event = JSON.parse(rawBody);
     const type = event.type;
+
+    // Shared-account gate. This Stripe account also bills nabeelkhan.com, and
+    // Stripe filters webhook deliveries by event TYPE only, so foreign sales land
+    // here too. A `foreign` verdict is acknowledged with 200 and dropped: 200 is
+    // what stops Stripe retrying for ~3 days and eventually DISABLING this
+    // endpoint, which would take Maxim license issuance down as collateral.
+    // `unknown` deliberately falls through to the handlers so a genuinely broken
+    // Maxim event still fails loud. See src/event-ownership.ts.
+    const ownership = classifyOwnership(event.data?.object);
+    if (ownership === "foreign") {
+        return json({ received: true, ignored: "not_a_maxim_event", event: type });
+    }
 
     if (type === "checkout.session.completed") {
         return await handleStripeCheckoutCompleted(event.data.object, env);
