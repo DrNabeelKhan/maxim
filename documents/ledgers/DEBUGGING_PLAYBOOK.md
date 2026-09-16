@@ -376,3 +376,48 @@ This is DEBUGGING_PLAYBOOK's standing rule restated with fresh evidence: **a che
 - **Verified live after deploy: 21/21 assertions pass against production URLs**, not against the local build
 - Tooling gap: **BUG-016, OPEN** — real fix is the v1.4 derived-counts registry
 
+
+
+---
+
+## §12 — 2026-09-16 — The inverse of §11: a verification tool weaker than the runtime, producing a false PASS
+
+§11 recorded three checkers that produced false FAILURES, all caught by an independent second method. This is the same disease with the sign flipped, and it is more dangerous.
+
+### What happened
+
+The description sweep added `description` frontmatter to 46 skills and 23 agents. The verification asserted **52/52 skills and 24/24 agents**, round-tripping byte-identical. `claude plugin validate` passed. The work was committed and pushed on that basis.
+
+Minutes later the live skill registry reloaded in-session and showed `wiki-ingest` still advertising its bare `name`. **The runtime disagreed with the checker, and the runtime was right: it was 51/52.**
+
+### Why the checker was wrong
+
+It extracted frontmatter with a regex and parsed the description with `JSON.parse`. It never used a YAML parser. So it validated the one line it had written and stayed blind to the block that line lived in.
+
+Two files had **invalid YAML frontmatter that predated the sweep**:
+
+- `wiki-ingest:13` — `- "ingest" command`. A double-quoted scalar cannot carry trailing text.
+- `ui-ux-pro-max:2` — `name: maxim:ui-ux-pro-max`, an unquoted value containing a colon; and `:3`, an unquoted `description` containing `": "` inside the prose.
+
+An invalid block means the host discards **all** of it, so those skills had been running on directory-name fallback for as long as the defect existed. Re-validated with the `yaml` package: 52/52 and 24/24, zero failures.
+
+### Why this is worse than §11
+
+A false FAILURE costs time and gets investigated, because someone has to explain it. A false PASS closes the ticket. §11's checkers were wrong in the direction that raises an alarm; this one was wrong in the direction that silences it, and the work was already pushed before the runtime contradicted it.
+
+### The rule
+
+**Verify with the same class of parser the runtime uses, not a cheaper approximation.** Regex over structured data proves only that a string is present, never that the structure holds. If the artifact is YAML, parse YAML. If it is JSON-LD, parse JSON. If it is served HTML, fetch and parse it.
+
+And the corollary that actually caught this one: **prefer a signal the runtime emits over any signal you compute yourself.** The live skill listing was ground truth. Everything upstream of it was a hypothesis.
+
+### Tooling gap this exposes
+
+`claude plugin validate --strict` reported **141 warnings before and after** the sweep and flagged none of it. It warns on a missing frontmatter **block**, not on a missing `description` inside an existing block, and it tolerated both invalid-YAML files. It cannot be the CI gate for this class.
+
+That check belongs in the v1.4 derived-counts registry, and it must **parse with a real YAML parser**. See BUG-016, which is the same disease on the counts surface: a gate that reports CLEAN is trusted more than no gate at all.
+
+### Where it landed
+
+- `2f16712` the sweep · `8b48933` the YAML repair
+- Both verified against the live registry afterwards, not against the checker

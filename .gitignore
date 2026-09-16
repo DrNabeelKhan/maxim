@@ -10,6 +10,10 @@
 .mxm-skills/agents-background.log
 .mxm-skills/review-queue.md
 .mxm-skills/watch-report.jsonl
+.mxm-skills/routing-log.jsonl
+# ADR-021 router writes runtime state into whatever the session cwd is, so a
+# nested .mxm-skills/ can appear under any subproject. Runtime state, never source.
+*/.mxm-skills/
 .mxm-skills/watch-errors.jsonl
 .mxm-skills/compliance-audit.jsonl
 .mxm-skills/operator-persona.txt

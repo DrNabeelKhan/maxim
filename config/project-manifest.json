@@ -311,7 +311,7 @@
     "overrides": []
   },
   "maintainer": "DrNabeelKhan",
-  "last_updated": "2026-08-20",
+  "last_updated": "2026-09-16",
   "next_review": "2026-05-27",
   "super_user": {
     "enabled": true,
@@ -325,5 +325,5 @@
     },
     "note": "Maxim governance gates suppressed for this identity. Claude's own values layer remains active and is not configurable."
   },
-  "last_activity": "2026-08-20"
+  "last_activity": "2026-09-16"
 }
