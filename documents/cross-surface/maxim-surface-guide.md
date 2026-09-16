@@ -15,6 +15,7 @@
 |---|---|---|---|
 | **Claude Code CLI** | 🟢 100% | Clone repo + follow `documents/reference/MXM_INSTALL.md` | None |
 | **Claude Code IDE** (VS Code, JetBrains) | 🟢 100% | Clone repo + IDE extension | None |
+| **Claude Code in the Desktop app** (Code tab) | 🟢 100% | Same as CLI; the plugin loads from the marketplace | None. Hooks fire, MCP attaches, skills and subagents route natively (verified 2026-09, CC 2.1.220) |
 | **Claude.ai Cowork** | 🟡 85% | `maxim.plugin` (see `packaging/cowork/`) | No hooks, no local file auto-read |
 | **Claude Desktop** (Projects feature) | 🟠 60% | `documents/cross-surface/maxim-project-instructions.md` pasted into Project Instructions | No slash commands, no hooks, no MCP |
 | **Claude.ai Web** (Projects feature) | 🟠 60% | Same as Desktop | Same as Desktop |
@@ -27,7 +28,13 @@ Fidelity measures how much of Maxim's behavioral layer + technical scaffolding t
 
 Green = native, Yellow = degraded, Red = absent.
 
-| Capability | Code CLI | Code IDE | Cowork | Desktop | Web |
+> **Read the Desktop and Web columns as the Projects CHAT feature only.** Claude Code running inside the
+> Claude Desktop app is a Code CLI surface and scores with that column, not this one: hooks fire there and
+> MCP attaches. Conflating the two understated Maxim on Desktop for several releases. The earlier
+> "hooks are Claude Code CLI-only" framing was about the Projects surface, and current Claude Code docs
+> state hooks run on Desktop.
+
+| Capability | Code CLI | Code IDE | Cowork | Desktop **Projects** | Web **Projects** |
 |---|---|---|---|---|---|
 | **Behavioral layer** (Fogg, COM-B, EAST, Cialdini) | 🟢 | 🟢 | 🟢 | 🟢 | 🟢 |
 | **Office routing** (7 executive mental models) | 🟢 | 🟢 | 🟢 | 🟢 | 🟢 |

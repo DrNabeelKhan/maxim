@@ -207,10 +207,15 @@ Maxim runs everywhere Claude does:
 
 | Surface | Fidelity | What works |
 |---|---|---|
-| **Claude Code** | 100% | All 50 commands · 9 MCPs (95 tools) · 24 dispatchable subagents · all behavioral overlays |
-| **Claude Desktop** | ~95% | 9 MCPs (95 tools) · paste `maxim-project-instructions.md` for behavioral layer |
-| **Claude.ai Web** | ~85% | Project instructions · MCP-over-API when available |
+| **Claude Code** (CLI, IDE, or the Claude Desktop app's Code tab) | 100% | All 50 commands · 9 MCPs (95 tools) · 24 dispatchable subagents · 52 skills · 16 hooks · all behavioral overlays |
+| **Claude Desktop** (Projects) | ~95% | 9 MCPs (95 tools) · paste `maxim-project-instructions.md` for behavioral layer |
+| **Claude.ai Web** (Projects) | ~85% | Project instructions · MCP-over-API when available |
 | **Claude.ai Cowork** | ~85% | Plugin bundles MCPs natively |
+
+**Claude Code is a runtime, not a surface.** When it runs inside the Claude Desktop app, Maxim is at full
+fidelity there: hooks fire, MCP servers attach, skills and subagents route natively. Verified 2026-09 on
+Claude Code 2.1.220 in the Desktop app. The rows below it describe the separate **Projects** chat feature,
+which is a different surface with different limits.
 
 Desktop one-command setup: `bash bootstrap/mxm-desktop-config.sh` or `pwsh -File bootstrap/mxm-desktop-config.ps1`.
 
