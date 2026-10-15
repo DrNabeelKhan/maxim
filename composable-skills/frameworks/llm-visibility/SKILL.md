@@ -1,120 +1,123 @@
 ---
 skill_id: llm-visibility
 name: LLM Visibility
-version: 1.0.0
+version: 2.0.0
 category: search-visibility
 type: framework
 frameworks: []
 triggers:
-  - apply llm visibility
-  - use llm-visibility framework
-  - llm visibility analysis
+  - llm visibility
+  - generative engine optimization
+  - geo
+  - get cited by ai assistants
+  - llms.txt
+  - answer engine optimization
 collaborates_with:
   - geo-optimizer
   - seo-specialist
   - article-writer
   - authority-builder
-ethics_required: false
-priority: medium
-tags: [search-visibility, framework]
+ethics_required: true
+priority: high
+tags: [search-visibility, framework, geo, aeo, ai-search, entities]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # LLM Visibility
 
 ## Purpose
-Apply LLM Visibility to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use LLM visibility, also called generative engine optimization (GEO), to make content more likely to be retrieved, quoted and cited accurately by AI assistants and AI search. These systems assemble answers from sources rather than listing links, so being a clear, citable, unambiguous source matters more than ranking position. The field is young: some practices have research behind them, others are emerging conventions, and this definition labels which is which.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `llm-visibility` |
-| Category | Search Visibility |
-| Version | 1.0.0 |
-| Owner | Industry Standard (Emerging) |
-| Maturity | Emerging (2023) |
-| Primary References | Generative Engine Optimization |
+| Category | Search Visibility — Generative and Answer Engines |
+| Version | 2.0.0 |
+| Research basis | Aggarwal et al., "GEO: Generative Engine Optimization", KDD 2024 (arXiv, 2023) |
+| Emerging convention | `llms.txt`, proposed by Jeremy Howard in 2024; adoption by AI providers is not established |
+| Maturity | Emerging; practices change quickly |
+
+## The Practices
+
+**Supported by research.** Aggarwal et al. tested content changes against generative engines and found that adding citations to sources, quotations and statistics improved how visibly a source appeared in generated answers.
+
+**Established web practice that carries over**
+- **Crawlability for AI crawlers**: robots.txt rules that name the AI crawlers you want to allow.
+- **Server-rendered content**, since many crawlers do not execute JavaScript.
+- **Structured data and a consistent entity graph**, so systems can tell which pages describe the same thing.
+- **Answer-first writing**: the direct answer in the opening sentences, naming the entity rather than "we".
+
+**Emerging conventions**
+- **`llms.txt`**: a plain-text summary for language models. Useful and cheap, but treat its effect as unproven.
+
+## Core Principles
+- **Be quotable.** A sentence that makes sense out of context, names its subject and states a fact can be lifted into an answer intact.
+- **Name the entity.** "Maxim does X" survives extraction; "we do X" loses its attribution.
+- **Disambiguate.** A name shared with other things needs explicit context about which one you are.
+- **Accuracy is the whole point.** AI systems repeat what they find, so errors propagate and retractions do not.
+- **Measure by asking.** Query the assistants your audience uses and record whether and how you are cited.
+
+## Applications & Use Cases
+| Use Case | Application | Practice |
+|---|---|---|
+| Product definitions | One quotable sentence defining what the product is | Answer-first writing |
+| Ambiguous brand names | A disambiguation block stating what you are not | Disambiguation |
+| Factual claims | Cite sources and include specific figures with attribution | Research-backed |
+| Multi-site organisations | Shared `@id`s and reciprocal links | Entity graph |
+| AI crawler access | Name allowed AI crawlers in robots.txt | Crawlability |
+| Monitoring | A fixed set of probe questions run on a schedule | Measurement |
+
+## Usage Guidelines
+- **Write the one-sentence definition first**, so it can be quoted verbatim with no surrounding context.
+- **Name the entity in every key answer** rather than using pronouns.
+- **Cite sources and use specific, attributed figures**, which the GEO research associates with greater visibility.
+- **Render content and structured data server-side**, and allow the AI crawlers you want in robots.txt.
+- **Track a fixed probe set** across assistants over time, and treat single responses as anecdotes.
 
 ## Prompt Template
 ```
-You are applying the LLM Visibility framework.
+You are improving LLM visibility (Aggarwal et al. 2024).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: search visibility
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of LLM Visibility applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with LLM Visibility principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+ENTITY: [[what you want AI systems to describe correctly]]
+ONE-SENTENCE DEFINITION, quotable without context:
+DISAMBIGUATION: what this is NOT, if the name is shared:
+KEY CLAIMS, each with a source:
+TECHNICAL: AI crawlers allowed? Content server-rendered? Entity @ids consistent?
+PROBE QUESTIONS to track, and current results:
+Label each recommendation: research-backed | established practice | emerging.
 ```
 
-## Core Principles
-- **Foundation**: LLM Visibility provides structured approach to search visibility
-- **Application**: Use when facing decisions requiring search visibility guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply LLM Visibility to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Generative Engine Optimization](https://arxiv.org/search/?query=generative+engine+optimization) - Industry Standard (Emerging)
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Every claim must be true and checkable.** AI systems repeat errors, and corrections rarely catch up.
+- **Do not attempt to manipulate model outputs** with hidden text or prompt-injection content; it is deceptive and can backfire.
+- **Do not overstate what is proven** in this emerging field.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to LLM Visibility principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Run the same probe questions across several assistants on a schedule and record citations.
+- Compare before and after content changes, allowing for the variability of model responses.
+
+## Success Metrics
+- Share of probe questions where the entity is cited or described correctly.
+- Accuracy of AI descriptions of the entity.
+- Referral traffic from AI assistants, where measurable.
+
+## Collaboration Protocol
+- Inbound from: `geo-optimizer` · `seo-specialist` · `authority-builder` · `article-writer`
+- Outbound to: `technical-seo-auditor` for crawlability and structured data
+- Cross-framework: Schema.org for the entity graph; E-E-A-T for credibility; search intent mapping for the questions people ask.
+
+## Related Skills
+- `composable-skills/frameworks/schemaorg/SKILL.md` — the entity graph
+- `composable-skills/frameworks/e-e-a-t/SKILL.md` — credibility signals
+- `composable-skills/frameworks/search-intent-mapping/SKILL.md` — the questions to answer
+- `composable-skills/frameworks/no-fabrication/SKILL.md` — evidence-bound claims
+
+## Reference Materials
+- Aggarwal, P., Murahari, V., Rajpurohit, T., Kalyan, A., Narasimhan, K., & Deshpande, A. (2024). "GEO: Generative Engine Optimization." *Proceedings of KDD 2024.* arXiv:2311.09735.
+- Howard, J. (2024). "The /llms.txt file." llmstxt.org.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

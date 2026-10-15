@@ -1,120 +1,117 @@
 ---
 skill_id: schemaorg
 name: Schema.org
-version: 1.0.0
+version: 2.0.0
 category: search-visibility
 type: framework
 frameworks: []
 triggers:
-  - apply schema.org
-  - use schemaorg framework
-  - schema.org analysis
+  - schema.org markup
+  - structured data
+  - json-ld
+  - rich results
+  - entity markup
 collaborates_with:
   - aeo-strategist
   - technical-seo-auditor
   - article-writer
   - documentation-writer
-ethics_required: false
-priority: medium
-tags: [search-visibility, framework]
+ethics_required: true
+priority: high
+tags: [search-visibility, framework, structured-data, json-ld, entities]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Schema.org
 
 ## Purpose
-Apply Schema.org to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use Schema.org vocabulary to describe the things a page is about, such as an organisation, a person, a product or an article, in a machine-readable form that search engines and other systems can parse reliably. It was launched in 2011 by Google, Microsoft and Yahoo, with Yandex joining later the same year. Beyond eligibility for some rich results, its lasting value is building a consistent **entity graph**: stable identifiers that tell machines which pages describe the same real thing.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `schemaorg` |
-| Category | Search Visibility |
-| Version | 1.0.0 |
-| Owner | Schema.org Consortium |
-| Maturity | Established (2011) |
-| Primary References | Structured Data Markup |
+| Category | Search Visibility — Structured Data |
+| Version | 2.0.0 |
+| Founded | 2011 by Google, Microsoft (Bing) and Yahoo; Yandex joined in 2011 |
+| Formats | JSON-LD (recommended by Google) · Microdata · RDFa |
+| Validation | Schema Markup Validator (validator.schema.org) · Google Rich Results Test |
+
+## Key Concepts
+- **Types and properties.** Everything is a `Thing` with more specific types such as `Organization`, `Person`, `Product` and `Article`.
+- **`@id`** gives an entity a stable identifier, so several pages and sites can refer to the same entity rather than each describing a new one.
+- **`sameAs`** links an entity to its other authoritative profiles.
+- **Nesting and references** connect entities, for example an article's `author` pointing to a `Person` by `@id`.
+
+**Rich results are a subset.** Google supports only some types for rich results, and it has restricted or retired several over time, for example FAQ and HowTo rich results were restricted in 2023. Check the current list rather than assuming a type earns a rich result.
+
+## Core Principles
+- **Markup must match visible content.** Marking up questions, reviews or prices that are not on the page is against Google's guidelines.
+- **Parse, do not grep.** Validate JSON-LD by parsing it; a regex check misses structural errors.
+- **One entity, one `@id`, everywhere.** Minting a new unidentified node for an entity that already exists forks it.
+- **Use the most specific type that fits.**
+- **Structured data describes; it does not guarantee display.**
+
+## Applications & Use Cases
+| Use Case | Application | Types |
+|---|---|---|
+| Organisation identity | Define the organisation once with `@id`, logo and `sameAs` | Organization |
+| Authorship | Link articles to a `Person` by `@id` | Article, Person |
+| Products and offers | Price, availability and reviews matching the page | Product, Offer |
+| Software | Version, licence and publisher | SoftwareApplication |
+| Cross-site entity graph | Reference the same `@id` from every related property | Any |
+| Breadcrumbs | Show site hierarchy | BreadcrumbList |
+
+## Usage Guidelines
+- **Use JSON-LD**, and render it in the served HTML rather than only client-side.
+- **Give every important entity a stable `@id`** and reference it instead of redefining it.
+- **Keep markup and visible content in sync**; never mark up what the page does not show.
+- **Validate with the Schema Markup Validator and the Rich Results Test**, then confirm in Search Console.
+- **Re-check after every template change**, since markup often breaks silently.
 
 ## Prompt Template
 ```
-You are applying the Schema.org framework.
+You are writing or auditing Schema.org structured data.
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: search visibility
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Schema.org applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Schema.org principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+ENTITIES ON THIS PAGE: [[organisation, person, product, article...]]
+FOR EACH
+- Most specific type:
+- @id (stable, reused across pages and sites):
+- Required and recommended properties:
+- References to other entities by @id:
+VISIBLE-CONTENT CHECK: is everything marked up actually shown on the page?
+VALIDATION: Schema Markup Validator and Rich Results Test results.
 ```
 
-## Core Principles
-- **Foundation**: Schema.org provides structured approach to search visibility
-- **Application**: Use when facing decisions requiring search visibility guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Schema.org to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Structured Data Markup](https://schema.org/) - Schema.org Consortium
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Never mark up content that is not visible**, such as hidden FAQs or fabricated reviews; this is cloaking.
+- **Do not invent ratings, reviews or credentials** in markup.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Schema.org principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Parse the served HTML and assert on the JSON-LD objects, not on strings.
+- Validate after every deploy that touches templates.
+
+## Success Metrics
+- Pages with valid structured data and zero parse errors.
+- Rich result eligibility and impressions where applicable.
+- Consistency of `@id` references across pages and properties.
+
+## Collaboration Protocol
+- Inbound from: `aeo-strategist` · `technical-seo-auditor` · `documentation-writer`
+- Outbound to: `frontend-developer` for templates
+- Cross-framework: Google Search Central for supported features; E-E-A-T for authorship; LLM visibility, where the entity graph helps AI systems.
+
+## Related Skills
+- `composable-skills/frameworks/google-search-central/SKILL.md` — supported structured-data features
+- `composable-skills/frameworks/e-e-a-t/SKILL.md` — authorship and organisation signals
+- `composable-skills/frameworks/llm-visibility/SKILL.md` — entities for AI answers
+
+## Reference Materials
+- Schema.org. *Schemas and documentation.* schema.org.
+- Google Search Central. *Introduction to structured data* and *General structured data guidelines.*
+- Google Search Central blog. Changes to FAQ and HowTo rich results, August 2023.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

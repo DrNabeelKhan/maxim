@@ -1,120 +1,120 @@
 ---
 skill_id: core-web-vitals
 name: Core Web Vitals
-version: 1.0.0
+version: 2.0.0
 category: search-visibility
 type: framework
 frameworks: []
 triggers:
-  - apply core web vitals
-  - use core-web-vitals framework
-  - core web vitals analysis
+  - core web vitals
+  - lcp inp cls
+  - page speed
+  - page experience
+  - performance audit
 collaborates_with:
   - seo-specialist
   - technical-seo-auditor
   - frontend-developer
   - performance-benchmarker
 ethics_required: false
-priority: medium
-tags: [search-visibility, framework]
+priority: high
+tags: [search-visibility, framework, performance, web-vitals, ux]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Core Web Vitals
 
 ## Purpose
-Apply Core Web Vitals to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use Core Web Vitals to measure and improve three aspects of real users' experience of a page: how fast the main content appears, how quickly the page responds to interaction, and how stable the layout is while it loads. Google defines the metrics and their thresholds, measures them from real Chrome users, and uses them among its page experience signals. They matter for search, but more directly they measure whether a page feels fast and solid to the people using it.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `core-web-vitals` |
-| Category | Search Visibility |
-| Version | 1.0.0 |
-| Owner | Google |
-| Maturity | Established (2020) |
-| Primary References | Web Performance Metrics |
+| Category | Search Visibility — Page Experience and Performance |
+| Version | 2.0.0 |
+| Originator | Google (web.dev) |
+| Key change | INP replaced FID as the responsiveness metric on 12 March 2024 |
+| Thresholds | Assessed at the 75th percentile of page loads, separately for mobile and desktop |
+
+## The Three Metrics
+| Metric | Measures | Good | Poor |
+|---|---|---|---|
+| **LCP** — Largest Contentful Paint | Loading: when the main content is visible | ≤ 2.5 s | > 4.0 s |
+| **INP** — Interaction to Next Paint | Responsiveness to user input across the visit | ≤ 200 ms | > 500 ms |
+| **CLS** — Cumulative Layout Shift | Visual stability: unexpected layout movement | ≤ 0.1 | > 0.25 |
+
+Values between "good" and "poor" are rated "needs improvement". A page passes when the 75th percentile of its real-user loads is "good" on all three.
+
+**Field data versus lab data.** Field data from the Chrome User Experience Report reflects real users and is what counts. Lab tools such as Lighthouse are for diagnosis and do not measure INP directly.
+
+## Core Principles
+- **Field data decides.** A perfect lab score does not mean real users have a good experience.
+- **The 75th percentile, not the average.** Slow devices and networks determine the result.
+- **Mobile and desktop are assessed separately.** Mobile is usually the harder one.
+- **Relevance still dominates ranking.** Good vitals help, but they do not outrank helpful content.
+- **Fix causes, not scores.** Large images, render-blocking resources, long JavaScript tasks and unsized media are the usual culprits.
+
+## Applications & Use Cases
+| Use Case | Application | Metric |
+|---|---|---|
+| Slow hero images | Prioritise, compress and correctly size the LCP element | LCP |
+| Heavy JavaScript | Break up long tasks, defer non-critical scripts | INP |
+| Ads and embeds shifting content | Reserve space with explicit dimensions | CLS |
+| Web fonts causing shifts | Use appropriate font-display and matched fallbacks | CLS |
+| Slow server response | Reduce time to first byte with caching and a CDN | LCP |
+| Pre-launch checks | Lab-test, then confirm in field data after release | All |
+
+## Usage Guidelines
+- **Start from field data** in Search Console or the CrUX report to see which pages fail and on which metric.
+- **Identify the LCP element** on failing pages and make it load first.
+- **Profile interactions** to find long tasks that delay INP.
+- **Give every image, video, ad and embed explicit dimensions** to prevent layout shift.
+- **Confirm fixes in field data**, which takes time to update, rather than relying on lab scores.
 
 ## Prompt Template
 ```
-You are applying the Core Web Vitals framework.
+You are improving Core Web Vitals (Google, web.dev). Thresholds at the 75th percentile:
+LCP <= 2.5 s · INP <= 200 ms · CLS <= 0.1
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: search visibility
-- Stakeholders: [[stakeholder_roles]]
+PAGE: [[url]]   DEVICE: mobile | desktop
+FIELD DATA: LCP __ · INP __ · CLS __   (source: CrUX / Search Console)
 
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Core Web Vitals applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Core Web Vitals principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+FOR EACH FAILING METRIC
+- Likely cause:
+- Specific fix:
+- How it will be confirmed in field data:
 ```
 
-## Core Principles
-- **Foundation**: Core Web Vitals provides structured approach to search visibility
-- **Application**: Use when facing decisions requiring search visibility guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Core Web Vitals to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Web Performance Metrics](https://web.dev/vitals/) - Google
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Do not game the metrics** at users' expense, for example by hiding content to improve a score.
+- **Performance is an accessibility and equity issue**: users on slower devices and networks are affected most.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Core Web Vitals principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Diagnose with lab tools, then verify with field data over the following weeks.
+- Add real-user monitoring to catch regressions before they show in aggregated reports.
+
+## Success Metrics
+- Share of URLs passing all three metrics, for mobile and desktop.
+- 75th-percentile values for LCP, INP and CLS.
+- Engagement or conversion changes on improved pages.
+
+## Collaboration Protocol
+- Inbound from: `seo-specialist` · `technical-seo-auditor` · `performance-benchmarker`
+- Outbound to: `frontend-developer` for implementation
+- Cross-framework: Google Search Central for page-experience guidance; WCAG, since performance and accessibility overlap.
+
+## Related Skills
+- `composable-skills/frameworks/google-search-central/SKILL.md` — official search guidance
+- `composable-skills/frameworks/wcag/SKILL.md` — overlapping accessibility concerns
+- `composable-skills/frameworks/cicd/SKILL.md` — performance budgets in the pipeline
+
+## Reference Materials
+- Google. "Web Vitals" and "Defining the Core Web Vitals metrics thresholds." web.dev.
+- Google. "Interaction to Next Paint (INP)." web.dev; INP became a Core Web Vital on 12 March 2024.
+- Google Search Central. "Understanding Core Web Vitals and Google search results."
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._
