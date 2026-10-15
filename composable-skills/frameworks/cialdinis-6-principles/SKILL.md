@@ -122,7 +122,7 @@ OUTPUT: which principles apply, the exact wording or design change, and an ethic
 - `composable-skills/frameworks/social-learning-theory/SKILL.md` — the mechanics behind social proof
 
 ## Reference Materials
-- Cialdini, R.B. (1984). *Influence: The Psychology of Persuasion.* William Morrow.
+- Cialdini, R.B. (1984). *Influence: How and Why People Agree to Things.* William Morrow. (Later editions subtitled *The Psychology of Persuasion*.)
 - Cialdini, R.B. (2016). *Pre-Suasion: A Revolutionary Way to Influence and Persuade.* Simon & Schuster.
 - Cialdini, R.B. (2021). *Influence, New and Expanded: The Psychology of Persuasion.* Harper Business.
 - Cialdini, R.B., & Goldstein, N.J. (2004). "Social Influence: Compliance and Conformity." *Annual Review of Psychology*, 55, 591–621.

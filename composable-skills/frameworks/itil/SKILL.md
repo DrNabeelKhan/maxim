@@ -36,7 +36,7 @@ Use ITIL to manage IT-enabled services so that they create value for customers a
 | Category | Enterprise Architecture — IT Service Management |
 | Version | 2.0.0 |
 | Owner | PeopleCert (acquired AXELOS, the previous owner, in 2021) |
-| Current version | ITIL 4 (Foundation published 2019) |
+| Current version | ITIL (Version 5), introduced by PeopleCert in 2026 in a phased release. ITIL 4 (Foundation published 2019) remains available, and the structure below is ITIL 4's; check the Version 5 publications for changes. |
 | Related standard | ISO/IEC 20000-1 (service management system requirements) |
 
 ## The Service Value System
@@ -110,7 +110,8 @@ IMPROVEMENT REGISTER: next three items
 
 ## Reference Materials
 - AXELOS. (2019). *ITIL Foundation: ITIL 4 Edition.* TSO.
-- ISO/IEC 20000-1:2018. *Service management — Part 1: Service management system requirements.*
+- ISO/IEC 20000-1:2018. *Information technology — Service management — Part 1: Service management system requirements.*
+- PeopleCert. "ITIL (Version 5) explained." peoplecert.org.
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

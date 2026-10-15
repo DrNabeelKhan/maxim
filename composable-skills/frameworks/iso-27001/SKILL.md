@@ -116,7 +116,7 @@ AUDIT READINESS: internal audit, management review, open nonconformities
 ## Reference Materials
 - ISO/IEC 27001:2022. *Information security, cybersecurity and privacy protection — Information security management systems — Requirements.*
 - ISO/IEC 27001:2022/Amd 1:2024. *Climate action changes.*
-- ISO/IEC 27002:2022. *Information security controls.*
+- ISO/IEC 27002:2022. *Information security, cybersecurity and privacy protection — Information security controls.*
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

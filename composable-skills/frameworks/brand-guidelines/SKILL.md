@@ -106,7 +106,7 @@ AUDIT (if reviewing material): where does it depart from the guidelines, and doe
 - `composable-skills/frameworks/platform-specific-writing/SKILL.md` — voice across channels
 
 ## Reference Materials
-- Wheeler, A. *Designing Brand Identity: An Essential Guide for the Whole Branding Team.* Wiley (multiple editions).
+- Wheeler, A. (2017). *Designing Brand Identity: An Essential Guide for the Whole Branding Team* (5th ed.). Wiley. (6th ed., 2024, with R. Meyerson, is subtitled *A Comprehensive Guide to the World of Brands and Branding*.)
 - Aaker, D.A. (1996). *Building Strong Brands.* Free Press.
 - Keller, K.L. (1993). "Conceptualizing, Measuring, and Managing Customer-Based Brand Equity." *Journal of Marketing*, 57(1), 1–22.
 

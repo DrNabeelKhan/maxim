@@ -35,7 +35,7 @@ Use infrastructure as code (IaC) to define servers, networks, databases and othe
 | Framework ID | `infrastructure-as-code` |
 | Category | Engineering — Infrastructure Automation |
 | Version | 2.0.0 |
-| Key reference | Morris, *Infrastructure as Code* (O'Reilly; first edition 2016, later editions) |
+| Key reference | Morris, *Infrastructure as Code* (O'Reilly; 1st ed. 2016, 2nd ed. 2020, 3rd ed. 2025) |
 | Related practices | GitOps · policy as code · immutable infrastructure |
 | Common tools | Terraform and OpenTofu · Pulumi · AWS CloudFormation · Ansible |
 
@@ -108,7 +108,7 @@ SECRETS: how injected (never committed)?
 - `composable-skills/frameworks/cloud-architecture/SKILL.md` — what the code describes
 
 ## Reference Materials
-- Morris, K. *Infrastructure as Code: Dynamic Systems for the Cloud Age.* O'Reilly Media (first edition 2016; later editions).
+- Morris, K. (2020). *Infrastructure as Code: Dynamic Systems for the Cloud Age* (2nd ed.). O'Reilly Media. (1st ed., 2016: *Managing Servers in the Cloud*; 3rd ed., 2025: *Designing and Delivering Dynamic Systems for the Cloud Age*.)
 - OpenGitOps (CNCF). *GitOps Principles.* opengitops.dev.
 
 ---

@@ -36,7 +36,7 @@ Use a design system to give a product organisation one shared source of design d
 | Category | Design and UX — Systems and Governance |
 | Version | 2.0.0 |
 | Key references | Kholmatova, *Design Systems* (2017) · Frost, *Atomic Design* (2016) |
-| Token standard | W3C Design Tokens Community Group format (in development) |
+| Token standard | Design Tokens Format Module 2025.10 (first stable version, October 2025), a W3C Community Group report, not a W3C Recommendation |
 | Public examples | Google Material Design · IBM Carbon · GOV.UK Design System |
 
 ## The Parts
@@ -108,7 +108,7 @@ ADOPTION: which products use it, and where do they diverge?
 ## Reference Materials
 - Kholmatova, A. (2017). *Design Systems: A Practical Guide to Creating Design Languages for Digital Products.* Smashing Magazine.
 - Frost, B. (2016). *Atomic Design.*
-- W3C Design Tokens Community Group. *Design Tokens Format Module* (draft).
+- W3C Design Tokens Community Group. (2025). *Design Tokens Format Module 2025.10.* Final Community Group Report, 28 October 2025.
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

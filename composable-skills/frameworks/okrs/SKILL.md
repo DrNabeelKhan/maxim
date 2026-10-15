@@ -41,7 +41,7 @@ Use Objectives and Key Results to set a small number of ambitious goals and defi
 ## The Structure
 - **Objective**: what you want to accomplish. Clear, significant, action-oriented. Not a metric.
 - **Key Results**: usually three to five per objective. Specific, time-bound, measurable outcomes that show the objective was achieved.
-- **Committed versus aspirational OKRs.** Committed OKRs are expected to be fully met. Aspirational ones are deliberately ambitious; Doerr describes Google grading these from 0 to 1, with around 0.6 to 0.7 considered a strong result.
+- **Committed versus aspirational OKRs.** Committed OKRs are expected to be fully met. Aspirational ones are deliberately ambitious; Google grades OKRs from 0 to 1; Doerr's guidance treats an average of about 0.7 on aspirational OKRs as a sign that goals are ambitious enough.
 - **Cadence**: commonly quarterly, with regular check-ins.
 
 ## Core Principles

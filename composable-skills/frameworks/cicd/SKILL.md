@@ -46,12 +46,11 @@ Use continuous integration and continuous delivery to make releasing software ro
 - **Deployment automation and safe release techniques**: feature flags, canary and blue-green releases.
 - **Fast feedback**: a broken build is fixed or reverted immediately.
 
-### The four DORA delivery metrics
-- **Deployment frequency.**
-- **Lead time for changes.**
-- **Change failure rate.**
-- **Time to restore service.**
-The DORA research program has refined these names and measures over time; check its current report.
+### The DORA software delivery metrics
+DORA currently defines five, in two groups (dora.dev):
+- **Throughput**: change lead time; deployment frequency; failed deployment recovery time.
+- **Instability**: change fail rate; deployment rework rate.
+Earlier DORA reports and *Accelerate* (2018) used four metrics, with "time to restore service" in place of failed deployment recovery time and no rework rate.
 
 ## Core Principles
 - **Small batches reduce risk.** Smaller changes are easier to test, review and roll back.
@@ -67,7 +66,7 @@ The DORA research program has refined these names and measures over time; check 
 | Long-lived branches | Move to trunk-based development | Mainline development |
 | Environment drift | Build once, deploy the same artifact | Artifact promotion |
 | Risky deployments | Canary or blue-green releases with feature flags | Safe release |
-| Measuring delivery | Track the four DORA metrics | Measurement |
+| Measuring delivery | Track the DORA software delivery metrics | Measurement |
 | Quality gates | Tests, security and performance checks in the pipeline | Automated testing |
 
 ## Usage Guidelines
@@ -85,7 +84,7 @@ CURRENT STATE: branch strategy · merge frequency · test automation · release 
 PIPELINE STAGES (commit -> production):
 ARTIFACT PROMOTION: built once?
 RELEASE SAFETY: feature flags · canary · blue-green · rollback
-DORA METRICS: deployment frequency · lead time · change failure rate · time to restore
+DORA METRICS: change lead time · deployment frequency · failed deployment recovery time · change fail rate · deployment rework rate
 BIGGEST CONSTRAINT and the next improvement:
 ```
 
@@ -98,7 +97,7 @@ BIGGEST CONSTRAINT and the next improvement:
 - Test the rollback path, not only the deployment path.
 
 ## Success Metrics
-- The four DORA metrics.
+- The DORA software delivery metrics (throughput and instability).
 - Pipeline duration and reliability.
 - Share of changes deployed without manual steps.
 
@@ -115,6 +114,7 @@ BIGGEST CONSTRAINT and the next improvement:
 ## Reference Materials
 - Fowler, M. (2006). "Continuous Integration." martinfowler.com.
 - Humble, J., & Farley, D. (2010). *Continuous Delivery.* Addison-Wesley.
+- DORA. "DORA's software delivery performance metrics." dora.dev/guides/dora-metrics.
 - Forsgren, N., Humble, J., & Kim, G. (2018). *Accelerate: The Science of Lean Software and DevOps.* IT Revolution Press.
 
 ---

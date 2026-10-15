@@ -34,7 +34,7 @@ Use ArchiMate, an open modelling language from The Open Group, to describe enter
 | Category | Enterprise Architecture — Modelling Language |
 | Version | 2.0.0 |
 | Owner | The Open Group |
-| Current specification | ArchiMate 3.2 (2022) |
+| Current specification | ArchiMate 4 (released April 2026). The structure below follows ArchiMate 3.2 (2022), which remains widely used in tools and models. ArchiMate 4 reorganises parts of the language while aiming for user-level compatibility; check the ArchiMate 4 specification for its element set. |
 | Companion method | TOGAF ADM |
 
 ## Structure of the Language
@@ -77,7 +77,7 @@ Use ArchiMate, an open modelling language from The Open Group, to describe enter
 
 ## Prompt Template
 ```
-You are modelling in ArchiMate 3.2.
+You are modelling in ArchiMate (3.2 element set; confirm against ArchiMate 4 if the team has adopted it).
 
 QUESTION the model must answer: [[...]]
 STAKEHOLDER and viewpoint:
@@ -109,6 +109,7 @@ IMPLEMENTATION AND MIGRATION: plateaus, gaps, work packages (if planning change)
 - `composable-skills/frameworks/bizbok/SKILL.md` — capabilities and value streams
 
 ## Reference Materials
+- The Open Group. (2026). *ArchiMate 4 Specification.*
 - The Open Group. (2022). *ArchiMate 3.2 Specification.*
 - The Open Group. (2022). *The TOGAF Standard, 10th Edition.*
 

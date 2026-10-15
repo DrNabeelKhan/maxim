@@ -37,20 +37,22 @@ Use the OWASP Top 10 as an awareness baseline for the most critical security ris
 | Category | Security — Application Security |
 | Version | 2.0.0 |
 | Owner | OWASP Foundation |
-| Edition listed below | OWASP Top 10:2021. OWASP has been publishing a 2025 update; check owasp.org for the current edition before citing category numbers. |
+| Current edition | OWASP Top 10:2025 (succeeds the 2021 edition) |
 | Related OWASP projects | ASVS (verification requirements) · API Security Top 10 · Top 10 for LLM Applications · Cheat Sheet Series |
 
-## The 2021 Categories
+## The 2025 Categories
 - **A01 Broken Access Control.**
-- **A02 Cryptographic Failures.**
-- **A03 Injection** (including cross-site scripting).
-- **A04 Insecure Design.**
-- **A05 Security Misconfiguration.**
-- **A06 Vulnerable and Outdated Components.**
-- **A07 Identification and Authentication Failures.**
-- **A08 Software and Data Integrity Failures.**
-- **A09 Security Logging and Monitoring Failures.**
-- **A10 Server-Side Request Forgery (SSRF).**
+- **A02 Security Misconfiguration.**
+- **A03 Software Supply Chain Failures.**
+- **A04 Cryptographic Failures.**
+- **A05 Injection** (including cross-site scripting).
+- **A06 Insecure Design.**
+- **A07 Authentication Failures.**
+- **A08 Software or Data Integrity Failures.**
+- **A09 Security Logging and Alerting Failures.**
+- **A10 Mishandling of Exceptional Conditions.**
+
+Category numbers changed between editions; for example, Injection was A03 in 2021, and Server-Side Request Forgery, a separate 2021 category, now falls under Broken Access Control. Always cite the edition with the number, such as "A05:2025".
 
 ## Core Principles
 - **An awareness document, not a checklist.** Being free of the Top 10 does not make an application secure.
@@ -63,9 +65,9 @@ Use the OWASP Top 10 as an awareness baseline for the most critical security ris
 | Use Case | Application | Category |
 |---|---|---|
 | Developer training | Teach each category with examples from your stack | All |
-| Code review | Review checklists derived from the categories | A01, A03 |
-| Threat modelling | Identify design-level risks before building | A04 |
-| Dependency management | Software composition analysis and patching | A06 |
+| Code review | Review checklists derived from the categories | A01, A05 |
+| Threat modelling | Identify design-level risks before building | A06 |
+| Dependency and supply chain | Software composition analysis, SBOMs and patching | A03 |
 | Penetration test scoping | Make sure tests cover each category | All |
 | Logging design | Log security events and alert on them | A09 |
 
@@ -78,7 +80,7 @@ Use the OWASP Top 10 as an awareness baseline for the most critical security ris
 
 ## Prompt Template
 ```
-You are reviewing an application against the OWASP Top 10 (2021; check for newer edition).
+You are reviewing an application against the OWASP Top 10:2025.
 
 APPLICATION and stack: [[...]]
 FOR EACH CATEGORY A01-A10:
@@ -111,7 +113,8 @@ REMEDIATION order:
 - `composable-skills/frameworks/mitre-attck/SKILL.md` — attacker techniques
 
 ## Reference Materials
-- OWASP Foundation. (2021). *OWASP Top 10:2021.* owasp.org/Top10.
+- OWASP Foundation. (2025). *OWASP Top 10:2025.* top10.owasp.org/2025.
+- OWASP Foundation. (2021). *OWASP Top 10:2021.* top10.owasp.org/2021.
 - OWASP Foundation. *Application Security Verification Standard (ASVS).*
 - OWASP Foundation. *OWASP Cheat Sheet Series.*
 

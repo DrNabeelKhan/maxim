@@ -43,7 +43,7 @@ Apply DORA to manage ICT risk and operational resilience for EU financial entiti
 ## The Five Pillars
 - **ICT risk management**: a documented framework owned by the management body, covering identification, protection, detection, response, recovery, learning and communication.
 - **ICT-related incident management and reporting**: classify incidents and report major ones to the competent authority through an initial notification, an intermediate report and a final report, on deadlines set in the technical standards.
-- **Digital operational resilience testing**: a risk-based testing programme for all in-scope entities, plus threat-led penetration testing (TLPT) at least every three years for entities identified by their authorities.
+- **Digital operational resilience testing**: a risk-based testing programme for in-scope entities other than microenterprises (Art. 24), plus threat-led penetration testing (TLPT) at least every three years for entities identified by their authorities.
 - **ICT third-party risk**: a register of information on all ICT service contracts, mandatory contract terms, exit strategies, and concentration-risk assessment.
 - **Information sharing**: voluntary arrangements for sharing cyber threat information among financial entities.
 

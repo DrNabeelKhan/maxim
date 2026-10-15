@@ -48,7 +48,7 @@ Use Core Web Vitals to measure and improve three aspects of real users' experien
 
 Values between "good" and "poor" are rated "needs improvement". A page passes when the 75th percentile of its real-user loads is "good" on all three.
 
-**Field data versus lab data.** Field data from the Chrome User Experience Report reflects real users and is what counts. Lab tools such as Lighthouse are for diagnosis and do not measure INP directly.
+**Field data versus lab data.** Field data from the Chrome User Experience Report reflects real users and is what counts. Lab tools such as Lighthouse are for diagnosis. Lighthouse's default page-load report has no user interactions, so it cannot report INP; its timespan mode and user flows can.
 
 ## Core Principles
 - **Field data decides.** A perfect lab score does not mean real users have a good experience.
@@ -112,7 +112,7 @@ FOR EACH FAILING METRIC
 - `composable-skills/frameworks/cicd/SKILL.md` — performance budgets in the pipeline
 
 ## Reference Materials
-- Google. "Web Vitals" and "Defining the Core Web Vitals metrics thresholds." web.dev.
+- Google. "Web Vitals" and "How the Core Web Vitals metrics thresholds were defined." web.dev.
 - Google. "Interaction to Next Paint (INP)." web.dev; INP became a Core Web Vital on 12 March 2024.
 - Google Search Central. "Understanding Core Web Vitals and Google search results."
 

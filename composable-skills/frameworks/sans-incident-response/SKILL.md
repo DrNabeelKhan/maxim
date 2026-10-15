@@ -34,7 +34,7 @@ Use the SANS incident response process to handle security incidents in a consist
 | Framework ID | `sans-incident-response` |
 | Category | Security — Incident Response |
 | Version | 2.0.0 |
-| Source | SANS Institute; Kral, *Incident Handler's Handbook* (SANS Reading Room, 2011) |
+| Source | SANS Institute; Kral, *Incident Handler's Handbook* (SANS white paper) |
 | Related guidance | NIST SP 800-61 (Rev. 2, 2012, four phases; Rev. 3, 2025, organised around CSF 2.0) |
 
 ## The Six Steps (PICERL)
@@ -110,9 +110,9 @@ LESSONS LEARNED: what to change
 - `composable-skills/frameworks/hipaa/SKILL.md` — health data breach notification
 
 ## Reference Materials
-- Kral, P. (2011). *The Incident Handler's Handbook.* SANS Institute Reading Room.
+- Kral, P. *Incident Handler's Handbook.* SANS Institute white paper (commonly dated 2011; SANS lists it as published 21 February 2012). sans.org/white-papers/33901.
 - Cichonski, P., Millar, T., Grance, T., & Scarfone, K. (2012). *Computer Security Incident Handling Guide.* NIST SP 800-61 Rev. 2.
-- NIST. (2025). *Incident Response Recommendations and Considerations for Cybersecurity Risk Management.* NIST SP 800-61 Rev. 3.
+- Nelson, A., Rekhi, S., Souppaya, M., & Scarfone, K. (2025). *Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile.* NIST SP 800-61 Rev. 3.
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

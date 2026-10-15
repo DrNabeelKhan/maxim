@@ -27,7 +27,7 @@ updated: 2026-10-15
 # Lean Startup
 
 ## Purpose
-Use the Lean Startup method to reduce the risk of building something nobody wants, by treating a new product's plan as a set of assumptions and testing the riskiest ones as cheaply and quickly as possible. Eric Ries described it in 2011, building on Steve Blank's customer development. The central loop is **Build, Measure, Learn**, and the goal of each turn is **validated learning**: evidence about customers, not just output.
+Use the Lean Startup method to reduce the risk of building something nobody wants, by treating a new product's plan as a set of assumptions and testing the riskiest ones as cheaply and quickly as possible. Eric Ries named it on his blog in 2008 and set it out in his 2011 book, building on Steve Blank's customer development. The central loop is **Build, Measure, Learn**, and the goal of each turn is **validated learning**: evidence about customers, not just output.
 
 ## Frameworks & Standards
 | Item | Value |
@@ -36,7 +36,7 @@ Use the Lean Startup method to reduce the risk of building something nobody want
 | Category | Product Research — Experimentation and Validation |
 | Version | 2.0.0 |
 | Originator | Eric Ries |
-| First published | 2011 |
+| First published | 2008 (blog post "The lean startup"); book 2011 |
 | Builds on | Steve Blank's customer development, *The Four Steps to the Epiphany* (2005) |
 
 ## Key Concepts
@@ -109,6 +109,7 @@ DECISION DATE for pivot or persevere:
 - `composable-skills/frameworks/design-thinking/SKILL.md` — discovery before validation
 
 ## Reference Materials
+- Ries, E. (2008, 8 September). "The lean startup." *Startup Lessons Learned* (blog).
 - Ries, E. (2011). *The Lean Startup.* Crown Business.
 - Blank, S. (2005). *The Four Steps to the Epiphany.* Cafepress / K&S Ranch.
 

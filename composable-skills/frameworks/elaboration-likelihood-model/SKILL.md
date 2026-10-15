@@ -34,7 +34,7 @@ Apply the Elaboration Likelihood Model to understand how people are persuaded an
 | Framework ID | `elaboration-likelihood-model` |
 | Category | Behavior Science — Persuasion |
 | Version | 2.0.0 |
-| Origin | Petty & Cacioppo (1986) |
+| Origin | Petty & Cacioppo, introduced around 1980–1981; comprehensive statement 1986 |
 | Classic study | Petty, Cacioppo & Goldman (1981): argument quality mattered under high personal involvement; source expertise mattered under low involvement |
 
 ## What Determines the Route

@@ -115,7 +115,7 @@ TRADE-OFFS accepted, and why:
 - NIST. (2011). SP 800-145, *The NIST Definition of Cloud Computing.*
 - Amazon Web Services. *AWS Well-Architected Framework.*
 - Microsoft. *Azure Well-Architected Framework.*
-- Google Cloud. *Google Cloud Architecture Framework.*
+- Google Cloud. *Google Cloud Well-Architected Framework* (formerly the Google Cloud Architecture Framework).
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

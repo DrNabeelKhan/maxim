@@ -36,7 +36,7 @@ Use COBIT, published by ISACA, to govern and manage enterprise information and t
 | Category | Enterprise Architecture — I&T Governance |
 | Version | 2.0.0 |
 | Owner | ISACA |
-| Current version | COBIT 2019 |
+| Current version | COBIT 2019, which ISACA is succeeding with COBIT 7 (the COBIT 7 Foundations certificate replaces the COBIT 2019 one on 27 October 2026). The structure below is COBIT 2019's; check COBIT 7 for changes. |
 | Related standards | ISO/IEC 38500 (governance of IT) · COSO · ITIL · ISO/IEC 27001 |
 
 ## Structure

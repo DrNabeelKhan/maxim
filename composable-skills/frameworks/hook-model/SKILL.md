@@ -155,7 +155,7 @@ OUTPUT: the weakest phase, the specific change, and the ethical assessment.
 
 ## Reference Materials
 - Eyal, N., with Hoover, R. (2014). *Hooked: How to Build Habit-Forming Products.* Portfolio / Penguin.
-- Eyal, N. (2019). *Indistractable: How to Control Your Attention and Choose Your Life.* BenBella Books.
+- Eyal, N., with Li, J. (2019). *Indistractable: How to Control Your Attention and Choose Your Life.* BenBella Books.
 - Fogg, B.J. (2009). "A Behavior Model for Persuasive Design." *Proceedings of Persuasive '09.* ACM.
 
 ---

@@ -36,7 +36,7 @@ Use design thinking to solve problems that are poorly defined, by starting from 
 | Framework ID | `design-thinking` |
 | Category | Product Research — Human-Centred Design |
 | Version | 2.0.0 |
-| Common models | Stanford d.school five modes · Design Council Double Diamond (2005) |
+| Common models | Stanford d.school five modes · Design Council Double Diamond (developed 2003, shared from 2004) |
 | Key references | Brown, "Design Thinking", *HBR* (2008) · Brown, *Change by Design* (2009) · Simon, *The Sciences of the Artificial* (1969) |
 
 ## Two Common Models
@@ -113,7 +113,7 @@ TEST: what will you watch for, and what would send you back to Define?
 ## Reference Materials
 - Brown, T. (2008). "Design Thinking." *Harvard Business Review*, June 2008.
 - Brown, T. (2009). *Change by Design.* Harper Business.
-- Design Council (2005). The Double Diamond design process model.
+- Design Council. "History of the Double Diamond." designcouncil.org.uk (model developed 2003, shared publicly from 2004).
 - Simon, H.A. (1969). *The Sciences of the Artificial.* MIT Press.
 
 ---

@@ -47,7 +47,7 @@ Use MITRE ATT&CK, a public knowledge base of adversary tactics and techniques ba
 - **Groups, software and campaigns**: documented threat actors and tools, linked to techniques.
 - **Mitigations and detections**: guidance for each technique.
 
-**Enterprise tactics** in recent versions: reconnaissance, resource development, initial access, execution, persistence, privilege escalation, defence evasion, credential access, discovery, lateral movement, collection, command and control, exfiltration, and impact.
+**Enterprise tactics** (15 as of ATT&CK v20.0, October 2026): reconnaissance, resource development, initial access, execution, persistence, privilege escalation, stealth, defense impairment, credential access, discovery, lateral movement, collection, command and control, exfiltration, and impact. ATT&CK v19 (April 2026) retired the former "defense evasion" tactic, splitting it into stealth (which keeps TA0005) and defense impairment (TA0112). Older reports and mappings use the earlier 14-tactic list.
 
 ## Core Principles
 - **Behaviour over indicators.** Techniques are harder for attackers to change than file hashes or IP addresses.

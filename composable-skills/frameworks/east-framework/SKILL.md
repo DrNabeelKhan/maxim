@@ -150,7 +150,7 @@ OUTPUT: changes under each heading, the single highest-leverage change, and how 
 - Service, O., Hallsworth, M., Halpern, D., Algate, F., Gallagher, R., Nguyen, S., Ruda, S., Sanders, M., et al. (2014). *EAST: Four Simple Ways to Apply Behavioural Insights.* The Behavioural Insights Team.
 - Dolan, P., Hallsworth, M., Halpern, D., King, D., & Vlaev, I. (2010). *MINDSPACE: Influencing Behaviour Through Public Policy.* Institute for Government and Cabinet Office.
 - Halpern, D. (2015). *Inside the Nudge Unit: How Small Changes Can Make a Big Difference.* WH Allen.
-- Hallsworth, M., List, J.A., Metcalfe, R.D., & Vlaev, I. (2017). "The behavioralist as tax collector: Using natural field experiments to enforce tax compliance." *Journal of Public Economics*, 148, 14–31.
+- Hallsworth, M., List, J.A., Metcalfe, R.D., & Vlaev, I. (2017). "The behavioralist as tax collector: Using natural field experiments to enhance tax compliance." *Journal of Public Economics*, 148, 14–31.
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-14, replacing a generated template stub._

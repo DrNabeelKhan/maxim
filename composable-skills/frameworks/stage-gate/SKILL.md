@@ -112,7 +112,7 @@ NEXT STAGE PLAN and resources, if go:
 
 ## Reference Materials
 - Cooper, R.G. (1990). "Stage-Gate systems: a new tool for managing new products." *Business Horizons*, 33(3), 44–54.
-- Cooper, R.G. *Winning at New Products.* Basic Books (first edition 1986; later editions).
+- Cooper, R.G. (1986). *Winning at New Products.* Addison-Wesley (later editions Basic Books).
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

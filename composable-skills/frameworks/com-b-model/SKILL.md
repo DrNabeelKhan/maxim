@@ -155,7 +155,7 @@ Mark any subtype diagnosed without evidence as an assumption.
 ## Reference Materials
 - Michie, S., van Stralen, M.M., & West, R. (2011). "The behaviour change wheel: A new method for characterising and designing behaviour change interventions." *Implementation Science*, 6, 42.
 - Michie, S., Atkins, L., & West, R. (2014). *The Behaviour Change Wheel: A Guide to Designing Interventions.* Silverback Publishing.
-- Michie, S., Richardson, M., Johnston, M., et al. (2013). "The behavior change technique taxonomy (v1) of 93 hierarchically clustered techniques." *Annals of Behavioral Medicine*, 46(1), 81–95.
+- Michie, S., Richardson, M., Johnston, M., et al. (2013). "The behavior change technique taxonomy (v1) of 93 hierarchically clustered techniques: Building an international consensus for the reporting of behavior change interventions." *Annals of Behavioral Medicine*, 46(1), 81–95.
 - Cane, J., O'Connor, D., & Michie, S. (2012). "Validation of the theoretical domains framework for use in behaviour change and implementation research." *Implementation Science*, 7, 37.
 
 ---

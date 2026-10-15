@@ -62,7 +62,7 @@ Sludge is the opposite of a good nudge: friction that makes it harder to do some
 - **There is no neutral design.** Order, defaults and wording always influence choice, so choose them deliberately.
 - **Defaults are decisions on the user's behalf.** Set them to what most people would choose if they had time and information.
 - **Preserve freedom of choice.** Opting out must be easy; otherwise the design is coercion, not a nudge.
-- **Nudge for good.** Thaler's test: would the people being nudged endorse it?
+- **Nudge for good.** Thaler and Sunstein's standard is that a nudge should make choosers better off "as judged by themselves"; Thaler also asks that nudges be transparent and easy to opt out of.
 - **Remove sludge as well as adding nudges.** Taking friction out of beneficial actions often matters as much as adding prompts.
 
 ## Applications & Use Cases
@@ -79,7 +79,7 @@ Sludge is the opposite of a good nudge: friction that makes it harder to do some
 - **Map the existing choice architecture first**, including the current default, the order of options and every step.
 - **Set defaults to the option most people would choose with full information**, and make changing it easy.
 - **Audit for sludge** in the paths that serve the user, such as cancelling, claiming, correcting or opting out.
-- **Apply Thaler's endorsement test** before shipping: would users approve of the nudge if it were explained to them?
+- **Apply an endorsement test** before shipping, as a practical check on the "as judged by themselves" standard: would users approve of the nudge if it were explained to them?
 - **Test against a control.** Nudges are hypotheses, and their effects vary by population and context.
 
 ## Prompt Template

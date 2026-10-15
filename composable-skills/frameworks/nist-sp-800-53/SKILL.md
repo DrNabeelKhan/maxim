@@ -114,7 +114,7 @@ CONTINUOUS MONITORING and POA&M:
 - NIST. (2020). SP 800-53 Rev. 5, *Security and Privacy Controls for Information Systems and Organizations.*
 - NIST. (2020). SP 800-53B, *Control Baselines for Information Systems and Organizations.*
 - NIST. (2022). SP 800-53A Rev. 5, *Assessing Security and Privacy Controls in Information Systems and Organizations.*
-- NIST. (2018). SP 800-37 Rev. 2, *Risk Management Framework for Information Systems and Organizations.*
+- NIST. (2018). SP 800-37 Rev. 2, *Risk Management Framework for Information Systems and Organizations: A System Life Cycle Approach for Security and Privacy.*
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Revised 2026-10-15: generic template sections replaced with authored content._

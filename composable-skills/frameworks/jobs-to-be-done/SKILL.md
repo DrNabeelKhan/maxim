@@ -137,7 +137,7 @@ OUTPUT: the job, the real competition, and which force to strengthen or weaken.
 - Christensen, C.M., Hall, T., Dillon, K., & Duncan, D.S. (2016). *Competing Against Luck: The Story of Innovation and Customer Choice.* Harper Business.
 - Christensen, C.M., Hall, T., Dillon, K., & Duncan, D.S. (2016). "Know Your Customers' 'Jobs to Be Done'." *Harvard Business Review*, September 2016.
 - Ulwick, A.W. (2016). *Jobs to Be Done: Theory to Practice.* Idea Bite Press.
-- Moesta, B. (2020). *Demand-Side Sales 101: Stop Selling and Help Your Customers Make Progress.* Lioncrest.
+- Moesta, B., with Engle, G. (2020). *Demand-Side Sales 101: Stop Selling and Help Your Customers Make Progress.* Lioncrest.
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

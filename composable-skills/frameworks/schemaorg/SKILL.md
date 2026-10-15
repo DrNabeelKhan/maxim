@@ -45,7 +45,7 @@ Use Schema.org vocabulary to describe the things a page is about, such as an org
 - **`sameAs`** links an entity to its other authoritative profiles.
 - **Nesting and references** connect entities, for example an article's `author` pointing to a `Person` by `@id`.
 
-**Rich results are a subset.** Google supports only some types for rich results, and it has restricted or retired several over time, for example FAQ and HowTo rich results were restricted in 2023. Check the current list rather than assuming a type earns a rich result.
+**Rich results are a subset.** Google supports only some types for rich results, and it has restricted or retired several over time, for example HowTo rich results were deprecated in September 2023, and FAQ rich results stopped appearing in Google Search on 7 May 2026 (the FAQPage type itself remains valid in Schema.org). Check the current list rather than assuming a type earns a rich result.
 
 ## Core Principles
 - **Markup must match visible content.** Marking up questions, reviews or prices that are not on the page is against Google's guidelines.
@@ -111,7 +111,8 @@ VALIDATION: Schema Markup Validator and Rich Results Test results.
 ## Reference Materials
 - Schema.org. *Schemas and documentation.* schema.org.
 - Google Search Central. *Introduction to structured data* and *General structured data guidelines.*
-- Google Search Central blog. Changes to FAQ and HowTo rich results, August 2023.
+- Google Search Central blog. (2023, 8 August). "Changes to HowTo and FAQ rich results."
+- Google Search Central. "FAQ (FAQPage) structured data" documentation changelog: FAQ rich results no longer shown from 7 May 2026.
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

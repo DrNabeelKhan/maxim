@@ -34,7 +34,7 @@ Use the California Consumer Privacy Act (CCPA), as amended by the California Pri
 | Framework ID | `ccpa` |
 | Category | Privacy — Regulation |
 | Version | 2.0.0 |
-| Law | California Civil Code §1798.100 et seq.; CCPA effective 2020, amended by the CPRA (Proposition 24, 2020), effective 2023 |
+| Law | California Civil Code §1798.100 et seq.; CCPA effective 2020, amended by the CPRA (Proposition 24, approved November 2020), operative 1 January 2023 |
 | Enforcement | California Privacy Protection Agency and the California Attorney General |
 | Regulations | Agency regulations, updated over time, including on risk assessments, cybersecurity audits and automated decision-making technology; check the current text |
 

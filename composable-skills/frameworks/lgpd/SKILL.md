@@ -37,7 +37,7 @@ Apply the LGPD, Brazil's General Data Protection Law, to process personal data l
 | Version | 2.0.0 |
 | Instrument | Law No. 13,709/2018, amended by Law No. 13,853/2019 (which created the ANPD) |
 | In force | September 2020; administrative sanctions enforceable from August 2021 |
-| Authority | Autoridade Nacional de Proteção de Dados (ANPD), which issues implementing resolutions |
+| Authority | The ANPD, Brazil's national data protection authority, which issues implementing resolutions. Law No. 15,352/2026 restructured it as a special-nature autarchy with regulatory-agency status; check the current text of Art. 55-A for its exact name. |
 | Maximum fine | Up to 2% of the organisation's revenue in Brazil, limited to R$50 million per infraction (Art. 52) |
 
 ## Legal Bases (Art. 7)
@@ -118,7 +118,8 @@ INCIDENT readiness (Art. 48; current ANPD resolution):
 
 ## Reference Materials
 - Brazil. Law No. 13,709 of 14 August 2018 (Lei Geral de Proteção de Dados Pessoais), as amended.
-- Autoridade Nacional de Proteção de Dados (ANPD). Resolutions and guidance. gov.br/anpd.
+- ANPD. Resolutions and guidance. gov.br/anpd.
+- Brazil. Law No. 15,352 of 25 February 2026 (restructures the ANPD as a special-nature autarchy and amends the LGPD).
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Revised 2026-10-15: generic template sections replaced with authored content; legal bases completed to the ten in Art. 7._

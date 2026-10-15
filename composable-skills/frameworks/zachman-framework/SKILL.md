@@ -84,7 +84,7 @@ Earlier versions name the rows planner, owner, designer, builder, subcontractor 
 You are applying the Zachman Framework 3.0 (Zachman 1987; 2011).
 
 SCOPE: [[...]]
-FOR EACH ROW (executive · business management · architect · engineer · technician)
+FOR EACH ROW (executive · business management · architect · engineer · technician · enterprise)
   FOR EACH COLUMN (what · how · where · who · when · why)
     existing artifact? / gap / needed for current decision?
 PRIORITY GAPS and the method to fill them:
