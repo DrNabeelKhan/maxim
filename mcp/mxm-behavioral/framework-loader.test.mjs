@@ -210,11 +210,12 @@ test("corpus: authoring progress (update deliberately as batches land)", () => {
   //   2026-10-15  55 / 4 / 26                         (batch D: design and UX)
   //   2026-10-15  61 / 4 / 20                         (batch E: engineering)
   //   2026-10-15  69 / 4 / 12                         (batch F: EA and governance)
+  //   2026-10-15  76 / 4 / 5                          (batch G: security)
   const defs = [...loadDefinitions(DIR).values()];
   const count = (s) => defs.filter((d) => d.status === s).length;
   assert.deepEqual(
     { authored: count("authored"), partial: count("partial"), stub: count("stub") },
-    { authored: 69, partial: 4, stub: 12 },
+    { authored: 76, partial: 4, stub: 5 },
   );
 });
 

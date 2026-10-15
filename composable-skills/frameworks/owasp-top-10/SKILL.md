@@ -1,14 +1,16 @@
 ---
 skill_id: owasp-top-10
 name: OWASP Top 10
-version: 1.0.0
+version: 2.0.0
 category: security
 type: framework
 frameworks: []
 triggers:
-  - apply owasp top 10
-  - use owasp-top-10 framework
-  - owasp top 10 analysis
+  - owasp top 10
+  - web application security
+  - broken access control
+  - injection vulnerability
+  - secure code review
 collaborates_with:
   - penetration-tester
   - security-auditor
@@ -16,106 +18,102 @@ collaborates_with:
   - security-architect
   - backend-architect
 ethics_required: true
-priority: medium
-tags: [security, framework]
+priority: high
+tags: [security, framework, owasp, appsec, web, vulnerabilities]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # OWASP Top 10
 
 ## Purpose
-Apply OWASP Top 10 to identify, assess, and mitigate security risks in systems, processes, and data handling.
+Use the OWASP Top 10 as an awareness baseline for the most critical security risks to web applications. Published by the Open Worldwide Application Security Project (OWASP), it ranks categories of risk using vulnerability data contributed by organisations and a community survey. It is a starting point, not a complete standard: OWASP itself recommends the Application Security Verification Standard (ASVS) when you need testable requirements.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `owasp-top-10` |
-| Category | Security |
-| Version | 1.0.0 |
+| Category | Security — Application Security |
+| Version | 2.0.0 |
 | Owner | OWASP Foundation |
-| Maturity | Established (2003, updated 2021) |
-| Primary References | Open Web Application Security Project |
+| Edition listed below | OWASP Top 10:2021. OWASP has been publishing a 2025 update; check owasp.org for the current edition before citing category numbers. |
+| Related OWASP projects | ASVS (verification requirements) · API Security Top 10 · Top 10 for LLM Applications · Cheat Sheet Series |
+
+## The 2021 Categories
+- **A01 Broken Access Control.**
+- **A02 Cryptographic Failures.**
+- **A03 Injection** (including cross-site scripting).
+- **A04 Insecure Design.**
+- **A05 Security Misconfiguration.**
+- **A06 Vulnerable and Outdated Components.**
+- **A07 Identification and Authentication Failures.**
+- **A08 Software and Data Integrity Failures.**
+- **A09 Security Logging and Monitoring Failures.**
+- **A10 Server-Side Request Forgery (SSRF).**
+
+## Core Principles
+- **An awareness document, not a checklist.** Being free of the Top 10 does not make an application secure.
+- **Prefer secure defaults and frameworks** that prevent whole classes of flaws, such as parameterised queries and output encoding.
+- **Enforce access control on the server**, deny by default, for every request.
+- **Design matters.** Insecure design cannot be fixed by perfect implementation; threat-model early.
+- **Know your components.** Track dependencies and patch known vulnerabilities.
+
+## Applications & Use Cases
+| Use Case | Application | Category |
+|---|---|---|
+| Developer training | Teach each category with examples from your stack | All |
+| Code review | Review checklists derived from the categories | A01, A03 |
+| Threat modelling | Identify design-level risks before building | A04 |
+| Dependency management | Software composition analysis and patching | A06 |
+| Penetration test scoping | Make sure tests cover each category | All |
+| Logging design | Log security events and alert on them | A09 |
+
+## Usage Guidelines
+- **Train developers on the categories** using examples in your own languages and frameworks.
+- **Use the ASVS for testable requirements** and the Top 10 for awareness.
+- **Automate what can be automated**, such as dependency scanning and static analysis, and test access control manually.
+- **Threat-model new features** to catch insecure design.
+- **Check the current edition** before citing category numbers.
 
 ## Prompt Template
 ```
-You are applying the OWASP Top 10 framework.
+You are reviewing an application against the OWASP Top 10 (2021; check for newer edition).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: security
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of OWASP Top 10 applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with OWASP Top 10 principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+APPLICATION and stack: [[...]]
+FOR EACH CATEGORY A01-A10:
+  exposure in this application · existing controls · gaps · test method
+TOP RISKS by likelihood and impact:
+REMEDIATION order:
 ```
 
-## Core Principles
-- **Foundation**: OWASP Top 10 provides structured approach to security
-- **Application**: Use when facing decisions requiring security guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply OWASP Top 10 to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Open Web Application Security Project](https://owasp.org/www-project-top-ten/) - OWASP Foundation
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS apply principle of least privilege
-- NEVER store sensitive data in plaintext or logs
-- ALWAYS follow responsible disclosure practices
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Test only systems you are authorised to test.**
+- **Report vulnerabilities responsibly** and protect users until fixes are deployed.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to OWASP Top 10 principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Static and dynamic analysis in the pipeline.
+- Manual testing for access control and business logic.
+- Penetration tests by qualified testers.
+
+## Success Metrics
+- Vulnerabilities by category found in testing versus production.
+- Mean time to remediate by severity.
+
+## Collaboration Protocol
+- Inbound from: `backend-architect` · `security-architect`
+- Outbound to: `penetration-tester` · `ethical-hacker` · `security-auditor`
+- Cross-framework: DevSecOps for automation; API design for API-specific risks; NIST CSF for program context.
+
+## Related Skills
+- `composable-skills/frameworks/devsecops/SKILL.md` — automating security checks
+- `composable-skills/frameworks/api-design/SKILL.md` — API security
+- `composable-skills/frameworks/mitre-attck/SKILL.md` — attacker techniques
+
+## Reference Materials
+- OWASP Foundation. (2021). *OWASP Top 10:2021.* owasp.org/Top10.
+- OWASP Foundation. *Application Security Verification Standard (ASVS).*
+- OWASP Foundation. *OWASP Cheat Sheet Series.*
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._
