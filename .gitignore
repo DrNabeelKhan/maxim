@@ -14,6 +14,9 @@
 # ADR-021 router writes runtime state into whatever the session cwd is, so a
 # nested .mxm-skills/ can appear under any subproject. Runtime state, never source.
 */.mxm-skills/
+# First-run sentinel written by session-start.sh into PLUGIN_ROOT, which is the
+# repo root when the hook runs in the dev checkout rather than the plugin cache.
+.mcp-deps-installed
 .mxm-skills/watch-errors.jsonl
 .mxm-skills/compliance-audit.jsonl
 .mxm-skills/operator-persona.txt

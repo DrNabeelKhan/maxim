@@ -31,8 +31,9 @@ Green = native, Yellow = degraded, Red = absent.
 > **Read the Desktop and Web columns as the Projects CHAT feature only.** Claude Code running inside the
 > Claude Desktop app is a Code CLI surface and scores with that column, not this one: hooks fire there and
 > MCP attaches. Conflating the two understated Maxim on Desktop for several releases. The earlier
-> "hooks are Claude Code CLI-only" framing was about the Projects surface, and current Claude Code docs
-> state hooks run on Desktop.
+> "hooks are Claude Code CLI-only" framing was about the Projects surface. The Desktop claim rests on
+> direct observation (2026-09, CC 2.1.220): the docs list plugin hooks as "not stated" for the Code tab,
+> so this is observed behaviour, not documented behaviour, and should be re-checked on newer versions.
 
 | Capability | Code CLI | Code IDE | Cowork | Desktop **Projects** | Web **Projects** |
 |---|---|---|---|---|---|

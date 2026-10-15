@@ -231,4 +231,42 @@ fi
   echo "═══════════════════════════════════════════════════════"
 } >&2
 
+# ----- Deliver Maxim's operating standard to the model -----
+# SessionStart STDOUT becomes Claude's context. Everything above this block
+# writes to stderr, which the user can see but the model never receives, so
+# until this block existed the hook delivered nothing to the model at all.
+# The plugin-root CLAUDE.md is NOT loaded for plugin consumers (claude plugin
+# validate says so), which makes this the only always-on route on Claude Code
+# surfaces: CLI, IDE and the Desktop app's Code tab. Desktop/Web Projects get
+# the same rules from documents/cross-surface/maxim-project-instructions.md.
+# Values cross into node through env vars, never string interpolation.
+# Fail-soft: any error emits nothing and the session starts normally.
+if command -v node >/dev/null 2>&1; then
+  MXM_CTX_FILE="${PLUGIN_ROOT}/distributions/claude-plugin/session-context.md" \
+  MXM_PROJECT="${PROJECT_ID:-unknown}" \
+  MXM_HANDOFF="${HANDOFF_STATE:-none}" \
+  MXM_GAPS="${GAP_COUNT:-0}" \
+  MXM_REVIEW="${PENDING_COUNT:-0}" \
+  MXM_DRIFT="${WATCH_DRIFT:-0}" \
+  node -e '
+const fs = require("fs");
+const e = process.env;
+if (!e.MXM_CTX_FILE || !fs.existsSync(e.MXM_CTX_FILE)) process.exit(0);
+const drift = String(e.MXM_DRIFT || "0").trim();
+const summary = [
+  "",
+  "## This session",
+  "",
+  "- Project: " + e.MXM_PROJECT,
+  "- Handoff state: " + (e.MXM_HANDOFF || "none"),
+  "- Open skill gaps: " + e.MXM_GAPS + " · Pending review: " + e.MXM_REVIEW,
+  "- Drift detected at start: " + drift + (drift !== "0" ? " (run /mxm-watch for details)" : ""),
+].join("\n");
+const ctx = fs.readFileSync(e.MXM_CTX_FILE, "utf8") + summary + "\n";
+process.stdout.write(JSON.stringify({
+  hookSpecificOutput: { hookEventName: "SessionStart", additionalContext: ctx },
+}));
+' 2>/dev/null || true
+fi
+
 exit 0

@@ -15,7 +15,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/session-end.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/session-end.sh",
+            "timeout": 60
           }
         ]
       }
