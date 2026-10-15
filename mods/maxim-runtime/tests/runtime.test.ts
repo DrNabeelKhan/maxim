@@ -373,13 +373,17 @@ describe('framework tool', () => {
   test('answers a framework by name from the definition files', async ($, on) => {
     world(on)
     const r = await $.tool.call({ tool: 'mcp__maxim-runtime__framework', name: 'Prospect Theory' } as never)
-    expect(String(r.text ?? JSON.stringify(r.result))).toContain('Losses weigh about twice as much as gains')
-    expect(String(r.text ?? JSON.stringify(r.result))).not.toContain('Copyright')
+    // The engine accepts a plugin tool's result only as text (or content blocks),
+    // never an MCP { content } envelope: v1.3.11 shipped that and the live call failed.
+    expect(typeof r.result).toBe('string')
+    expect(String(r.result)).toContain('Losses weigh about twice as much as gains')
+    expect(String(r.result)).not.toContain('Copyright')
   })
 
   test('says so when nothing matches', async ($, on) => {
     world(on)
     const r = await $.tool.call({ tool: 'mcp__maxim-runtime__framework', name: 'zzz unknown' } as never)
-    expect(String(r.text ?? JSON.stringify(r.result))).toContain('No Maxim framework matches')
+    expect(typeof r.result).toBe('string')
+    expect(String(r.result)).toContain('No Maxim framework matches')
   })
 })

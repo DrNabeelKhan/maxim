@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.11 · **Last verified:** 2026-10-15 (v1.3.11 — `maxim-runtime` mod added as Section 5a; no capability-count change)
+**Version:** v1.3.11.1 · **Last verified:** 2026-10-15 (v1.3.11.1 — `maxim-runtime` mod (Section 5a) framework-tool fix; no capability-count change)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 

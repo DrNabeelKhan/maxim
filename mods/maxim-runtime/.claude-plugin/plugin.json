@@ -1,6 +1,6 @@
 {
   "name": "maxim-runtime",
-  "version": "1.3.11",
+  "version": "1.3.11.1",
   "description": "Maxim's in-engine runtime for Claude Code (function hooks): the operating standard in the system prompt, a hybrid keyword and model router shown in the status line, enforced junction, secret-commit and CSO guards, confidence-tag checks, a /maxim panel, and an in-process framework lookup. Companion to the maxim plugin; needs Claude Code with function-hook support.",
   "author": {
     "name": "Dr. Nabeel Khan",

@@ -8,6 +8,29 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.11.1 — 2026-10-15 — maxim-runtime framework tool fix, and the runtime verified live
+
+Patch to the `maxim-runtime` mod. No change to the `maxim` plugin or its counts.
+
+### Fixed — framework tool answered in a shape the engine refuses (BUG-020)
+
+`mcp__maxim-runtime__framework` returned an MCP-style `{ content: [...] }` envelope. The engine accepts a plugin tool's result only as text or content blocks, so every call failed with "a result that does not match its output shape". It now returns the definition's text. The engine tests missed it because their mocked bottom does not apply the engine's output-shape check; they now assert the result is a string.
+
+### Verified live (Claude Code 2.1.300, Desktop app Code tab, v1.3.11 installed)
+
+v1.3.11 loaded into the running session at install, with no restart, so its guards were exercised for real:
+
+- **Junction guard:** a Write through a real Windows junction named `.mxm-system` was refused, naming the junction's target.
+- **Secret-commit guard:** in a scratch repository, a clean commit went through (so `$.process` works in the Desktop app's Code tab, which the audit had flagged as unknown), and a commit staging a fake AWS key was refused, naming `app.env (AWS access key)` without the value.
+- **Framework tool:** failed as above; fixed here.
+- Still to observe after a restart: the status-line route and `/maxim`.
+
+### Operator actions
+
+Run `claude plugin marketplace update maxim-packs`, then `claude plugin update maxim-runtime@maxim-packs` and `claude plugin update maxim@maxim-packs`, then restart Claude (or run `/reload-plugins`).
+
+---
+
 ## v1.3.11 — 2026-10-15 — maxim-runtime: Maxim moves into the engine (Claude Code mods)
 
 Feature release. Adds a second, optional plugin to the marketplace, **`maxim-runtime`**, built on Claude Code's function hooks ("mods"). No change to the `maxim` plugin's capability counts (91 agents · 52 skills · 50 commands · 9 MCPs/95 tools · 16 hook scripts · 86 frameworks · 22 ADRs); the runtime is one hooks module in its own plugin.

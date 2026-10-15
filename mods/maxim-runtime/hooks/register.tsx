@@ -380,7 +380,9 @@ export const register: Register = (on, options) => {
     const text = found
       ? `# ${found.slug}\n\n${definitionBody(found.text)}`
       : `No Maxim framework matches "${query}". Use a name or slug from composable-skills/frameworks, e.g. "prospect-theory".`
-    return { result: { content: [{ type: 'text' as const, text }], isError: !found } }
+    // A plugin tool's result is its text (a string), not an MCP { content } envelope:
+    // the engine checks the shape and refuses anything else.
+    return found ? { result: text } : { result: text, isError: true }
   })
 
   // ---------------------------------------------------------------- /maxim
