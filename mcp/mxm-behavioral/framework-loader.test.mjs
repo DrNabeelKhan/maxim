@@ -79,11 +79,24 @@ test("resolves by slug, lowercase name, and full parenthetical name", () => {
 
 // ------------------------------------------------- backwards compatibility
 
-test("a curated framework still wins over a same-named definition", () => {
+test("a curated entry wins over a definition that is only a stub", () => {
+  // nudge-theory on disk is generated template text; the curated entry is real.
+  const curated = { "Nudge Theory": { description: "curated nudge", when_to_use: "x", components: ["a"], application_steps: ["1. b"] } };
+  const r = createResolver({ curated, dir: DIR });
+  const hit = r.resolve("Nudge Theory");
+  assert.equal(hit.source, "curated");
+  assert.equal(hit.detail.description, "curated nudge");
+});
+
+test("an authored definition outranks the curated entry for the same framework", () => {
+  // Authoring a definition must be what changes the tool's answer, otherwise the
+  // curated map silently shadows every definition that gets written.
   const r = createResolver({ curated: CURATED, dir: DIR });
   const hit = r.resolve("Fogg Behavior Model");
-  assert.equal(hit.source, "curated");
-  assert.equal(hit.detail.description, "curated fogg");
+  assert.equal(hit.source, "definition");
+  assert.equal(hit.status, "authored");
+  assert.notEqual(hit.detail.description, "curated fogg");
+  assert.match(hit.detail.description, /Motivation/);
 });
 
 test("unknown framework returns null rather than a wrong guess", () => {
@@ -123,17 +136,20 @@ test("classifies the corpus into authored, partial and stub", () => {
   const count = (s) => defs.filter((d) => d.status === s).length;
   // Pinned on purpose. If someone authors a stub, these numbers move and this
   // test fails loudly, which is the signal to update them deliberately.
-  assert.equal(count("stub"), 63);
+  // 2026-10-14: 63 -> 59 stubs, 18 -> 22 authored, after authoring the four moat
+  // frameworks (Fogg, COM-B, EAST, Hook).
+  assert.equal(count("stub"), 59);
   assert.equal(count("partial"), 4);
-  assert.equal(count("authored"), 18);
+  assert.equal(count("authored"), 22);
 });
 
 test("known stubs are stubs and known authored definitions are authored", () => {
   const defs = loadDefinitions(DIR);
-  for (const s of ["togaf", "owasp-top-10", "fogg-behavior-model", "nist-cybersecurity-framework"]) {
+  for (const s of ["togaf", "owasp-top-10", "cialdinis-6-principles", "nist-cybersecurity-framework"]) {
     assert.equal(defs.get(s).status, "stub", `${s} should be a stub`);
   }
-  for (const s of ["prospect-theory", "self-determination-theory", "no-fabrication"]) {
+  for (const s of ["prospect-theory", "self-determination-theory", "no-fabrication",
+                   "fogg-behavior-model", "com-b-model", "east-framework", "hook-model"]) {
     assert.equal(defs.get(s).status, "authored", `${s} should be authored`);
   }
 });
@@ -160,7 +176,8 @@ test("reviewed aliases resolve to the framework they mean", () => {
   const r = createResolver({ curated, dir: DIR });
   assert.equal(r.resolve("NIST CSF").name, "NIST Cybersecurity Framework");
   assert.equal(r.resolve("Hook Canvas").name, "Hook Model");
-  assert.equal(r.resolve("Hook Canvas").source, "curated");
+  // hook-model is now authored, so the alias reaches the definition, not the curated entry.
+  assert.equal(r.resolve("Hook Canvas").source, "definition");
 });
 
 test("frameworks that merely share a word are NOT aliased", () => {

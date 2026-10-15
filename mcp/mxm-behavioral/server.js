@@ -156,13 +156,15 @@ server.tool(
     // one-letter word, so every long definition would score as relevant. Here the
     // resolver only fills in content for the frameworks already chosen.
     const result = top3.map((r) => {
-      const hit = r.details ? null : frameworks.resolve(r.framework);
-      const authored = hit && hit.status !== "stub" ? hit.detail : null;
-      const d = r.details || authored;
+      // Same resolver as get_framework_details, so both tools describe a framework
+      // identically: an authored definition first, then the curated entry.
+      const hit = frameworks.resolve(r.framework);
+      const usable = hit && hit.status !== "stub" ? hit.detail : null;
+      const d = usable || r.details;
       return {
         framework: r.framework,
         relevance_score: r.score,
-        status: r.details ? "authored" : hit ? hit.status : "unknown",
+        status: hit ? hit.status : r.details ? "authored" : "unknown",
         description: d?.description || "See documents/reference/FRAMEWORKS_MASTER.md for details",
         when_to_use: d?.when_to_use || "General application",
         application_steps: d?.application_steps || ["Consult documents/reference/FRAMEWORKS_MASTER.md"],

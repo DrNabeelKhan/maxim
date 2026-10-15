@@ -16,9 +16,10 @@ Behavioral science framework selection and audit MCP server. Returns structured 
 
 `apply_framework` and `get_framework_details` resolve a framework in this order:
 
-1. **Curated** — 8 hand-written entries in `server.js`: Fogg Behavior Model · COM-B · EAST · Hook Model · Nudge Theory · Cialdini's Principles · AIDA · Jobs-to-be-Done.
-2. **Reviewed aliases** — a short explicit list in `framework-loader.mjs` (for example `NIST CSF`). Deliberately not fuzzy: names that merely share a word, such as Hero's Journey and User Journey Mapping, are different frameworks.
-3. **On-disk definitions** — every `composable-skills/frameworks/<slug>/SKILL.md`, loaded lazily on first use.
+1. **Authored definition** — if `composable-skills/frameworks/<slug>/SKILL.md` for that framework is authored, it is the answer. This is what makes writing a definition change the tool's output.
+2. **Curated** — 8 compact hand-written entries in `server.js`: Fogg Behavior Model · COM-B · EAST · Hook Model · Nudge Theory · Cialdini's Principles · AIDA · Jobs-to-be-Done. Used when the definition for that framework is still a stub. Fogg, COM-B, EAST and Hook now have authored definitions, so the curated entries serve Nudge, Cialdini, AIDA and JTBD.
+3. **Reviewed aliases** — a short explicit list in `framework-loader.mjs` (for example `NIST CSF`). Deliberately not fuzzy: names that merely share a word, such as Hero's Journey and User Journey Mapping, are different frameworks.
+4. **Any other definition** — every remaining `SKILL.md`, loaded lazily on first use.
 
 Each answer carries a `status`:
 

@@ -229,14 +229,23 @@ export function createResolver({ curated = {}, dir, onLoad } = {}) {
     return { name: d.name, detail: d.detail, source: "definition", status: d.status, generic_fields: d.templated, path: d.path };
   };
 
+  /** Curated entry k, unless an authored definition of the same framework exists. */
+  function preferAuthored(k) {
+    ensure();
+    const slug = index.get(normalize(k));
+    if (slug && defs.get(slug).status === "authored") return fromDef(slug);
+    return fromCurated(k);
+  }
+
   function resolve(query) {
     const q = String(query ?? "").trim();
     if (!q) return null;
 
-    // 1. Curated, exact then case-insensitive. Preserves prior behaviour exactly.
-    if (curated[q]) return fromCurated(q);
-    const ci = Object.keys(curated).find((k) => k.toLowerCase() === q.toLowerCase());
-    if (ci) return fromCurated(ci);
+    // 1. Curated, exact then case-insensitive. An AUTHORED definition of the same
+    //    framework outranks its curated entry, so authoring a definition is what
+    //    changes the tool's answer. A curated entry still beats a stub or partial.
+    const ck = curated[q] ? q : Object.keys(curated).find((k) => k.toLowerCase() === q.toLowerCase());
+    if (ck) return preferAuthored(ck);
 
     ensure();
     const nq = normalize(q);
@@ -244,7 +253,7 @@ export function createResolver({ curated = {}, dir, onLoad } = {}) {
     // 2. Reviewed aliases, which may point at a curated name or a definition slug.
     if (ALIASES[nq]) {
       const target = ALIASES[nq];
-      if (curated[target]) return fromCurated(target);
+      if (curated[target]) return preferAuthored(target);
       if (defs.has(target)) return fromDef(target);
     }
 
