@@ -8,6 +8,48 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.10 — 2026-10-15 — Every framework definition authored and wired; routing descriptions; session context reaches the model
+
+Feature release. No capability-count change (91 agents · 52 skills · 50 commands · 9 MCPs/95 tools · 16 hooks · 86 frameworks · 22 ADRs).
+
+### Why
+
+Mr. Khan reported "The tool has no Prospect Theory module." It was systemic: `mxm-behavioral` recommended 68 frameworks but could only explain 8, so 60 were recommended and then reported "not found." The definitions existed (85 `composable-skills/frameworks/*/SKILL.md` files), but the MCP never read them, and 63 of them were generated template text.
+
+### Fixed — `mxm-behavioral` reads all 85 definitions and reports their status honestly
+
+- **New `framework-loader.mjs`** maps the uniform 12-section definition template onto the detail shape the tools return. Resolution order: authored definition › curated entry › reviewed alias › other definitions › partial match. `recommend_frameworks` ranking is deliberately unchanged (77/77 regression queries identical).
+- **Status is computed, not declared** (`authored` / `partial` / `stub`). A field counts as template text if it matches another definition after name substitution, or one of 16 frozen fingerprints (`template-fingerprints.json`, from the pre-authoring corpus). This stops the last stub of a group being misreported as authored. A stub returns a plain "not yet authored" message, never the filler.
+- **21 tests** (`framework-loader.test.mjs`), including a pinned corpus count that records each authoring batch.
+
+### Added — all 85 framework definitions authored (from 18 authored · 4 partial · 63 stub to 85 · 0 · 0)
+
+- 63 stubs written from scratch and 4 partials revised, in batches: behaviour and persuasion, content and growth, search and generative-engine visibility, product strategy and delivery, design and UX, engineering, enterprise architecture and governance, security, and privacy and regulatory. Each has framework-specific purpose, components, use cases, steps, prompt template, ethics and real references.
+- **Primary-source citation verification.** Eight parallel verifiers checked every reference and checkable fact against publisher and DOI records, standards bodies, regulators and the legal texts. Each claimed error was re-checked before editing. 30 files corrected (`12a6e48`), including frameworks superseded during 2025–26: OWASP Top 10:2025, MITRE ATT&CK v19/v20 (Defense Evasion split), DORA's five delivery metrics, ArchiMate 4, ITIL Version 5, COBIT 7, Google retiring FAQ rich results, and Brazil's Law 15,352/2026 restructuring the ANPD.
+- Regulatory definitions (GDPR, CCPA, HIPAA, PCI DSS, FedRAMP, DORA, LGPD, NIST SP 800-53) carry an explicit "not legal advice" guideline.
+
+### Fixed — routing tier was invisible to the host
+
+- `description` frontmatter added to all 52 skills and 24 dispatchable agents (previously 5 and 1 that a YAML parser accepts). The executive offices had been advertised as "Agent from maxim plugin."
+- Invalid YAML frontmatter repaired in `wiki-ingest` and `ui-ux-pro-max`.
+
+### Fixed — SessionStart context now reaches the model (Claude Code CLI and the Desktop app's Code tab)
+
+- The session-start summary was written to stderr, which reaches only the user. It now goes out as `hookSpecificOutput.additionalContext`, together with `distributions/claude-plugin/session-context.md`. Plugin-root `CLAUDE.md` is not loaded for plugin consumers, so this is how Maxim's standard reaches the model.
+- The SessionEnd hook timeout is raised to 60 s (the default budget is 1.5 s).
+
+### Changed
+
+- Docs now separate **Claude Code running in the Desktop app's Code tab** (full fidelity, verified: hooks and all 9 MCP servers) from **Desktop Projects chat** (unchanged, not tested). This replaces the stale "hooks are CLI-only" claim.
+- Plugin author URL now points to nabeelkhan.com; `homepage` stays maxim.isystematic.com.
+- License Worker (`cloudflare-worker/`, deployed separately): Stripe webhooks are gated on event ownership, so events from other products on the shared iSystematic Stripe account are acknowledged without action instead of returning 400 and risking endpoint disablement.
+
+### Operator actions
+
+Run `claude plugin marketplace update maxim-packs`, then `claude plugin update maxim@maxim-packs`, then restart Claude. The license Worker change is deployed with `wrangler deploy` from `cloudflare-worker/`, not by the plugin update.
+
+---
+
 ## v1.3.9.1 — 2026-07-21 — MCP reliability: complete-not-just-present dep check + version-independent Desktop launcher
 
 Patch. Fixes two stacked bugs that took **every `mxm-*` MCP server down in Claude Desktop** on the operator's machine after a plugin update (BUG-014 + BUG-015). No capability-count change (91 · 52 · 50 · 9/95 · 16 · 22).

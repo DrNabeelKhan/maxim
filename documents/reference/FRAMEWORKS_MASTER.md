@@ -944,7 +944,7 @@
 | **Owner**         | ISACA                                          |
 | **Purpose**       | IT governance and management                   |
 | **Official Docs** | [isaca.org/cobit](https://www.isaca.org/cobit) |
-| **Maturity**      | Established (1996, COBIT 2019)                 |
+| **Maturity**      | Established (1996, COBIT 2019; COBIT 7 from Oct 2026) |
 
 #### Governance Objectives
 
@@ -974,7 +974,7 @@
 | **Owner**         | Axelos                                                                           |
 | **Purpose**       | IT service management                                                            |
 | **Official Docs** | [axelos.com/itil](https://www.axelos.com/certifications/itil-service-management) |
-| **Maturity**      | Established (1989, ITIL 4 2019)                                                  |
+| **Maturity**      | Established (1989; ITIL 4 2019, ITIL Version 5 2026)                             |
 
 #### Service Value System
 

@@ -83,14 +83,14 @@ const FRAMEWORK_DETAILS = {
   },
 };
 
-// Framework lookup: the curated details above win, then the on-disk definitions at
-// composable-skills/frameworks/*/SKILL.md. Before this, recommend_frameworks offered
+// Framework lookup: an authored on-disk definition at
+// composable-skills/frameworks/*/SKILL.md wins, then the curated details above. Before this, recommend_frameworks offered
 // 68 frameworks while apply_framework and get_framework_details knew only the 8
 // above, so the tool recommended frameworks it then said did not exist.
 //
-// 63 of the on-disk definitions are generated template text with no
-// framework-specific content. Those resolve with status "stub" and are reported as
-// not yet authored rather than returned as guidance. Loading is lazy, so server
+// A definition that is generated template text resolves with status "stub" and is
+// reported as not yet authored rather than returned as guidance (none remain as of
+// 2026-10-15; the path stays for newly added definitions). Loading is lazy, so server
 // startup is unchanged. See framework-loader.mjs.
 const frameworks = createResolver({
   curated: FRAMEWORK_DETAILS,

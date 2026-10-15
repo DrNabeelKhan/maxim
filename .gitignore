@@ -58,6 +58,7 @@ documents/adr/
 
 # Architecture docs (PRD, FRD, SRD, secrets) stay operator-local
 documents/architecture/
+documents/planning/
 
 # ── Public ADRs (negation exceptions) ─────────────────────────────────────
 # The 7 ADRs below are public per the migration plan — they are moat

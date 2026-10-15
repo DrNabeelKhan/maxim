@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.9.1 · **Last verified:** 2026-07-21 (v1.3.9.1 MCP reliability — BUG-014 `spawn-with-deps` completeness + BUG-015 stable Desktop launcher; no capability-count change)
+**Version:** v1.3.10 · **Last verified:** 2026-10-15 (v1.3.10 — all 85 framework definitions authored and wired into `mxm-behavioral`; description frontmatter on skills/agents; SessionStart context; no capability-count change)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -87,7 +87,7 @@ Under `.claude/hooks/`:
 
 **Total hook scripts: 16** (8 hooks × 2 platforms). Net delta (14 → 16): `user-prompt-router.{sh,ps1}` added v1.3.5 (ADR-021) — the always-on intent router that makes Maxim default-on instead of opt-in.
 
-**Surface compatibility (verified 2026-06-19 against code.claude.com):** hooks run in **Claude Code CLI only**. They do NOT execute in Claude Desktop / Web / Cowork (hooks are a CLI-exclusive feature; parity request [anthropics/claude-code#45514](https://github.com/anthropics/claude-code/issues/45514)). So all hook-enforced governance — pre-commit secret/PII scan, session-start drift detection, and the ADR-021 default-on router — is **CLI-bound**; on Desktop/Web/Cowork it degrades to advisory/opt-in. Skills, commands, and MCP servers remain cross-surface. (v1.3.6 hardened all 4 hook commands to quote `"${CLAUDE_PLUGIN_ROOT}"` for install paths containing spaces.)
+**Surface compatibility (corrected 2026-09; supersedes the 2026-06-19 "CLI only" note):** hooks run **wherever Claude Code runs**: the CLI, IDE extensions, and the Claude Desktop app's Code tab (verified 2026-09 on Claude Code 2.1.220 in the Desktop app: the ADR-021 router fired on live prompts and all 9 `mxm-*` MCP servers attached). Desktop/Web **Projects chat** and Cowork were **not tested**; treat hook-enforced governance there (pre-commit scan, session-start context, the default-on router) as advisory/opt-in until verified. Skills, commands and MCP servers remain cross-surface. See `documents/cross-surface/maxim-surface-guide.md`. (v1.3.6 hardened all 4 hook commands to quote `"${CLAUDE_PLUGIN_ROOT}"` for install paths containing spaces.)
 
 ---
 
