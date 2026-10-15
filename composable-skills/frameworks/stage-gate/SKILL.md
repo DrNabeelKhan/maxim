@@ -1,119 +1,118 @@
 ---
 skill_id: stage-gate
 name: Stage-Gate
-version: 1.0.0
+version: 2.0.0
 category: project-management
 type: framework
 frameworks: []
 triggers:
-  - apply stage-gate
-  - use stage-gate framework
-  - stage-gate analysis
+  - stage-gate
+  - phase gate
+  - new product development process
+  - go kill decision
+  - innovation funnel
 collaborates_with:
   - rd-coordinator
   - product-strategist
   - project-shipper
 ethics_required: false
 priority: medium
-tags: [project-management, framework]
+tags: [project-management, framework, new-product-development, governance, portfolio]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Stage-Gate
 
 ## Purpose
-Apply Stage-Gate to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use Stage-Gate to move new products from idea to launch through a series of work stages separated by decision gates, so that investment rises only as uncertainty falls. Robert Cooper developed the model from studies of successful and failed product launches. Its main value is disciplined **go or kill** decisions: weak projects are stopped early, freeing resources for strong ones.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `stage-gate` |
-| Category | Project Management |
-| Version | 1.0.0 |
-| Owner | Robert G. Cooper |
-| Maturity | Established (1980s) |
-| Primary References | Product Development Process |
+| Category | Project Management — New Product Development |
+| Version | 2.0.0 |
+| Originator | Robert G. Cooper |
+| Key publications | *Winning at New Products* (1986, later editions) · "Stage-Gate systems", *Business Horizons* (1990) |
+| Later development | Agile-Stage-Gate hybrids, combining sprints within stages |
+
+## Stages and Gates
+**Typical stages**
+1. **Discovery**: generating ideas.
+2. **Scoping**: a quick, inexpensive assessment.
+3. **Build the business case**: detailed investigation and definition.
+4. **Development**: design and build.
+5. **Testing and validation**: verify the product and the plan.
+6. **Launch**: commercialise.
+
+**Gates** sit between stages. At each one, decision-makers review agreed deliverables against criteria and decide **go, kill, hold or recycle**.
+
+## Core Principles
+- **Killing projects is a success of the process,** not a failure.
+- **Gates need real criteria and real decision-makers** who control resources.
+- **Front-end work pays off.** Sharp scoping and business cases reduce late failures.
+- **Investment rises as uncertainty falls.**
+- **Adapt the process to the project's risk.** Small projects need fewer, lighter gates.
+
+## Applications & Use Cases
+| Use Case | Application | Note |
+|---|---|---|
+| Manufacturing and hardware | Gate expensive tooling decisions | Its original setting |
+| Portfolio management | Compare projects at gates to allocate resources | Kill weak projects |
+| Regulated products | Build compliance checkpoints into gates | Medical, finance, food |
+| Corporate innovation | Fund ideas in increments | Tie money to evidence |
+| Hybrid agile delivery | Sprints within stages, gates for funding | Agile-Stage-Gate |
+| Launch readiness | A final gate on market and operational readiness | Avoid premature launch |
+
+## Usage Guidelines
+- **Define deliverables and criteria for every gate** in advance.
+- **Name gatekeepers** with authority over resources.
+- **Make kill decisions explicitly** and record the reasons.
+- **Scale the number and weight of gates** to the project's risk and size.
+- **Combine with agile delivery** inside stages where requirements are uncertain.
 
 ## Prompt Template
 ```
-You are applying the Stage-Gate framework.
+You are running a Stage-Gate review (Cooper).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: project management
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Stage-Gate applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Stage-Gate principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+PROJECT AND CURRENT STAGE: [[...]]
+GATE DELIVERABLES: present / missing
+CRITERIA
+- Strategic fit:
+- Market attractiveness:
+- Technical feasibility:
+- Financial return and risk:
+DECISION: go | kill | hold | recycle, with reasons
+NEXT STAGE PLAN and resources, if go:
 ```
 
-## Core Principles
-- **Foundation**: Stage-Gate provides structured approach to project management
-- **Application**: Use when facing decisions requiring project management guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Stage-Gate to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Product Development Process](Stage-Gate International) - Robert G. Cooper
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Gate on safety and compliance**, not only on commercial criteria.
+- **Record kill decisions honestly**, without blame, so lessons are kept.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Stage-Gate principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Track outcomes of projects passed and killed at each gate to calibrate criteria.
+
+## Success Metrics
+- Share of launched products meeting their business case.
+- Time and money spent on projects later killed.
+- Cycle time from idea to launch.
+
+## Collaboration Protocol
+- Inbound from: `rd-coordinator` · `product-strategist` · `project-shipper`
+- Outbound to: CEO office for portfolio and funding decisions
+- Cross-framework: Lean Startup for evidence within stages; Agile/Scrum for delivery inside stages.
+
+## Related Skills
+- `composable-skills/frameworks/lean-startup/SKILL.md` — evidence before investment
+- `composable-skills/frameworks/agilescrum/SKILL.md` — delivery within stages
+- `composable-skills/frameworks/raci-matrix/SKILL.md` — gatekeeper accountability
+
+## Reference Materials
+- Cooper, R.G. (1990). "Stage-Gate systems: a new tool for managing new products." *Business Horizons*, 33(3), 44–54.
+- Cooper, R.G. *Winning at New Products.* Basic Books (first edition 1986; later editions).
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

@@ -1,120 +1,116 @@
 ---
 skill_id: lean-startup
 name: Lean Startup
-version: 1.0.0
+version: 2.0.0
 category: product-research
 type: framework
 frameworks: []
 triggers:
-  - apply lean startup
-  - use lean-startup framework
-  - lean startup analysis
+  - lean startup
+  - minimum viable product
+  - build measure learn
+  - validated learning
+  - pivot or persevere
 collaborates_with:
   - product-strategist
   - innovation-researcher
   - rapid-prototyper
   - data-scientist
-ethics_required: false
-priority: medium
-tags: [product-research, framework]
+ethics_required: true
+priority: high
+tags: [product-research, framework, mvp, experimentation, startups]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Lean Startup
 
 ## Purpose
-Apply Lean Startup to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use the Lean Startup method to reduce the risk of building something nobody wants, by treating a new product's plan as a set of assumptions and testing the riskiest ones as cheaply and quickly as possible. Eric Ries described it in 2011, building on Steve Blank's customer development. The central loop is **Build, Measure, Learn**, and the goal of each turn is **validated learning**: evidence about customers, not just output.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `lean-startup` |
-| Category | Product Research |
-| Version | 1.0.0 |
-| Owner | Eric Ries |
-| Maturity | Established (2011) |
-| Primary References | Build-Measure-Learn Methodology |
+| Category | Product Research — Experimentation and Validation |
+| Version | 2.0.0 |
+| Originator | Eric Ries |
+| First published | 2011 |
+| Builds on | Steve Blank's customer development, *The Four Steps to the Epiphany* (2005) |
+
+## Key Concepts
+- **Leap-of-faith assumptions**: the value hypothesis (will people get value?) and the growth hypothesis (how will new customers find it?).
+- **Minimum viable product (MVP)**: the smallest thing that lets you complete a Build-Measure-Learn loop with the least effort. It is an experiment, not a cut-down product.
+- **Build, Measure, Learn**: plan backwards, deciding what you need to learn, what you must measure to learn it, and only then what to build.
+- **Validated learning**: progress measured in evidence about customers.
+- **Innovation accounting**: actionable metrics that show whether learning is moving the business, as opposed to vanity metrics.
+- **Pivot or persevere**: a deliberate, regular decision based on the evidence.
+
+## Core Principles
+- **Test the riskiest assumption first.**
+- **An MVP is a learning tool.** Its quality bar is whatever it takes to produce trustworthy evidence.
+- **Actionable metrics, not vanity metrics.** Cohorts and conversion beat total sign-ups.
+- **Speed of learning is the advantage.** Shorter loops mean more turns before money runs out.
+- **Pivot on evidence, at planned points**, rather than drifting or persisting by default.
+
+## Applications & Use Cases
+| Use Case | Application | Concept |
+|---|---|---|
+| New product idea | List assumptions and test the riskiest | Leap-of-faith assumptions |
+| Demand testing | A landing page or concierge service before building | MVP |
+| Feature decisions | Ship small and measure behavior | Build-Measure-Learn |
+| Board and investor updates | Report cohort metrics and learning | Innovation accounting |
+| Strategy reviews | Scheduled pivot-or-persevere meetings | Pivot or persevere |
+| Corporate innovation | Small teams with learning milestones | Validated learning |
+
+## Usage Guidelines
+- **Write the assumptions down** and rank them by risk and uncertainty.
+- **Design the experiment before the MVP**: what will you measure, and what result would change your mind?
+- **Choose the cheapest MVP that gives trustworthy evidence**: a landing page, a concierge or a Wizard of Oz test.
+- **Use cohort-based, actionable metrics.**
+- **Hold pivot-or-persevere decisions on a schedule.**
 
 ## Prompt Template
 ```
-You are applying the Lean Startup framework.
+You are applying the Lean Startup method (Ries 2011).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: product research
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Lean Startup applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Lean Startup principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+VALUE HYPOTHESIS:
+GROWTH HYPOTHESIS:
+RISKIEST ASSUMPTION:
+LEARN: what do we need to find out?
+MEASURE: which actionable metric, and what threshold changes our mind?
+BUILD: the cheapest MVP that produces that evidence
+DECISION DATE for pivot or persevere:
 ```
 
-## Core Principles
-- **Foundation**: Lean Startup provides structured approach to product research
-- **Application**: Use when facing decisions requiring product research guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Lean Startup to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Build-Measure-Learn Methodology](https://theleanstartup.com/) - Eric Ries
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Be honest with early customers.** A Wizard of Oz or concierge test must not deceive people in ways that harm them.
+- **Do not take payment for things you cannot deliver.**
+- **Protect data** collected during experiments.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Lean Startup principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Pre-register the success threshold for each experiment.
+- Use cohorts so changes in the product are not confused with changes in the audience.
+
+## Success Metrics
+- Learning velocity: validated assumptions per period.
+- Movement in actionable metrics such as activation and retention by cohort.
+- Time and cost per experiment.
+
+## Collaboration Protocol
+- Inbound from: `product-strategist` · `innovation-researcher` · `rapid-prototyper`
+- Outbound to: `data-scientist` for experiment analysis
+- Cross-framework: Jobs-to-be-Done for what to test; A/B testing for rigour; design thinking for discovery.
+
+## Related Skills
+- `composable-skills/frameworks/jobs-to-be-done/SKILL.md` — the job the product must do
+- `composable-skills/frameworks/ab-testing/SKILL.md` — experiment rigour
+- `composable-skills/frameworks/design-thinking/SKILL.md` — discovery before validation
+
+## Reference Materials
+- Ries, E. (2011). *The Lean Startup.* Crown Business.
+- Blank, S. (2005). *The Four Steps to the Epiphany.* Cafepress / K&S Ranch.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

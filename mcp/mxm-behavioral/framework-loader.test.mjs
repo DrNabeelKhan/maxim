@@ -206,11 +206,12 @@ test("corpus: authoring progress (update deliberately as batches land)", () => {
   //   2026-10-15  26 / 4 / 55                         (Nudge, Cialdini, AIDA, JTBD)
   //   2026-10-15  33 / 4 / 48                         (batch A: behaviour, content, growth)
   //   2026-10-15  39 / 4 / 42                         (batch B: search and GEO)
+  //   2026-10-15  49 / 4 / 32                         (batch C: product strategy and delivery)
   const defs = [...loadDefinitions(DIR).values()];
   const count = (s) => defs.filter((d) => d.status === s).length;
   assert.deepEqual(
     { authored: count("authored"), partial: count("partial"), stub: count("stub") },
-    { authored: 39, partial: 4, stub: 42 },
+    { authored: 49, partial: 4, stub: 32 },
   );
 });
 

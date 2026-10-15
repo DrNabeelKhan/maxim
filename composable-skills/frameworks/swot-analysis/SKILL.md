@@ -1,14 +1,16 @@
 ---
 skill_id: swot-analysis
 name: SWOT Analysis
-version: 1.0.0
+version: 2.0.0
 category: product-research
 type: framework
 frameworks: []
 triggers:
-  - apply swot analysis
-  - use swot-analysis framework
-  - swot analysis analysis
+  - swot analysis
+  - strengths weaknesses opportunities threats
+  - tows matrix
+  - strategic position
+  - situational analysis
 collaborates_with:
   - competitive-analyst
   - product-strategist
@@ -16,105 +18,103 @@ collaborates_with:
   - business-architect
 ethics_required: false
 priority: medium
-tags: [product-research, framework]
+tags: [product-research, framework, strategy, situational-analysis]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # SWOT Analysis
 
 ## Purpose
-Apply SWOT Analysis to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use SWOT to take stock of a strategic position by setting internal **Strengths** and **Weaknesses** against external **Opportunities** and **Threats**. It is quick and widely understood, which makes it useful for shared discussion. Its well-known weakness is that it produces lists rather than decisions, so it is most useful when followed by the TOWS step, which turns the four lists into strategic options.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `swot-analysis` |
-| Category | Product Research |
-| Version | 1.0.0 |
-| Owner | Albert Humphrey |
-| Maturity | Established (1960s) |
-| Primary References | Strengths, Weaknesses, Opportunities, Threats |
+| Category | Product Research — Strategic Situation Analysis |
+| Version | 2.0.0 |
+| Origin | Disputed; commonly traced to 1960s work at Harvard Business School and the Stanford Research Institute |
+| Extension | TOWS matrix, Weihrich, *Long Range Planning* (1982) |
+
+## The Four Quadrants
+- **Strengths** (internal, helpful): capabilities and resources that give an advantage.
+- **Weaknesses** (internal, harmful): gaps and limitations.
+- **Opportunities** (external, helpful): trends and openings in the environment.
+- **Threats** (external, harmful): risks from competitors, regulation, technology or the market.
+
+### TOWS — from lists to strategies
+- **SO**: use strengths to pursue opportunities.
+- **WO**: overcome weaknesses by taking opportunities.
+- **ST**: use strengths to counter threats.
+- **WT**: minimise weaknesses and avoid threats.
+
+## Core Principles
+- **Internal versus external is the key distinction.** Strengths and weaknesses are within your control; opportunities and threats are not.
+- **Be specific and evidence-based.** "Strong brand" means little without evidence.
+- **Relative, not absolute.** A strength matters only compared with competitors.
+- **Prioritise.** A long list of equal items does not guide decisions.
+- **Always finish with TOWS** so the analysis produces options.
+
+## Applications & Use Cases
+| Use Case | Application | Note |
+|---|---|---|
+| Strategy offsites | A shared starting picture for discussion | Follow with TOWS |
+| Product reviews | Assess a product's position against competitors | Keep it comparative |
+| Market entry | Weigh internal capability against the market | Pair with Five Forces |
+| Personal or team planning | Quick self-assessment | Evidence over opinion |
+| Investment memos | Summarise position and risks | Prioritise items |
+| Annual planning | Refresh the picture and the strategic options | Track changes year to year |
+
+## Usage Guidelines
+- **Gather external analysis first**, for example Five Forces or market research, to inform opportunities and threats.
+- **Make every item specific and supported by evidence.**
+- **Rank items within each quadrant** by importance.
+- **Build the TOWS matrix** to generate strategic options.
+- **Select a few options to act on** with owners and measures.
 
 ## Prompt Template
 ```
-You are applying the SWOT Analysis framework.
+You are running a SWOT and TOWS analysis (Weihrich 1982).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: product research
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of SWOT Analysis applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with SWOT Analysis principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+SUBJECT: [[company, product or unit]]   COMPARED WITH: [[main competitors]]
+STRENGTHS (internal, with evidence, ranked):
+WEAKNESSES (internal, ranked):
+OPPORTUNITIES (external, ranked):
+THREATS (external, ranked):
+TOWS
+- SO:
+- WO:
+- ST:
+- WT:
+CHOSEN OPTIONS, with owners:
 ```
 
-## Core Principles
-- **Foundation**: SWOT Analysis provides structured approach to product research
-- **Application**: Use when facing decisions requiring product research guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply SWOT Analysis to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Strengths, Weaknesses, Opportunities, Threats](Industry standard) - Albert Humphrey
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Be honest about weaknesses**; a flattering SWOT is useless and misleading.
+- **Ground external claims in evidence**, not speculation about competitors.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to SWOT Analysis principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Review past SWOTs against what actually happened, to improve judgment.
+
+## Success Metrics
+- Strategic options produced and acted on.
+- Accuracy of identified threats and opportunities over time.
+
+## Collaboration Protocol
+- Inbound from: `competitive-analyst` · `market-analyst` · `product-strategist`
+- Outbound to: CEO office for strategic choices
+- Cross-framework: Porter's Five Forces informs the external quadrants; OKRs turn chosen options into goals.
+
+## Related Skills
+- `composable-skills/frameworks/porters-five-forces/SKILL.md` — external analysis
+- `composable-skills/frameworks/okrs/SKILL.md` — turning options into goals
+- `composable-skills/frameworks/cognitive-biases/SKILL.md` — guarding against optimism bias
+
+## Reference Materials
+- Weihrich, H. (1982). "The TOWS Matrix — A Tool for Situational Analysis." *Long Range Planning*, 15(2), 54–66.
+- Learned, E.P., Christensen, C.R., Andrews, K.R., & Guth, W.D. (1965). *Business Policy: Text and Cases.* Irwin.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

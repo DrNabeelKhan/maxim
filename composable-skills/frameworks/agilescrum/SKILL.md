@@ -1,14 +1,17 @@
 ---
 skill_id: agilescrum
 name: Agile/Scrum
-version: 1.0.0
+version: 2.0.0
 category: product-research
 type: framework
 frameworks: []
 triggers:
-  - apply agile/scrum
-  - use agilescrum framework
-  - agile/scrum analysis
+  - agile
+  - scrum
+  - sprint planning
+  - product backlog
+  - retrospective
+  - definition of done
 collaborates_with:
   - sprint-prioritizer
   - project-shipper
@@ -16,106 +19,104 @@ collaborates_with:
   - frontend-developer
   - backend-architect
 ethics_required: false
-priority: medium
-tags: [product-research, framework]
+priority: high
+tags: [product-research, framework, agile, scrum, delivery]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Agile/Scrum
 
 ## Purpose
-Apply Agile/Scrum to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use Agile values and the Scrum framework to deliver complex work in short iterations, inspecting results and adapting frequently rather than planning everything up front. The Agile Manifesto (2001) sets out the values; Scrum, defined in the Scrum Guide by Ken Schwaber and Jeff Sutherland, is the most widely used framework for applying them. Scrum is deliberately minimal: a small set of accountabilities, events and artifacts that make progress and problems visible.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `agilescrum` |
-| Category | Product Research |
-| Version | 1.0.0 |
-| Owner | Agile Alliance / Scrum.org |
-| Maturity | Established (2001) |
-| Primary References | Iterative Development Methodology |
+| Category | Delivery — Iterative and Incremental Development |
+| Version | 2.0.0 |
+| Values | *Manifesto for Agile Software Development* (2001): four values, twelve principles |
+| Scrum definition | Schwaber & Sutherland, *The Scrum Guide* (2020 edition) |
+
+## Scrum, per the 2020 Scrum Guide
+**Three accountabilities**: Product Owner · Scrum Master · Developers.
+
+**Five events**: the Sprint (one month or less), Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective.
+
+**Three artifacts, each with a commitment**
+- **Product Backlog**, committed to the **Product Goal**.
+- **Sprint Backlog**, committed to the **Sprint Goal**.
+- **Increment**, committed to the **Definition of Done**.
+
+**Five values**: commitment, focus, openness, respect, courage.
+
+**The Agile Manifesto values** individuals and interactions, working software, customer collaboration and responding to change, over processes and tools, comprehensive documentation, contract negotiation and following a plan.
+
+## Core Principles
+- **Empiricism**: transparency, inspection and adaptation.
+- **A usable increment every sprint.** "Almost done" work is not an increment.
+- **One Product Owner orders the backlog.** Clear ownership of value.
+- **The Definition of Done is a quality bar,** not a checklist to negotiate away.
+- **Retrospectives drive improvement;** skipping them stops the team learning.
+
+## Applications & Use Cases
+| Use Case | Application | Scrum element |
+|---|---|---|
+| New product development | Short sprints with frequent feedback | Sprint Review |
+| Unclear requirements | Refine the backlog as learning arrives | Product Backlog |
+| Quality problems | Strengthen the Definition of Done | Increment |
+| Team dysfunction | Honest retrospectives with actions | Retrospective |
+| Stakeholder alignment | A visible Product Goal | Product Goal |
+| Coordination | A short daily replan toward the Sprint Goal | Daily Scrum |
+
+## Usage Guidelines
+- **Set a Product Goal** and order the backlog toward it.
+- **Plan each sprint around a Sprint Goal**, not just a list of items.
+- **Agree and enforce a Definition of Done.**
+- **Show working increments at the Sprint Review** to real stakeholders.
+- **Leave every Retrospective with at least one concrete improvement.**
 
 ## Prompt Template
 ```
-You are applying the Agile/Scrum framework.
+You are applying Scrum (Scrum Guide 2020).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: product research
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Agile/Scrum applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Agile/Scrum principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+PRODUCT GOAL:
+SPRINT GOAL:
+SPRINT BACKLOG (items and plan):
+DEFINITION OF DONE:
+RISKS TO THE SPRINT GOAL:
+RETROSPECTIVE: what to keep, what to change, one concrete action
 ```
 
-## Core Principles
-- **Foundation**: Agile/Scrum provides structured approach to product research
-- **Application**: Use when facing decisions requiring product research guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Agile/Scrum to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Iterative Development Methodology](https://agilemanifesto.org/) - Agile Alliance / Scrum.org
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Sustainable pace.** The Agile principles call for a pace teams can maintain indefinitely.
+- **Do not use velocity to compare or rank teams.**
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Agile/Scrum principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Build testing into the Definition of Done rather than a later phase.
+- Review whether increments meet the Definition of Done at every Sprint Review.
+
+## Success Metrics
+- Sprint Goals achieved.
+- Increments that meet the Definition of Done.
+- Lead time from idea to delivered value.
+- Improvement actions completed from retrospectives.
+
+## Collaboration Protocol
+- Inbound from: `sprint-prioritizer` · `project-shipper` · `experiment-tracker`
+- Outbound to: `frontend-developer` · `backend-architect` for delivery
+- Cross-framework: Kanban for flow-based teams; OKRs for goals above the backlog; CI/CD for frequent, safe releases.
+
+## Related Skills
+- `composable-skills/frameworks/kanban/SKILL.md` — flow-based alternative
+- `composable-skills/frameworks/okrs/SKILL.md` — goals above the backlog
+- `composable-skills/frameworks/cicd/SKILL.md` — releasing increments safely
+
+## Reference Materials
+- Beck, K., et al. (2001). *Manifesto for Agile Software Development.* agilemanifesto.org.
+- Schwaber, K., & Sutherland, J. (2020). *The Scrum Guide.* scrumguides.org.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

@@ -1,121 +1,120 @@
 ---
 skill_id: design-thinking
 name: Design Thinking
-version: 1.0.0
+version: 2.0.0
 category: product-research
 type: framework
 frameworks: []
 triggers:
-  - apply design thinking
-  - use design-thinking framework
-  - design thinking analysis
+  - design thinking
+  - empathize define ideate prototype test
+  - human-centered design
+  - double diamond
+  - design sprint discovery
 collaborates_with:
   - innovation-researcher
   - user-researcher
   - ux-researcher
   - product-strategist
   - ui-designer
-ethics_required: false
-priority: medium
-tags: [product-research, framework]
+ethics_required: true
+priority: high
+tags: [product-research, framework, human-centered-design, innovation, discovery]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Design Thinking
 
 ## Purpose
-Apply Design Thinking to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use design thinking to solve problems that are poorly defined, by starting from the needs of the people affected rather than from an assumed solution. It alternates between widening the field, to understand the problem and generate options, and narrowing it, to define the problem and choose what to build, and it tests ideas with cheap prototypes before committing. Its value is greatest early, when the risk is solving the wrong problem well.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `design-thinking` |
-| Category | Product Research |
-| Version | 1.0.0 |
-| Owner | IDEO / Stanford d.school |
-| Maturity | Established (1990s) |
-| Primary References | Human-Centered Design Methodology |
+| Category | Product Research — Human-Centred Design |
+| Version | 2.0.0 |
+| Common models | Stanford d.school five modes · Design Council Double Diamond (2005) |
+| Key references | Brown, "Design Thinking", *HBR* (2008) · Brown, *Change by Design* (2009) · Simon, *The Sciences of the Artificial* (1969) |
+
+## Two Common Models
+**Stanford d.school, five modes**
+1. **Empathize**: understand people through observation and interviews.
+2. **Define**: frame the specific problem worth solving.
+3. **Ideate**: generate many possible solutions.
+4. **Prototype**: make quick, cheap versions of the most promising ideas.
+5. **Test**: learn from people using the prototypes, and loop back.
+
+**Design Council, Double Diamond**
+Discover and Define (diverge, then converge on the problem), then Develop and Deliver (diverge, then converge on the solution).
+
+## Core Principles
+- **Start with people, not the solution.** Direct contact with users is the core input.
+- **Diverge before converging.** Generate options before choosing among them, for the problem as well as the solution.
+- **Frame the problem deliberately.** A well-framed problem statement does much of the work.
+- **Prototype to learn, not to impress.** The lowest-fidelity prototype that answers the question is the right one.
+- **It is iterative.** Testing routinely sends a team back to redefine the problem.
+
+## Applications & Use Cases
+| Use Case | Application | Phase |
+|---|---|---|
+| New product discovery | Field research before defining features | Empathize, Define |
+| Reframing a stuck problem | Write several alternative problem statements | Define |
+| Service redesign | Map the experience and prototype changes with users | All |
+| Innovation workshops | Structured ideation with clear selection criteria | Ideate |
+| Concept validation | Paper or click-through prototypes tested with users | Prototype, Test |
+| Cross-functional alignment | Shared understanding of user needs | Empathize |
+
+## Usage Guidelines
+- **Talk to real users early**, and record what they do, not only what they say.
+- **Write the problem as a point-of-view statement**: user, need, and the insight behind it.
+- **Separate idea generation from judgment** so options are not killed too early.
+- **Prototype at the lowest fidelity that answers the current question.**
+- **Plan for iteration**; expect testing to change the problem definition.
 
 ## Prompt Template
 ```
-You are applying the Design Thinking framework.
+You are applying design thinking (d.school five modes / Double Diamond).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: product research
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Design Thinking applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Design Thinking principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+PEOPLE AFFECTED: [[who]]
+EMPATHIZE: what was observed and heard?
+DEFINE — point of view: [[user]] needs [[need]] because [[insight]]
+IDEATE: at least ten options before choosing
+PROTOTYPE: the cheapest artefact that tests the riskiest assumption
+TEST: what will you watch for, and what would send you back to Define?
 ```
 
-## Core Principles
-- **Foundation**: Design Thinking provides structured approach to product research
-- **Application**: Use when facing decisions requiring product research guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Design Thinking to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Human-Centered Design Methodology](https://dschool.stanford.edu/) - IDEO / Stanford d.school
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Obtain informed consent** for research and protect participants' data.
+- **Include the people most affected**, including those who are hardest to reach.
+- **Do not present a workshop as research**; ideas from the team are not evidence about users.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Design Thinking principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Test prototypes with representative users, not colleagues.
+- Track which assumptions each test confirmed or refuted.
+
+## Success Metrics
+- Number of user contacts in discovery.
+- Assumptions tested before build.
+- Outcomes of the shipped solution against the defined need.
+
+## Collaboration Protocol
+- Inbound from: `innovation-researcher` · `ux-researcher` · `product-strategist`
+- Outbound to: `ui-designer` for prototypes; `user-researcher` for testing
+- Cross-framework: Jobs-to-be-Done for framing needs; Lean Startup for validating solutions; user journey mapping for the experience.
+
+## Related Skills
+- `composable-skills/frameworks/jobs-to-be-done/SKILL.md` — framing the need
+- `composable-skills/frameworks/lean-startup/SKILL.md` — validating with experiments
+- `composable-skills/frameworks/user-journey-mapping/SKILL.md` — mapping the experience
+
+## Reference Materials
+- Brown, T. (2008). "Design Thinking." *Harvard Business Review*, June 2008.
+- Brown, T. (2009). *Change by Design.* Harper Business.
+- Design Council (2005). The Double Diamond design process model.
+- Simon, H.A. (1969). *The Sciences of the Artificial.* MIT Press.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._
