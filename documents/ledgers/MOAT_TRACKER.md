@@ -207,7 +207,20 @@ Every row cites a framework from `documents/reference/FRAMEWORKS_MASTER.md` by n
 | **Anti-pattern** | Plugins where you must remember the right slash command or the governance layer never engages — friction means it gets used in the demo and forgotten in daily work. Maxim's router makes the behavioral layer engage on every prompt, asked for or not. |
 | **Pack(s)** | Free tier. Claude Code CLI surface (hooks are CLI-native; Desktop/Web reach the same offices via the `mxm-commands` + `mxm-catalog` MCP). |
 | **Primary framework** | EAST (Behavioural Insights Team, 2014) · see `FRAMEWORKS_MASTER.md`. ADR-021 ratified 2026-06-19. |
-| **Proof** | [ADR-021](../ADRs/ADR-021-maxim-default-on-router.md). v1.3.5 commits. `.claude/hooks/user-prompt-router.{sh,ps1}` + `config/routing-table.json` (word-boundary matching + weak-keyword gate, hardened v1.3.8). Routing token-cost banner + opt-out. |
+| **Proof** | [ADR-021](../ADRs/ADR-021-maxim-default-on-router.md). v1.3.5 commits. `.claude/hooks/user-prompt-router.{sh,ps1}` + `config/routing-table.json` (word-boundary matching + weak-keyword gate, hardened v1.3.8). Routing token-cost banner + opt-out. v1.3.11: with the `maxim-runtime` mod the route shows in the status line instead (MOAT-16). |
+
+---
+
+### MOAT-16 · Governance enforced by the engine, not requested of the model · maxim-runtime SHIPPED v1.3.11
+
+| Field | Value |
+|---|---|
+| **Positioning claim** | Maxim's rules are **enforced inside Claude Code**, not left to the model's good behaviour. A write through a read-only junction is refused, a commit that would add a secret is refused in any repository, an edit to a security-sensitive file brings a CSO review, an answer without a confidence tag is flagged, and the operating standard sits in the system prompt. Routing shows in the status line instead of costing tokens in every reply. |
+| **Mechanism** | Choice architecture (Thaler & Sunstein): the safe path is the default path, and the unsafe action is not merely discouraged but unavailable. Enforcement at the tool boundary means a rule holds even when the model forgets, is rushed or is mis-prompted. |
+| **Anti-pattern** | Governance that lives only in instructions ("never commit secrets", "always tag confidence") and so holds only as well as the model follows them, invisibly failing when it does not. |
+| **Pack(s)** | Free tier. `maxim-runtime` mod on Claude Code versions with function hooks (CLI, IDE extensions, the Desktop app's Code tab); the shell hooks remain the fallback everywhere else. |
+| **Primary framework** | Nudge Theory / choice architecture (Thaler & Sunstein, 2008) · see `FRAMEWORKS_MASTER.md`. ADR-021 amended 2026-10-15. |
+| **Proof** | `mods/maxim-runtime/` · CHANGELOG v1.3.11 + v1.3.11.1 · 27 engine tests + 22-prompt router parity · **verified live** in the Desktop Code tab: junction write refused through a real Windows junction; commit with a staged fake AWS key refused, naming the file but not the value. |
 
 ---
 

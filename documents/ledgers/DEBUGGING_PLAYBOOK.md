@@ -421,3 +421,32 @@ That check belongs in the v1.4 derived-counts registry, and it must **parse with
 
 - `2f16712` the sweep · `8b48933` the YAML repair
 - Both verified against the live registry afterwards, not against the checker
+
+## §13 — 2026-10-15 — Two more verifications weaker than reality: facts from memory, and a test kit's mocked floor
+
+§11 recorded checkers that cried wolf; §12 a checker that stayed silent. Session 31 met the same disease twice more, in places that look nothing like a checker: the author's own knowledge, and a test harness.
+
+### Case 1 — framework facts written from memory
+
+All 85 framework definitions were authored or revised this session so that `mxm-behavioral` could serve them (BUG-017). They were written carefully, with citations, and they read as authoritative. Two primary-source verification passes (eight parallel verifiers for the 67 new definitions, four for the 18 older ones; every claimed error re-checked by hand before editing) then found:
+
+- **35 errors in 30 of the 67 new definitions** (`12a6e48`). Many were not mistakes when the model's knowledge was formed: OWASP Top 10:2025 had replaced 2021, ATT&CK v19 had split Defense Evasion, DORA had moved to five metrics, ArchiMate 4, ITIL Version 5 and COBIT 7 had arrived, Google had retired FAQ rich results, and Brazil's Law 15,352/2026 had restructured the ANPD. Others were plain errors: a paper title with "enforce" for "enhance", a wrong 1984 subtitle, a Double Diamond dated 2005.
+- **16 of the 18 pre-existing definitions** carried effect sizes no source supports (`89ce33f`), the worst being Prospect Theory's "loss frames are ~2x more persuasive" and "mis-framing costs 30–50% of conversion": a valuation parameter (λ) presented as a persuasion effect, contradicted by the framing meta-analyses. Seven definitions had invented "expected lift" benchmarks. The EU AI Act had been amended (Reg. 2026/1744) after the definition was written.
+
+The verifiers over-reached too: one asserted ArchiMate 4 "replaces layers with domains, 60 → 42 concepts", which the official announcement does not say. Re-checking each claim against its source before editing caught it.
+
+### Case 2 — a test kit's mocked floor
+
+The `maxim-runtime` mod passed 27 engine tests (`claude plugin test`), a type-check against the engine's own declarations and `claude plugin validate`. Its first live call failed: the framework tool returned an MCP `{ content }` envelope, and the engine accepts a plugin tool's result only as text or content blocks (BUG-020). The kit's mocked bottom hook stands in for the engine and does not apply the engine's output-shape check, and the assertion read `r.text ?? JSON.stringify(r.result)`, which matched the text inside the wrong shape.
+
+The same live session verified what the mocks could not: the junction guard refused a Write through a real Windows junction, and the secret guard scanned a real repository (which also settled whether `$.process` works in the Desktop app's Code tab).
+
+### The rule
+
+**A source you did not consult is not a citation, and a mock is not the engine.** Facts that change (standards, laws, versions, effect sizes) get a primary-source pass before release, and each claimed error is re-checked before it is "fixed". A mod is not verified until each of its surfaces has run once live; assert the exact shape the engine requires, not a string that happens to appear inside some shape.
+
+### Where it landed
+
+- `12a6e48`, `89ce33f` the verification fixes · BUG-019 (guard: the verify-before-release process)
+- `5dfdcee` BUG-020 fix, with `typeof r.result === 'string'` assertions
+
