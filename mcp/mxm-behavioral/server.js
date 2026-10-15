@@ -14,6 +14,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { wrapServerWithLicenseGate } from "../_shared/license-gate.mjs";
+import { fileURLToPath } from "node:url";
+import { createResolver } from "./framework-loader.mjs";
 
 // Domain → framework mapping (from documents/reference/FRAMEWORKS_MASTER.md 63 frameworks)
 const DOMAIN_FRAMEWORKS = {
@@ -81,6 +83,29 @@ const FRAMEWORK_DETAILS = {
   },
 };
 
+// Framework lookup: the curated details above win, then the on-disk definitions at
+// composable-skills/frameworks/*/SKILL.md. Before this, recommend_frameworks offered
+// 68 frameworks while apply_framework and get_framework_details knew only the 8
+// above, so the tool recommended frameworks it then said did not exist.
+//
+// 63 of the on-disk definitions are generated template text with no
+// framework-specific content. Those resolve with status "stub" and are reported as
+// not yet authored rather than returned as guidance. Loading is lazy, so server
+// startup is unchanged. See framework-loader.mjs.
+const frameworks = createResolver({
+  curated: FRAMEWORK_DETAILS,
+  dir: fileURLToPath(new URL("../../composable-skills/frameworks", import.meta.url)),
+});
+
+const stubMessage = (hit) =>
+  `Maxim lists ${hit.name} but has not authored framework-specific guidance for it yet. ` +
+  `Its definition file contains template text only, so it is not returned as guidance. ` +
+  `If you apply it, do so from your own knowledge of the framework and say so, or choose an authored framework.`;
+
+const notFoundMessage = (query) =>
+  `Framework "${query}" not found. Curated: ${Object.keys(FRAMEWORK_DETAILS).join(", ")}. ` +
+  `Try get_framework_coverage to see which domains list a framework.`;
+
 const server = new McpServer({
   name: "mxm-behavioral",
   version: "1.0.0",
@@ -126,13 +151,23 @@ server.tool(
       return { content: [{ type: "text", text: `No frameworks found for domain="${domain}", task="${task}". Try domains: ${Object.keys(DOMAIN_FRAMEWORKS).join(", ")}` }] };
     }
 
-    const result = top3.map((r) => ({
-      framework: r.framework,
-      relevance_score: r.score,
-      description: r.details?.description || "See documents/reference/FRAMEWORKS_MASTER.md for details",
-      when_to_use: r.details?.when_to_use || "General application",
-      application_steps: r.details?.application_steps || ["Consult documents/reference/FRAMEWORKS_MASTER.md"],
-    }));
+    // Ranking above is unchanged and still scores against the curated details only.
+    // Scoring against all definitions would break it: the keyword test matches any
+    // one-letter word, so every long definition would score as relevant. Here the
+    // resolver only fills in content for the frameworks already chosen.
+    const result = top3.map((r) => {
+      const hit = r.details ? null : frameworks.resolve(r.framework);
+      const authored = hit && hit.status !== "stub" ? hit.detail : null;
+      const d = r.details || authored;
+      return {
+        framework: r.framework,
+        relevance_score: r.score,
+        status: r.details ? "authored" : hit ? hit.status : "unknown",
+        description: d?.description || "See documents/reference/FRAMEWORKS_MASTER.md for details",
+        when_to_use: d?.when_to_use || "General application",
+        application_steps: d?.application_steps || ["Consult documents/reference/FRAMEWORKS_MASTER.md"],
+      };
+    });
 
     return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
   }
@@ -147,19 +182,26 @@ server.tool(
     context: z.string().describe("The specific context to apply the framework to (e.g., 'SaaS onboarding for small business owners')"),
   },
   async ({ framework, context }) => {
-    const detail = FRAMEWORK_DETAILS[framework];
-    if (!detail) {
-      const available = Object.keys(FRAMEWORK_DETAILS).join(", ");
-      return { content: [{ type: "text", text: `Framework "${framework}" not found. Available: ${available}` }] };
+    const hit = frameworks.resolve(framework);
+    if (!hit) {
+      return { content: [{ type: "text", text: notFoundMessage(framework) }] };
     }
+    if (hit.status === "stub") {
+      return { content: [{ type: "text", text: JSON.stringify({ framework: hit.name, status: "stub", message: stubMessage(hit) }, null, 2) }] };
+    }
+    const detail = hit.detail;
+    const name = hit.name;
 
     const application = {
-      framework,
+      framework: name,
       context,
+      source: hit.source,
+      status: hit.status,
+      ...(hit.generic_fields?.length ? { generic_fields: hit.generic_fields } : {}),
       description: detail.description,
       components: detail.components,
       application_steps: detail.application_steps,
-      prompt: `Apply the ${framework} to: ${context}\n\nComponents to address:\n${detail.components.map((c) => `- ${c}`).join("\n")}\n\nFollow these steps:\n${detail.application_steps.join("\n")}`,
+      prompt: `Apply the ${name} to: ${context}\n\nComponents to address:\n${detail.components.map((c) => `- ${c}`).join("\n")}\n\nFollow these steps:\n${detail.application_steps.join("\n")}`,
     };
 
     return { content: [{ type: "text", text: JSON.stringify(application, null, 2) }] };
@@ -174,16 +216,21 @@ server.tool(
     framework: z.string().describe("Framework name"),
   },
   async ({ framework }) => {
-    const detail = FRAMEWORK_DETAILS[framework];
-    if (!detail) {
-      // Try partial match
-      const match = Object.keys(FRAMEWORK_DETAILS).find((k) => k.toLowerCase().includes(framework.toLowerCase()));
-      if (match) {
-        return { content: [{ type: "text", text: JSON.stringify({ name: match, ...FRAMEWORK_DETAILS[match] }, null, 2) }] };
-      }
-      return { content: [{ type: "text", text: `Framework "${framework}" not found. Available: ${Object.keys(FRAMEWORK_DETAILS).join(", ")}` }] };
+    const hit = frameworks.resolve(framework);
+    if (!hit) {
+      return { content: [{ type: "text", text: notFoundMessage(framework) }] };
     }
-    return { content: [{ type: "text", text: JSON.stringify({ name: framework, ...detail }, null, 2) }] };
+    if (hit.status === "stub") {
+      return { content: [{ type: "text", text: JSON.stringify({ name: hit.name, status: "stub", message: stubMessage(hit) }, null, 2) }] };
+    }
+    const out = {
+      name: hit.name,
+      source: hit.source,
+      status: hit.status,
+      ...(hit.generic_fields?.length ? { generic_fields: hit.generic_fields } : {}),
+      ...hit.detail,
+    };
+    return { content: [{ type: "text", text: JSON.stringify(out, null, 2) }] };
   }
 );
 
