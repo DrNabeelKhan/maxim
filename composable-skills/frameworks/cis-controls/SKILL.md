@@ -20,7 +20,7 @@ ethics_required: true
 priority: high
 tags: [security-compliance, framework]
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-10-15
 ---
 
 # CIS Controls (Center for Internet Security)
@@ -35,23 +35,23 @@ Apply the CIS Controls to prioritize and implement a defensible set of cyber-def
 | Category | Security & Compliance |
 | Version | 1.0.0 |
 | Owner | Center for Internet Security (CIS) |
-| Maturity | Established (v8, 2021) |
+| Maturity | Established (v8, May 2021; current v8.1, June 2024, which added the Govern function; 18 Controls, 153 Safeguards) |
 | Primary References | Prioritized set of actions to protect against cyber threats |
 
 ## Implementation Groups
-| Group | Target Organization | Control Count |
+| Group | Target Organization (by risk profile and resources) | Safeguards (cumulative) |
 |-------|---------------------|---------------|
-| IG1 | Small/low-risk | 56 safeguards |
-| IG2 | Mid-size organizations | 130 safeguards |
-| IG3 | Large/high-risk | All 153 safeguards |
+| IG1 | Essential cyber hygiene; limited IT and security expertise | 56 |
+| IG2 | Dedicated IT staff, multiple departments with differing risk | 130 |
+| IG3 | Security specialists; sensitive or regulated data | All 153 |
 
-## Top 5 CIS Controls
+## CIS Controls 1–5 (the first five of 18)
 | Control | Name | Description |
 |---------|------|-------------|
-| 1 | Inventory of Enterprise Assets | Know all hardware in your environment |
-| 2 | Inventory of Software Assets | Know all software running |
+| 1 | Inventory and Control of Enterprise Assets | Know all enterprise assets: end-user devices, network, IoT and servers, physical, virtual, remote or cloud |
+| 2 | Inventory and Control of Software Assets | Know all software running |
 | 3 | Data Protection | Classify, handle, and retain data |
-| 4 | Secure Configuration | Establish and maintain secure configurations |
+| 4 | Secure Configuration of Enterprise Assets and Software | Establish and maintain secure configurations |
 | 5 | Account Management | Manage the lifecycle of all accounts |
 
 ## Prompt Template
@@ -78,7 +78,7 @@ OUTPUT STRUCTURE:
 
 QUALITY CHECKS:
 □ Implementation Group selection is justified
-□ Top-priority controls (1–5) are assessed first
+□ Controls 1–5 are assessed first
 □ Ethical considerations have been evaluated
 □ Roadmap maps to the target safeguard count
 ```
@@ -98,7 +98,8 @@ QUALITY CHECKS:
 | Compliance roadmap | Sequence safeguards to a target IG | Defensible improvement plan |
 
 ## Reference Materials
-- [CIS Controls v8](https://www.cisecurity.org/controls) — Center for Internet Security (CIS)
+- [CIS Critical Security Controls v8.1](https://www.cisecurity.org/controls) — Center for Internet Security (CIS), June 2024
+- [CIS Controls Implementation Groups](https://www.cisecurity.org/controls/implementation-groups) — CIS
 
 ## Usage Guidelines
 - **Start with the IG**: Pick the Implementation Group before assessing safeguards.

@@ -21,7 +21,7 @@ priority: medium
 tags: [behavior-science, framework, reinforcement, habit-formation]
 adr: ADR-007
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-10-15
 ---
 
 # Operant Conditioning / Reinforcement Theory
@@ -37,7 +37,7 @@ Apply B.F. Skinner's operant conditioning to design reinforcement schedules that
 | Version | 1.0.0 |
 | Originator | B.F. Skinner (1938 · 1953) |
 | Maturity | Foundational — empirical base from the 1930s; mechanistic understanding well-established |
-| Primary references | Skinner, B.F. (1938) *The Behavior of Organisms* · Skinner, B.F. (1953) *Science and Human Behavior* (public domain) |
+| Primary references | Skinner, B.F. (1938) *The Behavior of Organisms* · Skinner, B.F. (1953) *Science and Human Behavior* (1953; distributed by the B. F. Skinner Foundation) |
 
 ## The Four Consequence Types
 
@@ -101,7 +101,7 @@ EXTINCTION PLAN:
 - **Variable-ratio is powerful AND dangerous.** It's the engine of habit formation AND the engine of addiction. Use deliberately, not by accident.
 - **Schedules should evolve.** Start continuous for acquisition; shift to variable-ratio for maintenance; eventually fade reinforcement entirely.
 - **Negative reinforcement is underused.** Removing friction when a behavior occurs (auto-saving · streamlining workflows on engagement) is more sustainable than adding rewards.
-- **Extinction is hard.** Once a behavior is established on variable-ratio, removing reinforcement produces an extinction burst (intensified behavior before decline). Plan for it.
+- **Intermittent schedules resist extinction.** Behavior built on variable-ratio reinforcement extinguishes more slowly. Removing reinforcement may also produce a temporary extinction burst, seen in roughly a quarter to a third of cases in a clinical review (Lerman & Iwata 1995). Plan for both.
 - **Generalization vs discrimination.** Behaviors generalize to similar contexts; discrimination must be trained deliberately.
 
 ## Applications & Use Cases
@@ -118,6 +118,7 @@ EXTINCTION PLAN:
 - Skinner, B.F. (1938). *The Behavior of Organisms: An Experimental Analysis.* Appleton-Century.
 - Skinner, B.F. (1953). *Science and Human Behavior.* Macmillan.
 - Ferster, C.B. & Skinner, B.F. (1957). *Schedules of Reinforcement.* Appleton-Century-Crofts.
+- Lerman, D.C., & Iwata, B.A. (1995). "Prevalence of the extinction burst and its attenuation during treatment." *Journal of Applied Behavior Analysis* 28(1): 93–94.
 - Eyal, N. (2014). *Hooked: How to Build Habit-Forming Products.* Portfolio. (modern product application — operant conditioning underlies the Hook Model)
 
 ## Usage Guidelines
@@ -129,7 +130,7 @@ EXTINCTION PLAN:
 ## Collaboration Protocol
 - Inbound from: `behavioral-designer` · `habit-formation-coach` · `conversion-optimizer` · `product-strategist`
 - Outbound to: same agents for schedule implementation
-- Cross-framework: pairs with Hook Model (commercial application of variable-ratio), Social Learning Theory (modeled vs direct reinforcement), Fogg Behavior Model (Motivation × Ability × Prompt with reinforcement as the Prompt)
+- Cross-framework: pairs with Hook Model (commercial application of variable-ratio), Social Learning Theory (modeled vs direct reinforcement), Fogg Behavior Model (reinforcement after a behavior can raise future Motivation; the Prompt is the cue before it)
 
 ## Ethical Guidelines
 - **Variable-ratio + addiction-proximal context = dark pattern.** Slot-machine mechanics in non-gaming products targeting kids / addiction-prone populations is unethical regardless of revenue lift.
@@ -147,7 +148,7 @@ EXTINCTION PLAN:
 ## Related Skills
 - `composable-skills/frameworks/hook-model/SKILL.md` — commercial application
 - `composable-skills/frameworks/social-learning-theory/SKILL.md` — vicarious reinforcement
-- `composable-skills/frameworks/fogg-behavior-model/SKILL.md` — Prompt component
+- `composable-skills/frameworks/fogg-behavior-model/SKILL.md` — Motivation, Ability and Prompt; reinforcement feeds Motivation
 - `composable-skills/frameworks/self-determination-theory/SKILL.md` — overjustification effect warning
 
 ## Testing Strategy

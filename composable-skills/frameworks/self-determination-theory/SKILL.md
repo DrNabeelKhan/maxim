@@ -22,7 +22,7 @@ priority: high
 tags: [behavior-science, framework, motivation, intrinsic-motivation]
 adr: ADR-007
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-10-15
 ---
 
 # Self-Determination Theory (SDT)
@@ -42,13 +42,13 @@ Apply Self-Determination Theory to design experiences that strengthen intrinsic 
 
 ## The Three Innate Psychological Needs
 
-SDT posits that humans have three innate, universal psychological needs. Behavior change that violates any of them is unsustainable; behavior change that satisfies all three is self-perpetuating.
+SDT posits that humans have three innate, universal psychological needs. Need satisfaction supports autonomous, more durable motivation and wellbeing; need thwarting is associated with controlled motivation, amotivation and ill-being.
 
 1. **Autonomy** — sense that one's actions are self-endorsed and self-chosen (NOT the same as independence; one can be autonomously interdependent)
 2. **Competence** — sense of effectiveness and mastery in one's interactions with the environment
 3. **Relatedness** — sense of belonging, mutual care, and connection with others
 
-When all three needs are met, intrinsic motivation flourishes. When any are thwarted, motivation degrades — first to extrinsic (carrot-and-stick), then to amotivation (apathy).
+When the needs are supported, intrinsic and other autonomous forms of motivation are more likely. When they are thwarted, people tend toward controlled motivation (rewards, pressure) or amotivation. SDT does not claim a fixed order of decline.
 
 ## The Motivation Continuum (Organismic Integration Theory sub-theory)
 
@@ -92,9 +92,9 @@ OUTPUT:
 
 ## Core Principles
 - **Need-satisfaction is universal but contextually expressed.** All humans need autonomy, competence, relatedness; cultures express the needs differently.
-- **Extrinsic rewards undermine intrinsic motivation** for already-interesting tasks (the famous "overjustification effect"). Use rewards strategically — not for tasks people would do anyway.
+- **Expected, tangible, task-contingent rewards tend to undermine intrinsic motivation** for interesting tasks (the "undermining effect"; Deci, Koestner & Ryan 1999, a finding disputed by Lepper et al. 1999). Use such rewards sparingly for tasks people would do anyway.
 - **Controlling language degrades autonomy** even when ostensibly motivational. "You should..." and "You have to..." trigger reactance.
-- **Informational feedback supports competence; evaluative feedback undermines it.** "Here's what worked..." beats "Good job!"
+- **Feedback framed informationally supports competence; feedback framed as control (pressure, comparison) can undermine it.** Positive verbal feedback on its own tended to enhance intrinsic motivation in the 1999 meta-analysis.
 - **Identified regulation is the practical target.** Pure intrinsic ("I do this for the joy of it") is rare; identified ("I do this because it's important to me") is sustainable and achievable through design.
 
 ## Applications & Use Cases
@@ -111,11 +111,14 @@ OUTPUT:
 - Deci, E. & Ryan, R. (1985). *Intrinsic Motivation and Self-Determination in Human Behavior.* Plenum.
 - Ryan, R. & Deci, E. (2017). *Self-Determination Theory: Basic Psychological Needs in Motivation, Development, and Wellness.* Guilford Press.
 - Center for Self-Determination Theory — https://selfdeterminationtheory.org/
+- Ryan, R.M., & Deci, E.L. (2000). "Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being." *American Psychologist* 55(1): 68–78.
+- Deci, E.L., Koestner, R., & Ryan, R.M. (1999). "A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation." *Psychological Bulletin* 125(6): 627–668.
+- Lepper, M.R., Henderlong, J., & Gingras, I. (1999). "Understanding the effects of extrinsic rewards on intrinsic motivation — uses and abuses of meta-analysis." *Psychological Bulletin* 125(6): 669–676.
 
 ## Usage Guidelines
 - Diagnose need-satisfaction in user research, not just outcome metrics. NPS doesn't reveal autonomy thwarting; qualitative interviews do.
 - Audit copy for controlling language (should · must · have to · need to · supposed to) — replace with autonomy-supportive language (can · could · might consider · invite you to).
-- Avoid contingent rewards for tasks users find intrinsically interesting — the reward will eventually undermine the interest.
+- Avoid expected, tangible, task-contingent rewards for tasks users find intrinsically interesting; they tend to reduce later free-choice engagement.
 - Pair with Fogg Behavior Model (moment-of-action) and TTM (stage-of-change) for full motivational design.
 
 ## Collaboration Protocol
@@ -141,7 +144,7 @@ OUTPUT:
 
 ## Testing Strategy
 - A/B test autonomy-supportive vs controlling language with matched populations; measure both immediate conversion AND 90-day retention
-- Expected effect: short-term conversion may be similar; long-term retention diverges 20–40%
+- Hypothesis to test: short-term conversion may be similar while long-term retention differs; there is no established benchmark for the size of the gap
 - Need-satisfaction survey deltas are leading indicators for the long-term split
 
 ---

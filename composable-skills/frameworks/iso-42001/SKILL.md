@@ -20,7 +20,7 @@ ethics_required: true
 priority: high
 tags: [security-compliance, framework]
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-10-15
 ---
 
 # ISO 42001 (AI Management System)
@@ -41,11 +41,11 @@ Apply ISO/IEC 42001 to establish, operate, and continually improve an AI Managem
 ## Key Clauses
 | Clause | Area | Description |
 |--------|------|-------------|
-| 4 | Context of Organization | Understanding AI impact on stakeholders |
+| 4 | Context of Organization | Organizational context, interested parties, scope of the AI management system |
 | 5 | Leadership | Top management commitment and AI policy |
 | 6 | Planning | Risk and opportunity management for AI |
 | 7 | Support | Resources, competence, awareness |
-| 8 | Operation | AI system lifecycle controls |
+| 8 | Operation | Operational planning and control; AI risk assessment, risk treatment and AI system impact assessment (8.1–8.4). Lifecycle controls are in Annex A |
 | 9 | Performance Evaluation | Monitoring, measurement, audits |
 | 10 | Improvement | Nonconformity and continual improvement |
 
@@ -97,7 +97,7 @@ QUALITY CHECKS:
 - [ISO/IEC 42001 — standard page](https://www.iso.org/standard/81230.html) — ISO/IEC JTC 1/SC 42
 
 ## Usage Guidelines
-- **Start with context (Clause 4)**: Define stakeholders and AI impact before designing controls.
+- **Start with context (Clause 4)**: Define interested parties and AIMS scope; assess AI system impact under 6.1.4 and 8.4.
 - **Adapt, don't adopt**: Scale the AIMS to the organization's risk and AI maturity.
 - **Document decisions**: Record clause conformity and management-review outputs.
 - **Review outcomes**: Run the performance-evaluation and improvement loop on a cadence.

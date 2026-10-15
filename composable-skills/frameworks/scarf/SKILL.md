@@ -21,13 +21,13 @@ priority: medium
 tags: [behavior-science, framework, workplace, neuroscience, social-threat]
 adr: ADR-007
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-10-15
 ---
 
 # SCARF Model
 
 ## Purpose
-Apply David Rock's SCARF model to diagnose social threat / reward responses in organizational, team, and product-experience contexts. SCARF identifies five domains the brain treats as primary social rewards or threats — Status · Certainty · Autonomy · Relatedness · Fairness. Threats activate the same neural circuitry as physical threats; rewards activate the same dopamine pathways. Most "soft skill" failures and "engagement problems" map directly to SCARF threats.
+Apply David Rock's SCARF model to diagnose social threat / reward responses in organizational, team, and product-experience contexts. SCARF identifies five domains the brain treats as primary social rewards or threats — Status · Certainty · Autonomy · Relatedness · Fairness. Rock (2008) proposes that these social domains engage brain networks similar to those for primary survival threats and rewards; how far the circuitry actually overlaps is debated in later research. Many "soft skill" failures and "engagement problems" can be read as SCARF threats.
 
 ## Frameworks & Standards
 | Item | Value |
@@ -76,12 +76,12 @@ INTERVENTION DESIGN:
 ```
 
 ## Core Principles
-- **Threats and rewards are neurologically primary.** SCARF triggers activate primary motivation/avoidance circuitry — not just "preferences."
-- **Status is asymmetric.** Threats to status produce ~2x the reaction of equivalent status rewards. Public criticism is a primary status threat.
-- **Certainty matters more under stress.** When operators are already overloaded, ambiguity is doubly costly.
-- **Autonomy doesn't mean independence.** It means perceived choice. Even small choices (workflow ordering · scheduling) restore autonomy.
-- **Relatedness is the in-group/out-group switch.** Onboarding language matters: "we" before "you" creates relatedness; "you" before "we" creates outsider framing.
-- **Fairness violations compound.** Repeated small unfairness produces disproportionate disengagement.
+- **Social threats and rewards are treated as primary.** Rock's model holds that SCARF triggers engage approach and avoidance responses, not just "preferences."
+- **Threats weigh more than rewards.** Threat responses tend to be stronger and longer-lasting than reward responses (Baumeister et al., 2001, cited in Rock, 2008). Public criticism is a primary status threat.
+- **Certainty matters more under stress.** Ambiguity adds load that overloaded people can least afford.
+- **Autonomy doesn't mean independence.** It means perceived choice. Rock notes that even a subtle perception of autonomy helps, so small choices (workflow ordering · scheduling) count.
+- **Relatedness is the in-group/out-group switch.** Signals of shared identity build relatedness; outsider treatment threatens it.
+- **Unfairness triggers a strong threat response** (Rock 2008, citing Tabibnia & Lieberman 2007), so arbitrary decisions cost more trust than they appear to.
 
 ## Applications & Use Cases
 | Use Case | Application | Expected Outcome |
@@ -94,12 +94,13 @@ INTERVENTION DESIGN:
 | Sales conversations | Reduce Status threats (don't condescend); provide Certainty (clear next steps) | Better close rates |
 
 ## Reference Materials
-- Rock, D. (2008). "SCARF: a brain-based model for collaborating with and influencing others." *NeuroLeadership Journal* 1: 1–9.
+- Rock, D. (2008). "SCARF: a brain-based model for collaborating with and influencing others." *NeuroLeadership Journal* 1, 44–52.
+- Baumeister, R.F., Bratslavsky, E., Finkenauer, C., & Vohs, K.D. (2001). "Bad is stronger than good." *Review of General Psychology* 5(4), 323–370.
 - Rock, D. (2009). *Your Brain at Work.* HarperBusiness.
 - NeuroLeadership Institute — https://neuroleadership.com/
 
 ## Usage Guidelines
-- Diagnose ALL 5 domains, not just the obvious one. The dominant threat is often Status or Fairness even when the surface conversation is about something else.
+- Diagnose ALL 5 domains, not just the obvious one. The threat driving a reaction is often not the one the surface conversation is about (practitioner heuristic; which domains generate the strongest responses is an open research question in Rock 2008).
 - Use language that signals reward, not just absence of threat. "You're doing great" (Status reward) beats "no concerns about your work" (Status neutral).
 - For organizational change: front-load Certainty (clear timeline · what stays the same) + Autonomy (where employees have input).
 
@@ -126,7 +127,7 @@ INTERVENTION DESIGN:
 ## Testing Strategy
 - Quarterly pulse surveys with SCARF-domain-specific questions
 - A/B test communication styles (threat-reduced vs control) and measure response rates + sentiment
-- Expected: 15–30% engagement lift on SCARF-aware messaging
+- Measure the lift in your own context; there is no established benchmark for SCARF-aware messaging
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Shipped in v1.2.0 final WS6b (2026-05-19)._

@@ -20,7 +20,7 @@ ethics_required: true
 priority: high
 tags: [security-compliance, framework]
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-10-15
 ---
 
 # SOX (Sarbanes-Oxley Act)
@@ -52,7 +52,7 @@ Apply the Sarbanes-Oxley Act to safeguard financial-reporting integrity and IT g
 | Access Controls | Who can access financial systems |
 | Change Management | IT system change documentation |
 | Computer Operations | Backup, recovery, batch processing |
-| Data Center Security | Physical and logical data security |
+| Program Development | Controls over developing or acquiring systems that affect financial reporting |
 
 ## Prompt Template
 ```
@@ -84,7 +84,7 @@ QUALITY CHECKS:
 ```
 
 ## Core Principles
-- **Foundation**: SOX ties financial-reporting integrity to demonstrable IT general controls.
+- **Foundation**: SOX Section 404 requires effective internal control over financial reporting (ICFR). The Act itself does not mention IT; under PCAOB AS 2201 and SEC management guidance, IT general controls over financially significant systems are assessed as part of ICFR.
 - **Application**: Use when assessing controls over financial systems and reporting for public companies.
 - **Adaptation**: Scope controls to the systems that affect financial reporting (ICFR boundary).
 - **Documentation**: Maintain evidence, change records, and retention logs as audit-ready artifacts.
@@ -99,7 +99,9 @@ QUALITY CHECKS:
 | Financial data integrity | Protect data feeding financial reports | Trustworthy reporting pipeline |
 
 ## Reference Materials
-- [Sarbanes-Oxley Act of 2002 (SEC)](https://www.sec.gov/about/laws/soa2002.pdf) — U.S. Congress / SEC / PCAOB
+- Sarbanes-Oxley Act of 2002, Pub. L. 107-204, 116 Stat. 745 (30 July 2002). https://www.govinfo.gov/content/pkg/PLAW-107publ204/pdf/PLAW-107publ204.pdf
+- PCAOB. AS 2201, *An Audit of Internal Control Over Financial Reporting That Is Integrated with An Audit of Financial Statements.*
+- SEC. (2007). Release 33-8810, *Management's Report on Internal Control Over Financial Reporting* (interpretive guidance).
 
 ## Usage Guidelines
 - **Start with scope**: Establish the ICFR boundary before assessing controls.

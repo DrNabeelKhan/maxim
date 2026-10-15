@@ -22,13 +22,13 @@ priority: high
 tags: [behavior-science, framework, decision-making, cognitive-load]
 adr: ADR-007
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-10-15
 ---
 
 # Dual Process Theory (System 1 & System 2)
 
 ## Purpose
-Apply Dual Process Theory to design decisions that match the cognitive system the user is actually operating in. System 1 (fast · automatic · associative · low-effort) handles 95%+ of daily decisions; System 2 (slow · deliberative · effortful) handles the rest. Designing a System-2 interface for a System-1 task creates friction; designing a System-1 interface for a System-2 task creates errors. The mismatch is one of the most common UX failures.
+Apply Dual Process Theory to design decisions that match the cognitive system the user is actually operating in. System 1 (fast · automatic · associative · low-effort) handles most routine judgments; System 2 (slow · deliberative · effortful) is engaged when a task demands it. (The popular "95% of decisions" figure is a marketing estimate, not a measurement.) Designing a System-2 interface for a System-1 task creates friction; designing a System-1 interface for a System-2 task creates errors. The mismatch is one of the most common UX failures.
 
 ## Frameworks & Standards
 | Item | Value |
@@ -44,16 +44,16 @@ Apply Dual Process Theory to design decisions that match the cognitive system th
 
 | Attribute | System 1 | System 2 |
 |---|---|---|
-| Speed | Fast (~250ms) | Slow (seconds to minutes) |
+| Speed | Fast | Slow (seconds to minutes) |
 | Effort | Automatic, low-effort | Effortful, requires attention |
 | Control | Implicit, hard to override | Conscious, can be directed |
 | Capacity | Massive parallel | Sequential, limited |
-| Energy cost | Cheap | Expensive (glucose · attention budget) |
+| Energy cost | Cheap | Effortful (attention- and working-memory-limited) |
 | Decision style | Associative, intuitive | Logical, rule-based |
-| Error mode | Systematic biases | Cognitive overload, errors of omission |
+| Typical error mode | Biases from heuristics (but can also be correct) | Overload, errors of omission (and can also rationalise) |
 | When dominant | Familiar context · time pressure · low stakes · routine | Novel context · explicit reasoning required · high stakes |
 
-System 1 isn't "wrong" — it's the working horse. The 100+ cognitive biases catalogued (anchoring · availability · loss aversion · framing · representativeness · etc.) are System 1 outputs. System 2 is needed for verification, but it's expensive to deploy.
+System 1 isn't "wrong" — it's the working horse. Kahneman (2011) attributes many catalogued biases (anchoring · availability · framing · representativeness) to System 1. Evans & Stanovich (2013) caution against the "Type 1 = bad, Type 2 = good" reading: both kinds of processing can produce biased or correct responses. System 2 is useful for verification, but it is effortful to deploy.
 
 ## Prompt Template
 ```
@@ -92,7 +92,7 @@ OUTPUT:
 - **Match the system the user is operating in.** Designing for the wrong system is the most common UX failure.
 - **Default to System 1 for routine tasks; escalate to System 2 for stakes.** Most product flows benefit from System-1-default + System-2-escape.
 - **System 2 is lazy.** People default to System 1 even on high-stakes decisions unless deliberately engaged. Design must actively engage System 2 when it's needed.
-- **Cognitive load tax on System 2 is real.** Each System-2 decision depletes attention budget; sequencing N System-2 decisions in one session causes errors in the later ones (decision fatigue).
+- **System 2 capacity is limited.** Deliberate processing competes for attention and working memory, so heavy concurrent load degrades it. (Claims that decisions "deplete" a resource — ego depletion, decision fatigue — have weak support in large preregistered replications: Hagger et al. 2016; Vohs et al. 2021.)
 - **Pre-attentive attributes work in System 1.** Color · motion · size · position · contrast — these are read in System 1 in milliseconds. Use them to surface the right information before System 2 has to engage.
 
 ## Applications & Use Cases
@@ -110,10 +110,12 @@ OUTPUT:
 - Evans, J. & Stanovich, K. (2013). "Dual-Process Theories of Higher Cognition: Advancing the Debate." *Perspectives on Psychological Science* 8(3): 223–241.
 - Stanovich, K. (2011). *Rationality and the Reflective Mind.* Oxford University Press.
 - The Nobel Prize 2002 — https://www.nobelprize.org/prizes/economic-sciences/2002/kahneman/facts/
+- Hagger, M.S., et al. (2016). "A Multilab Preregistered Replication of the Ego-Depletion Effect." *Perspectives on Psychological Science* 11(4): 546–573.
+- Vohs, K.D., et al. (2021). "A Multisite Preregistered Paradigmatic Test of the Ego-Depletion Effect." *Psychological Science* 32(10): 1566–1581.
 
 ## Usage Guidelines
 - Diagnose user state BEFORE designing interventions. A System-1 design that works for focused users will fail for distracted/time-pressured users.
-- Watch for decision fatigue: late-in-session decisions are more error-prone than early ones. Design important decisions for early-session placement.
+- Reduce competing load around important decisions (interruptions, parallel tasks), rather than relying on contested decision-fatigue effects for placement.
 - Use pre-attentive attributes (color · motion · size · contrast) to communicate priority WITHOUT requiring System 2 to read text.
 - Cooling-off periods + confirmation steps engage System 2 for irreversible decisions.
 
@@ -136,7 +138,7 @@ OUTPUT:
 - `composable-skills/frameworks/fogg-behavior-model/SKILL.md` — Motivation × Ability × Prompt overlays both systems
 - `composable-skills/frameworks/prospect-theory/SKILL.md` — loss aversion is a System 1 phenomenon
 - `composable-skills/frameworks/com-b-model/SKILL.md` — Capability + Opportunity differ by system
-- `composable-skills/frameworks/cognitive-load-theory/SKILL.md` — System 2 capacity limits
+- `composable-skills/frameworks/cognitive-biases/SKILL.md` — biases attributed to fast processing
 
 ## Testing Strategy
 - A/B test System-1 vs System-2 calibrated designs for the same task

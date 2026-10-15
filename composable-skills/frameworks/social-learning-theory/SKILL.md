@@ -21,7 +21,7 @@ priority: medium
 tags: [behavior-science, framework, modeling, observation, self-efficacy]
 adr: ADR-007
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-10-15
 ---
 
 # Social Learning Theory (Bandura)
@@ -98,9 +98,9 @@ INTERVENTION DESIGN:
 ```
 
 ## Core Principles
-- **People learn primarily by observation,** not direct trial-and-error. Hours of YouTube tutorials work because of social learning.
-- **Model similarity drives attention.** Observers attend to models they perceive as relevant to themselves. "People like me did X" is more persuasive than "experts say Y."
-- **Vicarious reinforcement works.** Seeing someone else rewarded for a behavior is nearly as motivating as direct reinforcement.
+- **Much learning happens by observation,** not only by direct trial-and-error (Bandura 1977's central claim). Hours of YouTube tutorials work because of social learning.
+- **Model similarity drives attention.** Observers attend to models they perceive as relevant to themselves. Perceived similarity to the model increases its influence, especially when observers are unsure of their own capability (Schunk 1987); model competence and status also draw attention.
+- **Vicarious reinforcement works.** Seeing a model rewarded can increase an observer's motivation to perform the behavior.
 - **Self-efficacy gates behavior.** Without belief in capability, observation doesn't translate to action. Self-efficacy must be built deliberately.
 - **Mastery experiences trump verbal persuasion.** "You can do this!" without small-win opportunities is hollow.
 - **Reciprocal determinism** — person, behavior, and environment continuously influence each other. SLT explicitly rejects pure behaviorism.
@@ -120,6 +120,7 @@ INTERVENTION DESIGN:
 - Bandura, A. (1986). *Social Foundations of Thought and Action: A Social Cognitive Theory.* Prentice Hall.
 - Bandura, A. (1997). *Self-Efficacy: The Exercise of Control.* W.H. Freeman.
 - Albert Bandura archive — https://www.albertbandura.com/
+- Schunk, D.H. (1987). "Peer models and children's behavioral change." *Review of Educational Research* 57(2): 149–174.
 
 ## Usage Guidelines
 - Choose models who are similar to the target population — not aspirational but unattainable
@@ -140,7 +141,7 @@ INTERVENTION DESIGN:
 ## Success Metrics
 - Behavior adoption rate after observational intervention vs baseline
 - Self-efficacy scale scores pre/post (Bandura's Self-Efficacy Scales)
-- Long-term retention — SLT-driven adoption tends to be more durable than reinforcement-only
+- Long-term retention, compared between modeling-based and reinforcement-only designs
 
 ## Related Skills
 - `composable-skills/frameworks/cialdinis-6-principles/SKILL.md` — Social Proof principle
@@ -152,7 +153,7 @@ INTERVENTION DESIGN:
 ## Testing Strategy
 - A/B test modeled-example designs vs text-only explanations on the same skill/behavior
 - Measure: completion rate · self-reported self-efficacy delta · 30/90-day retention
-- Expected: 30–50% lift on activation; even larger on long-term retention
+- Measure activation and retention lift in your own context; there is no established benchmark
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Shipped in v1.2.0 final WS6b (2026-05-19)._

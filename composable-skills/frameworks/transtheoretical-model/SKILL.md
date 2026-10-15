@@ -22,7 +22,7 @@ priority: high
 tags: [behavior-science, framework, motivation, change-management]
 adr: ADR-007
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-10-15
 ---
 
 # Transtheoretical Model (TTM / Stages of Change)
@@ -37,7 +37,7 @@ Apply the Transtheoretical Model to design interventions calibrated to where a p
 | Category | Behavior Science — Motivation / Change Management |
 | Version | 1.0.0 |
 | Originators | James Prochaska & Carlo DiClemente (1977; expanded with John Norcross) |
-| Maturity | Established — 40+ years of empirical validation, ~1000+ peer-reviewed studies |
+| Maturity | Widely studied and applied since the late 1970s; its validity and the value of stage-matching are contested (e.g. West 2005; Cochrane review 2010) |
 | Primary references | Prochaska & DiClemente "Stages of Change in the Modification of Problem Behaviors" (1992) · uri.edu/cprc/transtheoretical-model |
 
 ## The Five Stages
@@ -60,16 +60,16 @@ CONTEXT:
 
 STAGE DIAGNOSIS:
 1. Estimate the dominant stage of the population (precontemplation / contemplation / preparation / action / maintenance)
-2. Identify the stage-distribution split (typical: 40% precontemplation / 40% contemplation / 20% preparation+action)
+2. Identify the stage-distribution split (reference point: in representative US smoker samples about 40% precontemplation / 40% contemplation / 20% preparation (Velicer et al. 1995); distributions vary by behavior and population)
 3. Diagnose which stage the current intervention is calibrated for
 4. Flag the mismatch (if any) between intervention design and population stage
 
 STAGE-MATCHED INTERVENTION:
 - Precontemplation:  Consciousness-raising · dramatic relief · environmental reevaluation
-- Contemplation:     Self-reevaluation · weighing pros/cons (decisional balance) · self-liberation
-- Preparation:       Helping relationships · self-efficacy reinforcement · commitment devices
-- Action:            Reinforcement management · counterconditioning · stimulus control
-- Maintenance:       Relapse prevention · social support · environmental supports
+- Contemplation:     Self-reevaluation · weighing pros/cons (decisional balance)
+- Preparation:       Self-liberation (commitment) · self-efficacy support
+- Action/Maintenance: Reinforcement management · helping relationships · counterconditioning · stimulus control
+- (Process-stage mapping per Prochaska, DiClemente & Norcross 1992; social liberation is the tenth process and is not tied to one transition. Relapse-prevention planning and environmental supports are useful practice, not TTM processes.)
 
 OUTPUT:
 - Stage diagnosis with confidence band
@@ -79,7 +79,7 @@ OUTPUT:
 ```
 
 ## Core Principles
-- **Stage-matched intervention beats universal intervention.** A "just sign up" CTA to precontemplators is ~10x less effective than consciousness-raising for the same population.
+- **Stage-matching is the model's core proposal, but the evidence is weak.** TTM proposes matching interventions to stage; systematic reviews (Riemsma et al. 2003; Cochrane, Cahill et al. 2010, for smoking) found stage-based interventions no more effective than non-staged equivalents. Use stages as a diagnostic lens, and test rather than assume a stage-matching advantage.
 - **The 10 processes of change map to stages.** Cognitive/affective processes dominate early stages; behavioral processes dominate later.
 - **Movement is non-linear.** Relapse is part of the cycle, not failure. Maintenance-stage subjects can cycle back to contemplation; design for re-entry.
 - **Decisional balance** (pros vs cons of change) shifts predictably across stages — interventions can directly influence it.
@@ -98,6 +98,11 @@ OUTPUT:
 - Prochaska, J. & DiClemente, C. (1992). "Stages of Change in the Modification of Problem Behaviors." *Progress in Behavior Modification* 28: 183–218.
 - Norcross, J., Krebs, P., & Prochaska, J. (2011). "Stages of Change." *Journal of Clinical Psychology* 67(2): 143–154.
 - University of Rhode Island Cancer Prevention Research Center — https://web.uri.edu/cprc/transtheoretical-model/
+- Prochaska, J.O., DiClemente, C.C., & Norcross, J.C. (1992). "In search of how people change: Applications to addictive behaviors." *American Psychologist* 47(9): 1102–1114.
+- Velicer, W.F., Fava, J.L., Prochaska, J.O., Abrams, D.B., Emmons, K.M., & Pierce, J.P. (1995). "Distribution of smokers by stage in three representative samples." *Preventive Medicine* 24(4): 401–411.
+- Riemsma, R.P., et al. (2003). "Systematic review of the effectiveness of stage based interventions to promote smoking cessation." *BMJ* 326(7400): 1175–1177.
+- Cahill, K., Lancaster, T., & Green, N. (2010). "Stage-based interventions for smoking cessation." *Cochrane Database of Systematic Reviews*, CD004492.
+- West, R. (2005). "Time for a change: putting the Transtheoretical (Stages of Change) Model to rest." *Addiction* 100(8): 1036–1039.
 
 ## Usage Guidelines
 - Diagnose stage BEFORE designing intervention. Skipping diagnosis defaults the intervention to action-stage assumptions.
@@ -127,7 +132,7 @@ OUTPUT:
 
 ## Testing Strategy
 - A/B test stage-matched vs universal intervention with a population sample diagnosed via URICA or behavioral proxy
-- Expected effect size: 15–30% lift in stage-transition rate when intervention matches stage vs random assignment
+- No established benchmark: reviews have not found a reliable advantage for stage-matched interventions, so measure stage transition and behavior directly
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Shipped in WS6a of v1.2.0 sprint (2026-05-19). One of 4 HIGH-priority behavioral frameworks per FRAMEWORK_ROADMAP § v1.2.E._

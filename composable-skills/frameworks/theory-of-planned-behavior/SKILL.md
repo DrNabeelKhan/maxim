@@ -21,7 +21,7 @@ priority: medium
 tags: [behavior-science, framework, motivation, intention-action]
 adr: ADR-007
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-10-15
 ---
 
 # Theory of Planned Behavior (TPB)
@@ -94,7 +94,7 @@ INTERVENTION DESIGN:
 
 ## Core Principles
 - **Intention is a function of three things, not one.** Persuading on attitude alone fails when subjective norms or control are negative.
-- **Subjective norms matter most in collectivist cultures and high-stakes decisions.** In individualist contexts they're often weak; in family/health/career decisions they dominate.
+- **Subjective norms matter most in collectivist cultures and high-stakes decisions.** Across studies, subjective norm is generally the weakest predictor of intention (Armitage & Conner 2001); its weight in particular cultures or decisions is a hypothesis to check.
 - **Perceived control predicts behavior even when intention is weak.** Operators with high self-efficacy take action; operators with low self-efficacy delay even when motivated.
 - **Implementation intentions close the intention-action gap.** "When X situation occurs, I'll do Y action" turns intention into automatic response.
 - **Actual control limits perceived control's predictive power.** If barriers are real (cost · time · access), perceived control matters less than reducing the real barriers.
@@ -114,10 +114,14 @@ INTERVENTION DESIGN:
 - Ajzen, I. (2002). "Perceived Behavioral Control, Self-Efficacy, Locus of Control, and the Theory of Planned Behavior." *Journal of Applied Social Psychology* 32(4): 665–683.
 - Constructing Theory of Planned Behavior questionnaires — https://people.umass.edu/aizen/tpb.measurement.pdf
 - Ajzen's TPB resource page — https://people.umass.edu/aizen/tpb.html
+- Armitage, C.J., & Conner, M. (2001). "Efficacy of the Theory of Planned Behaviour: A meta-analytic review." *British Journal of Social Psychology* 40(4): 471–499.
+- McEachan, R.R.C., Conner, M., Taylor, N.J., & Lawton, R.J. (2011). "Prospective prediction of health-related behaviours with the Theory of Planned Behaviour: a meta-analysis." *Health Psychology Review* 5(2): 97–144.
+- Steinmetz, H., Knappstein, M., Ajzen, I., Schmidt, P., & Kabst, R. (2016). "How Effective are Behavior Change Interventions Based on the Theory of Planned Behavior? A Three-Level Meta-Analysis." *Zeitschrift für Psychologie* 224(3): 216–233.
+- Gollwitzer, P.M., & Sheeran, P. (2006). "Implementation intentions and goal achievement: A meta-analysis of effects and processes." *Advances in Experimental Social Psychology* 38: 69–119.
 
 ## Usage Guidelines
 - Measure each TPB component separately in user research. A combined "would you do X?" question hides which component is the bottleneck.
-- Implementation intentions are the lowest-cost, highest-leverage intervention to close intention-behavior gaps.
+- Implementation intentions ("if X, then I will Y") have a medium-to-large average effect on goal attainment (d ≈ 0.65; Gollwitzer & Sheeran 2006) and are cheap to add.
 - Pair with TTM (stage-of-change determines which TPB component dominates).
 
 ## Collaboration Protocol
@@ -133,7 +137,7 @@ INTERVENTION DESIGN:
 ## Success Metrics
 - TPB-component-segmented conversion rates (which component is the bottleneck?)
 - Intention-behavior gap closure rate after implementation-intentions intervention
-- Behavior maintenance at 90 days (TPB predicts maintenance better than initial conversion)
+- Behavior maintenance at 90 days (note: TPB's predictive power declines over longer follow-up; McEachan et al. 2011)
 
 ## Related Skills
 - `composable-skills/frameworks/transtheoretical-model/SKILL.md` — stage determines TPB component dominance
@@ -144,7 +148,7 @@ INTERVENTION DESIGN:
 ## Testing Strategy
 - Pre/post TPB questionnaires segmented by intervention type
 - A/B test attitude-focused vs control-focused vs norms-focused messaging on the same population
-- Expected: 20–40% lift when intervention matches the diagnosed bottleneck vs random framing
+- Benchmark: TPB-based interventions show a medium average effect on behavior (d ≈ 0.5; Steinmetz et al. 2016). Measure your own lift.
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Shipped in v1.2.0 final WS6b (2026-05-19)._

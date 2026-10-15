@@ -21,7 +21,7 @@ priority: medium
 tags: [behavior-science, framework, adoption, market, innovation]
 adr: ADR-007
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-10-15
 ---
 
 # Diffusion of Innovations
@@ -37,7 +37,7 @@ Apply Everett Rogers' Diffusion of Innovations to model how new ideas, products,
 | Version | 1.0.0 |
 | Originator | Everett Rogers (1962 · 5th edition 2003) |
 | Maturity | Foundational — one of the most-cited frameworks in marketing, sociology, and behavior change |
-| Primary references | Rogers, E. (2003). *Diffusion of Innovations* (5th ed.) · Moore, G. (1991). *Crossing the Chasm* (the GTM application) · diffusionofinnovations.com |
+| Primary references | Rogers, E. (2003). *Diffusion of Innovations* (5th ed.) · Moore, G. (1991). *Crossing the Chasm* (the GTM application) |
 
 ## The Five Adopter Categories
 
@@ -65,7 +65,7 @@ Between Early Adopters and Early Majority sits **the chasm** — a gap where man
 | **Trialability** | Ability to test before commitment | Higher = faster adoption |
 | **Observability** | Visibility of results to other potential adopters | Higher = faster adoption |
 
-Rogers showed these five attributes explain ~50% of adoption-rate variance. Products that score high on all five spread rapidly; products that score low on multiple attributes stall regardless of marketing spend.
+Rogers (2003, p. 221) reports that, across studies, these perceived attributes explain 49–87% of the variance in rate of adoption. Rate of adoption also depends on the type of innovation-decision, communication channels, the social system and change agents' promotion efforts.
 
 ## Prompt Template
 ```
@@ -104,10 +104,10 @@ INTERVENTION DESIGN:
 ## Core Principles
 - **The adoption curve is not just demographic — it's behavioral.** Same person can be Innovator for one product, Laggard for another.
 - **Different categories require different marketing.** Visionary positioning for Early Adopters; proof-and-reference for Early Majority; cost-and-necessity for Late Majority.
-- **The chasm is real.** Many products win Innovators + Early Adopters but stall before Early Majority. Pre-chasm-success metrics overestimate market potential.
+- **Moore argues there is a chasm** between Early Adopters and the Early Majority. Sales "saddles" are documented, but they have several causes, including technology and business cycles (Chandrasekaran & Tellis 2011). Pre-chasm-success metrics overestimate market potential.
 - **Beachhead strategy beats horizontal.** Dominating one Early Majority niche enables expansion; trying to win broadly from the chasm typically fails.
 - **Innovation attributes are levers.** Each attribute can be deliberately improved through product or positioning changes.
-- **Observability accelerates adoption disproportionately.** Visible adoption (community · public usage · network effects) compounds.
+- **Observability helps adoption.** Visible results make an innovation easier to evaluate. (In Tornatzky & Klein's 1982 meta-analysis, compatibility, relative advantage and complexity showed the most consistent relationships with adoption.)
 
 ## Applications & Use Cases
 | Use Case | Application | Expected Outcome |
@@ -122,7 +122,8 @@ INTERVENTION DESIGN:
 ## Reference Materials
 - Rogers, E.M. (2003). *Diffusion of Innovations* (5th ed.). Free Press.
 - Moore, G.A. (1991). *Crossing the Chasm: Marketing and Selling High-Tech Products to Mainstream Customers.* HarperBusiness.
-- Diffusion of Innovations resource site — https://www.diffusionofinnovations.com/
+- Tornatzky, L.G., & Klein, K.J. (1982). "Innovation characteristics and innovation adoption-implementation: A meta-analysis of findings." *IEEE Transactions on Engineering Management* EM-29(1): 28–45.
+- Chandrasekaran, D., & Tellis, G.J. (2011). "Getting a Grip on the Saddle: Chasms or Cycles?" *Journal of Marketing* 75(4): 21–34.
 
 ## Usage Guidelines
 - Identify the dominant adopter category in your customer base FIRST. Marketing to "the market" is marketing to no one.
@@ -150,12 +151,11 @@ INTERVENTION DESIGN:
 - `composable-skills/frameworks/cialdinis-6-principles/SKILL.md` — Social Proof for Early Majority
 - `composable-skills/frameworks/social-learning-theory/SKILL.md` — Observability = modeling
 - `composable-skills/frameworks/theory-of-planned-behavior/SKILL.md` — Subjective Norms in adopter categories
-- `composable-skills/frameworks/wardley-mapping/SKILL.md` (if exists) — component-evolution stage informs diffusion stage
 
 ## Testing Strategy
 - A/B test category-matched messaging vs unsegmented control
 - Measure conversion per adopter category, not just aggregate
-- Expected lift: 30–60% on conversion when messaging matches dominant category vs misaligned
+- Measure conversion lift when messaging matches the dominant adopter category; there is no established benchmark
 
 ---
 _Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Shipped in v1.2.0 final WS6b (2026-05-19)._

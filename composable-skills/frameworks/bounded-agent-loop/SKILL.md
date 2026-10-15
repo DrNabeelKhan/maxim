@@ -18,7 +18,7 @@ ethics_required: true
 priority: medium
 tags: [operational, framework]
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-10-15
 ---
 
 # Bounded Agent Loop
@@ -79,7 +79,7 @@ QUALITY CHECKS:
 | Verification checkpoint (Reviewer) | Per-iteration verification checkpoint | Each pass validated before repeat-or-stop |
 
 ## Reference Materials
-- [Forward-Future Loop Library](https://signals.forwardfuture.ai/loop-library/) - prior art, per ADR-007
+- [Forward-Future Loop Library](https://signals.forwardfuture.com/loop-library/) - prior art, per ADR-007
 
 ## Usage Guidelines
 - **Start with context**: Define the task and the stopping condition before the first iteration.

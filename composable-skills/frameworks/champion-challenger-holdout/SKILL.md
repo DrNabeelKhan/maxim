@@ -18,13 +18,13 @@ ethics_required: true
 priority: medium
 tags: [operational, framework]
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-10-15
 ---
 
 # Champion–Challenger with Holdout
 
 ## Purpose
-Promote a change only if it beats the incumbent on a *frozen holdout* without weakening a must-pass check. The champion stays in place until a challenger provably wins, which makes the process resistant to Goodhart's Law — optimizing a proxy metric until it stops meaning anything.
+Promote a change only if it beats the incumbent on a *frozen holdout* without weakening a must-pass check. The champion stays in place until a challenger provably wins, which reduces Goodhart-style overfitting (optimizing a proxy metric until it stops meaning anything), provided the holdout is refreshed or access to it is limited: a holdout reused across many rounds can itself be overfit (Dwork et al. 2015).
 
 ## Frameworks & Standards
 | Item | Value |
@@ -83,7 +83,8 @@ QUALITY CHECKS:
 
 ## Reference Materials
 - [Goodhart's Law](https://en.wikipedia.org/wiki/Goodhart%27s_law) - Charles Goodhart
-- Holdout / cross-validation literature - statistical learning
+- Hastie, T., Tibshirani, R., & Friedman, J. (2009). *The Elements of Statistical Learning* (2nd ed.), ch. 7 (model assessment and selection). Springer.
+- Dwork, C., Feldman, V., Hardt, M., Pitassi, T., Reingold, O., & Roth, A. (2015). "The reusable holdout: Preserving validity in adaptive data analysis." *Science* 349(6248): 636–638.
 
 ## Usage Guidelines
 - **Start with context**: Define the incumbent and the metric before proposing a challenger.
