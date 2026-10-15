@@ -1,120 +1,144 @@
 ---
 skill_id: nudge-theory
 name: Nudge Theory
-version: 1.0.0
+version: 2.0.0
 category: behavior-science
 type: framework
 frameworks: []
 triggers:
   - apply nudge theory
-  - use nudge-theory framework
   - nudge theory analysis
+  - choice architecture
+  - default design
+  - libertarian paternalism
+  - sludge audit
 collaborates_with:
   - nudge-architect
   - decision-architect
   - behavioral-designer
   - product-strategist
 ethics_required: true
-priority: medium
-tags: [behavior-science, framework]
+priority: high
+tags: [behavior-science, framework, choice-architecture, defaults, sludge]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Nudge Theory
 
 ## Purpose
-Apply Nudge Theory to understand and influence human behavior in product design, marketing, and user experience.
+Use Nudge Theory to design the context in which people choose, so that the choice that serves them is easier to make, without removing any option or materially changing incentives. Thaler and Sunstein call the person who shapes that context a **choice architect**, and note that there is no neutral design: every form, menu and default influences the outcome. The useful question is therefore not whether to influence, but how to do it transparently and in the chooser's interest.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `nudge-theory` |
-| Category | Behavior Science |
-| Version | 1.0.0 |
-| Owner | Thaler & Sunstein |
-| Maturity | Established (2008) |
-| Primary References | Libertarian Paternalism |
+| Category | Behavior Science — Choice Architecture |
+| Version | 2.0.0 |
+| Originators | Richard H. Thaler and Cass R. Sunstein |
+| First published | 2008 (book); "libertarian paternalism" set out in 2003 |
+| Primary references | *Nudge* (2008) · *Nudge: The Final Edition* (2021) |
+| Recognition | Thaler received the Nobel Memorial Prize in Economic Sciences in 2017 |
+
+## The Theory
+
+**A nudge** is any aspect of choice architecture that changes behavior predictably without forbidding options or significantly changing economic incentives. To count as a nudge it must be easy and cheap to avoid. A ban is not a nudge, and neither is a large tax.
+
+**Libertarian paternalism.** Steer people toward choices that make their lives better by their own judgment, while preserving their freedom to choose otherwise.
+
+### The tools of choice architecture (from *Nudge*)
+- **Defaults.** Many people accept whatever is pre-set, so the default is one of the most powerful design choices.
+- **Expect error.** Design for the mistakes people predictably make.
+- **Give feedback.** Tell people promptly how they are doing and when something is going wrong.
+- **Understand mappings.** Help people connect a choice to the outcome they will actually experience.
+- **Structure complex choices.** Simplify, sort and filter when options are many or hard to compare.
+- **Incentives.** Make the relevant costs and benefits salient to the person choosing.
+
+### Sludge
+Sludge is the opposite of a good nudge: friction that makes it harder to do something in your own interest, such as a long cancellation process or a burdensome claim form. *The Final Edition* gives it extended attention.
+
+## Core Principles
+- **There is no neutral design.** Order, defaults and wording always influence choice, so choose them deliberately.
+- **Defaults are decisions on the user's behalf.** Set them to what most people would choose if they had time and information.
+- **Preserve freedom of choice.** Opting out must be easy; otherwise the design is coercion, not a nudge.
+- **Nudge for good.** Thaler's test: would the people being nudged endorse it?
+- **Remove sludge as well as adding nudges.** Taking friction out of beneficial actions often matters as much as adding prompts.
+
+## Applications & Use Cases
+| Use Case | Application | Choice-architecture tool |
+|---|---|---|
+| Retirement saving | Automatic enrolment with an easy opt-out | Defaults |
+| Organ donation and consent schemes | Set the default thoughtfully and make the choice easy to change | Defaults |
+| Pricing pages | Order and group plans so the comparison is clear | Structure complex choices |
+| Error-prone forms | Validate inline, confirm irreversible actions | Expect error, feedback |
+| Cancellation and claims | Audit for friction that works against the user | Sludge removal |
+| Energy and spending feedback | Show usage against a meaningful comparison | Feedback, mappings |
+
+## Usage Guidelines
+- **Map the existing choice architecture first**, including the current default, the order of options and every step.
+- **Set defaults to the option most people would choose with full information**, and make changing it easy.
+- **Audit for sludge** in the paths that serve the user, such as cancelling, claiming, correcting or opting out.
+- **Apply Thaler's endorsement test** before shipping: would users approve of the nudge if it were explained to them?
+- **Test against a control.** Nudges are hypotheses, and their effects vary by population and context.
 
 ## Prompt Template
 ```
-You are applying the Nudge Theory framework.
+You are applying Nudge Theory and choice architecture (Thaler & Sunstein 2008).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: behavior science
-- Stakeholders: [[stakeholder_roles]]
+DECISION: [[what the person is choosing]]
+THE CHOOSER'S INTEREST: [[the outcome they would endorse with full information]]
 
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Nudge Theory applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
+CURRENT CHOICE ARCHITECTURE
+- Default:
+- Order and grouping of options:
+- Steps and friction, mark any SLUDGE:
 
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
+TOOLS
+- Defaults · Expect error · Give feedback · Understand mappings · Structure complex choices · Incentives
 
-QUALITY CHECKS:
-□ All recommendations align with Nudge Theory principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+DESIGN
+- Proposed default and why it serves the chooser:
+- How easy is opt-out?
+- Sludge to remove:
+
+ENDORSEMENT TEST: would the chooser approve of this if it were explained? yes / no, and why.
 ```
 
-## Core Principles
-- **Foundation**: Nudge Theory provides structured approach to behavior science
-- **Application**: Use when facing decisions requiring behavior science guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Nudge Theory to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Libertarian Paternalism](https://www.nudgeworld.org/) - Thaler & Sunstein
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS prioritize user autonomy and informed consent
-- NEVER use for manipulative or coercive purposes
-- ALWAYS provide clear opt-out mechanisms
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Nudge for the chooser, not the organisation.** A default chosen to benefit the business at the user's expense is a dark pattern, not a nudge.
+- **Keep it transparent.** A nudge that only works if hidden is not acceptable.
+- **Opting out must stay cheap.** If avoiding it is costly, it has become coercion.
+- **Watch for unequal effects.** Defaults that suit the average person can harm those whose circumstances differ.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Nudge Theory principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Randomise exposure to the redesigned choice and compare against the current design.
+- Measure the decision and its later consequences, not just the immediate choice.
+- Track opt-out rates; a very low rate can mean a strong default or a hidden exit, so check which.
+
+## Success Metrics
+- Share of people ending up with the option they would endorse.
+- Opt-out and reversal rates.
+- Time and effort needed to complete beneficial actions, as a sludge measure.
+- Satisfaction or regret measured after the decision.
+
+## Collaboration Protocol
+- Inbound from: `nudge-architect` · `decision-architect` · `behavioral-designer` · `product-strategist`
+- Outbound to: CSO office when defaults touch consent, privacy or regulated choices
+- Cross-framework: EAST for an applied checklist; Prospect Theory for why defaults and losses weigh heavily; COM-B for diagnosing what blocks the choice.
+
+## Related Skills
+- `composable-skills/frameworks/east-framework/SKILL.md` — a practical checklist built on this tradition
+- `composable-skills/frameworks/prospect-theory/SKILL.md` — status quo bias and loss aversion behind the power of defaults
+- `composable-skills/frameworks/dual-process-theory/SKILL.md` — why automatic thinking makes choice architecture matter
+- `composable-skills/frameworks/com-b-model/SKILL.md` — diagnosis before redesign
+
+## Reference Materials
+- Thaler, R.H., & Sunstein, C.R. (2003). "Libertarian Paternalism." *American Economic Review*, 93(2), 175–179.
+- Thaler, R.H., & Sunstein, C.R. (2008). *Nudge: Improving Decisions About Health, Wealth, and Happiness.* Yale University Press.
+- Thaler, R.H., & Sunstein, C.R. (2021). *Nudge: The Final Edition.* Penguin Books.
+- Thaler, R.H., & Benartzi, S. (2004). "Save More Tomorrow: Using Behavioral Economics to Increase Employee Saving." *Journal of Political Economy*, 112(S1), S164–S187.
+- Sunstein, C.R. (2016). *The Ethics of Influence: Government in the Age of Behavioral Science.* Cambridge University Press.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

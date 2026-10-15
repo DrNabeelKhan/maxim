@@ -26,6 +26,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 
 /**
  * Explicit, reviewed aliases from names recommend_frameworks uses to the definition
@@ -38,6 +39,9 @@ export const ALIASES = {
   "nist csf": "nist-cybersecurity-framework",   // CSF is the Cybersecurity Framework
   "microservices patterns": "microservices-architecture",
   "hook canvas": "Hook Model",                    // Eyal's worksheet for the Hook Model
+  // The MCP's curated key is "Cialdini's Principles"; the definition's slug and
+  // name both carry the principle count, so they would never match it unaided.
+  "cialdinis principles": "cialdinis-6-principles",
 };
 
 const FIELDS = ["description", "when_to_use", "components", "application_steps"];
@@ -143,8 +147,39 @@ export function parseDefinition(raw, slug) {
   };
 }
 
-/** Load every <dir>/<slug>/SKILL.md. Returns Map<slug, { slug, name, path, detail }>. */
-export function loadDefinitions(dir) {
+/**
+ * Fingerprints of the generator's template text, frozen from the corpus as it stood
+ * before any stub was authored (commit 633e3fa). See classify() for why they must
+ * be frozen rather than recomputed. Read lazily; absent file means none.
+ */
+let bundledFingerprints = null;
+function defaultFingerprints() {
+  if (bundledFingerprints) return bundledFingerprints;
+  try {
+    const p = new URL("./template-fingerprints.json", import.meta.url);
+    const json = JSON.parse(fs.readFileSync(p, "utf8"));
+    bundledFingerprints = new Set(json.fingerprints || []);
+  } catch {
+    bundledFingerprints = new Set();
+  }
+  return bundledFingerprints;
+}
+
+/** The comparable shape of one field: the framework's own name replaced, then normalized. */
+export function fieldShape(def, field) {
+  const raw = Array.isArray(def.detail[field]) ? def.detail[field].join(" | ") : String(def.detail[field] ?? "");
+  let t = raw;
+  for (const v of [def.name, def.name.replace(/\s*\(.*$/, "")]) if (v) t = t.split(v).join("<NAME>");
+  return normalize(t);
+}
+
+/** Stable fingerprint of a field's shape. Hashed so the frozen set stays small. */
+export function fingerprint(field, shape) {
+  return createHash("sha1").update(field + "::" + shape).digest("hex").slice(0, 16);
+}
+
+/** Load every <dir>/<slug>/SKILL.md. Returns Map<slug, { slug, name, path, detail, status, templated }>. */
+export function loadDefinitions(dir, { fingerprints } = {}) {
   const defs = new Map();
   let entries;
   try {
@@ -164,7 +199,7 @@ export function loadDefinitions(dir) {
     const { name, detail } = parseDefinition(raw, e.name);
     defs.set(e.name, { slug: e.name, name, path: p, detail });
   }
-  classify(defs);
+  classify(defs, fingerprints ?? defaultFingerprints());
   return defs;
 }
 
@@ -181,26 +216,49 @@ export function loadDefinitions(dir) {
  * headings with real, specific content. A heading marker flags them as stubs and
  * hides real material. Cross-definition identity does not.
  *
+ * Why the FROZEN fingerprints as well: "shared with another definition" is relative
+ * to a population that shrinks as stubs get authored. Author every other member of
+ * a template group and the last one's text becomes unique, so it is reclassified as
+ * partial, then as authored. That happened: authoring the behaviour-science stubs
+ * turned cognitive-biases from stub into "partial" with nobody touching it. Left
+ * alone, the last stub of every group would end up reported as authored: a false
+ * pass. A field is therefore templated if it is shared now OR matches the frozen
+ * set, so the frozen set catches known template text and the live check still
+ * catches new stubs.
+ *
  * status: "authored" (no templated fields) | "partial" (some) | "stub" (all four).
  */
-function classify(defs) {
-  const shape = (d, f) => {
-    const raw = Array.isArray(d.detail[f]) ? d.detail[f].join(" | ") : String(d.detail[f] ?? "");
-    let t = raw;
-    for (const v of [d.name, d.name.replace(/\s*\(.*$/, "")]) if (v) t = t.split(v).join("<NAME>");
-    return normalize(t);
-  };
+function classify(defs, frozen) {
   const seen = new Map();
   for (const d of defs.values()) {
     for (const f of FIELDS) {
-      const k = f + "::" + shape(d, f);
+      const k = f + "::" + fieldShape(d, f);
       seen.set(k, (seen.get(k) || 0) + 1);
     }
   }
   for (const d of defs.values()) {
-    d.templated = FIELDS.filter((f) => seen.get(f + "::" + shape(d, f)) > 1);
+    d.templated = FIELDS.filter((f) => {
+      const s = fieldShape(d, f);
+      return seen.get(f + "::" + s) > 1 || frozen.has(fingerprint(f, s));
+    });
     d.status = d.templated.length === 0 ? "authored" : d.templated.length === FIELDS.length ? "stub" : "partial";
   }
+}
+
+/**
+ * Template fingerprints of a corpus: every field shape shared by two or more
+ * definitions. Used once to produce template-fingerprints.json from the
+ * pre-authoring corpus; exported so the generator and classifier cannot diverge.
+ */
+export function templateFingerprints(defs) {
+  const seen = new Map();
+  for (const d of defs.values()) {
+    for (const f of FIELDS) {
+      const fp = fingerprint(f, fieldShape(d, f));
+      seen.set(fp, (seen.get(fp) || 0) + 1);
+    }
+  }
+  return [...seen].filter(([, n]) => n > 1).map(([fp]) => fp).sort();
 }
 
 /**
@@ -232,7 +290,9 @@ export function createResolver({ curated = {}, dir, onLoad } = {}) {
   /** Curated entry k, unless an authored definition of the same framework exists. */
   function preferAuthored(k) {
     ensure();
-    const slug = index.get(normalize(k));
+    const nk = normalize(k);
+    const viaAlias = ALIASES[nk] && defs.has(ALIASES[nk]) ? ALIASES[nk] : undefined;
+    const slug = index.get(nk) ?? viaAlias;
     if (slug && defs.get(slug).status === "authored") return fromDef(slug);
     return fromCurated(k);
   }

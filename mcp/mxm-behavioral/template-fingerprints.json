@@ -1,0 +1,27 @@
+{
+  "description": "Fingerprints of the generator's template text in composable-skills/frameworks, frozen from the corpus before any stub was authored. A field whose shape (the framework's own name replaced, then normalized) hashes to one of these is template text. Regenerate only if the template itself changes; see framework-loader.mjs classify().",
+  "source_commit": "633e3fa",
+  "source_split": {
+    "authored": 18,
+    "partial": 4,
+    "stub": 63
+  },
+  "fingerprints": [
+    "010e080a044eaf0c",
+    "01fe9fa99e2da15f",
+    "1404a7e155280622",
+    "5a38ea349b39c293",
+    "64f89a3effde9e89",
+    "6894cb7ba11c660e",
+    "6f34833ef6d51f07",
+    "781213348ddc257e",
+    "8fb467142b8a0de0",
+    "98d4bd49508e37a3",
+    "9b826d65ebfa35bb",
+    "a8d6eab00e6b96b4",
+    "beaa72594ffc8c62",
+    "c327989fe98edc65",
+    "c43a4f375d6ebee3",
+    "e1e7a9342b520327"
+  ]
+}
