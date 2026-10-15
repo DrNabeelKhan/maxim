@@ -1,14 +1,16 @@
 ---
 skill_id: brand-guidelines
 name: Brand Guidelines
-version: 1.0.0
+version: 2.0.0
 category: content-marketing
 type: framework
 frameworks: []
 triggers:
-  - apply brand guidelines
-  - use brand-guidelines framework
-  - brand guidelines analysis
+  - brand guidelines
+  - brand book
+  - style guide
+  - logo usage rules
+  - voice and tone guide
 collaborates_with:
   - brand-guardian
   - content-creator
@@ -17,105 +19,96 @@ collaborates_with:
   - article-writer
 ethics_required: false
 priority: medium
-tags: [content-marketing, framework]
+tags: [content-marketing, framework, brand, identity, voice]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Brand Guidelines
 
 ## Purpose
-Apply Brand Guidelines to craft compelling messages, understand customer journeys, and drive ethical engagement.
+Use brand guidelines to make a brand recognisable and consistent wherever it appears, by defining its strategy, voice and visual identity precisely enough that different people produce work that looks and sounds like the same company. Guidelines exist because consistency builds recognition and trust over time, and because without written rules every new designer or writer reinvents the brand a little.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `brand-guidelines` |
-| Category | Content Marketing |
-| Version | 1.0.0 |
-| Owner | Industry Standard |
-| Maturity | Established |
-| Primary References | Brand Consistency Framework |
+| Category | Content Marketing — Brand Identity |
+| Version | 2.0.0 |
+| Key references | Wheeler, *Designing Brand Identity* · Aaker, *Building Strong Brands* (1996) · Keller, customer-based brand equity (1993) |
+
+## What Guidelines Cover
+- **Strategy**: purpose, positioning, audience and the promise the brand makes.
+- **Voice and tone**: the brand's personality in words, and how tone shifts by context while the voice stays constant.
+- **Logo**: approved versions, clear space, minimum size and examples of misuse.
+- **Colour**: primary and secondary palettes with values for screen and print, and accessible contrast pairings.
+- **Typography**: typefaces, hierarchy and usage rules.
+- **Imagery and iconography**: style, subject matter and what to avoid.
+- **Layout**: grids, spacing and templates for common formats.
+
+## Core Principles
+- **Consistency builds recognition.** Repeated, consistent exposure is how a brand becomes familiar.
+- **Voice is constant; tone adapts.** The same personality speaks differently in an error message and in a launch.
+- **Show, do not just tell.** Examples of correct and incorrect use teach faster than rules alone.
+- **Accessibility is part of the brand.** Colour pairings must meet contrast requirements.
+- **Guidelines are a living tool.** Version them and update them as the brand evolves.
+
+## Applications & Use Cases
+| Use Case | Application | Section used |
+|---|---|---|
+| Onboarding designers and writers | A single reference for how the brand looks and sounds | All |
+| Agency and partner briefs | Clear rules for external producers | Logo, colour, typography |
+| Product UI | Consistent colour, type and tone in the interface | Colour, voice |
+| Marketing campaigns | Recognisable assets across channels | Imagery, layout |
+| Rebrands | Defining and rolling out a new identity | Strategy, all |
+| Brand audits | Checking existing material against the rules | All |
+
+## Usage Guidelines
+- **Start with strategy**; visual rules without a positioning produce consistency without meaning.
+- **Write voice principles with examples** of what to say and what not to say.
+- **Specify colour values for every medium** and the approved accessible combinations.
+- **Include misuse examples** for the logo and key assets.
+- **Assign an owner and a version number**, and record changes.
 
 ## Prompt Template
 ```
-You are applying the Brand Guidelines framework.
+You are writing or auditing brand guidelines.
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: content marketing
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Brand Guidelines applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Brand Guidelines principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+STRATEGY: purpose · positioning · audience · promise
+VOICE: 3-4 personality traits, each with "we say / we don't say" examples
+TONE BY CONTEXT: e.g. onboarding, errors, marketing, support
+VISUAL: logo rules · colour with values and accessible pairs · typography · imagery
+AUDIT (if reviewing material): where does it depart from the guidelines, and does it matter?
 ```
 
-## Core Principles
-- **Foundation**: Brand Guidelines provides structured approach to content marketing
-- **Application**: Use when facing decisions requiring content marketing guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Brand Guidelines to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Brand Consistency Framework](Organization-specific) - Industry Standard
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS be truthful and avoid misleading claims
-- NEVER exploit vulnerabilities or use dark patterns
-- ALWAYS respect user privacy and data rights
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Do not imitate another brand's identity** closely enough to cause confusion.
+- **Keep claims in brand messaging truthful**; a consistent voice does not excuse an inaccurate promise.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Brand Guidelines principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Audit a sample of recent material against the guidelines periodically.
+- Test recognition with users unfamiliar with the brand.
+
+## Success Metrics
+- Share of audited material that complies.
+- Brand recognition and recall measures.
+- Time for new contributors to produce on-brand work.
+
+## Collaboration Protocol
+- Inbound from: `brand-guardian` · `ui-designer` · `content-creator`
+- Outbound to: `ui-designer` for design-system tokens; `article-writer` for voice
+- Cross-framework: Design systems implement the visual rules in product; WCAG sets the contrast requirements.
+
+## Related Skills
+- `composable-skills/frameworks/design-systems/SKILL.md` — implementing brand rules in product
+- `composable-skills/frameworks/wcag/SKILL.md` — accessible colour and type
+- `composable-skills/frameworks/platform-specific-writing/SKILL.md` — voice across channels
+
+## Reference Materials
+- Wheeler, A. *Designing Brand Identity: An Essential Guide for the Whole Branding Team.* Wiley (multiple editions).
+- Aaker, D.A. (1996). *Building Strong Brands.* Free Press.
+- Keller, K.L. (1993). "Conceptualizing, Measuring, and Managing Customer-Based Brand Equity." *Journal of Marketing*, 57(1), 1–22.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

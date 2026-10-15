@@ -1,14 +1,16 @@
 ---
 skill_id: platform-specific-writing
 name: Platform-Specific Writing
-version: 1.0.0
+version: 2.0.0
 category: content-marketing
 type: framework
 frameworks: []
 triggers:
-  - apply platform-specific writing
-  - use platform-specific-writing framework
-  - platform-specific writing analysis
+  - write for linkedin
+  - adapt this for each platform
+  - platform-specific copy
+  - write a thread
+  - newsletter version
 collaborates_with:
   - article-writer
   - social-media-strategist
@@ -16,105 +18,100 @@ collaborates_with:
   - video-script-writer
 ethics_required: false
 priority: medium
-tags: [content-marketing, framework]
+tags: [content-marketing, framework, copywriting, social-media, channels]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Platform-Specific Writing
 
 ## Purpose
-Apply Platform-Specific Writing to craft compelling messages, understand customer journeys, and drive ethical engagement.
+Use platform-specific writing to write each piece for how people actually read on that channel, rather than reformatting one text everywhere. Readers behave differently on a professional feed, a short-form timeline, an inbox and a long article: they scan differently, give different amounts of attention, and expect different structures. Most online reading is scanning, which is why the opening and the structure matter more than the prose in the middle.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `platform-specific-writing` |
-| Category | Content Marketing |
-| Version | 1.0.0 |
-| Owner | Platform Guidelines |
-| Maturity | Established |
-| Primary References | Multi-Platform Content Optimization |
+| Category | Content Marketing — Channel Writing |
+| Version | 2.0.0 |
+| Nature | An established practice drawing on reading research and platform norms |
+| Key reference | Nielsen, "How Users Read on the Web" (Nielsen Norman Group, 1997) |
+| Note | Character limits and features change; check each platform's current guidance |
+
+## Platform Profiles
+- **Professional feeds (e.g. LinkedIn).** The first lines decide whether a reader expands the post. Lead with a specific insight or claim, use short paragraphs, and end with a question or a clear point.
+- **Short-form timelines (e.g. X).** One idea per post; a thread works when each post stands on its own and the first one earns the rest.
+- **Visual platforms (e.g. Instagram).** The image or video carries the message; the caption supports it.
+- **Email newsletters.** The subject line and preview text decide the open; one main idea and one call to action decide the click.
+- **Long-form articles and blogs.** Descriptive headings, front-loaded paragraphs and a scannable structure, since most readers scan before they read.
+- **Video scripts.** Earn attention in the opening seconds and write for the ear, not the eye.
+
+## Core Principles
+- **Write for scanning.** Readers scan first; headings, opening lines and structure carry the message.
+- **Front-load the point.** The first line of a post, the subject of an email and the first sentence of a paragraph matter most.
+- **One idea per unit.** A post, an email or a section should do one thing well.
+- **Native beats reformatted.** Copy pasted across channels reads as an afterthought.
+- **Respect each platform's norms**, including tone, length and how links are treated.
+
+## Applications & Use Cases
+| Use Case | Application | Key adaptation |
+|---|---|---|
+| Launch announcement | One core message, written natively for each channel | Different openings per platform |
+| Thought leadership | A specific claim up front on professional feeds | First lines that earn the expand |
+| Repurposing a long article | Pull one idea per post rather than summarising | One idea per unit |
+| Newsletter | Subject and preview written as carefully as the body | Earn the open |
+| Threads | Each post independently useful | Standalone units |
+| Video | Script for speech, with an early hook | Write for the ear |
+
+## Usage Guidelines
+- **Decide the single point first**, then write the opening line that carries it.
+- **Adapt structure, not just length**, to each platform's reading behavior.
+- **Check current platform limits and features** before writing; they change.
+- **Use descriptive headings and short paragraphs** for anything long.
+- **Read it as the audience would scroll past it**: would the first line stop them?
 
 ## Prompt Template
 ```
-You are applying the Platform-Specific Writing framework.
+You are adapting a message for each platform.
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: content marketing
-- Stakeholders: [[stakeholder_roles]]
+CORE MESSAGE: [[the single point]]
+AUDIENCE: [[who, on which platforms]]
 
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Platform-Specific Writing applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
+FOR EACH PLATFORM
+- Opening line that carries the point:
+- Structure suited to how people read there:
+- Call to action appropriate to the platform:
 
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Platform-Specific Writing principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+CHECK: is each version native, or a reformatted copy?
 ```
 
-## Core Principles
-- **Foundation**: Platform-Specific Writing provides structured approach to content marketing
-- **Application**: Use when facing decisions requiring content marketing guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Platform-Specific Writing to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Multi-Platform Content Optimization](X, LinkedIn, Medium guidelines) - Platform Guidelines
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS be truthful and avoid misleading claims
-- NEVER exploit vulnerabilities or use dark patterns
-- ALWAYS respect user privacy and data rights
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Disclose sponsorships and affiliate links** as each platform and the law require.
+- **Do not use misleading openings** to win the expand or the open; the body must deliver what the first line promises.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Platform-Specific Writing principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Test opening lines and subject lines separately from body copy.
+- Compare native versions against reformatted ones on the same channel.
+
+## Success Metrics
+- Expand, open and click rates by platform.
+- Read-through or watch-through.
+- Downstream conversion from each channel.
+
+## Collaboration Protocol
+- Inbound from: `article-writer` · `social-media-strategist` · `content-creator` · `video-script-writer`
+- Outbound to: `brand-guardian` for voice consistency across channels
+- Cross-framework: AIDA structures each version; content calendar schedules them; brand guidelines keep the voice consistent.
+
+## Related Skills
+- `composable-skills/frameworks/aida/SKILL.md` — message structure within each platform
+- `composable-skills/frameworks/content-calendar/SKILL.md` — scheduling across channels
+- `composable-skills/frameworks/brand-guidelines/SKILL.md` — one voice across platforms
+
+## Reference Materials
+- Nielsen, J. (1997). "How Users Read on the Web." Nielsen Norman Group.
+- Handley, A. (2014). *Everybody Writes.* Wiley.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

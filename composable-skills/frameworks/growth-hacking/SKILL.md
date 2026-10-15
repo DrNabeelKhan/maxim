@@ -1,120 +1,122 @@
 ---
 skill_id: growth-hacking
 name: Growth Hacking
-version: 1.0.0
+version: 2.0.0
 category: content-marketing
 type: framework
 frameworks: []
 triggers:
-  - apply growth hacking
-  - use growth-hacking framework
-  - growth hacking analysis
+  - growth hacking
+  - growth experiments
+  - aarrr pirate metrics
+  - north star metric
+  - ice scoring
+  - product-market fit test
 collaborates_with:
   - growth-hacker
   - marketing-team
   - product-strategist
   - analytics-reporter
-ethics_required: false
-priority: medium
-tags: [content-marketing, framework]
+ethics_required: true
+priority: high
+tags: [content-marketing, framework, growth, experimentation, funnel-metrics]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Growth Hacking
 
 ## Purpose
-Apply Growth Hacking to craft compelling messages, understand customer journeys, and drive ethical engagement.
+Use growth hacking as a disciplined process for finding what grows a product: run many small, fast experiments across the whole customer lifecycle, measure them against one north star metric, and keep what works. The term was coined by Sean Ellis in 2010. The useful part is not tactics or tricks but the operating cadence: a backlog of ideas, a scoring method, a testing rhythm, and a shared metric that every team moves.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `growth-hacking` |
-| Category | Content Marketing |
-| Version | 1.0.0 |
-| Owner | Sean Ellis |
-| Maturity | Established (2010) |
-| Primary References | Rapid Growth Experimentation |
+| Category | Content Marketing — Growth and Experimentation |
+| Version | 2.0.0 |
+| Originator of the term | Sean Ellis (2010) |
+| Primary reference | Ellis & Brown, *Hacking Growth* (2017) |
+| Related models | AARRR "pirate metrics" (Dave McClure, 2007) · ICE scoring |
+
+## The Process
+1. **Confirm product-market fit first.** Ellis's test asks users how they would feel if they could no longer use the product; growth work on a product people would not miss wastes effort.
+2. **Choose a north star metric** that captures the value customers get, not just activity.
+3. **Map the funnel with AARRR**: Acquisition, Activation, Retention, Referral, Revenue.
+4. **Generate and score ideas**, for example with ICE: Impact, Confidence, Ease.
+5. **Run experiments on a fixed cadence**, then analyse, learn and feed the results back into the backlog.
+
+## Core Principles
+- **Retention before acquisition.** Pouring users into a product that does not keep them burns money.
+- **One north star.** A single metric aligns teams that would otherwise optimise conflicting numbers.
+- **Velocity of learning matters more than any single win.** A steady experiment cadence compounds.
+- **Activation is usually the cheapest lever.** Getting new users to their first moment of value lifts every later stage.
+- **Growth is cross-functional.** Product, marketing, engineering and data share the same backlog.
+
+## Applications & Use Cases
+| Use Case | Application | Stage |
+|---|---|---|
+| Checking readiness to scale | Run the product-market fit survey before spending on acquisition | Pre-growth |
+| Onboarding improvement | Shorten time to first value and test changes | Activation |
+| Churn reduction | Find and fix the drop-off point after week one | Retention |
+| Referral programmes | Design incentives tied to delivered value | Referral |
+| Pricing and packaging | Test plan structure and upgrade prompts | Revenue |
+| Channel discovery | Small, cheap tests across several channels | Acquisition |
+
+## Usage Guidelines
+- **Do not start growth work before product-market fit**; fix the product first.
+- **Define the north star metric and the input metrics** that drive it, with owners.
+- **Keep a single scored backlog** of experiment ideas across all AARRR stages.
+- **Write each experiment as a hypothesis** with an expected effect and a stopping rule, before running it.
+- **Record every result, including failures**, so the team does not repeat them.
 
 ## Prompt Template
 ```
-You are applying the Growth Hacking framework.
+You are running a growth process (Ellis & Brown 2017).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: content marketing
-- Stakeholders: [[stakeholder_roles]]
+PRODUCT-MARKET FIT: [[evidence that users would miss the product]]
+NORTH STAR METRIC: [[the value metric]]
 
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Growth Hacking applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
+AARRR — current rate and biggest drop-off:
+acquisition · activation · retention · referral · revenue
 
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
+EXPERIMENT IDEAS, scored with ICE (impact, confidence, ease, 1-10 each):
 
-QUALITY CHECKS:
-□ All recommendations align with Growth Hacking principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+TOP EXPERIMENT
+- Hypothesis:
+- Metric and expected change:
+- Stopping rule:
 ```
 
-## Core Principles
-- **Foundation**: Growth Hacking provides structured approach to content marketing
-- **Application**: Use when facing decisions requiring content marketing guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Growth Hacking to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Rapid Growth Experimentation](Industry standard) - Sean Ellis
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS be truthful and avoid misleading claims
-- NEVER exploit vulnerabilities or use dark patterns
-- ALWAYS respect user privacy and data rights
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **No dark patterns.** Tricking users into sign-ups, shares or charges is not growth; it is churn and complaints deferred.
+- **Respect consent and anti-spam law** in referral and messaging experiments.
+- **Do not inflate metrics.** A north star that rewards vanity numbers misleads the whole team.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Growth Hacking principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Use controlled experiments with a pre-registered hypothesis and stopping rule.
+- Watch guardrail metrics such as retention and complaints alongside the target metric.
+
+## Success Metrics
+- Movement in the north star metric.
+- Experiment velocity and the share of experiments that produce a learning.
+- Retention curves flattening rather than declining toward zero.
+
+## Collaboration Protocol
+- Inbound from: `growth-hacker` · `marketing-team` · `product-strategist` · `analytics-reporter`
+- Outbound to: CSO office for referral and messaging experiments that touch consent
+- Cross-framework: A/B testing for rigorous experiments; Lean Startup for validated learning; Jobs-to-be-Done for finding what drives retention.
+
+## Related Skills
+- `composable-skills/frameworks/ab-testing/SKILL.md` — rigorous experiment design
+- `composable-skills/frameworks/lean-startup/SKILL.md` — build, measure, learn
+- `composable-skills/frameworks/okrs/SKILL.md` — aligning teams on the north star
+- `composable-skills/frameworks/jobs-to-be-done/SKILL.md` — why customers stay
+
+## Reference Materials
+- Ellis, S., & Brown, M. (2017). *Hacking Growth: How Today's Fastest-Growing Companies Drive Breakout Success.* Crown Business.
+- McClure, D. (2007). "Startup Metrics for Pirates: AARRR!" Presentation.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

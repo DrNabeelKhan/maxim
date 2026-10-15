@@ -1,121 +1,117 @@
 ---
 skill_id: ab-testing
 name: A/B Testing
-version: 1.0.0
+version: 2.0.0
 category: project-management
 type: framework
 frameworks: []
 triggers:
-  - apply a/b testing
-  - use ab-testing framework
-  - a/b testing analysis
+  - a/b test
+  - design an experiment
+  - controlled experiment
+  - is this result significant
+  - sample size
 collaborates_with:
   - experiment-tracker
   - data-scientist
   - growth-hacker
   - product-strategist
   - conversion-optimizer
-ethics_required: false
-priority: medium
-tags: [project-management, framework]
+ethics_required: true
+priority: high
+tags: [project-management, framework, experimentation, statistics, decision-making]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # A/B Testing
 
 ## Purpose
-Apply A/B Testing to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use A/B testing, or online controlled experiments, to learn the causal effect of a change by randomly assigning users to a control and one or more variants and comparing outcomes. Randomisation is what makes the comparison causal rather than correlational. The method is simple to describe and easy to get wrong, so most of the value lies in the discipline around it: a clear hypothesis, an adequate sample, a metric chosen in advance, and checks that the experiment itself is sound.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `ab-testing` |
-| Category | Project Management |
-| Version | 1.0.0 |
-| Owner | Industry Standard |
-| Maturity | Established |
-| Primary References | Experimentation Framework |
+| Category | Experimentation — Online Controlled Experiments |
+| Version | 2.0.0 |
+| Primary reference | Kohavi, Tang & Xu, *Trustworthy Online Controlled Experiments* (2020) |
+| Earlier survey | Kohavi et al., "Controlled experiments on the web", *Data Mining and Knowledge Discovery* (2009) |
+
+## The Method
+1. **Hypothesis**: the change, the expected effect, and why.
+2. **Overall Evaluation Criterion (OEC)**: the primary metric the decision rests on, plus guardrail metrics that must not get worse.
+3. **Randomisation unit**: usually the user, so each person sees one experience consistently.
+4. **Sample size and duration**: set from the minimum effect worth detecting and the desired statistical power, and run for full weekly cycles.
+5. **Run, then check validity**, including a sample ratio mismatch check.
+6. **Analyse and decide** against the pre-registered criterion.
+
+## Core Principles
+- **Decide the metric and sample size before starting.** Choosing them afterwards invites false positives.
+- **Do not stop early on a promising result.** Repeatedly checking significance and stopping when it looks good inflates the false-positive rate.
+- **Check the experiment before trusting it.** A sample ratio mismatch, where group sizes differ from the planned split, signals a bug.
+- **Guardrails protect against wins that do harm,** such as higher conversion with more refunds.
+- **Beware novelty effects.** Early lifts can fade as users get used to a change.
+
+## Applications & Use Cases
+| Use Case | Application | Watch for |
+|---|---|---|
+| Copy and design changes | Test variants of a page against the current one | Novelty effects |
+| Pricing and packaging | Test plan structure on new visitors | Guardrails such as refunds |
+| Onboarding flows | Measure activation for new users | Randomise by user, not session |
+| Algorithm changes | Compare ranking or recommendation versions | Network effects between users |
+| Feature launches | Roll out behind a flag as an experiment | Long-term retention, not just day one |
+| Email and messaging | Test subject lines and timing | Deliverability as a guardrail |
+
+## Usage Guidelines
+- **Write the hypothesis, primary metric, guardrails and stopping rule before launch.**
+- **Calculate the required sample size** from the minimum detectable effect and power.
+- **Run for whole weeks** to cover day-of-week patterns.
+- **Check for sample ratio mismatch** before reading any results.
+- **Report confidence intervals, not only p-values,** and record inconclusive and negative results too.
 
 ## Prompt Template
 ```
-You are applying the A/B Testing framework.
+You are designing an online controlled experiment (Kohavi, Tang & Xu 2020).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: project management
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of A/B Testing applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with A/B Testing principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+CHANGE: [[what is different in the variant]]
+HYPOTHESIS: [[expected effect and why]]
+PRIMARY METRIC (OEC):
+GUARDRAIL METRICS:
+RANDOMISATION UNIT:
+MINIMUM DETECTABLE EFFECT and POWER -> SAMPLE SIZE and DURATION:
+STOPPING RULE (decided now, not after looking):
+VALIDITY CHECKS: sample ratio mismatch · instrumentation · novelty
 ```
 
-## Core Principles
-- **Foundation**: A/B Testing provides structured approach to project management
-- **Application**: Use when facing decisions requiring project management guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply A/B Testing to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Experimentation Framework](Industry standard) - Industry Standard
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Do not test changes that could seriously harm users**, such as withholding safety information.
+- **Respect consent and privacy law** in what is collected and how users are assigned.
+- **Do not run deceptive variants**, even for learning.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to A/B Testing principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Run A/A tests periodically to validate the experimentation platform.
+- Re-test important wins to confirm they replicate.
+
+## Success Metrics
+- Share of experiments with valid design and no sample ratio mismatch.
+- Replication rate of declared wins.
+- Decisions informed by experiments rather than opinion.
+
+## Collaboration Protocol
+- Inbound from: `experiment-tracker` · `growth-hacker` · `conversion-optimizer` · `product-strategist`
+- Outbound to: `data-scientist` for power analysis and interpretation
+- Cross-framework: Growth hacking supplies the backlog; Lean Startup frames experiments as validated learning.
+
+## Related Skills
+- `composable-skills/frameworks/growth-hacking/SKILL.md` — the experiment backlog and cadence
+- `composable-skills/frameworks/lean-startup/SKILL.md` — validated learning
+- `composable-skills/frameworks/champion-challenger-holdout/SKILL.md` — guarding against metric gaming
+
+## Reference Materials
+- Kohavi, R., Tang, D., & Xu, Y. (2020). *Trustworthy Online Controlled Experiments: A Practical Guide to A/B Testing.* Cambridge University Press.
+- Kohavi, R., Longbotham, R., Sommerfield, D., & Henne, R.M. (2009). "Controlled experiments on the web: survey and practical guide." *Data Mining and Knowledge Discovery*, 18, 140–181.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._
