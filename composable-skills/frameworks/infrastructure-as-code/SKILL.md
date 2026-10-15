@@ -1,120 +1,115 @@
 ---
 skill_id: infrastructure-as-code
 name: Infrastructure as Code
-version: 1.0.0
+version: 2.0.0
 category: engineering-devops
 type: framework
 frameworks: []
 triggers:
-  - apply infrastructure as code
-  - use infrastructure-as-code framework
-  - infrastructure as code analysis
+  - infrastructure as code
+  - terraform
+  - gitops
+  - configuration drift
+  - reproducible environments
 collaborates_with:
   - devops-automator
   - infrastructure-maintainer
   - security-architect
   - backend-architect
 ethics_required: false
-priority: medium
-tags: [engineering-devops, framework]
+priority: high
+tags: [engineering, framework, iac, gitops, automation, cloud]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Infrastructure as Code
 
 ## Purpose
-Apply Infrastructure as Code to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use infrastructure as code (IaC) to define servers, networks, databases and other infrastructure in version-controlled files, and to create and change them through automation rather than by hand. This makes environments reproducible, changes reviewable, and the actual state of infrastructure knowable. It applies software engineering practice, such as version control, review, testing and continuous delivery, to infrastructure.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `infrastructure-as-code` |
-| Category | Engineering Devops |
-| Version | 1.0.0 |
-| Owner | Industry Standard |
-| Maturity | Established (2010s) |
-| Primary References | IaC |
+| Category | Engineering — Infrastructure Automation |
+| Version | 2.0.0 |
+| Key reference | Morris, *Infrastructure as Code* (O'Reilly; first edition 2016, later editions) |
+| Related practices | GitOps · policy as code · immutable infrastructure |
+| Common tools | Terraform and OpenTofu · Pulumi · AWS CloudFormation · Ansible |
+
+## Key Concepts
+- **Declarative versus imperative.** Declarative tools describe the desired end state and work out the steps; imperative tools specify the steps.
+- **Idempotency.** Applying the same definition repeatedly produces the same result.
+- **State.** Many tools record what they manage; that state must be stored securely and shared safely.
+- **Drift.** Manual changes that make reality differ from the code; detect and correct it.
+- **Immutable infrastructure.** Replace components rather than modifying them in place.
+- **GitOps.** The repository is the source of truth, and an automated agent reconciles the running system to it.
+
+## Core Principles
+- **Everything in version control**, reviewed like application code.
+- **No manual changes in production.** Manual changes create drift and undocumented state.
+- **Small, modular, reusable definitions.**
+- **Test infrastructure changes** before applying them, for example with plans, policy checks and test environments.
+- **Treat state and secrets as sensitive**; never commit secrets to the repository.
+
+## Applications & Use Cases
+| Use Case | Application | Concept |
+|---|---|---|
+| Inconsistent environments | Define all environments from the same modules | Reproducibility |
+| Risky manual changes | Review infrastructure changes as pull requests | Version control |
+| Configuration drift | Scheduled drift detection and reconciliation | Drift |
+| Disaster recovery | Rebuild environments from code | Reproducibility |
+| Compliance controls | Enforce rules with policy as code | Policy as code |
+| Kubernetes delivery | Reconcile clusters from Git | GitOps |
+
+## Usage Guidelines
+- **Keep infrastructure definitions in the same review process as application code.**
+- **Store state remotely, with locking and encryption.**
+- **Review the plan** of changes before every apply.
+- **Scan definitions for misconfigurations** and enforce policy as code in the pipeline.
+- **Detect and correct drift on a schedule.**
 
 ## Prompt Template
 ```
-You are applying the Infrastructure as Code framework.
+You are designing or reviewing infrastructure as code (Morris).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: engineering devops
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Infrastructure as Code applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Infrastructure as Code principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+RESOURCES MANAGED: [[...]]
+APPROACH: declarative | imperative · tool:
+STATE: where stored? locked? encrypted?
+MODULES and reuse:
+CHANGE PROCESS: pull request -> plan -> policy check -> apply
+DRIFT DETECTION:
+SECRETS: how injected (never committed)?
 ```
 
-## Core Principles
-- **Foundation**: Infrastructure as Code provides structured approach to engineering devops
-- **Application**: Use when facing decisions requiring engineering devops guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Infrastructure as Code to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [IaC](Terraform, CloudFormation, etc.) - Industry Standard
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Never commit secrets or credentials** to infrastructure repositories.
+- **Apply least privilege** to the automation that changes infrastructure.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Infrastructure as Code principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Static analysis and policy checks on definitions.
+- Apply to an ephemeral environment before production.
+
+## Success Metrics
+- Share of infrastructure managed as code.
+- Drift incidents detected and corrected.
+- Time to rebuild an environment from scratch.
+
+## Collaboration Protocol
+- Inbound from: `devops-automator` · `infrastructure-maintainer` · `backend-architect`
+- Outbound to: `security-architect` for policy and access review
+- Cross-framework: CI/CD runs the infrastructure pipeline; DevSecOps scans the definitions; cloud architecture shapes what is defined.
+
+## Related Skills
+- `composable-skills/frameworks/cicd/SKILL.md` — the delivery pipeline
+- `composable-skills/frameworks/devsecops/SKILL.md` — scanning definitions
+- `composable-skills/frameworks/cloud-architecture/SKILL.md` — what the code describes
+
+## Reference Materials
+- Morris, K. *Infrastructure as Code: Dynamic Systems for the Cloud Age.* O'Reilly Media (first edition 2016; later editions).
+- OpenGitOps (CNCF). *GitOps Principles.* opengitops.dev.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

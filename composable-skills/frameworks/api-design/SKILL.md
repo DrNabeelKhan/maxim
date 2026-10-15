@@ -1,120 +1,127 @@
 ---
 skill_id: api-design
 name: API Design
-version: 1.0.0
+version: 2.0.0
 category: engineering-devops
 type: framework
 frameworks: []
 triggers:
-  - apply api design
-  - use api-design framework
-  - api design analysis
+  - api design
+  - rest api design
+  - openapi spec
+  - api versioning
+  - idempotency
+  - api error format
 collaborates_with:
   - backend-architect
   - api-tester
   - documentation-writer
   - frontend-developer
-ethics_required: false
-priority: medium
-tags: [engineering-devops, framework]
+ethics_required: true
+priority: high
+tags: [engineering, framework, api, rest, http, openapi]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # API Design
 
 ## Purpose
-Apply API Design to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use these API design principles to build interfaces that are predictable, safe to retry, easy to evolve and easy for other developers to use correctly. An API is a long-lived contract: once others depend on it, every design decision becomes expensive to change. Good design therefore leans on established standards, HTTP semantics, a machine-readable specification and consistent conventions, rather than inventing new ones.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `api-design` |
-| Category | Engineering Devops |
-| Version | 1.0.0 |
-| Owner | Industry Standard |
-| Maturity | Established |
-| Primary References | REST/GraphQL API Best Practices |
+| Category | Engineering — Interface Design |
+| Version | 2.0.0 |
+| Architectural style | REST, defined by Roy Fielding (2000) |
+| HTTP semantics | RFC 9110 (2022) |
+| Specification format | OpenAPI Specification 3.1 (2021) |
+| Error format | Problem Details for HTTP APIs, RFC 9457 (2023, obsoletes RFC 7807) |
+| Security reference | OWASP API Security Top 10 (2023) |
+
+## Key Design Areas
+- **Resources and naming**: nouns for resources, consistent plural naming, predictable paths.
+- **HTTP methods and their semantics**: GET, PUT and DELETE are idempotent; POST is not. Use methods for what they mean.
+- **Status codes**: the right class (2xx success, 4xx client error, 5xx server error) and the specific code.
+- **Errors**: a consistent, machine-readable body, such as RFC 9457 Problem Details.
+- **Idempotency for non-idempotent operations**: an idempotency key lets clients retry a POST safely.
+- **Pagination, filtering and sorting**: cursor-based pagination for large or changing datasets.
+- **Versioning and evolution**: additive changes by default, explicit versions for breaking ones.
+- **Security**: authentication, per-object authorisation, rate limiting and input validation.
+
+## Core Principles
+- **Design the contract first** in a specification, then implement it.
+- **Follow HTTP semantics** so clients, caches and proxies behave correctly.
+- **Make operations safe to retry.** Networks fail; idempotency prevents duplicate side effects.
+- **Never break existing clients silently.** Prefer additive changes; version and deprecate deliberately.
+- **Authorise every object access.** Broken object-level authorisation tops the OWASP API Top 10.
+
+## Applications & Use Cases
+| Use Case | Application | Area |
+|---|---|---|
+| New public API | Spec-first design and review | Contract |
+| Payments and orders | Idempotency keys on creating operations | Retries |
+| Inconsistent errors | Adopt Problem Details across services | Errors |
+| Large collections | Cursor-based pagination | Pagination |
+| Breaking changes | Version, document and deprecate with a timeline | Evolution |
+| Security review | Check against the OWASP API Security Top 10 | Security |
+
+## Usage Guidelines
+- **Write the OpenAPI specification before the code** and review it with consumers.
+- **Use methods and status codes as HTTP defines them.**
+- **Support idempotency keys** for operations that create or charge.
+- **Return errors in one consistent, machine-readable format.**
+- **Check object-level authorisation on every request** that accesses a resource by identifier.
 
 ## Prompt Template
 ```
-You are applying the API Design framework.
+You are designing an API (REST, RFC 9110, OpenAPI 3.1).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: engineering devops
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of API Design applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with API Design principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+RESOURCES and operations: [[...]]
+FOR EACH OPERATION
+- Method and path (idempotent?):
+- Request and response schema:
+- Status codes:
+- Errors (RFC 9457 Problem Details):
+- Retry safety (idempotency key needed?):
+- Authorisation check:
+EVOLUTION: additive or breaking? Versioning and deprecation plan.
+SECURITY: OWASP API Security Top 10 review.
 ```
 
-## Core Principles
-- **Foundation**: API Design provides structured approach to engineering devops
-- **Application**: Use when facing decisions requiring engineering devops guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply API Design to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [REST/GraphQL API Best Practices](REST, GraphQL specifications) - Industry Standard
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Minimise data exposure.** Return only the fields clients need, especially personal data.
+- **Rate-limit and protect** against abuse that could harm other users.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to API Design principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Contract tests against the specification.
+- Security tests for authorisation on every endpoint.
+- Retry tests that confirm idempotent behavior.
+
+## Success Metrics
+- Breaking changes shipped without a version (target: none).
+- Endpoints covered by the specification and contract tests.
+- Authorisation defects found in testing versus production.
+
+## Collaboration Protocol
+- Inbound from: `backend-architect` · `frontend-developer` · `api-tester`
+- Outbound to: `documentation-writer` for reference docs; CSO office for security review
+- Cross-framework: OWASP Top 10 for security; microservices architecture for service boundaries; CI/CD for contract testing in the pipeline.
+
+## Related Skills
+- `composable-skills/frameworks/owasp-top-10/SKILL.md` — application security
+- `composable-skills/frameworks/microservices-architecture/SKILL.md` — service boundaries
+- `composable-skills/frameworks/cicd/SKILL.md` — contract tests in the pipeline
+
+## Reference Materials
+- Fielding, R.T. (2000). *Architectural Styles and the Design of Network-based Software Architectures.* Doctoral dissertation, University of California, Irvine.
+- IETF. RFC 9110, *HTTP Semantics* (2022).
+- IETF. RFC 9457, *Problem Details for HTTP APIs* (2023).
+- OpenAPI Initiative. *OpenAPI Specification 3.1.0* (2021).
+- OWASP. *API Security Top 10* (2023).
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

@@ -1,120 +1,121 @@
 ---
 skill_id: cloud-architecture
 name: Cloud Architecture
-version: 1.0.0
+version: 2.0.0
 category: engineering-devops
 type: framework
 frameworks: []
 triggers:
-  - apply cloud architecture
-  - use cloud-architecture framework
-  - cloud architecture analysis
+  - cloud architecture
+  - well-architected review
+  - design for the cloud
+  - shared responsibility model
+  - cloud cost and reliability
 collaborates_with:
   - solution-architect
   - backend-architect
   - devops-automator
   - infrastructure-maintainer
 ethics_required: false
-priority: medium
-tags: [engineering-devops, framework]
+priority: high
+tags: [engineering, framework, cloud, well-architected, reliability, cost]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Cloud Architecture
 
 ## Purpose
-Apply Cloud Architecture to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use cloud architecture principles to design systems that are secure, reliable, efficient and affordable on cloud platforms. The major providers publish **well-architected frameworks** that organise these concerns into pillars and offer review questions; they are the practical standard for assessing a cloud design. Underneath them sit two foundational ideas: NIST's definition of what cloud computing is, and the **shared responsibility model**, which divides security duties between provider and customer.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `cloud-architecture` |
-| Category | Engineering Devops |
-| Version | 1.0.0 |
-| Owner | Cloud Providers |
-| Maturity | Established |
-| Primary References | AWS/Azure/GCP Architecture |
+| Category | Engineering — Cloud Systems Design |
+| Version | 2.0.0 |
+| Definition | NIST SP 800-145, *The NIST Definition of Cloud Computing* (2011) |
+| AWS Well-Architected | Six pillars: operational excellence, security, reliability, performance efficiency, cost optimization, sustainability (added 2021) |
+| Azure Well-Architected | Five pillars: reliability, security, cost optimization, operational excellence, performance efficiency |
+
+## Foundations
+**NIST definition**: five essential characteristics (on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service), three service models (IaaS, PaaS, SaaS) and four deployment models (private, community, public, hybrid).
+
+**Shared responsibility.** The provider secures the cloud itself; the customer secures what they put in it. The split shifts with the service model: the customer carries more for IaaS than for SaaS.
+
+**Well-architected pillars, in short**
+- **Security**: identity, data protection, detection.
+- **Reliability**: recover from failure and meet demand.
+- **Performance efficiency**: use resources effectively as demand changes.
+- **Cost optimisation**: avoid unnecessary spend.
+- **Operational excellence**: run and improve the system.
+- **Sustainability** (AWS): reduce environmental impact.
+
+## Core Principles
+- **Design for failure.** Components fail; the system should not.
+- **Know your side of shared responsibility**, especially for identity and data.
+- **Elasticity over fixed capacity**, scaling with demand.
+- **Cost is an architectural property.** Design and review it, not just monitor it.
+- **Pillars trade off.** More resilience usually costs more; make the trade-offs explicit.
+
+## Applications & Use Cases
+| Use Case | Application | Pillar |
+|---|---|---|
+| Architecture reviews | Run the provider's well-architected review | All |
+| High-availability design | Multiple availability zones, health checks, failover | Reliability |
+| Rising cloud bills | Rightsizing, autoscaling and pricing commitments | Cost optimisation |
+| Data protection | Encryption, key management and access control | Security |
+| Migration planning | Choose the service model per workload | All |
+| Incident readiness | Runbooks, observability and recovery tests | Operational excellence |
+
+## Usage Guidelines
+- **Run a well-architected review** for significant systems, using the provider's questions.
+- **Document the shared-responsibility split** for each service you use.
+- **Set availability and recovery targets** (for example RTO and RPO) and design to them.
+- **Tag resources and review cost** as part of design, not after the bill arrives.
+- **Record pillar trade-offs** in architecture decision records.
 
 ## Prompt Template
 ```
-You are applying the Cloud Architecture framework.
+You are reviewing a cloud architecture (well-architected pillars; NIST SP 800-145).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: engineering devops
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Cloud Architecture applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Cloud Architecture principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+WORKLOAD and service models used: [[...]]
+SHARED RESPONSIBILITY: what does the customer own here?
+PILLARS — current state, risks, improvements:
+security · reliability (RTO/RPO) · performance efficiency · cost · operational excellence · sustainability
+TRADE-OFFS accepted, and why:
 ```
 
-## Core Principles
-- **Foundation**: Cloud Architecture provides structured approach to engineering devops
-- **Application**: Use when facing decisions requiring engineering devops guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Cloud Architecture to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [AWS/Azure/GCP Architecture](AWS, Azure, GCP documentation) - Cloud Providers
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Protect customer data** under the customer's side of shared responsibility; do not assume the provider does it.
+- **Consider data residency** obligations when choosing regions.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Cloud Architecture principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Test failover and recovery regularly against stated targets.
+- Load-test to confirm scaling behavior.
+
+## Success Metrics
+- Availability against target.
+- Recovery time and recovery point achieved in tests.
+- Cost per unit of business value over time.
+- Open high-risk findings from well-architected reviews.
+
+## Collaboration Protocol
+- Inbound from: `solution-architect` · `backend-architect` · `devops-automator`
+- Outbound to: `infrastructure-maintainer` for operations; CSO office for security architecture
+- Cross-framework: Infrastructure as code implements the design; zero trust shapes identity and network design; microservices architecture shapes workload structure.
+
+## Related Skills
+- `composable-skills/frameworks/infrastructure-as-code/SKILL.md` — implementing the design
+- `composable-skills/frameworks/zero-trust-architecture/SKILL.md` — identity-centred security
+- `composable-skills/frameworks/microservices-architecture/SKILL.md` — workload structure
+
+## Reference Materials
+- NIST. (2011). SP 800-145, *The NIST Definition of Cloud Computing.*
+- Amazon Web Services. *AWS Well-Architected Framework.*
+- Microsoft. *Azure Well-Architected Framework.*
+- Google Cloud. *Google Cloud Architecture Framework.*
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

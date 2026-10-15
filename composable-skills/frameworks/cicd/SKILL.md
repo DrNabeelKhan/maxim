@@ -1,120 +1,121 @@
 ---
 skill_id: cicd
 name: CI/CD
-version: 1.0.0
+version: 2.0.0
 category: engineering-devops
 type: framework
 frameworks: []
 triggers:
-  - apply ci/cd
-  - use cicd framework
-  - ci/cd analysis
+  - ci/cd
+  - continuous integration
+  - continuous delivery
+  - deployment pipeline
+  - dora metrics
 collaborates_with:
   - devops-automator
   - backend-architect
   - api-tester
   - infrastructure-maintainer
 ethics_required: false
-priority: medium
-tags: [engineering-devops, framework]
+priority: high
+tags: [engineering, framework, ci, cd, deployment, devops]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # CI/CD
 
 ## Purpose
-Apply CI/CD to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use continuous integration and continuous delivery to make releasing software routine, low-risk and fast. **Continuous integration** means everyone merges small changes to a shared mainline frequently, with an automated build and test run each time. **Continuous delivery** means every change that passes the pipeline is releasable, so deployment becomes a business decision rather than a technical event. Research by the DORA program has linked these practices to both speed and stability, showing that the two need not be traded off.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `cicd` |
-| Category | Engineering Devops |
-| Version | 1.0.0 |
-| Owner | Industry Standard |
-| Maturity | Established (2000s) |
-| Primary References | Continuous Integration / Continuous Deployment |
+| Category | Engineering — Delivery Pipeline |
+| Version | 2.0.0 |
+| Key references | Fowler, "Continuous Integration" (2006) · Humble & Farley, *Continuous Delivery* (2010) · Forsgren, Humble & Kim, *Accelerate* (2018) |
+| Delivery measures | The DORA metrics. Not to be confused with DORA, the EU Digital Operational Resilience Act, which has its own definition. |
+
+## The Practices
+- **Mainline development**: small, frequent merges, ideally daily.
+- **Automated build and test** on every change.
+- **A deployment pipeline**: stages from commit to production, each giving more confidence.
+- **Build once, deploy the same artifact** to every environment.
+- **Deployment automation and safe release techniques**: feature flags, canary and blue-green releases.
+- **Fast feedback**: a broken build is fixed or reverted immediately.
+
+### The four DORA delivery metrics
+- **Deployment frequency.**
+- **Lead time for changes.**
+- **Change failure rate.**
+- **Time to restore service.**
+The DORA research program has refined these names and measures over time; check its current report.
+
+## Core Principles
+- **Small batches reduce risk.** Smaller changes are easier to test, review and roll back.
+- **Keep the mainline releasable at all times.**
+- **Automate everything repeatable**, from build to deployment.
+- **Fix a broken pipeline first.** A red build blocks everyone.
+- **Speed and stability go together** when the pipeline is well built.
+
+## Applications & Use Cases
+| Use Case | Application | Practice |
+|---|---|---|
+| Painful, infrequent releases | Automate the pipeline and release smaller changes | Small batches |
+| Long-lived branches | Move to trunk-based development | Mainline development |
+| Environment drift | Build once, deploy the same artifact | Artifact promotion |
+| Risky deployments | Canary or blue-green releases with feature flags | Safe release |
+| Measuring delivery | Track the four DORA metrics | Measurement |
+| Quality gates | Tests, security and performance checks in the pipeline | Automated testing |
+
+## Usage Guidelines
+- **Run the full automated test suite on every merge** to the mainline.
+- **Keep branches short-lived**, merging at least daily.
+- **Promote one immutable artifact** through all environments.
+- **Separate deployment from release** with feature flags.
+- **Track the DORA metrics** and improve the weakest.
 
 ## Prompt Template
 ```
-You are applying the CI/CD framework.
+You are designing or reviewing a CI/CD pipeline (Humble & Farley 2010; DORA metrics).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: engineering devops
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of CI/CD applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with CI/CD principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+CURRENT STATE: branch strategy · merge frequency · test automation · release process
+PIPELINE STAGES (commit -> production):
+ARTIFACT PROMOTION: built once?
+RELEASE SAFETY: feature flags · canary · blue-green · rollback
+DORA METRICS: deployment frequency · lead time · change failure rate · time to restore
+BIGGEST CONSTRAINT and the next improvement:
 ```
 
-## Core Principles
-- **Foundation**: CI/CD provides structured approach to engineering devops
-- **Application**: Use when facing decisions requiring engineering devops guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply CI/CD to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Continuous Integration / Continuous Deployment](Industry standard) - Industry Standard
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Protect pipeline secrets and signing keys;** a compromised pipeline compromises every user.
+- **Do not bypass quality and security gates** under deadline pressure.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to CI/CD principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Layered tests: fast unit tests on commit, broader tests in later stages.
+- Test the rollback path, not only the deployment path.
+
+## Success Metrics
+- The four DORA metrics.
+- Pipeline duration and reliability.
+- Share of changes deployed without manual steps.
+
+## Collaboration Protocol
+- Inbound from: `devops-automator` · `backend-architect` · `api-tester`
+- Outbound to: `infrastructure-maintainer` for environments
+- Cross-framework: DevSecOps adds security to the pipeline; infrastructure as code provisions environments; Kanban shortens the flow before the pipeline.
+
+## Related Skills
+- `composable-skills/frameworks/devsecops/SKILL.md` — security in the pipeline
+- `composable-skills/frameworks/infrastructure-as-code/SKILL.md` — reproducible environments
+- `composable-skills/frameworks/kanban/SKILL.md` — flow of work into the pipeline
+
+## Reference Materials
+- Fowler, M. (2006). "Continuous Integration." martinfowler.com.
+- Humble, J., & Farley, D. (2010). *Continuous Delivery.* Addison-Wesley.
+- Forsgren, N., Humble, J., & Kim, G. (2018). *Accelerate: The Science of Lean Software and DevOps.* IT Revolution Press.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._
