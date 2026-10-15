@@ -1,119 +1,112 @@
 ---
 skill_id: sus
 name: SUS
-version: 1.0.0
+version: 2.0.0
 category: design-ux
 type: framework
 frameworks: []
 triggers:
-  - apply sus
-  - use sus framework
-  - sus analysis
+  - system usability scale
+  - sus score
+  - measure usability
+  - usability benchmark
+  - perceived usability survey
 collaborates_with:
   - usability-tester
   - ux-researcher
   - product-strategist
 ethics_required: false
 priority: medium
-tags: [design-ux, framework]
+tags: [design-ux, framework, usability, measurement, survey]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # SUS
 
 ## Purpose
-Apply SUS to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use the System Usability Scale to measure how usable people perceive a product to be, with a short, standard questionnaire that produces a single score from 0 to 100. John Brooke created it in 1986 as a "quick and dirty" measure. It has since become one of the most widely used usability questionnaires because it is short, free, reliable even with small samples, and comparable across products and over time.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `sus` |
-| Category | Design Ux |
-| Version | 1.0.0 |
-| Owner | John Brooke |
-| Maturity | Established (1986) |
-| Primary References | System Usability Scale |
+| Category | Design and UX — Usability Measurement |
+| Version | 2.0.0 |
+| Originator | John Brooke |
+| Created / published | 1986 / 1996 |
+| Benchmark research | Bangor, Kortum & Miller (2008) · Sauro & Lewis |
+
+## The Instrument
+- **Ten statements**, each rated on a five-point scale from strongly disagree to strongly agree.
+- Items **alternate between positive and negative** wording to reduce response bias.
+- **Scoring**: for odd-numbered items subtract 1 from the response; for even-numbered items subtract the response from 5; add the ten results and multiply by 2.5.
+- The result runs from **0 to 100** and is **not a percentage**.
+
+**Interpretation.** Across large sets of studies, the average score is about 68 (Sauro and Lewis), so scores are best read against that benchmark or as percentiles.
+
+## Core Principles
+- **Use the standard wording**, or results are not comparable with benchmarks.
+- **It is not a percentage.** A score of 68 is roughly average, not 68% usable.
+- **Measures perception, not cause.** SUS shows whether there is a problem, not what it is.
+- **Reliable with small samples,** which makes it practical for iterative testing.
+- **Compare over time and against benchmarks**, not in isolation.
+
+## Applications & Use Cases
+| Use Case | Application | Note |
+|---|---|---|
+| After usability tests | Administer once tasks are complete | Standard practice |
+| Release-over-release tracking | Repeat with the same method | Watch the trend |
+| Comparing designs | Score alternatives with similar users | Same tasks |
+| Benchmarking | Compare against the ~68 average | Use percentiles |
+| Vendor evaluation | Compare tools used for the same job | Consistent tasks |
+| Executive reporting | One simple usability number | With context |
+
+## Usage Guidelines
+- **Administer after participants have used the product** for representative tasks.
+- **Use the original ten items and scale** without modification.
+- **Score correctly**, applying the odd and even item rules.
+- **Report against the benchmark**, with sample size and confidence intervals.
+- **Pair with qualitative findings** to explain the score.
 
 ## Prompt Template
 ```
-You are applying the SUS framework.
+You are measuring usability with SUS (Brooke 1996).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: design ux
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of SUS applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with SUS principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+PRODUCT AND TASKS: [[...]]   PARTICIPANTS: n = __
+SCORING: odd items (r - 1) · even items (5 - r) · sum x 2.5
+MEAN SCORE and confidence interval:
+VERSUS BENCHMARK (~68 average):
+QUALITATIVE FINDINGS that explain the score:
 ```
 
-## Core Principles
-- **Foundation**: SUS provides structured approach to design ux
-- **Application**: Use when facing decisions requiring design ux guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply SUS to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [System Usability Scale](Industry standard) - John Brooke
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Do not present SUS as a percentage** or overstate what a small sample shows.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to SUS principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Use consistent tasks and participant profiles across rounds.
+- Report confidence intervals, especially with small samples.
+
+## Success Metrics
+- SUS score trend across releases.
+- Position relative to the benchmark.
+
+## Collaboration Protocol
+- Inbound from: `usability-tester` · `ux-researcher` · `product-strategist`
+- Outbound to: `ui-designer` with the qualitative findings
+- Cross-framework: Nielsen heuristics identify likely causes; user journey mapping locates problems in the experience.
+
+## Related Skills
+- `composable-skills/frameworks/nielsen-heuristics/SKILL.md` — finding likely causes
+- `composable-skills/frameworks/user-journey-mapping/SKILL.md` — locating problems in the journey
+- `composable-skills/frameworks/ab-testing/SKILL.md` — comparing designs rigorously
+
+## Reference Materials
+- Brooke, J. (1996). "SUS: A 'quick and dirty' usability scale." In Jordan, Thomas, Weerdmeester & McClelland (eds.), *Usability Evaluation in Industry.* Taylor & Francis.
+- Brooke, J. (2013). "SUS: A Retrospective." *Journal of Usability Studies*, 8(2), 29–40.
+- Bangor, A., Kortum, P.T., & Miller, J.T. (2008). "An Empirical Evaluation of the System Usability Scale." *International Journal of Human–Computer Interaction*, 24(6), 574–594.
+- Sauro, J., & Lewis, J.R. *Quantifying the User Experience.* Morgan Kaufmann (2012; 2nd ed. 2016).
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

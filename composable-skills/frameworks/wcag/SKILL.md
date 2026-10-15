@@ -1,120 +1,124 @@
 ---
 skill_id: wcag
 name: WCAG
-version: 1.0.0
+version: 2.0.0
 category: design-ux
 type: framework
 frameworks: []
 triggers:
-  - apply wcag
-  - use wcag framework
-  - wcag analysis
+  - wcag
+  - accessibility audit
+  - web content accessibility guidelines
+  - colour contrast check
+  - accessible design
 collaborates_with:
   - ui-designer
   - frontend-developer
   - ux-researcher
   - compliance-officer
-ethics_required: false
-priority: medium
-tags: [design-ux, framework]
+ethics_required: true
+priority: high
+tags: [design-ux, framework, accessibility, compliance, inclusive-design]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # WCAG
 
 ## Purpose
-Apply WCAG to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use the Web Content Accessibility Guidelines to make web content usable by people with disabilities, including those who are blind or have low vision, are deaf or hard of hearing, or have motor, cognitive or speech disabilities. WCAG is a W3C standard, and it is referenced by accessibility law in many jurisdictions, so it is both a design standard and, frequently, a legal obligation. The current version is **WCAG 2.2**, a W3C Recommendation since 5 October 2023.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `wcag` |
-| Category | Design Ux |
-| Version | 1.0.0 |
-| Owner | W3C |
-| Maturity | Established (1999, WCAG 2.2 2023) |
-| Primary References | Web Content Accessibility Guidelines |
+| Category | Design and UX — Accessibility |
+| Version | 2.0.0 (this definition) · WCAG 2.2 (the standard) |
+| Owner | W3C Web Accessibility Initiative |
+| Current version | WCAG 2.2, Recommendation, 5 October 2023 (previous: 2.1, 2018) |
+| Conformance levels | A · AA · AAA. AA is the usual legal and contractual target |
+| Next generation | WCAG 3.0 is a working draft, not yet a standard |
+
+## Structure
+**Four principles (POUR)**
+- **Perceivable**: information can be perceived, for example text alternatives, captions and sufficient contrast.
+- **Operable**: everything works by keyboard, users have enough time, and nothing causes seizures.
+- **Understandable**: content and operation are predictable and readable, with help avoiding errors.
+- **Robust**: content works with assistive technologies.
+
+Each principle has guidelines, and each guideline has testable **success criteria** at levels A, AA or AAA.
+
+### Thresholds worth knowing (WCAG 2.2)
+- **Contrast**: at least 4.5:1 for normal text and 3:1 for large text at AA; 7:1 for normal text at AAA.
+- **Non-text contrast**: 3:1 for UI components and meaningful graphics.
+- **Target size (minimum)**: 24 by 24 CSS pixels at AA, new in 2.2, with exceptions.
+- WCAG 2.2 added nine success criteria and removed 4.1.1 Parsing.
+
+## Core Principles
+- **Accessibility is designed in, not bolted on.**
+- **Automated tools catch only a portion of failures.** Manual and assistive-technology testing are essential.
+- **Keyboard access is fundamental.** If it cannot be done by keyboard, many users cannot do it.
+- **Semantic HTML first;** ARIA only where native elements cannot do the job.
+- **Test with disabled people** where possible; conformance and usability are not the same.
+
+## Applications & Use Cases
+| Use Case | Application | Principle |
+|---|---|---|
+| Design systems | Accessible components and contrast-safe tokens | All |
+| Forms | Labels, error identification and suggestions | Understandable |
+| Media | Captions, transcripts and audio description | Perceivable |
+| Navigation | Keyboard operation and visible focus | Operable |
+| Procurement and contracts | Require WCAG 2.2 AA conformance | Compliance |
+| Legal risk reviews | Audit against the standard the law references | Compliance |
+
+## Usage Guidelines
+- **Target WCAG 2.2 AA** unless a law or contract specifies otherwise, and check which version applies.
+- **Combine automated scanning, manual review and assistive-technology testing.**
+- **Test every flow by keyboard alone.**
+- **Check contrast for text, components and focus indicators.**
+- **Document conformance**, for example in an accessibility statement, and track remediation.
 
 ## Prompt Template
 ```
-You are applying the WCAG framework.
+You are auditing against WCAG 2.2 (W3C, 2023). Target level: [[AA]]
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: design ux
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of WCAG applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with WCAG principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+SCOPE: [[pages and flows]]
+PERCEIVABLE: alt text · captions · contrast (4.5:1 / 3:1) · non-text contrast (3:1)
+OPERABLE: keyboard · focus visible · timing · target size (24x24 CSS px)
+UNDERSTANDABLE: labels · errors identified with suggestions · predictable behavior
+ROBUST: semantics · name, role, value for assistive tech
+FOR EACH FAILURE: success criterion · level · location · fix
+METHOD: automated + manual + assistive technology (state which were used)
 ```
 
-## Core Principles
-- **Foundation**: WCAG provides structured approach to design ux
-- **Application**: Use when facing decisions requiring design ux guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply WCAG to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Web Content Accessibility Guidelines](https://www.w3.org/WAI/WCAG/) - W3C
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Accessibility is a matter of equal access**, not a feature to trade off.
+- **Do not claim conformance you have not verified.** Overlay products that promise automatic compliance do not make a site conformant.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to WCAG principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Automated checks in continuous integration, plus manual audits and screen-reader testing on key flows.
+- Include disabled users in usability testing.
+
+## Success Metrics
+- WCAG success criteria failures by level, trending to zero at the target level.
+- Key flows fully completable by keyboard and screen reader.
+- Accessibility defects found before release versus after.
+
+## Collaboration Protocol
+- Inbound from: `ui-designer` · `frontend-developer` · `ux-researcher`
+- Outbound to: `compliance-officer` for legal obligations
+- Cross-framework: Design systems encode accessibility once; Nielsen heuristics cover general usability; Core Web Vitals overlap on performance.
+
+## Related Skills
+- `composable-skills/frameworks/design-systems/SKILL.md` — accessible components
+- `composable-skills/frameworks/atomic-design/SKILL.md` — accessibility at the atom level
+- `composable-skills/frameworks/nielsen-heuristics/SKILL.md` — general usability
+
+## Reference Materials
+- W3C. (2023). *Web Content Accessibility Guidelines (WCAG) 2.2.* W3C Recommendation, 5 October 2023.
+- W3C. *Understanding WCAG 2.2* and *How to Meet WCAG (Quick Reference).*
+- W3C. *What's New in WCAG 2.2.*
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

@@ -1,119 +1,112 @@
 ---
 skill_id: atomic-design
 name: Atomic Design
-version: 1.0.0
+version: 2.0.0
 category: design-ux
 type: framework
 frameworks: []
 triggers:
-  - apply atomic design
-  - use atomic-design framework
-  - atomic design analysis
+  - atomic design
+  - atoms molecules organisms
+  - component hierarchy
+  - build a component library
+  - pattern library structure
 collaborates_with:
   - ui-designer
   - frontend-developer
   - design-system-lead
 ethics_required: false
 priority: medium
-tags: [design-ux, framework]
+tags: [design-ux, framework, components, design-systems, ui-architecture]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Atomic Design
 
 ## Purpose
-Apply Atomic Design to guide decision-making, structure analysis, and improve outcomes in relevant contexts.
+Use Atomic Design to build interfaces as a hierarchy of reusable parts, from the smallest elements up to complete pages. Brad Frost introduced it in 2013 and expanded it in his 2016 book, borrowing a chemistry metaphor. Its value is a shared vocabulary between designers and developers and a structure that makes consistency the default: pages are assembled from components rather than designed one by one.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `atomic-design` |
-| Category | Design Ux |
-| Version | 1.0.0 |
-| Owner | Brad Frost |
-| Maturity | Established (2013) |
-| Primary References | Design System Methodology |
+| Category | Design and UX — Interface Architecture |
+| Version | 2.0.0 |
+| Originator | Brad Frost |
+| First published | 2013 (article); 2016 (book) |
+| Primary reference | Frost, *Atomic Design* (2016) |
+
+## The Five Stages
+1. **Atoms**: basic elements that cannot be broken down usefully, such as a label, an input or a button.
+2. **Molecules**: small groups of atoms working as a unit, such as a search field with its label and button.
+3. **Organisms**: complex sections made of molecules and atoms, such as a site header.
+4. **Templates**: page-level layouts that place organisms in a structure, using placeholder content.
+5. **Pages**: templates filled with real content, which test whether the system holds up.
+
+## Core Principles
+- **Build from small to large**, but design with the whole page in view.
+- **Reuse before you create.** A new component is a deliberate decision, not a default.
+- **Templates show structure; pages test reality.** Real content exposes edge cases placeholders hide.
+- **The metaphor is a guide, not a rule.** Teams adapt the level names to what works for them.
+- **A shared vocabulary reduces handoff friction.**
+
+## Applications & Use Cases
+| Use Case | Application | Stage |
+|---|---|---|
+| Starting a component library | Inventory and group existing UI | Atoms, molecules |
+| Reducing inconsistency | Replace one-off elements with shared components | All |
+| Designer–developer handoff | Name components the same way in design and code | All |
+| New page design | Compose from existing organisms first | Templates |
+| Content stress-testing | Test pages with real, extreme content | Pages |
+| Design system documentation | Organise docs by level | All |
+
+## Usage Guidelines
+- **Run an interface inventory** of existing UI before building anything new.
+- **Define atoms with design tokens** for colour, type and spacing, so changes cascade.
+- **Name components consistently** across design files and code.
+- **Test with real content at the page level**, including long names and empty states.
+- **Document each component's purpose and variants.**
 
 ## Prompt Template
 ```
-You are applying the Atomic Design framework.
+You are structuring an interface with Atomic Design (Frost 2016).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: design ux
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Atomic Design applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Atomic Design principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+SCREEN OR FEATURE: [[...]]
+ATOMS:
+MOLECULES:
+ORGANISMS:
+TEMPLATE (layout of organisms):
+PAGE CHECK with real, extreme content:
+REUSE: which existing components cover this? What is genuinely new?
 ```
 
-## Core Principles
-- **Foundation**: Atomic Design provides structured approach to design ux
-- **Application**: Use when facing decisions requiring design ux guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Atomic Design to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Design System Methodology](https://atomicdesign.bradfrost.com/) - Brad Frost
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS act in the best interest of stakeholders
-- NEVER misrepresent the framework's capabilities or limitations
-- ALWAYS disclose when framework guidance is being applied
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Build accessibility into atoms**, so every composition inherits it.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Atomic Design principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Test components in isolation and in real pages.
+- Visual regression tests catch unintended changes across compositions.
+
+## Success Metrics
+- Share of UI built from shared components.
+- Number of one-off components introduced per release.
+- Time to build a new page.
+
+## Collaboration Protocol
+- Inbound from: `ui-designer` · `frontend-developer` · `design-system-lead`
+- Outbound to: `design-system-lead` for governance
+- Cross-framework: Design systems provide governance and tokens; WCAG accessibility belongs in the atoms.
+
+## Related Skills
+- `composable-skills/frameworks/design-systems/SKILL.md` — governance, tokens and documentation
+- `composable-skills/frameworks/wcag/SKILL.md` — accessible components
+- `composable-skills/frameworks/brand-guidelines/SKILL.md` — the visual rules atoms encode
+
+## Reference Materials
+- Frost, B. (2016). *Atomic Design.* atomicdesign.bradfrost.com.
+- Frost, B. (2013). "Atomic Design." bradfrost.com.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._
