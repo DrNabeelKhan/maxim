@@ -1,120 +1,122 @@
 ---
 skill_id: cobit
 name: COBIT
-version: 1.0.0
+version: 2.0.0
 category: enterprise-architecture
 type: framework
 frameworks: []
 triggers:
-  - apply cobit
-  - use cobit framework
-  - cobit analysis
+  - cobit
+  - it governance
+  - governance of enterprise it
+  - control objectives
+  - it audit framework
 collaborates_with:
   - governance-specialist
   - compliance-officer
   - enterprise-architect
   - infrastructure-maintainer
-ethics_required: false
-priority: medium
-tags: [enterprise-architecture, framework]
+ethics_required: true
+priority: high
+tags: [enterprise-architecture, framework, cobit, governance, isaca, audit]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # COBIT
 
 ## Purpose
-Apply COBIT to design scalable, maintainable, and interoperable enterprise systems and solutions.
+Use COBIT, published by ISACA, to govern and manage enterprise information and technology (I&T) so that it creates value, manages risk and uses resources well. COBIT separates **governance**, where a board evaluates, directs and monitors, from **management**, which plans, builds, runs and monitors. It defines a set of governance and management objectives, and is widely used by IT auditors as a reference for control.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `cobit` |
-| Category | Enterprise Architecture |
-| Version | 1.0.0 |
+| Category | Enterprise Architecture — I&T Governance |
+| Version | 2.0.0 |
 | Owner | ISACA |
-| Maturity | Established (1996, COBIT 2019) |
-| Primary References | Control Objectives for Information and Related Technologies |
+| Current version | COBIT 2019 |
+| Related standards | ISO/IEC 38500 (governance of IT) · COSO · ITIL · ISO/IEC 27001 |
+
+## Structure
+**Five domains of objectives** (40 objectives in COBIT 2019)
+- **EDM — Evaluate, Direct and Monitor**: governance.
+- **APO — Align, Plan and Organise**: management.
+- **BAI — Build, Acquire and Implement**: management.
+- **DSS — Deliver, Service and Support**: management.
+- **MEA — Monitor, Evaluate and Assess**: management.
+
+**Components of a governance system**: processes; organisational structures; principles, policies and procedures; information; culture, ethics and behaviour; people, skills and competencies; and services, infrastructure and applications.
+
+**Design factors** such as strategy, risk profile, compliance requirements and sourcing model tailor which objectives matter most.
+
+**Capability levels** (0 to 5) assess how well processes are performed.
+
+## Core Principles
+- **Provide stakeholder value**: governance exists to balance benefits, risk and resources.
+- **Holistic approach**: governance needs all seven components, not processes alone.
+- **Dynamic**: the governance system adapts as design factors change.
+- **Governance is distinct from management.**
+- **Tailor to the enterprise**, using design factors and focus areas.
+
+## Applications & Use Cases
+| Use Case | Application | Domain |
+|---|---|---|
+| Board oversight of IT | Define direction, oversight and reporting | EDM |
+| IT audit planning | Use objectives as an audit reference | All |
+| Process improvement | Assess capability levels and close gaps | APO, BAI, DSS |
+| Aligning IT with strategy | Goals cascade from enterprise to alignment goals | APO |
+| Risk management | Integrate I&T risk into enterprise risk | EDM, APO |
+| Regulatory compliance | Map objectives to regulatory controls | MEA |
+
+## Usage Guidelines
+- **Use the design factors** to decide which objectives to prioritise; do not implement all 40 at once.
+- **Separate governance and management roles** clearly.
+- **Assess current capability levels** for priority processes, then set targets.
+- **Cascade enterprise goals to I&T goals** so that work traces to value.
+- **Monitor and report** to the governing body regularly.
 
 ## Prompt Template
 ```
-You are applying the COBIT framework.
+You are designing I&T governance with COBIT 2019 (ISACA).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: enterprise architecture
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of COBIT applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with COBIT principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+ENTERPRISE CONTEXT and design factors: [[...]]
+PRIORITY OBJECTIVES (EDM · APO · BAI · DSS · MEA):
+FOR EACH: current capability level · target · gap · owner
+COMPONENTS needed: processes · structures · policies · information · culture · skills · services
+GOVERNANCE vs MANAGEMENT roles:
+REPORTING to the board:
 ```
 
-## Core Principles
-- **Foundation**: COBIT provides structured approach to enterprise architecture
-- **Application**: Use when facing decisions requiring enterprise architecture guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply COBIT to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Control Objectives for Information and Related Technologies](https://www.isaca.org/cobit) - ISACA
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS consider long-term maintainability and technical debt
-- NEVER recommend vendor lock-in without clear justification
-- ALWAYS document architectural decisions and tradeoffs
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Culture, ethics and behaviour are a component of governance,** not an afterthought.
+- **Report risks honestly to the governing body,** including unfavourable assessments.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to COBIT principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Audit sampled processes against their stated capability level.
+- Check that each priority objective has a named owner and evidence.
+
+## Success Metrics
+- Priority processes at target capability.
+- Audit findings by severity over time.
+- I&T goals traceable to enterprise goals.
+
+## Collaboration Protocol
+- Inbound from: `governance-specialist` · `compliance-officer`
+- Outbound to: `enterprise-architect` · `infrastructure-maintainer`
+- Cross-framework: ITIL for service management practices; ISO 27001 for information security; SOC 2 for assurance reporting; TOGAF for architecture.
+
+## Related Skills
+- `composable-skills/frameworks/itil/SKILL.md` — service management practices
+- `composable-skills/frameworks/iso-27001/SKILL.md` — information security management
+- `composable-skills/frameworks/soc-2/SKILL.md` — assurance reporting
+- `composable-skills/frameworks/togaf/SKILL.md` — enterprise architecture
+
+## Reference Materials
+- ISACA. (2018). *COBIT 2019 Framework: Introduction and Methodology.*
+- ISACA. (2018). *COBIT 2019 Framework: Governance and Management Objectives.*
+- ISO/IEC 38500. *Information technology — Governance of IT for the organization.*
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

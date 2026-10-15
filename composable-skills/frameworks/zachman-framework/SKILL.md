@@ -1,119 +1,119 @@
 ---
 skill_id: zachman-framework
 name: Zachman Framework
-version: 1.0.0
+version: 2.0.0
 category: enterprise-architecture
 type: framework
 frameworks: []
 triggers:
-  - apply zachman framework
-  - use zachman-framework framework
-  - zachman framework analysis
+  - zachman framework
+  - enterprise ontology
+  - classify architecture artifacts
+  - architecture coverage check
 collaborates_with:
   - enterprise-architect
   - data-architect
   - solution-architect
 ethics_required: false
 priority: medium
-tags: [enterprise-architecture, framework]
+tags: [enterprise-architecture, framework, zachman, ontology, classification]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # Zachman Framework
 
 ## Purpose
-Apply Zachman Framework to design scalable, maintainable, and interoperable enterprise systems and solutions.
+Use the Zachman Framework to classify the descriptive representations of an enterprise and to check which ones exist and which are missing. It is a two-dimensional schema: one axis asks the six basic questions (what, how, where, who, when, why), the other lists the perspectives of the audiences who need answers. Zachman describes it as an ontology, not a method: it tells you **what** descriptions an enterprise needs, not **how** to produce them. That is why it is often used alongside a method such as TOGAF.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `zachman-framework` |
-| Category | Enterprise Architecture |
-| Version | 1.0.0 |
-| Owner | Zachman International |
-| Maturity | Established (1987) |
-| Primary References | Zachman Framework for Enterprise Architecture |
+| Category | Enterprise Architecture — Classification Schema |
+| Version | 2.0.0 |
+| Origin | Zachman, *IBM Systems Journal* (1987); extended by Sowa & Zachman (1992) |
+| Current version | Zachman Framework 3.0 (2011), published by Zachman International |
+
+## The Two Axes
+**Columns: the interrogatives**
+- **What**: inventory (things and data).
+- **How**: process (transformations).
+- **Where**: distribution (locations and networks).
+- **Who**: responsibility (people and roles).
+- **When**: timing (events and cycles).
+- **Why**: motivation (goals and means).
+
+**Rows: the audience perspectives (version 3.0 names)**
+- **Executive**: scope and context.
+- **Business management**: business concepts.
+- **Architect**: system logic.
+- **Engineer**: technology physics.
+- **Technician**: tool components.
+- **Enterprise**: the operating instances.
+
+Earlier versions name the rows planner, owner, designer, builder, subcontractor and the functioning enterprise.
+
+## Core Principles
+- **Each cell is unique.** A cell answers one question from one perspective.
+- **Cells are primitive.** Keep one interrogative per model and compose them later, rather than mixing them.
+- **Columns have no order.** No question is more important than another.
+- **Rows are different, not just more detailed.** Each perspective is a distinct model for a distinct audience.
+- **A classification, not a process.** Pair it with a method to produce the artifacts.
+
+## Applications & Use Cases
+| Use Case | Application | Axis |
+|---|---|---|
+| Architecture repository structure | Organise artifacts by cell | Both |
+| Gap analysis of documentation | Find empty cells that matter | Both |
+| Stakeholder communication | Choose the row for the audience | Rows |
+| Requirements completeness | Check all six questions are answered | Columns |
+| Data architecture | Separate conceptual, logical and physical data models | What column |
+| Method selection | Map method deliverables to cells | Both |
+
+## Usage Guidelines
+- **Map existing artifacts to cells** to see coverage.
+- **Prioritise the empty cells** that matter for the current decision; not every cell needs to be filled.
+- **Keep models single-variable**, one interrogative each.
+- **Address each audience at its own row**, rather than giving executives engineering models.
+- **Use a method such as TOGAF** to produce the missing artifacts.
 
 ## Prompt Template
 ```
-You are applying the Zachman Framework framework.
+You are applying the Zachman Framework 3.0 (Zachman 1987; 2011).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: enterprise architecture
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of Zachman Framework applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with Zachman Framework principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+SCOPE: [[...]]
+FOR EACH ROW (executive · business management · architect · engineer · technician)
+  FOR EACH COLUMN (what · how · where · who · when · why)
+    existing artifact? / gap / needed for current decision?
+PRIORITY GAPS and the method to fill them:
 ```
 
-## Core Principles
-- **Foundation**: Zachman Framework provides structured approach to enterprise architecture
-- **Application**: Use when facing decisions requiring enterprise architecture guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply Zachman Framework to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Zachman Framework for Enterprise Architecture](https://zachman.com/) - Zachman International
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS consider long-term maintainability and technical debt
-- NEVER recommend vendor lock-in without clear justification
-- ALWAYS document architectural decisions and tradeoffs
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Do not use completeness as a sales tool.** Filling every cell is rarely necessary; recommend only what the decision needs.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to Zachman Framework principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Check that each artifact maps to exactly one cell; split those that span several.
+
+## Success Metrics
+- Decision-relevant cells covered.
+- Time to find an architecture artifact in the repository.
+
+## Collaboration Protocol
+- Inbound from: `enterprise-architect` · `data-architect`
+- Outbound to: `solution-architect` for producing missing artifacts
+- Cross-framework: TOGAF as the method; ArchiMate as the modelling language; DMBOK for data models in the What column.
+
+## Related Skills
+- `composable-skills/frameworks/togaf/SKILL.md` — a method to produce the artifacts
+- `composable-skills/frameworks/archimate/SKILL.md` — modelling notation
+- `composable-skills/frameworks/dmbok/SKILL.md` — data architecture
+
+## Reference Materials
+- Zachman, J.A. (1987). "A framework for information systems architecture." *IBM Systems Journal*, 26(3), 276–292.
+- Sowa, J.F., & Zachman, J.A. (1992). "Extending and formalizing the framework for information systems architecture." *IBM Systems Journal*, 31(3), 590–616.
+- Zachman International. *The Zachman Framework for Enterprise Architecture, Version 3.0* (2011).
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

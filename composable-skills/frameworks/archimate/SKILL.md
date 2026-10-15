@@ -1,119 +1,116 @@
 ---
 skill_id: archimate
 name: ArchiMate
-version: 1.0.0
+version: 2.0.0
 category: enterprise-architecture
 type: framework
 frameworks: []
 triggers:
-  - apply archimate
-  - use archimate framework
-  - archimate analysis
+  - archimate
+  - architecture model
+  - architecture viewpoint
+  - layered architecture diagram
 collaborates_with:
   - enterprise-architect
   - solution-architect
   - business-architect
 ethics_required: false
 priority: medium
-tags: [enterprise-architecture, framework]
+tags: [enterprise-architecture, framework, archimate, modelling, open-group]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # ArchiMate
 
 ## Purpose
-Apply ArchiMate to design scalable, maintainable, and interoperable enterprise systems and solutions.
+Use ArchiMate, an open modelling language from The Open Group, to describe enterprise architecture consistently across business, applications and technology, and to show how those layers relate. Where TOGAF supplies a method, ArchiMate supplies a precise notation: a defined set of elements and relationships, so that models drawn by different people mean the same thing and can be analysed, not just looked at.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `archimate` |
-| Category | Enterprise Architecture |
-| Version | 1.0.0 |
+| Category | Enterprise Architecture — Modelling Language |
+| Version | 2.0.0 |
 | Owner | The Open Group |
-| Maturity | Established (2004) |
-| Primary References | Enterprise Architecture Modeling Language |
+| Current specification | ArchiMate 3.2 (2022) |
+| Companion method | TOGAF ADM |
+
+## Structure of the Language
+**Core layers**
+- **Business**: actors, roles, processes, services, business objects.
+- **Application**: components, interfaces, application services, data objects.
+- **Technology**: nodes, devices, system software, networks, artifacts.
+
+**Additional elements**: strategy (capabilities, value streams, resources, courses of action), physical (equipment, facilities, materials), motivation (stakeholders, drivers, goals, requirements, principles) and implementation and migration (work packages, deliverables, plateaus, gaps).
+
+**Aspects**: active structure (who or what acts), behavior (what is done) and passive structure (what is acted on).
+
+**Relationship groups**: structural (composition, aggregation, assignment, realization), dependency (serving, access, influence, association), dynamic (triggering, flow) and specialization.
+
+**Viewpoints** select the elements relevant to a particular stakeholder concern.
+
+## Core Principles
+- **One model, many views.** Draw views from a single consistent model rather than separate diagrams.
+- **Use the defined semantics.** Each relationship has a precise meaning; do not use them decoratively.
+- **Connect the layers.** The value of ArchiMate is showing how technology serves applications and applications serve the business.
+- **Choose viewpoints for the audience.** Show each stakeholder only what addresses their concern.
+- **Model to answer a question**, not to document everything.
+
+## Applications & Use Cases
+| Use Case | Application | Elements |
+|---|---|---|
+| Impact analysis | Trace what depends on a system before changing it | Cross-layer relationships |
+| Application landscape | Components, interfaces and data flows | Application layer |
+| Capability-based planning | Map capabilities to the systems that realise them | Strategy elements |
+| Migration roadmaps | Plateaus, gaps and work packages | Implementation and migration |
+| Requirement traceability | Link goals and requirements to elements | Motivation elements |
+| Infrastructure views | Nodes, networks and deployment | Technology layer |
+
+## Usage Guidelines
+- **Start with the question the model must answer**, then pick the viewpoint.
+- **Keep one repository** and generate views from it.
+- **Check relationships against the specification's rules** rather than inventing connections.
+- **Use the motivation elements** to link architecture to drivers and goals.
+- **Model transitions with plateaus and gaps** when planning change.
 
 ## Prompt Template
 ```
-You are applying the ArchiMate framework.
+You are modelling in ArchiMate 3.2.
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: enterprise architecture
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of ArchiMate applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with ArchiMate principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+QUESTION the model must answer: [[...]]
+STAKEHOLDER and viewpoint:
+ELEMENTS by layer: business · application · technology · strategy · motivation
+RELATIONSHIPS (type and direction):
+CROSS-LAYER links to show:
+IMPLEMENTATION AND MIGRATION: plateaus, gaps, work packages (if planning change)
 ```
 
-## Core Principles
-- **Foundation**: ArchiMate provides structured approach to enterprise architecture
-- **Application**: Use when facing decisions requiring enterprise architecture guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply ArchiMate to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Enterprise Architecture Modeling Language](https://www.opengroup.org/archimate-forum) - The Open Group
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS consider long-term maintainability and technical debt
-- NEVER recommend vendor lock-in without clear justification
-- ALWAYS document architectural decisions and tradeoffs
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Do not let diagrams imply certainty** that the underlying information does not support; mark assumed elements.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to ArchiMate principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Validate relationships against the specification's allowed relationships.
+- Walk the view through with its intended stakeholder.
+
+## Success Metrics
+- Questions answered from the model without new diagramming.
+- Share of systems represented in the repository.
+
+## Collaboration Protocol
+- Inbound from: `enterprise-architect` · `business-architect`
+- Outbound to: `solution-architect` for detailed designs
+- Cross-framework: TOGAF for the method; Zachman for classification; BIZBOK for capability and value-stream content.
+
+## Related Skills
+- `composable-skills/frameworks/togaf/SKILL.md` — the method ArchiMate supports
+- `composable-skills/frameworks/zachman-framework/SKILL.md` — classifying the models
+- `composable-skills/frameworks/bizbok/SKILL.md` — capabilities and value streams
+
+## Reference Materials
+- The Open Group. (2022). *ArchiMate 3.2 Specification.*
+- The Open Group. (2022). *The TOGAF Standard, 10th Edition.*
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

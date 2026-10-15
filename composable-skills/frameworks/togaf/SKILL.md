@@ -1,120 +1,123 @@
 ---
 skill_id: togaf
 name: TOGAF
-version: 1.0.0
+version: 2.0.0
 category: enterprise-architecture
 type: framework
 frameworks: []
 triggers:
-  - apply togaf
-  - use togaf framework
-  - togaf analysis
+  - togaf
+  - architecture development method
+  - adm cycle
+  - enterprise architecture roadmap
+  - architecture governance
 collaborates_with:
   - enterprise-architect
   - solution-architect
   - business-architect
   - governance-specialist
 ethics_required: false
-priority: medium
-tags: [enterprise-architecture, framework]
+priority: high
+tags: [enterprise-architecture, framework, togaf, adm, open-group, governance]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # TOGAF
 
 ## Purpose
-Apply TOGAF to design scalable, maintainable, and interoperable enterprise systems and solutions.
+Use TOGAF, The Open Group Architecture Framework, to develop and govern enterprise architecture in a structured, repeatable way. Its core is the **Architecture Development Method (ADM)**, an iterative cycle that takes an organisation from a vision of its target architecture, through business, data, application and technology design, to a governed migration plan. TOGAF is a method and a vocabulary, not a template to fill in completely: its own guidance expects it to be tailored to the organisation.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `togaf` |
-| Category | Enterprise Architecture |
-| Version | 1.0.0 |
+| Category | Enterprise Architecture — Method |
+| Version | 2.0.0 |
 | Owner | The Open Group |
-| Maturity | Established (1995, TOGAF 10 2022) |
-| Primary References | The Open Group Architecture Framework |
+| Current edition | TOGAF Standard, 10th Edition (2022), split into Fundamental Content and Series Guides |
+| Related standards | ArchiMate (modelling language, also The Open Group) · ISO/IEC/IEEE 42010 (architecture description) |
+
+## The Architecture Development Method
+- **Preliminary**: set up the architecture capability, principles and tailoring.
+- **A. Architecture Vision**: scope, stakeholders, the vision and approval to proceed.
+- **B. Business Architecture.**
+- **C. Information Systems Architectures**: data and application.
+- **D. Technology Architecture.**
+- **E. Opportunities and Solutions**: identify work packages and transition architectures.
+- **F. Migration Planning**: a sequenced, costed roadmap.
+- **G. Implementation Governance**: architecture oversight of delivery projects.
+- **H. Architecture Change Management**: keep the architecture current as things change.
+- **Requirements Management** sits at the centre and feeds every phase.
+
+Phases B to D each compare a **baseline** (current) with a **target** architecture and record the **gaps**.
+
+## Core Principles
+- **Iterate and tailor.** Run the ADM at the depth the decision needs, not every step in full.
+- **Start from business drivers**, not from technology.
+- **Baseline, target, gap.** Every architecture domain is analysed this way.
+- **Govern the architecture**, through principles, compliance reviews and an architecture board.
+- **Reuse** through the Architecture Repository and the Enterprise Continuum, from generic to organisation-specific.
+
+## Applications & Use Cases
+| Use Case | Application | ADM Phase |
+|---|---|---|
+| Establishing an EA practice | Define principles, governance and tailoring | Preliminary |
+| Transformation programme | Vision, target architectures and roadmap | A to F |
+| Application rationalisation | Baseline and target application architecture | C |
+| Cloud migration | Technology target state and transition architectures | D, E, F |
+| Keeping projects aligned | Architecture compliance reviews | G |
+| Responding to change | Assess change requests against the architecture | H |
+
+## Usage Guidelines
+- **Agree architecture principles first**, each with a rationale and implications.
+- **Scope each ADM cycle** to a decision; avoid boiling the ocean.
+- **Record baseline, target and gaps** for each domain you work on.
+- **Turn gaps into work packages and a sequenced roadmap** with transition architectures.
+- **Set up architecture governance**, such as a board and compliance reviews, before implementation begins.
 
 ## Prompt Template
 ```
-You are applying the TOGAF framework.
+You are running a TOGAF ADM cycle (TOGAF Standard, 10th Edition).
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: enterprise architecture
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of TOGAF applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with TOGAF principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+SCOPE and the decision this cycle supports: [[...]]
+PRINCIPLES that apply:
+VISION (Phase A): stakeholders, concerns, target outcome
+FOR EACH DOMAIN (B business · C data, application · D technology):
+  baseline · target · gaps
+OPPORTUNITIES (E): work packages, transition architectures
+ROADMAP (F): sequence, dependencies, cost
+GOVERNANCE (G): how delivery will be checked against the architecture
 ```
 
-## Core Principles
-- **Foundation**: TOGAF provides structured approach to enterprise architecture
-- **Application**: Use when facing decisions requiring enterprise architecture guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply TOGAF to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [The Open Group Architecture Framework](https://www.opengroup.org/togaf) - The Open Group
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS consider long-term maintainability and technical debt
-- NEVER recommend vendor lock-in without clear justification
-- ALWAYS document architectural decisions and tradeoffs
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **Represent stakeholder concerns honestly,** including those of groups the change affects but who are not sponsors.
+- **Do not present a target architecture as approved** before governance has approved it.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to TOGAF principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Trace every work package back to a gap and a business driver.
+- Review architecture deliverables with the stakeholders whose concerns they address.
+
+## Success Metrics
+- Projects passing architecture compliance reviews.
+- Roadmap milestones delivered against plan.
+- Reduction in duplicated capabilities or applications.
+
+## Collaboration Protocol
+- Inbound from: `enterprise-architect` · `business-architect` · `governance-specialist`
+- Outbound to: `solution-architect` for project-level designs
+- Cross-framework: ArchiMate for models; Zachman for classifying artifacts; BIZBOK for business architecture depth; COBIT for IT governance.
+
+## Related Skills
+- `composable-skills/frameworks/archimate/SKILL.md` — modelling language for ADM deliverables
+- `composable-skills/frameworks/zachman-framework/SKILL.md` — classifying architecture artifacts
+- `composable-skills/frameworks/bizbok/SKILL.md` — business architecture
+- `composable-skills/frameworks/cobit/SKILL.md` — IT governance
+
+## Reference Materials
+- The Open Group. (2022). *The TOGAF Standard, 10th Edition.*
+- ISO/IEC/IEEE 42010:2022. *Software, systems and enterprise — Architecture description.*
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._
