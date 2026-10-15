@@ -8,6 +8,52 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.11 — 2026-10-15 — maxim-runtime: Maxim moves into the engine (Claude Code mods)
+
+Feature release. Adds a second, optional plugin to the marketplace, **`maxim-runtime`**, built on Claude Code's function hooks ("mods"). No change to the `maxim` plugin's capability counts (91 agents · 52 skills · 50 commands · 9 MCPs/95 tools · 16 hook scripts · 86 frameworks · 22 ADRs); the runtime is one hooks module in its own plugin.
+
+### Why
+
+Until now Maxim enforced its rules with shell hooks and with instructions it asked the model to follow. Several of those rules were never actually enforced: the junction read-only rule had no working guard (`mxm-guard.sh` checks the ADR-006 boundary, not junctions), the routing banner depended on the model echoing it, the standard arrived as a session-start message that compaction can shorten, and confidence tagging was trusted, not checked. Function hooks run inside the engine, so they can refuse a tool call, add to the system prompt, show state in the interface and call a small model, all without the model's cooperation.
+
+### Added — `maxim-runtime` (`mods/maxim-runtime/`, install `maxim-runtime@maxim-packs`)
+
+- **Standard in the system prompt.** `prompt.compose` adds Maxim's operating standard (`distributions/claude-plugin/session-context.md`) as a system-prompt section. The shell session-start hook's copy is trimmed to its per-session summary, so nothing is sent twice.
+- **Router in the engine (ADR-021, amended).** The same keyword router as `user-prompt-router.sh`, ported and checked for parity (22/22 prompts route identically against the real `config/routing-table.json`). In the default `hybrid` mode, a prompt the keywords cannot route confidently gets one small-model classification (four-second cap); confident routes, `/mxm-*` commands, short replies and pasted documents never reach the model. The route appears in the **status line**, the model is no longer asked to print a banner, and for each prompt the runtime handles, the shell router's directive is dropped. The runtime takes over only once it has seen its classic hooks run, so where they do not (managed organizations) the shell router keeps routing alone. Settings: `router` = `hybrid` · `keywords` · `off`.
+- **Junction guard (enforced).** A Write, Edit or NotebookEdit that passes through a `.mxm-system` or `.claude` junction is refused, naming where the junction leads and where session data belongs. The check runs at the junction-named folder itself, so a symlinked projects folder higher up is not mistaken for a junction write, and the user's own `~/.claude` (often a dotfiles symlink) is exempt. Writes made by shell commands are not covered.
+- **Secret-commit guard (any repository).** A `git commit` whose staged diff adds a secret is refused, naming the file and kind, never the value (patterns from `pre-commit.sh`, plus Stripe live keys and the wider GitHub token family). With `git add` or `-a` in the same command, the unstaged diff of tracked files is scanned too; brand-new untracked files are not in `git diff`. A commit the guard cannot scan is refused with how to proceed, rather than let through, and Git Bash paths (`cd /c/...`) are understood.
+- **CSO auto-loop (enforced).** Editing a security-sensitive file (auth, payments, secrets, PII, licensing) adds a CSO review note the model reads, once per file per session, with a toast.
+- **Confidence-tag check.** A substantive answer with no confidence tag (ADR-010) is flagged with a toast and counted.
+- **`/maxim`.** A pane and summary of the session: Maxim version, standard status, last route, guard refusals, CSO reviews, tag counts.
+- **In-process framework lookup.** `mcp__maxim-runtime__framework` reads the 85 framework definitions directly, so framework guidance still works when the `mxm-behavioral` MCP server fails to connect (as it did at the start of this release's session).
+- Settings `router` and `guards` in `/config`. Docs: `mods/maxim-runtime/README.md`.
+
+### Verification
+
+- `claude plugin validate mods/maxim-runtime`: passes (Claude Code 2.1.300).
+- `claude plugin test mods/maxim-runtime`: 27/27 engine tests (standard; router incl. model fallback, shell de-duplication and the managed-organization hand-off; junction guard incl. the higher-link and home `~/.claude` cases; secret guard incl. unstaged changes, Git Bash paths, refusing an unscannable commit and never echoing the value; CSO note incl. no false flags on design tokens and session notes; tag check; `/maxim`; framework tool).
+- `node --test mods/maxim-runtime/parity/router-parity.test.mjs`: 22/22 parity with the shell router.
+- TypeScript type-check against the engine's own API declarations: clean.
+- Path resolution through a real Windows junction confirmed with Node and Bun. A full live session run was not possible from the release environment (a child `claude -p` could not authenticate); the operator's own session after install is the live check.
+- Pre-release audit: BLOCKERS 3 (parity-test log inside the repo; secret guard failing open on Git Bash `cd /x/...` paths; double routing in managed organizations) → fixed, with tests for each → re-verified.
+
+### Changed
+
+- `bootstrap/sync-version.{sh,ps1}`: the runtime's manifest is a version surface, and `marketplace.json` now carries three release-version fields (outer, `maxim`, `maxim-runtime`).
+- `AGENT_SKILL_INVENTORY.md`: `mxm-guard` described correctly (ADR-006 boundary check, not junction enforcement); new Section 5a for the runtime.
+- ADR-021 amended: in-engine router, status line instead of banner, Desktop Code tab surface correction.
+- `.gitignore`: nested `.mxm-skills/` runtime folders are now ignored at any depth (the old rule matched one level only).
+
+### Limits
+
+Claude Code only (CLI, IDE extensions, the Desktop app's Code tab), on versions with function hooks; the API is early access. Where an organization manages Claude Code, the system-prompt section and the classic-hook trimming run only for plugins listed in managed settings; the runtime then leaves the standard and routing to the shell hooks, and its guards, tag check, `/maxim` and framework tool still run. The hybrid router makes one small-model call for prompts the keywords cannot route.
+
+### Operator actions
+
+Run `claude plugin marketplace update maxim-packs`, `claude plugin update maxim@maxim-packs`, then `claude plugin install maxim-runtime@maxim-packs`, and restart Claude. Check `/maxim`.
+
+---
+
 ## v1.3.10.1 — 2026-10-15 — The 18 pre-existing framework definitions verified against primary sources
 
 Patch. Content only; no code or capability-count change (91 agents · 52 skills · 50 commands · 9 MCPs/95 tools · 16 hooks · 86 frameworks · 22 ADRs).
