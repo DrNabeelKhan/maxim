@@ -1,0 +1,27 @@
+{
+  "name": "maxim-runtime",
+  "version": "1.3.11",
+  "description": "Maxim's in-engine runtime for Claude Code (function hooks): the operating standard in the system prompt, a hybrid keyword and model router shown in the status line, enforced junction, secret-commit and CSO guards, confidence-tag checks, a /maxim panel, and an in-process framework lookup. Companion to the maxim plugin; needs Claude Code with function-hook support.",
+  "author": {
+    "name": "Dr. Nabeel Khan",
+    "url": "https://nabeelkhan.com"
+  },
+  "homepage": "https://maxim.isystematic.com",
+  "license": "BSL-1.1",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "router": {
+      "type": "string",
+      "title": "Maxim router",
+      "description": "hybrid: keyword routing, with a small-model classifier only when the keywords are unsure. keywords: keyword routing only, no model calls. off: no routing.",
+      "default": "hybrid",
+      "options": ["hybrid", "keywords", "off"]
+    },
+    "guards": {
+      "type": "boolean",
+      "title": "Maxim guards",
+      "description": "Block writes through .mxm-system and .claude junctions, block git commits whose diff carries a secret, and add the CSO review note when a security-sensitive file is edited.",
+      "default": true
+    }
+  }
+}

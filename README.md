@@ -2,7 +2,7 @@
 
 > The structural moat behind every Claude output. 91 specialist agents · 86 peer-reviewed frameworks (behavioral core + security · compliance · enterprise-architecture · engineering) · 14 compliance frameworks · 9 MCPs · 95 tools. Framework citation on every output. Drift caught before you ship. Voice locked across every surface.
 
-![Version](https://img.shields.io/badge/version-1.3.10.1-blue)
+![Version](https://img.shields.io/badge/version-1.3.11-blue)
 ![Agents](https://img.shields.io/badge/agents-91-green)
 ![Frameworks](https://img.shields.io/badge/frameworks-86-orange)
 ![Skills](https://img.shields.io/badge/skill_domains-52-purple)
@@ -218,6 +218,16 @@ Claude Code 2.1.220 in the Desktop app. The rows below it describe the separate 
 which is a different surface with different limits.
 
 Desktop one-command setup: `bash bootstrap/mxm-desktop-config.sh` or `pwsh -File bootstrap/mxm-desktop-config.ps1`.
+
+### Optional: the in-engine runtime (Claude Code mods)
+
+On Claude Code versions with function hooks, install `maxim-runtime` beside `maxim`:
+
+```bash
+claude plugin install maxim-runtime@maxim-packs
+```
+
+It puts Maxim's standard in the system prompt, routes with the same keyword table plus a small-model fallback and shows the route in the status line, refuses writes through `.mxm-system`/`.claude` junctions and commits that add secrets, requests a CSO review when security-sensitive files change, flags answers missing a confidence tag, and adds `/maxim`. Without it, or on other surfaces, Maxim's shell hooks behave as before. Details: [`mods/maxim-runtime/README.md`](mods/maxim-runtime/README.md).
 
 ---
 

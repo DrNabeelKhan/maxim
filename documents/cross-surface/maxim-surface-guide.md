@@ -66,6 +66,7 @@ Green = native, Yellow = degraded, Red = absent.
 - Session memory persists across conversations (`.claude-sessions-memory/`)
 - Git Hygiene Gate hooks available
 - Proactive Watch LIGHT runs at SessionStart
+- Optional `maxim-runtime` mod (v1.3.11+, Claude Code versions with function hooks): standard in the system prompt, status-line routing, junction / secret-commit / CSO guards, `/maxim`. Runs in the CLI, IDE extensions and the Desktop app's Code tab only; every other surface keeps the shell hooks' behaviour
 
 ### Install
 

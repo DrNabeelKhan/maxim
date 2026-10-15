@@ -20,6 +20,8 @@ Total: **5 events, 10 executable scripts.**
 
 All hooks fail-soft (exit 0) except PreCommit (blocks on secrets) and Git Hygiene hooks (exit 1/2/3 on gate failure — caller decides what to do).
 
+**In-engine runtime (v1.3.11+).** On Claude Code versions with function hooks, the optional `maxim-runtime` plugin (`mods/maxim-runtime/`) runs beside these scripts. It puts the standard in the system prompt and trims `session-start`'s copy, replaces the `user-prompt-router` directive with its own (same routing table, route in the status line), and adds guards these scripts cannot enforce: junction writes, secret commits in any repository, and the CSO review note. The scripts stay the fallback wherever function hooks do not run. See `mods/maxim-runtime/README.md`.
+
 ---
 
 ## Wiring Hooks Into Your Project

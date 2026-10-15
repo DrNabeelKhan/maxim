@@ -78,6 +78,21 @@ The `UserPromptSubmit` contract was verified correct against the Claude Code doc
 
 ---
 
+## Amendment 2026-10-15 (v1.3.11) — in-engine router (maxim-runtime)
+
+**Change.** Where Claude Code supports function hooks ("mods"), the optional `maxim-runtime` plugin (`mods/maxim-runtime/`) takes over routing from the shell hook:
+
+1. **Same keyword router.** `hooks/lib/router.ts` is a port of `user-prompt-router.sh`'s scoring (weak keywords, instruction-zone bonus, floor and margin, pre-filters, long-paste guard) reading the same `config/routing-table.json`. A parity test runs both routers on the same prompts and requires the same route (22/22 at release).
+2. **Small-model fallback, only when unsure.** In the default `hybrid` mode, a prompt with real intent that the keywords cannot route confidently is classified once by a small model (`$.model.classify`, four-second cap). Confident keyword routes, `/mxm-*` commands, short replies, structural leads and pasted documents never reach the model. `keywords` mode makes no model calls; `off` disables routing. This is the first step towards the semantic classifier the Fable audit asked for (P1-2), not the full replacement.
+3. **Status line instead of a banner.** The route is shown in Claude Code's status line (and in `/maxim`). The directive the model reads no longer asks it to print the `🧭 Maxim:` banner, which removes the token cost and the dependence on the model echoing it.
+4. **No double routing.** For each prompt the runtime handles, it drops the shell router's `additionalContext` from the `UserPromptSubmit` result. It handles prompts only after it has seen its own classic hooks run: where an organization manages Claude Code those hooks pass over installed plugins, so the runtime never takes over there and the shell router routes alone.
+
+**Unchanged.** Without `maxim-runtime`, or on a Claude Code version without function hooks, or where an organization manages Claude Code and has not listed the runtime in managed settings, the shell router runs exactly as specified above, banner included, and only once. `routing-table.json` remains the single source of routes, and `.mxm-skills/router-off` still opts a project out on both paths.
+
+**Surface correction.** The 2026-06-19 surface section above predates the 2026-09 verification that hooks run in the Claude Desktop app's Code tab; see `documents/cross-surface/maxim-surface-guide.md`. Function hooks run in the same places as Claude Code itself: CLI, IDE extensions and the Desktop app's Code tab, not Desktop/Web Projects chat or Cowork.
+
+---
+
 ## References
 
 - Session-23 simplification brainstorm (the `prompt → Router brain → Office → Agents → Skills` flow) — `documents/architecture/MAXIM_LOOP_ADOPTION_PLAN.md` + chat.

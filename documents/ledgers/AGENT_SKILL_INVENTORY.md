@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.10.1 · **Last verified:** 2026-10-15 (v1.3.10.1 — the 18 pre-existing framework definitions verified against primary sources; no capability-count change)
+**Version:** v1.3.11 · **Last verified:** 2026-10-15 (v1.3.11 — `maxim-runtime` mod added as Section 5a; no capability-count change)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 
@@ -82,12 +82,30 @@ Under `.claude/hooks/`:
 | `behavioral-moat-drift.{sh,ps1}` | Linux/Mac/Win | Flag pack SKILL.md claims that drift from MOAT_TRACKER rows (ADR-007) |
 | `git-hygiene-preamble.{sh,ps1}` | Linux/Mac/Win | Pre-stage hygiene: staleness banners, junction check |
 | `git-hygiene-postamble.{sh,ps1}` | Linux/Mac/Win | Post-commit hygiene: session-end bundle check |
-| `mxm-guard.{sh,ps1}` | Linux/Mac/Win | Junction read-only enforcement |
+| `mxm-guard.{sh,ps1}` | Linux/Mac/Win | External-content boundary check on staged files (ADR-006). Junction read-only enforcement is done by the `maxim-runtime` mod (below) |
 | `user-prompt-router.{sh,ps1}` | Linux/Mac/Win | **UserPromptSubmit** — Default-On intent router (ADR-021): classify prompt → inject office/skills/frameworks → show routing token cost; conservative match + opt-out (`router-off`) |
 
 **Total hook scripts: 16** (8 hooks × 2 platforms). Net delta (14 → 16): `user-prompt-router.{sh,ps1}` added v1.3.5 (ADR-021) — the always-on intent router that makes Maxim default-on instead of opt-in.
 
 **Surface compatibility (corrected 2026-09; supersedes the 2026-06-19 "CLI only" note):** hooks run **wherever Claude Code runs**: the CLI, IDE extensions, and the Claude Desktop app's Code tab (verified 2026-09 on Claude Code 2.1.220 in the Desktop app: the ADR-021 router fired on live prompts and all 9 `mxm-*` MCP servers attached). Desktop/Web **Projects chat** and Cowork were **not tested**; treat hook-enforced governance there (pre-commit scan, session-start context, the default-on router) as advisory/opt-in until verified. Skills, commands and MCP servers remain cross-surface. See `documents/cross-surface/maxim-surface-guide.md`. (v1.3.6 hardened all 4 hook commands to quote `"${CLAUDE_PLUGIN_ROOT}"` for install paths containing spaces.)
+
+### Section 5a — Mods (function hooks): `maxim-runtime` (v1.3.11+)
+
+A separate, optional plugin in the same marketplace (`mods/maxim-runtime/`, install `maxim-runtime@maxim-packs`). It is one hooks module, not shell scripts, so the hook-script count above is unchanged. It runs only on Claude Code versions with function hooks, and the shell hooks above remain the fallback everywhere else.
+
+| Hook (event) | Purpose |
+|---|---|
+| `prompt.compose` | Adds Maxim's operating standard to the system prompt |
+| `classic.SessionStart` | Trims the shell session-start context to its per-session summary (the standard is in the system prompt) |
+| `prompt.submit` | ADR-021 router: same keyword scoring as `user-prompt-router.sh`, small-model fallback when unsure, route in the status line |
+| `classic.UserPromptSubmit` | Drops the shell router's directive while the runtime routes |
+| `tool.call` (Write · Edit · NotebookEdit) | Refuses writes through `.mxm-system` / `.claude` junctions; adds the CSO review note for security-sensitive files |
+| `tool.call` (Bash) | Refuses a `git commit` whose diff adds a secret |
+| `turn.complete` | Flags substantive answers with no confidence tag |
+| `command.run` · `ui.render` | `/maxim` command and pane |
+| `tool.call` (`mcp__maxim-runtime__framework`) | In-process framework lookup over the 85 definitions |
+
+Tests: `claude plugin test mods/maxim-runtime` (27 engine tests) and `node --test mods/maxim-runtime/parity/router-parity.test.mjs` (router parity with the shell router, 22 prompts).
 
 ---
 

@@ -63,7 +63,8 @@ Write-Host "  ──────────────────────
 $surfaces = @(
     @{ File = "config/agent-registry.json";                    Tmpl = '"version": "{V}"';   Note = "source of truth";       Want = 1 }
     @{ File = ".claude-plugin/plugin.json";                    Tmpl = '"version": "{V}"';   Note = "plugin manifest";       Want = 1 }
-    @{ File = ".claude-plugin/marketplace.json";               Tmpl = '"version": "{V}"';   Note = "marketplace outer+entry"; Want = 2 }
+    @{ File = ".claude-plugin/marketplace.json";               Tmpl = '"version": "{V}"';   Note = "marketplace outer+entry+runtime"; Want = 3 }
+    @{ File = "mods/maxim-runtime/.claude-plugin/plugin.json"; Tmpl = '"version": "{V}"';   Note = "maxim-runtime mod manifest"; Want = 1 }
     @{ File = "README.md";                                     Tmpl = "version-{V}-blue";   Note = "README badge";          Want = 1 }
     @{ File = "documents/ledgers/AGENT_SKILL_INVENTORY.md";    Tmpl = "**Version:** v{V}";  Note = "inventory stamp";       Want = 1 }
     @{ File = "documents/guides/HELP.md";                      Tmpl = "Maxim v{V}";         Note = "HELP header";           Want = 1 }

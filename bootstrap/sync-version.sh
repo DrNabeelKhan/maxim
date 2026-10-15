@@ -69,7 +69,8 @@ echo "  ────────────────────────
 SURFACES=(
   'config/agent-registry.json|"version": "%V"|source of truth'
   '.claude-plugin/plugin.json|"version": "%V"|plugin manifest'
-  '.claude-plugin/marketplace.json|"version": "%V"|marketplace (outer + entry)'
+  '.claude-plugin/marketplace.json|"version": "%V"|marketplace (outer + entry + runtime)'
+  'mods/maxim-runtime/.claude-plugin/plugin.json|"version": "%V"|maxim-runtime mod manifest'
   'README.md|version-%V-blue|README badge'
   'documents/ledgers/AGENT_SKILL_INVENTORY.md|**Version:** v%V|inventory stamp'
   'documents/guides/HELP.md|Maxim v%V|HELP header'
@@ -102,8 +103,9 @@ for entry in "${SURFACES[@]}"; do
 
   if $CHECK; then
     # In --check (TARGET == registry version): the surface MUST contain the target pattern.
-    # marketplace.json carries TWO version fields → require both.
-    want=1; [[ "$file" == ".claude-plugin/marketplace.json" ]] && want=2
+    # marketplace.json carries THREE version fields at the release version (outer
+    # metadata, the maxim entry, the maxim-runtime entry) → require all three.
+    want=1; [[ "$file" == ".claude-plugin/marketplace.json" ]] && want=3
     have=$(grep -cF "$newpat" "$fp" 2>/dev/null); have=${have:-0}
     if [[ "$have" -ge "$want" ]]; then
       echo "  $(fmt "$file") OK (v$TARGET)"; OK=$((OK+1))
