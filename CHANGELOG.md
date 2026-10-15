@@ -8,6 +8,39 @@ Releases are cut from `main` and tagged `vX.Y.Z`. Pre-release tags (`v1.1.0-rc.1
 
 ---
 
+## v1.3.10.1 — 2026-10-15 — The 18 pre-existing framework definitions verified against primary sources
+
+Patch. Content only; no code or capability-count change (91 agents · 52 skills · 50 commands · 9 MCPs/95 tools · 16 hooks · 86 frameworks · 22 ADRs).
+
+### Why
+
+v1.3.10 verified the 67 definitions authored in that release. The 18 that already existed had never been checked, and the first one spot-checked, Prospect Theory, contained effect sizes no source supports. Because `mxm-behavioral` now serves these definitions as guidance, unsupported numbers in them become Maxim's advice.
+
+### Fixed — unsupported effect sizes and misattributed findings (`89ce33f`)
+
+Four parallel verifiers checked every reference, attribution and quantitative claim in the 18; each claimed error was re-checked before editing. 16 files corrected.
+
+- **Prospect Theory.** Loss aversion (λ ≈ 2.25 in Tversky & Kahneman 1992; meta-analytic mean ≈ 1.96 in Brown et al. 2024) is a valuation parameter, not a message effect. Removed "loss frames are ~2x more persuasive" and "mis-framing costs 30–50% of conversion"; message-framing meta-analyses find effects of |r| ≤ ~.08. Corrected the probability-weighting example (a 75% chance of a gain is weighted about 57%, not 63%).
+- **Invented "expected lift" benchmarks removed** from SCARF, Emotional Design, Self-Determination Theory, Social Learning Theory, Theory of Planned Behavior, Transtheoretical Model and Diffusion of Innovations; replaced with "measure it" or a real meta-analytic figure.
+- **Transtheoretical Model.** Systematic reviews (Riemsma et al. 2003; Cochrane 2010) found stage-matched interventions no better than non-staged ones; the process-to-stage mapping is corrected to Prochaska et al. (1992).
+- **Dual Process Theory.** Removed "95% of decisions", "~250 ms" and glucose claims; decision fatigue and ego depletion marked weakly supported (Hagger et al. 2016; Vohs et al. 2021).
+- **Self-Determination Theory.** The undermining effect is limited to expected, tangible, task-contingent rewards; the claim that praise undermines motivation was the reverse of the 1999 meta-analysis.
+- Also: SCARF (Rock 2008 pages; contested neural-overlap claim), Emotional Design (Norman 1988 title; 50 ms first impressions), Operant Conditioning (Skinner 1953 not public domain; Fogg's Prompt is the cue), Theory of Planned Behavior, Social Learning Theory, Diffusion of Innovations (Rogers' 49–87%), Champion-Challenger-Holdout (reusable-holdout caveat).
+
+### Fixed — law and standards out of date
+
+- **EU AI Act.** Regulation (EU) 2026/1744 (in force July 2026) moved Annex III high-risk obligations to 2 December 2027 and Annex I to 2 August 2028 and added two Article 5 prohibitions. Also corrected: the scope of Art. 5(1)(h), Art. 4 AI literacy, Art. 13 versus Art. 50 transparency, and GPAI as a model-level regime. The "official portal" link was an unofficial Future of Life Institute site and is now labelled as such.
+- **CIS Controls** v8.1 (June 2024); **SOX** (the Act does not mention IT; ITGCs come through PCAOB AS 2201; dead SEC link replaced); **ISO/IEC 42001** clause descriptions.
+- `FRAMEWORKS_MASTER.md` EU AI Act, ISO/IEC 42001, SOX and CIS Controls sections brought in line with the corrected definitions.
+- Six dead related-skill links (five missing targets) removed or replaced across four definitions; the Bounded Agent Loop prior-art link updated to its new domain.
+- Logged as BUG-019 (`SHIPPED` v1.3.10.1).
+
+### Operator actions
+
+Run `claude plugin marketplace update maxim-packs`, then `claude plugin update maxim@maxim-packs`, then restart Claude.
+
+---
+
 ## v1.3.10 — 2026-10-15 — Every framework definition authored and wired; routing descriptions; session context reaches the model
 
 Feature release. No capability-count change (91 agents · 52 skills · 50 commands · 9 MCPs/95 tools · 16 hooks · 86 frameworks · 22 ADRs).

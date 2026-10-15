@@ -66,7 +66,7 @@ CONTEXT:
 FRAMEWORK APPLICATION:
 1. **Identify**: Which SOX section(s) (302 / 404 / 409 / 802) apply to this situation?
 2. **Analyze**: Assess against ITGC control areas:
-   - Access controls, change management, computer operations, data center security
+   - Access controls, change management, computer operations, program development
 3. **Synthesize**: Combine findings into a controls assessment or remediation plan
 4. **Validate**: Check against ICFR expectations and records-retention duties
 

@@ -99,7 +99,7 @@ vs. previous flow (~2 min, 2 restarts).
 |---|---|---|---|---|
 | §17 | EU AI Act | AI Governance / EU | [artificialintelligenceact.eu](https://artificialintelligenceact.eu/) | 🔴 HIGH — Pro overlay dependency |
 | §18 | ISO 42001 | AI Management System (ISO) | [iso.org/standard/81230.html](https://www.iso.org/standard/81230.html) | 🔴 HIGH — ships with Enterprise tier |
-| §19 | SOX (Sarbanes-Oxley) | US financial controls | [sec.gov](https://www.sec.gov/about/laws/soa2002.pdf) | 🟠 MED — Fintech overlay stacks cleaner with this |
+| §19 | SOX (Sarbanes-Oxley) | US financial controls | [govinfo](https://www.govinfo.gov/content/pkg/PLAW-107publ204/pdf/PLAW-107publ204.pdf) | 🟠 MED — Fintech overlay stacks cleaner with this |
 | §20 | CIS Controls | Security baseline (CIS) | [cisecurity.org/controls](https://www.cisecurity.org/controls) | 🟠 MED |
 | §21 | DORA | EU financial operational resilience | [digital-operational-resilience-act.com](https://www.digital-operational-resilience-act.com/) | 🟠 MED — EU fintech readiness |
 | §22 | NIST SP 800-53 | US federal controls baseline | [csrc.nist.gov/publications/detail/sp/800-53/rev-5/final](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final) | 🔴 HIGH — FedRAMP foundation |

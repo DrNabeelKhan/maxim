@@ -2,7 +2,7 @@
 
 > Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1 licensed.
 
-**Version:** v1.3.10 · **Last verified:** 2026-10-15 (v1.3.10 — all 85 framework definitions authored and wired into `mxm-behavioral`; description frontmatter on skills/agents; SessionStart context; no capability-count change)
+**Version:** v1.3.10.1 · **Last verified:** 2026-10-15 (v1.3.10.1 — the 18 pre-existing framework definitions verified against primary sources; no capability-count change)
 
 Single source of truth for Maxim's capability counts. On every commit that touches a tracked section, this file updates — otherwise the pre-commit hook flags a drift.
 

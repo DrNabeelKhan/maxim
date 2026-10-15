@@ -558,29 +558,34 @@
 | ----------------- | ------------------------------------------------------------------------------- |
 | **Owner**         | European Union                                                                  |
 | **Purpose**       | Risk-based regulation of artificial intelligence systems                        |
-| **Official Docs** | [artificialintelligenceact.eu](https://artificialintelligenceact.eu/)           |
-| **Maturity**      | Active (2024, enforcement phased through 2026–2027)                             |
+| **Official Docs** | [Regulation (EU) 2024/1689 on EUR-Lex](https://eur-lex.europa.eu/eli/reg/2024/1689/oj); amended by Regulation (EU) 2026/1744. Text explorer (unofficial, Future of Life Institute): artificialintelligenceact.eu |
+| **Maturity**      | Active (Reg. 2024/1689; amended by Reg. 2026/1744 — high-risk from Dec 2027 / Aug 2028) |
 
 #### Risk Classification
 
 | Risk Level          | Description                                     | Examples                                   |
 | ------------------- | ----------------------------------------------- | ------------------------------------------ |
-| **Unacceptable**    | Prohibited AI practices                         | Social scoring, real-time biometric mass surveillance |
-| **High Risk**       | Significant conformity requirements             | Medical devices, recruitment AI, credit scoring |
-| **Limited Risk**    | Transparency obligations                        | Chatbots, deepfakes                        |
-| **Minimal Risk**    | No mandatory requirements                       | Spam filters, AI in games                  |
-| **GPAI Models**     | General-purpose AI model requirements           | Foundation models (GPT, Claude, etc.)      |
+| **Unacceptable** (Art. 5) | Prohibited AI practices                   | Social scoring; real-time remote biometric identification in public spaces for law enforcement (narrow, authorised exceptions); from 2026, non-consensual sexual deepfakes and child sexual abuse material |
+| **High Risk** (Art. 6, Annexes I and III) | Significant conformity requirements | Recruitment AI, credit scoring (Annex III); AI safety components of products needing third-party conformity assessment, such as some medical devices (Annex I) |
+| **Limited Risk** (Art. 50) | Transparency obligations                 | Chatbots, deepfakes                        |
+| **Minimal Risk**    | No tier-specific requirements (Art. 4 AI literacy still applies) | Spam filters, AI in games |
 
-#### Compliance Requirements
+General-purpose AI (GPAI) models are regulated separately in Chapter V, at the model level, not as a risk tier of AI systems.
+
+#### Compliance Requirements for High-Risk Systems
 
 | Requirement               | Description                                              |
 | ------------------------- | -------------------------------------------------------- |
-| **Risk Management System**| Identify, analyze, and mitigate risks                    |
-| **Data Governance**       | Training data quality and relevance                      |
-| **Technical Documentation**| Pre-market and ongoing documentation                    |
-| **Human Oversight**       | Ensure meaningful human control                          |
-| **Transparency**          | Clear disclosure when interacting with AI                |
-| **Accuracy & Robustness** | Performance metrics and cybersecurity                    |
+| **Risk Management System** (Art. 9) | Identify, analyze, and mitigate risks          |
+| **Data Governance** (Art. 10) | Training data quality and relevance                  |
+| **Technical Documentation** (Art. 11) | Pre-market and ongoing documentation         |
+| **Record-Keeping** (Art. 12) | Automatic logging of events                           |
+| **Transparency to Deployers** (Art. 13) | Instructions for use and information deployers need |
+| **Human Oversight** (Art. 14) | Ensure meaningful human control                      |
+| **Accuracy, Robustness & Cybersecurity** (Art. 15) | Performance metrics and resilience |
+| **Quality Management System** (Art. 17) | Provider's documented quality system      |
+
+Disclosure to people that they are interacting with an AI system is the separate Art. 50 duty for limited-risk systems.
 
 #### Agents Using This Framework
 
@@ -607,11 +612,11 @@
 
 | Clause | Area                    | Description                                       |
 | ------ | ----------------------- | ------------------------------------------------- |
-| 4      | Context of Organization | Understanding AI impact on stakeholders           |
+| 4      | Context of Organization | Organizational context, interested parties, AIMS scope |
 | 5      | Leadership              | Top management commitment and AI policy           |
 | 6      | Planning                | Risk and opportunity management for AI            |
 | 7      | Support                 | Resources, competence, awareness                  |
-| 8      | Operation               | AI system lifecycle controls                      |
+| 8      | Operation               | Operational planning; AI risk assessment, risk treatment and impact assessment (lifecycle controls in Annex A) |
 | 9      | Performance Evaluation  | Monitoring, measurement, audits                   |
 | 10     | Improvement             | Nonconformity and continual improvement           |
 
@@ -632,8 +637,8 @@
 | Attribute         | Details                                                                         |
 | ----------------- | ------------------------------------------------------------------------------- |
 | **Owner**         | U.S. Congress / SEC / PCAOB                                                     |
-| **Purpose**       | Financial reporting integrity and IT controls for public companies              |
-| **Official Docs** | [sec.gov/about/laws/soa2002.pdf](https://www.sec.gov/about/laws/soa2002.pdf)   |
+| **Purpose**       | Financial reporting integrity and internal control over financial reporting (ICFR) for public companies; ITGCs are assessed under PCAOB AS 2201, not named in the Act |
+| **Official Docs** | [Pub. L. 107-204 (govinfo)](https://www.govinfo.gov/content/pkg/PLAW-107publ204/pdf/PLAW-107publ204.pdf) |
 | **Maturity**      | Established (2002)                                                              |
 
 #### Key Sections
@@ -652,7 +657,7 @@
 | Access Controls        | Who can access financial systems          |
 | Change Management      | IT system change documentation            |
 | Computer Operations    | Backup, recovery, batch processing        |
-| Data Center Security   | Physical and logical data security        |
+| Program Development    | Controls over developing or acquiring systems that affect financial reporting |
 
 #### Agents Using This Framework
 
@@ -673,24 +678,24 @@
 | **Owner**         | Center for Internet Security (CIS)                                              |
 | **Purpose**       | Prioritized set of actions to protect against cyber threats                    |
 | **Official Docs** | [cisecurity.org/controls](https://www.cisecurity.org/controls)                  |
-| **Maturity**      | Established (v8, 2021)                                                          |
+| **Maturity**      | Established (v8 2021; current v8.1, June 2024)                                  |
 
 #### Implementation Groups
 
-| Group | Target Organization     | Control Count |
+| Group | Target Organization (by risk profile and resources) | Safeguards (cumulative) |
 | ----- | ----------------------- | ------------- |
-| **IG1**  | Small/low-risk        | 56 safeguards |
-| **IG2**  | Mid-size organizations| 130 safeguards|
-| **IG3**  | Large/high-risk       | All 153 safeguards|
+| **IG1**  | Essential cyber hygiene; limited IT and security expertise | 56 |
+| **IG2**  | Dedicated IT staff, multiple departments with differing risk | 130 |
+| **IG3**  | Security specialists; sensitive or regulated data | All 153 |
 
-#### Top 5 CIS Controls
+#### CIS Controls 1–5 (the first five of 18)
 
 | Control | Name                        | Description                                       |
 | ------- | --------------------------- | ------------------------------------------------- |
-| 1       | Inventory of Enterprise Assets | Know all hardware in your environment          |
-| 2       | Inventory of Software Assets  | Know all software running                       |
+| 1       | Inventory and Control of Enterprise Assets | Know all enterprise assets: end-user, network, IoT and servers; physical, virtual, remote or cloud |
+| 2       | Inventory and Control of Software Assets | Know all software running                       |
 | 3       | Data Protection               | Classify, handle, and retain data               |
-| 4       | Secure Configuration          | Establish and maintain secure configurations    |
+| 4       | Secure Configuration of Enterprise Assets and Software | Establish and maintain secure configurations    |
 | 5       | Account Management            | Manage the lifecycle of all accounts            |
 
 #### Agents Using This Framework
@@ -2955,9 +2960,9 @@ Behavior = Capability × Opportunity × Motivation
 - [MITRE ATT&CK](https://attack.mitre.org/)
 - [CIS Controls](https://www.cisecurity.org/controls) 🆕
 - [FedRAMP](https://www.fedramp.gov/) 🆕
-- [EU AI Act](https://artificialintelligenceact.eu/) 🆕
+- [EU AI Act — Regulation (EU) 2024/1689 (EUR-Lex)](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) 🆕
 - [DORA](https://www.digital-operational-resilience-act.com/) 🆕
-- [SOX / SEC](https://www.sec.gov/about/laws/soa2002.pdf) 🆕
+- [SOX — Pub. L. 107-204 (govinfo)](https://www.govinfo.gov/content/pkg/PLAW-107publ204/pdf/PLAW-107publ204.pdf) 🆕
 
 ### Enterprise Architecture
 
