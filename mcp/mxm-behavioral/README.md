@@ -31,6 +31,8 @@ Each answer carries a `status`:
 
 The status is computed, not declared: a field counts as template text when, after the framework's own name is replaced by a placeholder, it is identical to that field in another definition, or matches a fingerprint in `template-fingerprints.json`. That file is frozen from the corpus before any stub was authored. Without it, authoring the other members of a template group makes the last one's text unique, and it gets reported as authored. Run `node --test mcp/mxm-behavioral/framework-loader.test.mjs` for the current counts, which the suite pins so that authoring a stub is a deliberate, visible change.
 
+As of 2026-10-15 all 85 definitions classify as `authored` (from 18 / 4 / 63 at initial wiring). The `partial` and `stub` paths stay in place and tested, so a newly added definition copied from the template is reported honestly rather than served as guidance.
+
 `recommend_frameworks` ranks from the domain lists and curated entries only, then fills in content for the chosen frameworks. Its ranking is intentionally unchanged by the definitions: the keyword scorer matches any one-letter word, so scoring against every long definition would make all of them look relevant. · BJ Fogg Tiny Habits · Octalysis · IKEA Effect · Anchoring · 55 more (see `documents/reference/FRAMEWORKS_MASTER.md`).
 
 ## Run
