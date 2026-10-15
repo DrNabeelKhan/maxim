@@ -1,119 +1,122 @@
 ---
 skill_id: ccpa
 name: CCPA
-version: 1.0.0
+version: 2.0.0
 category: security
 type: framework
 frameworks: []
 triggers:
-  - apply ccpa
-  - use ccpa framework
-  - ccpa analysis
+  - ccpa
+  - cpra
+  - california privacy
+  - do not sell or share
+  - consumer privacy rights
 collaborates_with:
   - compliance-officer
   - legal-compliance-checker
   - support-responder
 ethics_required: true
-priority: medium
-tags: [security, framework]
+priority: high
+tags: [security, framework, privacy, ccpa, cpra, california, regulation]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # CCPA
 
 ## Purpose
-Apply CCPA to identify, assess, and mitigate security risks in systems, processes, and data handling.
+Use the California Consumer Privacy Act (CCPA), as amended by the California Privacy Rights Act (CPRA), to meet California's privacy obligations: tell consumers what personal information you collect and why, honour their rights to know, delete, correct and opt out of sale or sharing, and limit use of sensitive personal information. It applies to for-profit businesses that do business in California and meet a size or data threshold. This definition is a working guide, not legal advice.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `ccpa` |
-| Category | Security |
-| Version | 1.0.0 |
-| Owner | State of California |
-| Maturity | Established (2020) |
-| Primary References | California Consumer Privacy Act |
+| Category | Privacy — Regulation |
+| Version | 2.0.0 |
+| Law | California Civil Code §1798.100 et seq.; CCPA effective 2020, amended by the CPRA (Proposition 24, 2020), effective 2023 |
+| Enforcement | California Privacy Protection Agency and the California Attorney General |
+| Regulations | Agency regulations, updated over time, including on risk assessments, cybersecurity audits and automated decision-making technology; check the current text |
+
+## Key Requirements
+**Who it applies to**: for-profit businesses doing business in California that meet at least one threshold: annual gross revenue above a set amount (originally $25 million, now adjusted for inflation); buying, selling or sharing the personal information of 100,000 or more consumers or households; or earning at least half of annual revenue from selling or sharing personal information.
+
+**Consumer rights**
+- **Right to know and access** what is collected, used and disclosed.
+- **Right to delete.**
+- **Right to correct** inaccurate information.
+- **Right to opt out of sale or sharing**, including sharing for cross-context behavioural advertising.
+- **Right to limit use of sensitive personal information.**
+- **Right to non-discrimination** for exercising rights.
+
+**Business obligations**: a notice at collection; a privacy policy; a "Do Not Sell or Share My Personal Information" link where applicable; honouring opt-out preference signals such as Global Privacy Control; contracts with service providers, contractors and third parties; and reasonable security.
+
+## Core Principles
+- **Notice at or before collection,** stating categories, purposes and retention.
+- **Purpose limitation**: use must be reasonably necessary and proportionate to the disclosed purposes.
+- **Make opting out easy,** including honouring browser privacy signals.
+- **Contracts flow obligations** to service providers and third parties.
+- **Security is a duty;** breaches of certain data can lead to private lawsuits.
+
+## Applications & Use Cases
+| Use Case | Application | Requirement |
+|---|---|---|
+| Applicability check | Test against the thresholds | Scope |
+| Advertising and tracking | Treat cross-context behavioural advertising as sharing; honour opt-outs | Opt-out |
+| Consumer requests | Verify identity and respond within the statutory timeline | Rights |
+| Sensitive data | Offer the right to limit, or restrict use to permitted purposes | Sensitive PI |
+| Vendor management | Contracts with required terms | Contracts |
+| Privacy policy update | Annual review of disclosures | Notice |
+
+## Usage Guidelines
+- **Confirm applicability** and identify all personal information you collect, including from cookies and pixels.
+- **Map sales and sharing**, especially advertising technology.
+- **Provide opt-out mechanisms** and honour Global Privacy Control signals.
+- **Build a verified request process** that meets statutory timelines.
+- **Check the current regulations** before relying on any requirement, as they change.
 
 ## Prompt Template
 ```
-You are applying the CCPA framework.
+You are assessing CCPA/CPRA compliance. Not legal advice.
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: security
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of CCPA applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with CCPA principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+BUSINESS and applicability thresholds: [[...]]
+PERSONAL INFORMATION: categories, sources, purposes, retention
+SENSITIVE PI: categories and uses
+SALE / SHARING: recipients, opt-out mechanism, GPC handling
+RIGHTS PROCESS: know · delete · correct · opt out · limit; verification; timelines
+CONTRACTS: service providers, contractors, third parties
+NOTICES: at collection; privacy policy
 ```
 
-## Core Principles
-- **Foundation**: CCPA provides structured approach to security
-- **Application**: Use when facing decisions requiring security guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply CCPA to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [California Consumer Privacy Act](https://oag.ca.gov/privacy/ccpa) - State of California
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS apply principle of least privilege
-- NEVER store sensitive data in plaintext or logs
-- ALWAYS follow responsible disclosure practices
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **This is not legal advice.** Confirm with qualified counsel and the current regulations.
+- **Do not use dark patterns.** California's rules state that consent obtained through dark patterns is not valid consent.
+- **Do not penalise consumers** for exercising their rights.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to CCPA principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Test opt-out flows, including with Global Privacy Control enabled.
+- Audit tags and pixels for undisclosed sharing.
+- Test request handling against timelines.
+
+## Success Metrics
+- Requests completed on time.
+- Opt-out signals honoured across properties.
+- Vendors under compliant contracts.
+
+## Collaboration Protocol
+- Inbound from: `compliance-officer` · `support-responder`
+- Outbound to: `legal-compliance-checker` for interpretation
+- Cross-framework: GDPR for EU obligations; DMBOK for data inventory; HIPAA where health data is excluded or overlaps.
+
+## Related Skills
+- `composable-skills/frameworks/gdpr/SKILL.md` — EU data protection
+- `composable-skills/frameworks/dmbok/SKILL.md` — data inventory and governance
+- `composable-skills/frameworks/hipaa/SKILL.md` — US health information
+
+## Reference Materials
+- California Consumer Privacy Act of 2018, Cal. Civ. Code §1798.100 et seq., as amended by the California Privacy Rights Act of 2020.
+- California Code of Regulations, Title 11, Division 6 (CCPA regulations).
+- California Privacy Protection Agency. cppa.ca.gov.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

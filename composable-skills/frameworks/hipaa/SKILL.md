@@ -1,120 +1,120 @@
 ---
 skill_id: hipaa
 name: HIPAA
-version: 1.0.0
+version: 2.0.0
 category: security
 type: framework
 frameworks: []
 triggers:
-  - apply hipaa
-  - use hipaa framework
-  - hipaa analysis
+  - hipaa
+  - protected health information
+  - phi
+  - business associate agreement
+  - hipaa security rule
 collaborates_with:
   - compliance-officer
   - legal-compliance-checker
   - security-architect
   - support-responder
 ethics_required: true
-priority: medium
-tags: [security, framework]
+priority: high
+tags: [security, framework, privacy, hipaa, health, regulation]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # HIPAA
 
 ## Purpose
-Apply HIPAA to identify, assess, and mitigate security risks in systems, processes, and data handling.
+Use HIPAA, the US Health Insurance Portability and Accountability Act of 1996 and its rules, to protect individually identifiable health information. Its administrative simplification rules govern how **covered entities** (health plans, health care clearinghouses and health care providers that conduct standard electronic transactions) and their **business associates** use, disclose and secure **protected health information (PHI)**, and how they respond to breaches. This definition is a working guide, not legal advice.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `hipaa` |
-| Category | Security |
-| Version | 1.0.0 |
-| Owner | U.S. Department of Health & Human Services |
-| Maturity | Established (1996, updated 2013) |
-| Primary References | Health Insurance Portability and Accountability Act |
+| Category | Privacy and Security — Regulation |
+| Version | 2.0.0 |
+| Regulations | 45 CFR Parts 160 and 164 |
+| Enforcement | US Department of Health and Human Services, Office for Civil Rights (OCR) |
+| Key amendment | HITECH Act (2009): extended obligations to business associates and created breach notification |
+| Pending changes | HHS proposed significant Security Rule changes in a 2025 rulemaking; check its status |
+
+## The Rules
+- **Privacy Rule**: permitted uses and disclosures of PHI; the **minimum necessary** standard; individuals' rights, such as access and amendment; and a notice of privacy practices.
+- **Security Rule**: administrative, physical and technical safeguards for electronic PHI (ePHI), starting with a **risk analysis**. Implementation specifications are either required or addressable.
+- **Breach Notification Rule**: notify affected individuals without unreasonable delay and no later than 60 days after discovery; notify HHS; and notify the media for breaches affecting more than 500 residents of a state or jurisdiction.
+- **Enforcement Rule**: investigations and civil money penalties.
+
+**De-identification** (45 CFR 164.514): either the Safe Harbor method (removing 18 specified identifiers) or Expert Determination.
+
+## Core Principles
+- **Know whether you are a covered entity, a business associate, or neither.** Many health apps are not covered by HIPAA, though other laws may apply.
+- **Minimum necessary**: use and disclose only what the purpose requires.
+- **Risk analysis drives security,** and it must be kept current.
+- **Business associate agreements** are required before a business associate handles PHI.
+- **Patients have rights**, including timely access to their records.
+
+## Applications & Use Cases
+| Use Case | Application | Rule |
+|---|---|---|
+| Health-tech vendor selling to providers | Sign BAAs and meet the Security Rule | Security, BAAs |
+| Cloud hosting of ePHI | BAA with the provider and configured safeguards | Security |
+| Security program | Documented risk analysis and risk management plan | Security |
+| Analytics on health data | De-identify by Safe Harbor or Expert Determination | Privacy |
+| Patient access requests | Provide records within required timelines | Privacy |
+| Lost laptop or breach | Breach risk assessment and notifications | Breach Notification |
+
+## Usage Guidelines
+- **Determine your HIPAA role** for each product and customer.
+- **Perform and document a risk analysis** of ePHI, and update it when systems change.
+- **Sign BAAs** with customers and downstream subcontractors as required.
+- **Apply minimum necessary** in data flows, access and logging.
+- **Prepare breach assessment and notification procedures** with the 60-day outer limit.
 
 ## Prompt Template
 ```
-You are applying the HIPAA framework.
+You are assessing HIPAA obligations (45 CFR Parts 160, 164). Not legal advice.
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: security
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of HIPAA applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with HIPAA principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+ORGANISATION and HIPAA role (covered entity / business associate / neither): [[...]]
+PHI / ePHI flows: sources, systems, recipients
+PRIVACY: permitted uses, minimum necessary, patient rights
+SECURITY: risk analysis status; administrative · physical · technical safeguards
+BAAs: upstream and downstream
+BREACH readiness: assessment method, notification timelines
+DE-IDENTIFICATION (if used): method
 ```
 
-## Core Principles
-- **Foundation**: HIPAA provides structured approach to security
-- **Application**: Use when facing decisions requiring security guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply HIPAA to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [Health Insurance Portability and Accountability Act](https://www.hhs.gov/hipaa/) - U.S. Department of Health & Human Services
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS apply principle of least privilege
-- NEVER store sensitive data in plaintext or logs
-- ALWAYS follow responsible disclosure practices
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **This is not legal advice.** Confirm with qualified counsel and current HHS guidance.
+- **Health data is deeply sensitive;** protect it beyond the legal minimum where you can.
+- **Do not treat non-HIPAA status as permission;** the FTC and state laws may still apply to health data.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to HIPAA principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Annual and change-triggered risk analysis.
+- Access log reviews for inappropriate access to records.
+- Breach tabletop exercises.
+
+## Success Metrics
+- Risk analysis current and risks tracked to treatment.
+- BAAs in place for all applicable relationships.
+- Patient access requests met on time.
+
+## Collaboration Protocol
+- Inbound from: `compliance-officer` · `support-responder`
+- Outbound to: `legal-compliance-checker`; `security-architect` for safeguards
+- Cross-framework: NIST SP 800-53 and NIST CSF for safeguards; SANS incident response for breach handling; SOC 2 and ISO 27001 for assurance.
+
+## Related Skills
+- `composable-skills/frameworks/nist-sp-800-53/SKILL.md` — security controls
+- `composable-skills/frameworks/sans-incident-response/SKILL.md` — incident handling
+- `composable-skills/frameworks/soc-2/SKILL.md` — assurance reporting
+- `composable-skills/frameworks/gdpr/SKILL.md` — EU health data obligations
+
+## Reference Materials
+- Health Insurance Portability and Accountability Act of 1996, Public Law 104-191.
+- 45 CFR Parts 160 and 164 (Privacy, Security, Breach Notification and Enforcement Rules).
+- US Department of Health and Human Services, Office for Civil Rights. *HIPAA guidance.* hhs.gov/hipaa.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._

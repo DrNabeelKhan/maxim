@@ -1,14 +1,17 @@
 ---
 skill_id: gdpr
 name: GDPR
-version: 1.0.0
+version: 2.0.0
 category: security
 type: framework
 frameworks: []
 triggers:
-  - apply gdpr
-  - use gdpr framework
-  - gdpr analysis
+  - gdpr
+  - general data protection regulation
+  - lawful basis
+  - data subject rights
+  - dpia
+  - eu personal data
 collaborates_with:
   - compliance-officer
   - legal-compliance-checker
@@ -16,106 +19,107 @@ collaborates_with:
   - data-architect
   - support-responder
 ethics_required: true
-priority: medium
-tags: [security, framework]
+priority: high
+tags: [security, framework, privacy, gdpr, eu, regulation]
+adr: ADR-007
 created: 2026-03-14
-updated: 2026-03-14
+updated: 2026-10-15
 ---
 
 # GDPR
 
 ## Purpose
-Apply GDPR to identify, assess, and mitigate security risks in systems, processes, and data handling.
+Use the General Data Protection Regulation (GDPR) to process personal data of people in the EU lawfully, fairly and transparently. The GDPR is a binding EU regulation, not a voluntary framework: it sets principles for processing, requires a lawful basis for every processing activity, gives individuals enforceable rights, and imposes accountability duties on controllers and processors. It can apply to organisations outside the EU that offer goods or services to, or monitor, people in the EU. This definition is a working guide, not legal advice.
 
 ## Frameworks & Standards
 | Item | Value |
-|------|-------|
+|---|---|
 | Framework ID | `gdpr` |
-| Category | Security |
-| Version | 1.0.0 |
-| Owner | European Union |
-| Maturity | Established (2018) |
-| Primary References | General Data Protection Regulation |
+| Category | Privacy — Regulation |
+| Version | 2.0.0 |
+| Instrument | Regulation (EU) 2016/679, applicable since 25 May 2018 |
+| Enforcement | National supervisory authorities, coordinated by the European Data Protection Board (EDPB) |
+| Maximum fines | Up to €20 million or 4% of worldwide annual turnover, whichever is higher (Art. 83) |
+| Related | UK GDPR (separate UK law) · ePrivacy rules for cookies and electronic marketing |
+
+## Key Requirements
+- **Principles (Art. 5)**: lawfulness, fairness and transparency; purpose limitation; data minimisation; accuracy; storage limitation; integrity and confidentiality; accountability.
+- **Lawful bases (Art. 6)**: consent, contract, legal obligation, vital interests, public task, legitimate interests. Special category data needs an additional condition (Art. 9).
+- **Rights (Arts. 12–22)**: information, access, rectification, erasure, restriction, portability, objection, and rights related to automated decision-making.
+- **Data protection by design and by default (Art. 25).**
+- **Processor contracts (Art. 28)** and **records of processing activities (Art. 30).**
+- **Security of processing (Art. 32).**
+- **Breach notification**: to the supervisory authority within 72 hours where feasible (Art. 33), and to individuals when the risk to them is high (Art. 34).
+- **Data protection impact assessments (Art. 35)** for high-risk processing.
+- **International transfers (Chapter V)**: adequacy decisions, standard contractual clauses, binding corporate rules or specific derogations.
+
+## Core Principles
+- **Every processing activity needs a lawful basis,** chosen before processing starts.
+- **Collect only what you need** and keep it only as long as needed.
+- **Be transparent** about what you do with data, in clear language.
+- **Accountability**: be able to demonstrate compliance, not just claim it.
+- **Build privacy in** from the design stage.
+
+## Applications & Use Cases
+| Use Case | Application | Requirement |
+|---|---|---|
+| New product feature | DPIA screening and privacy by design | Arts. 25, 35 |
+| Marketing consent | Valid, specific, freely given consent and easy withdrawal | Arts. 6, 7 |
+| Access and deletion requests | A process to respond within one month | Arts. 12, 15, 17 |
+| Vendors and sub-processors | Data processing agreements | Art. 28 |
+| Data breach | Assess risk and notify within 72 hours where required | Arts. 33, 34 |
+| Transfers outside the EU | Choose a transfer mechanism and assess risk | Chapter V |
+
+## Usage Guidelines
+- **Maintain a record of processing activities** with purpose, lawful basis, data, recipients and retention.
+- **Screen new processing for DPIA need** and complete DPIAs before high-risk processing begins.
+- **Set up a rights-request process** with identity verification and deadlines.
+- **Sign Article 28 agreements** with every processor.
+- **Rehearse breach assessment and notification** against the 72-hour deadline.
 
 ## Prompt Template
 ```
-You are applying the GDPR framework.
+You are assessing GDPR compliance (Regulation (EU) 2016/679). Not legal advice.
 
-CONTEXT:
-- Current task: [[task_description]]
-- Domain: security
-- Stakeholders: [[stakeholder_roles]]
-
-FRAMEWORK APPLICATION:
-1. **Identify**: What aspect of GDPR applies to this situation?
-2. **Analyze**: Break down the problem using framework principles:
-   - Apply relevant framework principles to the context
-3. **Synthesize**: Combine insights into actionable recommendations
-4. **Validate**: Check recommendations against framework guidelines
-
-OUTPUT STRUCTURE:
-- Framework Application: Which principles were used and why
-- Analysis: Step-by-step application to the specific context
-- Recommendations: Prioritized actions based on framework guidance
-- Limitations: Any constraints or assumptions in the application
-
-QUALITY CHECKS:
-□ All recommendations align with GDPR principles
-□ Ethical considerations have been evaluated
-□ Stakeholder impacts have been considered
-□ Next steps are clear and actionable
+PROCESSING ACTIVITY: [[...]]
+ROLE: controller / processor / joint controller
+PURPOSE and LAWFUL BASIS (Art. 6; Art. 9 condition if special category):
+DATA collected, minimised? retention period?
+TRANSPARENCY: privacy notice coverage
+RIGHTS: how each is fulfilled
+PROCESSORS and transfers (Art. 28; Chapter V mechanism):
+DPIA needed? SECURITY measures (Art. 32):
 ```
 
-## Core Principles
-- **Foundation**: GDPR provides structured approach to security
-- **Application**: Use when facing decisions requiring security guidance
-- **Adaptation**: Customize application to specific context while maintaining core integrity
-- **Documentation**: Record how framework was applied and outcomes achieved
-
-## Applications & Use Cases
-| Use Case | Application | Expected Outcome |
-|----------|-------------|----------------|
-| Strategic Planning | Apply GDPR to structure analysis | Clearer priorities and rationale |
-| Problem Solving | Use framework to break down complex issues | Systematic approach to solutions |
-| Team Alignment | Share framework language with stakeholders | Common understanding and vocabulary |
-| Documentation | Record framework application in decisions | Audit trail and knowledge transfer |
-
-## Reference Materials
-- [General Data Protection Regulation](https://gdpr.eu/) - European Union
-
-## Usage Guidelines
-- **Start with context**: Clearly define the problem space before applying framework
-- **Adapt, don't adopt**: Customize framework application to your specific situation
-- **Document decisions**: Record how and why framework principles were applied
-- **Review outcomes**: Evaluate results to improve future framework application
-- **Share learnings**: Contribute insights back to team knowledge base
-
-## Collaboration Protocol
-- Apply independently unless a task explicitly requires another skill or framework
-- Use structured handoff format: [Context] -> [Framework Applied] -> [Open Questions] -> [Next Action]
-
 ## Ethical Guidelines
-- ALWAYS apply principle of least privilege
-- NEVER store sensitive data in plaintext or logs
-- ALWAYS follow responsible disclosure practices
-
-## Success Metrics
-- **Clarity**: Framework application produces clearer decision rationale
-- **Consistency**: Similar situations receive similar framework-guided analysis
-- **Stakeholder Alignment**: Framework language improves cross-functional understanding
-- **Outcome Quality**: Decisions show improved consideration of relevant factors
-- **Learning**: Framework application generates insights for future improvement
-
-## Related Skills
-- *No directly related skills defined*
+- **This is not legal advice.** Confirm interpretations with qualified counsel or the relevant supervisory authority's guidance.
+- **Avoid manipulative consent design,** such as pre-ticked boxes or hidden refusal options.
+- **Respect the spirit of the rules,** not only their letter: people's expectations matter.
 
 ## Testing Strategy
-- Validate that recommendations clearly map back to GDPR principles
-- Review one real example and one edge case before adopting the output
-- Confirm stakeholder, ethical, and operational constraints were considered
-- Document adjustments made when the framework needed adaptation for context
+- Test rights-request handling end to end, including identity checks.
+- Audit consent records and withdrawal.
+- Breach-notification tabletop exercises.
+
+## Success Metrics
+- Rights requests completed within the legal deadline.
+- Processing activities with a documented lawful basis.
+- Processors with signed agreements.
+
+## Collaboration Protocol
+- Inbound from: `compliance-officer` · `data-architect` · `support-responder`
+- Outbound to: `legal-compliance-checker` for legal interpretation; `security-architect` for Art. 32 measures
+- Cross-framework: CCPA and LGPD for other jurisdictions; DMBOK for data governance; ISO 27001 for security; EU AI Act for AI systems using personal data.
+
+## Related Skills
+- `composable-skills/frameworks/ccpa/SKILL.md` — California privacy law
+- `composable-skills/frameworks/lgpd/SKILL.md` — Brazil's data protection law
+- `composable-skills/frameworks/dmbok/SKILL.md` — data governance
+- `composable-skills/frameworks/eu-ai-act/SKILL.md` — AI regulation
+
+## Reference Materials
+- Regulation (EU) 2016/679 (General Data Protection Regulation). *Official Journal of the European Union*, L 119, 4 May 2016.
+- European Data Protection Board. *Guidelines* (various, including on consent, DPIAs and breach notification). edpb.europa.eu.
 
 ---
-<sub>Copyright (c) 2026 iSystematic Inc. Maxim is a product of iSystematic Inc.  
-SPDX-License-Identifier: BSL-1.1 (Apache-2.0 after 4 years)  
-See LICENSE at repo root. Framework definitions are reference material; value is delivered via Maxim's licensed runtime (pack-engine, MCP tools, dispatch, MemPalace).</sub>
+_Copyright (c) 2026 iSystematic Inc. Maxim product. BSL 1.1. Authored 2026-10-15, replacing a generated template stub._
